@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "spec-flow",
+  "description": "Spec-Driven Development plugin for Claude Code",
+  "owner": {
+    "name": "Santiago Migoni",
+    "url": "https://github.com/santiago-migoni"
+  },
+  "plugins": [
+    {
+      "name": "spec-flow",
+      "description": "Seven-phase spec-driven development workflow: constitution, specify, plan, tasks, implement, converge, finishing-branch.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
