@@ -87,4 +87,4 @@ No configuration needed for either. They activate on their own if present.
 
 ## License
 
-MIT
+GNU AGPLv3 — see [LICENSE](LICENSE) for details.
