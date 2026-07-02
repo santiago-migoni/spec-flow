@@ -25,8 +25,9 @@ Before proceeding:
 2. **Explore the current codebase** — understand existing patterns, file structure, dependencies already in use
 3. **Draft the plan** — use `assets/plan-template.md` as the output format
 4. **Constitution check** — for every tech choice in the plan, verify it aligns with `specs/constitution.md`. Flag any conflict explicitly.
-5. **Present the plan** — show to user, get approval or revisions. One section at a time for complex plans.
-6. **Write `specs/NNN-feature-name/plan.md`**
+5. **Write `specs/NNN-feature-name/plan.md`**
+6. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
+7. **On revision request** — edit `plan.md` directly, then repeat step 6 with a summary of what changed
 
 ## Quality Check Before Writing
 

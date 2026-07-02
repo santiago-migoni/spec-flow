@@ -20,10 +20,13 @@ Check that `specs/constitution.md` exists before proceeding. If it does not exis
 
 1. **Read `specs/constitution.md`** — understand project principles and constraints before asking anything
 2. **Determine the feature number** — run `scripts/next-feature-number.sh` from the project root to get the next zero-padded NNN
-3. **Ask clarifying questions** — one at a time. Focus on: purpose, who benefits, success criteria, edge cases, explicit non-goals. Mark anything unclear as `[NEEDS CLARIFICATION: <specific question>]` in the draft rather than guessing.
-4. **Draft `spec.md`** — use `assets/spec-template.md` as the output format
-5. **Present the draft** — show to user, get approval or revisions
+3. **Check `specs/backlog.md`** — if it exists, scan for an item related to this feature and use it as context (skip silently if the file doesn't exist yet)
+4. **Ask clarifying questions** — one at a time. Focus on: purpose, who benefits, success criteria, edge cases, explicit non-goals. Mark anything unclear as `[NEEDS CLARIFICATION: <specific question>]` in the draft rather than guessing.
+5. **Draft `spec.md`** — use `assets/spec-template.md` as the output format
 6. **Create `specs/NNN-feature-name/` directory and write `spec.md`**
+7. **Remove the backlog item** — if this spec was drafted from a `specs/backlog.md` entry, delete that line now
+8. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
+9. **On revision request** — edit `spec.md` directly, then repeat step 8 with a summary of what changed
 
 ## Naming Convention
 

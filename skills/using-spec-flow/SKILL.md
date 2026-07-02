@@ -34,6 +34,7 @@ Each phase produces a file in `specs/`. Each phase requires the previous artifac
 ```
 specs/
 ├── constitution.md              ← project-wide principles (created once)
+├── backlog.md                   ← deferred ideas, side-channel (see below)
 ├── 001-feature-name/
 │   ├── spec.md
 │   ├── plan.md
@@ -43,6 +44,10 @@ specs/
     ├── plan.md
     └── tasks.md
 ```
+
+## Backlog (Side-Channel)
+
+`spec-flow:backlog` is not one of the seven phases — it has no gate and gates nothing. Invoke it deliberately, from any phase or none, to park an idea in `specs/backlog.md` without derailing current work. `spec-flow:specify` checks it when starting a new feature and removes the matching line once that idea becomes a spec.
 
 ## Ecosystem
 
