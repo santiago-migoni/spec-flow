@@ -1,7 +1,7 @@
 {
   "name": "spec-flow",
   "description": "Spec-Driven Development plugin for Claude Code: constitution, specify, plan, tasks, implement — artifacts versioned in the repo, hard gates between phases, no subagent overhead.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": {
     "name": "Santiago Migoni",
     "email": "santiagomigoni@gmail.com"
