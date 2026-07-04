@@ -1,8 +1,8 @@
 # Plan: [Feature Name]
 
-**ID**: NNN-feature-name
-**Created**: YYYY-MM-DD
-**Spec**: .specs/NNN-feature-name/spec.md
+| Name | Code | Version | Date |
+|---|---|---|---|
+| [short-description] | PLAN-NNN | R00 | [YYYY-MM-DD] |
 
 ## Approach
 

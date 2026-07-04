@@ -22,17 +22,17 @@ Check that `.specs/constitution.md` exists before proceeding. If it does not exi
 2. **Determine the feature number** — run `scripts/next-feature-number.sh` from the project root to get the next zero-padded NNN
 3. **Check `.specs/backlog.md`** — if it exists, scan for an item related to this feature and use it as context (skip silently if the file doesn't exist yet)
 4. **Ask clarifying questions** — one at a time. Focus on: purpose, who benefits, success criteria, edge cases, explicit non-goals. Mark anything unclear as `[NEEDS CLARIFICATION: <specific question>]` in the draft rather than guessing.
-5. **Draft `spec.md`** — use `assets/spec-template.md` as the output format
+5. **Draft `spec.md`** — use `assets/spec-template.md` as the output format. Table `Code` is `SPEC-NNN` (same `NNN` as the feature directory), `Version` is `R00`.
 6. **Create `.specs/NNN-feature-name/` directory and write `spec.md`**
 7. **Remove the backlog item** — if this spec was drafted from a `.specs/backlog.md` entry, delete that line now
 8. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
-9. **On revision request** — edit `spec.md` directly, then repeat step 8 with a summary of what changed
+9. **On revision request, before approval** — edit `spec.md` directly, then repeat step 8. This loop never changes `Version` — it stays `R00` no matter how many times it repeats, because the document hasn't been approved yet. Only an edit requested **after** the user already approved this spec increments `Version` by one.
 
 ## Naming Convention
 
 Feature directory name: `NNN-short-description` (e.g., `003-user-authentication`)
 - `NNN`: zero-padded 3-digit number from `scripts/next-feature-number.sh`
-- `short-description`: kebab-case, 2-4 words, describes the feature not the implementation
+- `short-description`: kebab-case, 2-4 words, describes the feature not the implementation — this is also the table's `Name` value
 
 ## Quality Check Before Writing
 

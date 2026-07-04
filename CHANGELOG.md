@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- Tabla de control documental (Name/Code/Version/Date) en los templates de `constitution`, `spec`, `plan` y `tasks` — trazabilidad de identidad y revisión para cada artefacto. La constitution suma un `Amendments Log` append-only. La versión (`R00`, `R01`, ...) solo sube en ediciones posteriores a la primera aprobación del usuario.
+
 ## Release v0.3.0
 
 ### Changed

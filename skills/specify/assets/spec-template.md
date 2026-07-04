@@ -1,7 +1,9 @@
 # Spec: [Feature Name]
 
-**ID**: NNN-feature-name
-**Created**: YYYY-MM-DD
+| Name | Code | Version | Date |
+|---|---|---|---|
+| [short-description] | SPEC-NNN | R00 | [YYYY-MM-DD] |
+
 **Status**: Draft
 
 ## Summary

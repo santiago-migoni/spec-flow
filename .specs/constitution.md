@@ -1,7 +1,8 @@
 # Constitución del Proyecto
 
-**Proyecto**: spec-flow
-**Actualizado**: 2026-07-04
+| Nombre | Versión | Fecha |
+|---|---|---|
+| spec-flow | R00 | 2026-07-04 |
 
 ## Propósito
 
@@ -41,3 +42,7 @@ Un plugin de Claude Code para Desarrollo Guiado por Especificaciones (SDD). Obli
 - Sin framework de hooks/extensions (etapas `before_*`/`after_*`, comandos pre/post configurados por YAML).
 - Sin capa de retrocompatibilidad para el nombre de carpeta `specs/` antiguo.
 - Sin framework de automatización personalizado más allá de pequeños helpers bash de propósito único.
+
+## Registro de Enmiendas
+
+<!-- Append-only. Una línea por revisión posterior a la primera aprobación. Formato: - RNN (YYYY-MM-DD): <qué cambió y por qué> -->

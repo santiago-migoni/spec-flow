@@ -1,9 +1,8 @@
 # Tasks: [Feature Name]
 
-**ID**: NNN-feature-name
-**Created**: YYYY-MM-DD
-**Spec**: .specs/NNN-feature-name/spec.md
-**Plan**: .specs/NNN-feature-name/plan.md
+| Name | Code | Version | Date |
+|---|---|---|---|
+| [short-description] | TASKS-NNN | R00 | [YYYY-MM-DD] |
 
 ## Phase 1: Setup
 

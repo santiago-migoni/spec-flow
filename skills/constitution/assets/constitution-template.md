@@ -1,7 +1,8 @@
 # Project Constitution
 
-**Project**: [name]
-**Updated**: [YYYY-MM-DD]
+| Name | Version | Date |
+|---|---|---|
+| [name] | R00 | [YYYY-MM-DD] |
 
 ## Purpose
 
@@ -32,3 +33,8 @@
 ## Out of Scope
 
 - [Things explicitly excluded — prevents scope creep during plan phases]
+
+## Amendments Log
+
+<!-- Append-only. One line per revision made after this constitution was first approved. Format: - RNN (YYYY-MM-DD): <what changed and why> -->
+
