@@ -14,18 +14,27 @@ constitution → specify → plan → tasks → implement → converge → finis
 
 | Phase | Skill | Output | Gate |
 |---|---|---|---|
-| **constitution** | `spec-flow:constitution` | `specs/constitution.md` | None — first phase |
-| **specify** | `spec-flow:specify` | `specs/NNN-feature/spec.md` | constitution must exist |
-| **plan** | `spec-flow:plan` | `specs/NNN-feature/plan.md` | spec must exist |
-| **tasks** | `spec-flow:tasks` | `specs/NNN-feature/tasks.md` | plan must exist |
+| **constitution** | `spec-flow:constitution` | `.specs/constitution.md` | None — first phase |
+| **specify** | `spec-flow:specify` | `.specs/NNN-feature/spec.md` | constitution must exist |
+| **plan** | `spec-flow:plan` | `.specs/NNN-feature/plan.md` | spec must exist |
+| **tasks** | `spec-flow:tasks` | `.specs/NNN-feature/tasks.md` | plan must exist |
 | **implement** | `spec-flow:implement` | Code changes | tasks must exist |
 | **converge** | `spec-flow:converge` | Gap analysis appended to tasks | implement must have run |
 | **finishing-branch** | `spec-flow:finishing-branch` | CHANGELOG + merge/PR options | spec status must be `Converged` |
 
+## Optional Commands
+
+Not part of the seven-phase gate chain — recommended, never required:
+
+| Skill | Run When | Output |
+|---|---|---|
+| `spec-flow:clarify` | Right after `specify`, before `plan` | Up to 5 clarifying questions answered directly into `spec.md`'s `## Clarifications` section |
+| `spec-flow:analyze` | After `tasks`, before `implement` | Read-only consistency report across `spec.md`, `plan.md`, `tasks.md` — writes no file |
+
 ### Artifact layout
 
 ```
-specs/
+.specs/
 ├── constitution.md              ← project-wide principles (created once)
 ├── 001-feature-name/
 │   ├── spec.md

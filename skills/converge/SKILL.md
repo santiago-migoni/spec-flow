@@ -9,9 +9,9 @@ Close the gap between what the artifacts say should exist and what the code actu
 
 <HARD-GATE>
 Before proceeding:
-1. `specs/NNN-feature-name/spec.md` must exist
-2. `specs/NNN-feature-name/plan.md` must exist
-3. `specs/NNN-feature-name/tasks.md` must exist and have been through at least one `implement` pass
+1. `.specs/NNN-feature-name/spec.md` must exist
+2. `.specs/NNN-feature-name/plan.md` must exist
+3. `.specs/NNN-feature-name/tasks.md` must exist and have been through at least one `implement` pass
 </HARD-GATE>
 
 ## Core Constraint: Append-Only
@@ -37,7 +37,7 @@ Read the following — load only what's needed for assessment, not the full text
 
 **From `tasks.md`**: all existing task IDs (to determine next ID), the highest phase number (to determine next phase).
 
-**From `specs/constitution.md`**: MUST principles that impose buildable obligations.
+**From `.specs/constitution.md`**: MUST principles that impose buildable obligations.
 
 ### 2. Build the Intent Inventory
 

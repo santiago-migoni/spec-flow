@@ -9,7 +9,7 @@ Turn a spec into an implementation blueprint. The plan defines HOW, while the sp
 
 <HARD-GATE>
 Before proceeding:
-1. `specs/constitution.md` must exist — if not, stop and invoke `spec-flow:constitution`
+1. `.specs/constitution.md` must exist — if not, stop and invoke `spec-flow:constitution`
 2. A `spec.md` must exist for the current feature — if not, stop and invoke `spec-flow:specify`
 3. No `[NEEDS CLARIFICATION]` markers should remain open in `spec.md` — resolve them with the user before planning
 </HARD-GATE>
@@ -21,11 +21,11 @@ Before proceeding:
 
 ## Process
 
-1. **Read `specs/constitution.md`** and `specs/NNN-feature-name/spec.md`
+1. **Read `.specs/constitution.md`** and `.specs/NNN-feature-name/spec.md`
 2. **Explore the current codebase** — understand existing patterns, file structure, dependencies already in use
 3. **Draft the plan** — use `assets/plan-template.md` as the output format
-4. **Constitution check** — for every tech choice in the plan, verify it aligns with `specs/constitution.md`. Flag any conflict explicitly.
-5. **Write `specs/NNN-feature-name/plan.md`**
+4. **Constitution check** — for every tech choice in the plan, verify it aligns with `.specs/constitution.md`. Flag any conflict explicitly.
+5. **Write `.specs/NNN-feature-name/plan.md`**
 6. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
 7. **On revision request** — edit `plan.md` directly, then repeat step 6 with a summary of what changed
 
@@ -38,4 +38,4 @@ Before proceeding:
 
 ## After Writing
 
-Tell the user: "Plan written to `specs/NNN-feature-name/plan.md`. Run `spec-flow:tasks` to break this into executable tasks."
+Tell the user: "Plan written to `.specs/NNN-feature-name/plan.md`. Run `spec-flow:tasks` to break this into executable tasks."

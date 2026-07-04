@@ -9,8 +9,8 @@ Execute the task list systematically. No task is skipped, no task is batched wit
 
 <HARD-GATE>
 Before proceeding:
-1. `specs/NNN-feature-name/tasks.md` must exist — if not, stop and invoke `spec-flow:tasks`
-2. `specs/NNN-feature-name/spec.md` must exist (needed for final verification)
+1. `.specs/NNN-feature-name/tasks.md` must exist — if not, stop and invoke `spec-flow:tasks`
+2. `.specs/NNN-feature-name/spec.md` must exist (needed for final verification)
 </HARD-GATE>
 
 ## When to Run This Phase
@@ -33,7 +33,7 @@ Write the minimal code that satisfies the acceptance scenario — nothing more. 
    - Confirm completion before moving to the next task
 4. **For `[P]` tasks** — execute in sequence within the same session (no subagents); the `[P]` marker is informational, indicating they touch independent files
 5. **On blockers** — if a task cannot be completed as written (missing info, conflicting code), stop and surface the blocker to the user before proceeding. Do not guess or work around it silently.
-6. **After all tasks are checked** — run `scripts/check-complete.sh specs/NNN-feature-name/tasks.md` to confirm, then proceed to the Verification Step
+6. **After all tasks are checked** — run `scripts/check-complete.sh .specs/NNN-feature-name/tasks.md` to confirm, then proceed to the Verification Step
 
 ## Verification Step
 
@@ -42,7 +42,7 @@ After all implementation tasks are done:
 1. **Read every acceptance scenario** in `spec.md`
 2. **Confirm each one is satisfied** by the code written — trace it explicitly: "US1 scenario 1: Given X, When Y, Then Z → satisfied by [file:line]"
 3. **If a scenario is not satisfied** — add a new task to `tasks.md` to fix it, execute it, then re-verify
-4. **Check against constitution** — confirm no principle in `specs/constitution.md` was violated
+4. **Check against constitution** — confirm no principle in `.specs/constitution.md` was violated
 
 ## What Counts as Done
 

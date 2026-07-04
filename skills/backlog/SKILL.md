@@ -1,6 +1,6 @@
 ---
 name: backlog
-description: "Capture an idea, deferred task, or future feature into specs/backlog.md without derailing current work. Use this whenever the user says to note something for later, add to the backlog, or park an idea — during any phase, or with no phase active. Items are removed automatically once spec-flow:specify turns them into a spec."
+description: "Capture an idea, deferred task, or future feature into .specs/backlog.md without derailing current work. Use this whenever the user says to note something for later, add to the backlog, or park an idea — during any phase, or with no phase active. Items are removed automatically once spec-flow:specify turns them into a spec."
 ---
 
 # Spec-Flow: Backlog
@@ -18,10 +18,10 @@ None — the backlog has no gate and gates nothing. It can be written to from an
 
 ## Process
 
-1. **Read `specs/backlog.md`** if it exists — create it fresh from `assets/backlog-template.md` if it doesn't
+1. **Read `.specs/backlog.md`** if it exists — create it fresh from `assets/backlog-template.md` if it doesn't
 2. **Determine the next backlog ID** — `B` + zero-padded 3-digit number, one greater than the highest existing `BNNN` in the file (or `B001` if empty)
 3. **Append one line**: `- [ ] BNNN <one-line description> (noted <today's date>, from <phase or context>)`
-4. **Write `specs/backlog.md`**
+4. **Write `.specs/backlog.md`**
 
 ## Format Rules
 
@@ -31,7 +31,7 @@ None — the backlog has no gate and gates nothing. It can be written to from an
 
 ## Consumption
 
-`spec-flow:specify` checks `specs/backlog.md` at the start of a new feature. If the feature being specified corresponds to an existing backlog line, that line is deleted once `spec.md` is written — the backlog item has been "processed."
+`spec-flow:specify` checks `.specs/backlog.md` at the start of a new feature. If the feature being specified corresponds to an existing backlog line, that line is deleted once `spec.md` is written — the backlog item has been "processed."
 
 ## After Writing
 

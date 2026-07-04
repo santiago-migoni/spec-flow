@@ -9,13 +9,13 @@ Guide the integration of a completed feature branch — tests, changelog, then a
 
 <HARD-GATE>
 Before proceeding:
-1. `specs/NNN-feature-name/tasks.md` must exist — run `scripts/check-complete.sh specs/NNN-feature-name/tasks.md` to confirm all tasks are `[x]`
+1. `.specs/NNN-feature-name/tasks.md` must exist — run `scripts/check-complete.sh .specs/NNN-feature-name/tasks.md` to confirm all tasks are `[x]`
 2. Converge must have run — either the spec's `Status` is `Converged`, or the user explicitly confirms they want to finish without converging
 </HARD-GATE>
 
 ## Step 1: Converge Check
 
-Read `specs/NNN-feature-name/spec.md`. If `Status` is not `Converged`, surface this:
+Read `.specs/NNN-feature-name/spec.md`. If `Status` is not `Converged`, surface this:
 
 ```
 Converge has not been run for this feature.
@@ -48,7 +48,7 @@ Do not proceed to Step 3.
 
 ## Step 3: Update CHANGELOG.md
 
-Read `specs/NNN-feature-name/spec.md` to extract:
+Read `.specs/NNN-feature-name/spec.md` to extract:
 - Feature name and summary
 - User stories delivered (and their priorities)
 
@@ -71,7 +71,7 @@ Write the updated `CHANGELOG.md`. Do not modify any other section.
 Before presenting integration options, provide the commands to commit all spec artifacts and the changelog:
 
 ```bash
-git add specs/NNN-feature-name/ CHANGELOG.md
+git add .specs/NNN-feature-name/ CHANGELOG.md
 git commit -m "spec: complete NNN-feature-name"
 ```
 
@@ -120,7 +120,7 @@ Report: "Merged and branch deleted. Feature complete."
 Provide the commands:
 ```bash
 git push -u origin <feature-branch>
-gh pr create --title "<feature name>" --body "Closes spec: specs/NNN-feature-name/"
+gh pr create --title "<feature name>" --body "Closes spec: .specs/NNN-feature-name/"
 ```
 
 Do not delete the branch — the user needs it alive for PR feedback.

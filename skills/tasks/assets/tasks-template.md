@@ -2,8 +2,8 @@
 
 **ID**: NNN-feature-name
 **Created**: YYYY-MM-DD
-**Spec**: specs/NNN-feature-name/spec.md
-**Plan**: specs/NNN-feature-name/plan.md
+**Spec**: .specs/NNN-feature-name/spec.md
+**Plan**: .specs/NNN-feature-name/plan.md
 
 ## Phase 1: Setup
 

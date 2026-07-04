@@ -9,8 +9,8 @@ Decompose the implementation plan into atomic, ordered, checkable tasks. This is
 
 <HARD-GATE>
 Before proceeding:
-1. `specs/NNN-feature-name/spec.md` must exist
-2. `specs/NNN-feature-name/plan.md` must exist — if not, stop and invoke `spec-flow:plan`
+1. `.specs/NNN-feature-name/spec.md` must exist
+2. `.specs/NNN-feature-name/plan.md` must exist — if not, stop and invoke `spec-flow:plan`
 </HARD-GATE>
 
 ## When to Run This Phase
@@ -25,7 +25,7 @@ Before proceeding:
 3. **Order tasks by dependency** — tasks that others depend on come first
 4. **Mark parallel tasks** — use `[P]` for tasks that can run concurrently (they touch different files)
 5. **Include exact file paths** in every task description
-6. **Write `specs/NNN-feature-name/tasks.md`** using `assets/tasks-template.md` as the output format
+6. **Write `.specs/NNN-feature-name/tasks.md`** using `assets/tasks-template.md` as the output format
 7. **Summarize and confirm** — report an executive summary (150 words max, never the full document — task count per phase/user story is enough), then ask for approval or revisions
 8. **On revision request** — edit `tasks.md` directly, then repeat step 7 with a summary of what changed
 
@@ -57,4 +57,4 @@ A well-sized task takes 5–15 minutes. If a task description needs more than on
 
 ## After Writing
 
-Tell the user: "Tasks written to `specs/NNN-feature-name/tasks.md`. Run `spec-flow:implement` to begin execution."
+Tell the user: "Tasks written to `.specs/NNN-feature-name/tasks.md`. Run `spec-flow:analyze` first for a consistency check (recommended, not required), or `spec-flow:implement` directly to begin execution."

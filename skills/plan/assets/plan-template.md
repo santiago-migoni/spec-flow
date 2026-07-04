@@ -2,7 +2,7 @@
 
 **ID**: NNN-feature-name
 **Created**: YYYY-MM-DD
-**Spec**: specs/NNN-feature-name/spec.md
+**Spec**: .specs/NNN-feature-name/spec.md
 
 ## Approach
 

@@ -15,7 +15,7 @@ if [ ! -f "$TASKS_FILE" ]; then
   exit 2
 fi
 
-UNCHECKED=$(grep -c '^- \[ \]' "$TASKS_FILE" 2>/dev/null || echo 0)
+UNCHECKED=$(grep -c '^- \[ \]' "$TASKS_FILE" 2>/dev/null)
 
 if [ "$UNCHECKED" -eq 0 ]; then
   echo "All tasks complete."

@@ -17,14 +17,14 @@ Do NOT write code, scaffold files, or invoke any implementation action until the
 constitution → specify → plan → tasks → implement → converge → finishing-branch
 ```
 
-Each phase produces a file in `specs/`. Each phase requires the previous artifact to exist before it can run.
+Each phase produces a file in `.specs/`. Each phase requires the previous artifact to exist before it can run.
 
 | Phase | Skill | Input | Output | Gate |
 |---|---|---|---|---|
-| **constitution** | `spec-flow:constitution` | User description of project | `specs/constitution.md` | None — first phase |
-| **specify** | `spec-flow:specify` | Feature description | `specs/NNN-feature/spec.md` | `specs/constitution.md` must exist |
-| **plan** | `spec-flow:plan` | Feature spec | `specs/NNN-feature/plan.md` | `spec.md` must exist |
-| **tasks** | `spec-flow:tasks` | Spec + plan | `specs/NNN-feature/tasks.md` | `plan.md` must exist |
+| **constitution** | `spec-flow:constitution` | User description of project | `.specs/constitution.md` | None — first phase |
+| **specify** | `spec-flow:specify` | Feature description | `.specs/NNN-feature/spec.md` | `.specs/constitution.md` must exist |
+| **plan** | `spec-flow:plan` | Feature spec | `.specs/NNN-feature/plan.md` | `spec.md` must exist |
+| **tasks** | `spec-flow:tasks` | Spec + plan | `.specs/NNN-feature/tasks.md` | `plan.md` must exist |
 | **implement** | `spec-flow:implement` | Tasks + spec | Code changes | `tasks.md` must exist |
 | **converge** | `spec-flow:converge` | Code + spec/plan/tasks | Appends gaps to `tasks.md`, or marks spec as Converged | `tasks.md` must have been through at least one implement pass |
 | **finishing-branch** | `spec-flow:finishing-branch` | Converged feature + passing tests | CHANGELOG updated, branch merged or pushed as PR | Spec status must be `Converged` |
@@ -32,7 +32,7 @@ Each phase produces a file in `specs/`. Each phase requires the previous artifac
 ## Artifact Layout
 
 ```
-specs/
+.specs/
 ├── constitution.md              ← project-wide principles (created once)
 ├── backlog.md                   ← deferred ideas, side-channel (see below)
 ├── 001-feature-name/
@@ -47,7 +47,16 @@ specs/
 
 ## Backlog (Side-Channel)
 
-`spec-flow:backlog` is not one of the seven phases — it has no gate and gates nothing. Invoke it deliberately, from any phase or none, to park an idea in `specs/backlog.md` without derailing current work. `spec-flow:specify` checks it when starting a new feature and removes the matching line once that idea becomes a spec.
+`spec-flow:backlog` is not one of the seven phases — it has no gate and gates nothing. Invoke it deliberately, from any phase or none, to park an idea in `.specs/backlog.md` without derailing current work. `spec-flow:specify` checks it when starting a new feature and removes the matching line once that idea becomes a spec.
+
+## Quality Skills (Side-Channel)
+
+Two optional skills, neither part of the seven-phase gate chain — recommended, never required:
+
+| Skill | Run When | What It Does |
+|---|---|---|
+| `spec-flow:clarify` | Right after `specify`, before `plan` | Asks up to 5 targeted questions to resolve ambiguity in `spec.md`, writing answers directly into a `## Clarifications` section |
+| `spec-flow:analyze` | After `tasks`, before `implement` | Read-only cross-check of `spec.md`, `plan.md`, and `tasks.md` for duplication, ambiguity, coverage gaps, and constitution conflicts — never writes a file |
 
 ## Ecosystem
 
@@ -57,7 +66,7 @@ Spec-Flow is fully independent. It composes naturally with other plugins if they
 
 ## How to Use This Session
 
-1. If no `specs/constitution.md` exists → invoke `spec-flow:constitution` first
+1. If no `.specs/constitution.md` exists → invoke `spec-flow:constitution` first
 2. To start a new feature → invoke `spec-flow:specify` with a description
 3. To continue a feature in progress → invoke the next phase skill for that feature
 4. If the user asks to "just code something" without going through the flow → remind them Spec-Flow is active and ask which phase to start from, or if they want to skip the flow for this task
