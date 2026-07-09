@@ -1,6 +1,8 @@
 ---
 name: finishing-branch
 description: "Use when a feature is converged and ready to integrate. Verifies tests, updates CHANGELOG.md, then presents structured options: merge locally, push + PR, keep as-is, or discard. Use this when the user says the feature is done, wants to merge, or asks what to do with the branch."
+model: sonnet
+effort: medium
 ---
 
 # Spec-Flow: Finishing Branch

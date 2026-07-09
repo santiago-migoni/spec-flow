@@ -1,6 +1,8 @@
 ---
 name: implement
 description: "Execute tasks from tasks.md one by one, marking each complete, then verify all acceptance scenarios from spec.md pass. Use this when tasks.md exists and it's time to write code."
+model: sonnet
+effort: medium
 ---
 
 # Spec-Flow: Implement

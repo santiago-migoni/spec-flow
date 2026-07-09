@@ -1,6 +1,8 @@
 ---
 name: specify
 description: "Turn a feature idea into a structured spec with user stories, acceptance scenarios, and explicit unknowns. Creates .specs/NNN-feature-name/spec.md. Use this whenever the user describes a feature they want to build, a change to make, or a bug to fix that will take more than 30 minutes."
+model: opus
+effort: high
 ---
 
 # Spec-Flow: Specify

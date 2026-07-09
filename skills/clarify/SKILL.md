@@ -1,6 +1,8 @@
 ---
 name: clarify
 description: "Ask up to 5 targeted questions to resolve ambiguity in the current feature's spec.md, writing answers directly into a Clarifications section. Recommended before spec-flow:plan, never required. Use this right after specify when the spec has vague or underspecified areas."
+model: opus
+effort: medium
 ---
 
 # Spec-Flow: Clarify

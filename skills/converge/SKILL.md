@@ -1,6 +1,8 @@
 ---
 name: converge
 description: "Assess the current codebase against the feature's spec, plan, and tasks. Classify gaps, then append any remaining work as new tasks to tasks.md so implement can complete it. Use this after implement has run at least once to close the loop between artifacts and code."
+model: opus
+effort: high
 ---
 
 # Spec-Flow: Converge

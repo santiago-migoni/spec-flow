@@ -1,6 +1,8 @@
 ---
 name: constitution
 description: "Create or update the project constitution — the single source of truth for principles, tech stack, and standards that all subsequent phases must respect. Use this whenever starting a new project with spec-flow, or when the tech stack or core principles change."
+model: opus
+effort: high
 ---
 
 # Spec-Flow: Constitution

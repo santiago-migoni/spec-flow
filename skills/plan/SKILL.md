@@ -1,6 +1,8 @@
 ---
 name: plan
 description: "Translate a feature spec into a concrete implementation plan: architecture, tech choices, project structure, and data contracts — all cross-checked against the project constitution. Use this after spec.md is approved and before breaking work into tasks."
+model: opus
+effort: high
 ---
 
 # Spec-Flow: Plan

@@ -1,6 +1,8 @@
 ---
 name: tasks
 description: "Break a plan into an ordered, checkable task list with exact file paths — the direct input for the implement phase. Use this after plan.md is approved and before writing any code."
+model: sonnet
+effort: high
 ---
 
 # Spec-Flow: Tasks
