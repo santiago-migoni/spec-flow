@@ -1,5 +1,11 @@
 # Changelog
 
+## Release v0.6.0
+
+### Added
+- `spec-flow:finishing-branch` derives the CHANGELOG heading (`Added`/`Fixed`/`Changed`) and a recommended SemVer bump (`MAJOR`/`MINOR`/`PATCH`/none) from the branch's Conventional Commits history — `feat` → MINOR, `fix`/`refactor` → PATCH, `!`/`BREAKING CHANGE:` → MAJOR. Its own housekeeping commit now follows the Conventional Commits format (`docs(NNN-feature-name): ...`).
+- `spec-flow:using-spec-flow` gains a Markdown Style section — markdownlint-derived rules (heading increments, blank-line spacing around headings/lists/fences, fenced-code language, no bare URLs, single trailing newline) that every phase follows when writing `.specs/` artifacts.
+
 ## Release v0.5.0
 
 ### Added
