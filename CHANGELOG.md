@@ -1,5 +1,18 @@
 # Changelog
 
+## Release v0.5.0
+
+### Added
+- `CLAUDE.md` — architecture guide for AI assistants working in this repo, including a per-phase model/effort rationale table.
+
+### Changed
+- `model`/`effort` tuned per phase across all nine skills, calibrated for subscription-tier usage budgets: Opus/high on judgment-heavy phases (`constitution`, `specify`, `plan`, `converge`), Opus/medium on short optional ones (`clarify`, `analyze`), Sonnet/high or medium on mechanical execution phases (`tasks`, `implement`, `finishing-branch`).
+- Document control table in `constitution`, `spec`, `plan`, and `tasks` templates moved from a markdown table to YAML frontmatter — simpler for skills to edit mechanically, consistent with the frontmatter `SKILL.md` files already use.
+- `spec-flow:backlog` gains priority sections (P0–P3); items are now filed under a priority instead of purely chronological order.
+
+### Fixed
+- `spec-flow:specify` now blocks writing `spec.md` while checked out on the repo's default branch, creating a feature branch first — previously nothing prevented drafting a spec directly on `main`.
+
 ## Release v0.4.0
 
 ### Added
