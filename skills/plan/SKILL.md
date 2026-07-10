@@ -25,7 +25,7 @@ Before proceeding:
 
 1. **Read `.specs/constitution.md`** and `.specs/NNN-feature-name/spec.md`
 2. **Explore the current codebase** — understand existing patterns, file structure, dependencies already in use
-3. **Draft the plan** — use `assets/plan-template.md` as the output format. Table `Code` is `PLAN-NNN` (same `NNN` as the feature directory), `Version` is `R00`.
+3. **Draft the plan** — use `assets/plan-template.md` as the output format. Frontmatter `code` is `PLAN-NNN` (same `NNN` as the feature directory), `version` is `R00`.
 4. **Constitution check** — for every tech choice in the plan, verify it aligns with `.specs/constitution.md`. Flag any conflict explicitly.
 5. **Write `.specs/NNN-feature-name/plan.md`**
 6. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions

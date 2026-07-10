@@ -19,15 +19,17 @@ None — the backlog has no gate and gates nothing. It can be written to from an
 ## Process
 
 1. **Read `.specs/backlog.md`** if it exists — create it fresh from `assets/backlog-template.md` if it doesn't
-2. **Determine the next backlog ID** — `B` + zero-padded 3-digit number, one greater than the highest existing `BNNN` in the file (or `B001` if empty)
-3. **Append one line**: `- [ ] BNNN <one-line description> (noted <today's date>, from <phase or context>)`
-4. **Write `.specs/backlog.md`**
+2. **Determine the next backlog ID** — `B` + zero-padded 3-digit number, one greater than the highest existing `BNNN` across all priority sections (or `B001` if empty)
+3. **Ask the priority** — P0 (critical), P1 (high), P2 (medium), or P3 (low). Default to P2 if the user doesn't say
+4. **Append one line** to the end of the matching `## PN` section: `- [ ] BNNN <one-line description> (noted <today's date>, from <phase or context>)`
+5. **Write `.specs/backlog.md`**
 
 ## Format Rules
 
 - One line per item — if it needs more than one sentence, it's not backlog material, it's a feature; run `spec-flow:specify` instead
-- Never reorder, edit, or delete existing lines, except when `spec-flow:specify` consumes one (see Consumption below)
-- No priority field, no status beyond the checkbox — ordering in the file is chronological, not priority
+- The file is ordered by priority section (P0 top, P3 bottom); within a section, order is chronological
+- P0 is reserved for critical items — something broken or blocking, not just important
+- Never reorder, edit, or delete existing lines, except: `spec-flow:specify` consuming one (see Consumption below), or moving a line to a different `## PN` section on explicit reprioritization request
 
 ## Consumption
 
@@ -35,4 +37,4 @@ None — the backlog has no gate and gates nothing. It can be written to from an
 
 ## After Writing
 
-Tell the user: "Added to backlog: BNNN — <description>." Do not show the full file.
+Tell the user: "Added to backlog: BNNN (PN) — <description>." Do not show the full file.

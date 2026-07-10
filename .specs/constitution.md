@@ -1,8 +1,10 @@
-# Constitución del Proyecto
+---
+name: spec-flow
+version: R01
+date: 2026-07-09
+---
 
-| Nombre | Versión | Fecha |
-|---|---|---|
-| spec-flow | R00 | 2026-07-04 |
+# Constitución del Proyecto
 
 ## Propósito
 
@@ -46,3 +48,4 @@ Un plugin de Claude Code para Desarrollo Guiado por Especificaciones (SDD). Obli
 ## Registro de Enmiendas
 
 <!-- Append-only. Una línea por revisión posterior a la primera aprobación. Formato: - RNN (YYYY-MM-DD): <qué cambió y por qué> -->
+- R01 (2026-07-09): La tabla de control documental (Nombre/Código/Versión/Fecha) de constitution/spec/plan/tasks pasa de tabla markdown a frontmatter YAML — más simple de editar mecánicamente por los skills, consistente con el frontmatter que ya usan los propios SKILL.md.

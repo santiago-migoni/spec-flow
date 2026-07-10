@@ -1,8 +1,11 @@
-# Plan: [Feature Name]
+---
+name: [short-description]
+code: PLAN-NNN
+version: R00
+date: [YYYY-MM-DD]
+---
 
-| Name | Code | Version | Date |
-|---|---|---|---|
-| [short-description] | PLAN-NNN | R00 | [YYYY-MM-DD] |
+# Plan: [Feature Name]
 
 ## Approach
 

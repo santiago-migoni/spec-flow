@@ -27,7 +27,7 @@ Before proceeding:
 3. **Order tasks by dependency** — tasks that others depend on come first
 4. **Mark parallel tasks** — use `[P]` for tasks that can run concurrently (they touch different files)
 5. **Include exact file paths** in every task description
-6. **Write `.specs/NNN-feature-name/tasks.md`** using `assets/tasks-template.md` as the output format. Table `Code` is `TASKS-NNN` (same `NNN` as the feature directory), `Version` is `R00`.
+6. **Write `.specs/NNN-feature-name/tasks.md`** using `assets/tasks-template.md` as the output format. Frontmatter `code` is `TASKS-NNN` (same `NNN` as the feature directory), `version` is `R00`.
 7. **Summarize and confirm** — report an executive summary (150 words max, never the full document — task count per phase/user story is enough), then ask for approval or revisions
 8. **On revision request, before approval** — edit `tasks.md` directly, then repeat step 7. This loop never changes `Version` — it stays `R00` no matter how many times it repeats, because the document hasn't been approved yet. Only an edit requested **after** the user already approved this task list increments `Version` by one.
 

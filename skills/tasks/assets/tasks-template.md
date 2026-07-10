@@ -1,8 +1,11 @@
-# Tasks: [Feature Name]
+---
+name: [short-description]
+code: TASKS-NNN
+version: R00
+date: [YYYY-MM-DD]
+---
 
-| Name | Code | Version | Date |
-|---|---|---|---|
-| [short-description] | TASKS-NNN | R00 | [YYYY-MM-DD] |
+# Tasks: [Feature Name]
 
 ## Phase 1: Setup
 

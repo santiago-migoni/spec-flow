@@ -11,6 +11,8 @@ Transform a feature idea into a concrete, testable specification before any plan
 
 <HARD-GATE>
 Check that `.specs/constitution.md` exists before proceeding. If it does not exist, stop and invoke `spec-flow:constitution` first.
+
+Never write `spec.md` while checked out on the repo's default branch (the remote's HEAD, typically `main` or `master`). Create and check out a feature branch first — see step 6 below.
 </HARD-GATE>
 
 ## When to Run This Phase
@@ -24,17 +26,18 @@ Check that `.specs/constitution.md` exists before proceeding. If it does not exi
 2. **Determine the feature number** — run `scripts/next-feature-number.sh` from the project root to get the next zero-padded NNN
 3. **Check `.specs/backlog.md`** — if it exists, scan for an item related to this feature and use it as context (skip silently if the file doesn't exist yet)
 4. **Ask clarifying questions** — one at a time. Focus on: purpose, who benefits, success criteria, edge cases, explicit non-goals. Mark anything unclear as `[NEEDS CLARIFICATION: <specific question>]` in the draft rather than guessing.
-5. **Draft `spec.md`** — use `assets/spec-template.md` as the output format. Table `Code` is `SPEC-NNN` (same `NNN` as the feature directory), `Version` is `R00`.
-6. **Create `.specs/NNN-feature-name/` directory and write `spec.md`**
-7. **Remove the backlog item** — if this spec was drafted from a `.specs/backlog.md` entry, delete that line now
-8. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
-9. **On revision request, before approval** — edit `spec.md` directly, then repeat step 8. This loop never changes `Version` — it stays `R00` no matter how many times it repeats, because the document hasn't been approved yet. Only an edit requested **after** the user already approved this spec increments `Version` by one.
+5. **Draft `spec.md`** — use `assets/spec-template.md` as the output format. Frontmatter `code` is `SPEC-NNN` (same `NNN` as the feature directory), `version` is `R00`.
+6. **Ensure a feature branch is active** — get the repo's default branch (`git symbolic-ref refs/remotes/origin/HEAD` stripped of `refs/remotes/origin/`, falling back to `main`/`master` if no remote is configured) and the current branch (`git branch --show-current`). If they match, create and check out a new branch named exactly like the feature directory: `git checkout -b NNN-short-description`. Never proceed to the next step while still on the default branch.
+7. **Create `.specs/NNN-feature-name/` directory and write `spec.md`**
+8. **Remove the backlog item** — if this spec was drafted from a `.specs/backlog.md` entry, delete that line now
+9. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
+10. **On revision request, before approval** — edit `spec.md` directly, then repeat step 9. This loop never changes `Version` — it stays `R00` no matter how many times it repeats, because the document hasn't been approved yet. Only an edit requested **after** the user already approved this spec increments `Version` by one.
 
 ## Naming Convention
 
 Feature directory name: `NNN-short-description` (e.g., `003-user-authentication`)
 - `NNN`: zero-padded 3-digit number from `scripts/next-feature-number.sh`
-- `short-description`: kebab-case, 2-4 words, describes the feature not the implementation — this is also the table's `Name` value
+- `short-description`: kebab-case, 2-4 words, describes the feature not the implementation — this is also the frontmatter's `name` value
 
 ## Quality Check Before Writing
 

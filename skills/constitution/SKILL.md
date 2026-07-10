@@ -25,7 +25,7 @@ This is the first phase — no gate. But do NOT proceed to `spec-flow:specify` u
 2. **Explore the project** — read `README.md`, `CLAUDE.md`, `package.json` / `Cargo.toml` / `pyproject.toml`, and any other root config files to infer the current stack and conventions
 3. **Ask targeted questions** — only about things that can't be inferred from the codebase; one question at a time
 4. **Draft the constitution** — use `assets/constitution-template.md` as the output format
-5. **Write `.specs/constitution.md`** — create the `.specs/` directory if needed. Table `Version` is `R00` for a brand-new constitution.
+5. **Write `.specs/constitution.md`** — create the `.specs/` directory if needed. Frontmatter `version` is `R00` for a brand-new constitution.
 6. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
 7. **On revision request, before approval** — edit `.specs/constitution.md` directly, then repeat step 6. This loop never changes `Version` — it stays `R00` (or whatever it already was) no matter how many times it repeats, because the document hasn't been approved yet.
 

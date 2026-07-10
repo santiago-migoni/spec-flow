@@ -1,8 +1,10 @@
-# Project Constitution
+---
+name: [name]
+version: R00
+date: [YYYY-MM-DD]
+---
 
-| Name | Version | Date |
-|---|---|---|
-| [name] | R00 | [YYYY-MM-DD] |
+# Project Constitution
 
 ## Purpose
 

@@ -1,10 +1,12 @@
+---
+name: [short-description]
+code: SPEC-NNN
+version: R00
+date: [YYYY-MM-DD]
+status: Draft
+---
+
 # Spec: [Feature Name]
-
-| Name | Code | Version | Date |
-|---|---|---|---|
-| [short-description] | SPEC-NNN | R00 | [YYYY-MM-DD] |
-
-**Status**: Draft
 
 ## Summary
 
