@@ -58,6 +58,18 @@ Two optional skills, neither part of the seven-phase gate chain — recommended,
 | `spec-flow:clarify` | Right after `specify`, before `plan` | Asks up to 5 targeted questions to resolve ambiguity in `spec.md`, writing answers directly into a `## Clarifications` section |
 | `spec-flow:analyze` | After `tasks`, before `implement` | Read-only cross-check of `spec.md`, `plan.md`, and `tasks.md` for duplication, ambiguity, coverage gaps, and constitution conflicts — never writes a file |
 
+## Markdown Style
+
+Every artifact written into `.specs/` is Markdown. Follow these rules (drawn from [markdownlint](https://github.com/DavidAnson/markdownlint)'s defaults) regardless of which phase is writing:
+
+- One `#` H1 per document, headings increment by one level at a time (no `##` straight to `####`)
+- Blank line before and after every heading, list, and fenced code block
+- No more than one consecutive blank line
+- Fenced code blocks declare a language (` ```bash `, ` ```markdown `, not bare ` ``` `)
+- No bare URLs — always `[text](url)`
+- File ends with exactly one trailing newline
+- No line-length limit — prose in specs/plans can run long; don't wrap artificially
+
 ## Ecosystem
 
 Spec-Flow is fully independent. It composes naturally with other plugins if they are installed:

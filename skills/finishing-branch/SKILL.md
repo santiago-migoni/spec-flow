@@ -54,6 +54,25 @@ Read `.specs/NNN-feature-name/spec.md` to extract:
 - Feature name and summary
 - User stories delivered (and their priorities)
 
+Check the branch's commit history for its [Conventional Commits](https://www.conventionalcommits.org/) types:
+
+```bash
+git log <base-branch>..HEAD --oneline
+```
+
+Use the heading driven by the commit types found (fall back to judgment from the spec summary if commits aren't typed):
+- `Added` — branch contains `feat` commits
+- `Fixed` — branch contains `fix` commits (and no `feat`)
+- `Changed` — everything else (`refactor`, `perf`, `style`, etc.)
+
+If any commit has a `!` after its type/scope or a `BREAKING CHANGE:` footer, call that out explicitly in the entry.
+
+The same scan gives the [SemVer](https://semver.org/) bump this branch calls for — carry it to Step 5, don't act on it here:
+- **MAJOR** — any `!` or `BREAKING CHANGE:` footer
+- **MINOR** — no breaking change, but at least one `feat`
+- **PATCH** — no breaking change or `feat`, but at least one `fix` or `refactor`
+- **none** — only `chore`/`docs`/`style`/etc., no user-facing change
+
 Read the root `CHANGELOG.md` and add an entry under `## [Unreleased]` (create the section if it does not exist):
 
 ```markdown
@@ -61,20 +80,15 @@ Read the root `CHANGELOG.md` and add an entry under `## [Unreleased]` (create th
 - [Feature name] — [one-line summary of what was delivered, derived from spec summary]
 ```
 
-Use the appropriate heading:
-- `Added` for new functionality
-- `Changed` for modifications to existing behavior
-- `Fixed` for bug fixes
-
 Write the updated `CHANGELOG.md`. Do not modify any other section.
 
 ## Step 4: Stage and Commit Spec Artifacts
 
-Before presenting integration options, provide the commands to commit all spec artifacts and the changelog:
+Before presenting integration options, provide the commands to commit all spec artifacts and the changelog. Use a [Conventional Commits](https://www.conventionalcommits.org/) message — this commit only touches documentation, so type `docs`, scoped to the feature:
 
 ```bash
 git add .specs/NNN-feature-name/ CHANGELOG.md
-git commit -m "spec: complete NNN-feature-name"
+git commit -m "docs(NNN-feature-name): update changelog and spec artifacts"
 ```
 
 This keeps the spec artifacts and changelog separate from the implementation commits.
@@ -83,6 +97,7 @@ This keeps the spec artifacts and changelog separate from the implementation com
 
 ```
 Feature NNN-feature-name is complete. Tests pass. CHANGELOG updated.
+Recommended version bump: <MAJOR|MINOR|PATCH|none> — <reason, e.g. "feat commits present">
 
 1. Merge into <base-branch> locally
 2. Push and create a Pull Request
@@ -91,6 +106,8 @@ Feature NNN-feature-name is complete. Tests pass. CHANGELOG updated.
 
 Which option?
 ```
+
+Don't edit any version file (`package.json`, `Cargo.toml`, `.claude-plugin/plugin.json`, etc.) — its location and format vary per project. The bump is a recommendation for whoever cuts the release.
 
 Detect base branch:
 ```bash
