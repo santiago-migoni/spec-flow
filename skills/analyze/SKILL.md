@@ -2,7 +2,7 @@
 name: analyze
 description: "Read-only cross-check of spec.md, plan.md, and tasks.md for duplication, ambiguity, coverage gaps, and constitution conflicts. Run after spec-flow:tasks, before spec-flow:implement. Recommended, never required, and never writes any file."
 model: opus
-effort: medium
+effort: high
 ---
 
 # Spec-Flow: Analyze
