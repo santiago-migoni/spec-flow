@@ -1,8 +1,11 @@
 #!/bin/bash
-# ponytail: fail-open by design — this hook reinforces the prose <HARD-GATE>, it is not the sole line of defense.
+# ponytail: fail-open ONLY for an existing artifact with no Status column (grandfathered,
+# pre-this-feature format). No resolvable branch/artifact at all denies instead — see
+# .specs/003-phase-approval-gate/spec.md's Clarifications for why the two cases differ.
 set -eu
 
-allow() { echo '{"hookSpecificOutput": {"permissionDecision": "allow"}}'; exit 0; }
+allow() { echo '{"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "allow"}}'; exit 0; }
+deny() { printf '{"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny"}, "systemMessage": "%s"}\n' "$1"; exit 0; }
 
 input=$(cat)
 
@@ -16,8 +19,8 @@ case "$skill" in
     artifact=".specs/constitution.md"
     ;;
   spec-flow:plan|spec-flow:tasks|spec-flow:implement)
-    branch=$(git branch --show-current 2>/dev/null) || allow
-    [ -n "$branch" ] || allow
+    branch=$(git branch --show-current 2>/dev/null) || deny "Can't determine the current feature (no git branch) — make sure you're on a feature branch before running ${skill}."
+    [ -n "$branch" ] || deny "Can't determine the current feature (no git branch) — make sure you're on a feature branch before running ${skill}."
     case "$skill" in
       spec-flow:plan) artifact=".specs/${branch}/spec.md" ;;
       spec-flow:tasks) artifact=".specs/${branch}/plan.md" ;;
@@ -29,7 +32,7 @@ case "$skill" in
     ;;
 esac
 
-[ -f "$artifact" ] || allow
+[ -f "$artifact" ] || deny "${artifact} doesn't exist — make sure you're on the correct feature branch and that the prior phase has completed."
 
 status=$(awk -F'|' '
   /^\|/ { n++ }
@@ -42,7 +45,7 @@ status=$(awk -F'|' '
 ' "$artifact")
 
 if [ "$status" = "Draft" ]; then
-  printf '{"hookSpecificOutput": {"permissionDecision": "deny"}, "systemMessage": "%s has Status: Draft \xe2\x80\x94 ask the user to approve it before running %s."}\n' "$artifact" "$skill"
+  deny "${artifact} has Status: Draft — ask the user to approve it before running ${skill}."
 else
   allow
 fi
