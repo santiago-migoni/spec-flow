@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## Release v0.8.1
 
 ### Fixed
 - `hooks/check-phase-approval.sh` (`.specs/003-phase-approval-gate/`) was silently a no-op — its JSON output was missing the `hookEventName` field Claude Code requires inside `hookSpecificOutput`, so every call was allowed regardless of the computed decision. Found via real `claude --debug` testing (not caught by standalone script smoke tests, which don't go through Claude Code's schema validation). Fixed by adding `"hookEventName": "PreToolUse"` to both JSON emissions.
