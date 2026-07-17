@@ -29,6 +29,16 @@ This is the first phase — no gate. But do NOT proceed to `spec-flow:specify` u
 6. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
 7. **On revision request, before approval** — edit `.specs/constitution.md` directly, then repeat step 6. This loop never changes `Version` — it stays `R00` (or whatever it already was) no matter how many times it repeats, because the document hasn't been approved yet.
 
+## Principle Keywords
+
+`Code Principles`, `Security`, `Operational Principles`, `Observability`, `Performance`, and `Dependency Policy` tag every bullet with an RFC 2119 keyword — `MUST`, `SHOULD`, or `MAY`. This is what makes a principle checkable downstream:
+
+- `MUST` — non-negotiable. `plan` must flag any conflict; `analyze` and `converge` always classify a violation as `CRITICAL`.
+- `SHOULD` — strong default. A feature may deviate, but `plan.md` must state the reason.
+- `MAY` — optional, left to the implementer's judgment.
+
+If a section genuinely doesn't apply to this project (e.g., no `Security`-relevant surface), write a single bullet: `N/A — <why>`, rather than inventing content to fill the section.
+
 ## Versioning
 
 `Version` only increments when the user asks for a change to a constitution that was **already approved** in a previous session (i.e., this run started at step 1 with an existing, previously-approved file — not a same-session draft/revise loop). On that kind of edit:

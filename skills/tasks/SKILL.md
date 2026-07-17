@@ -39,9 +39,11 @@ Each task line follows this pattern:
 - [ ] T001 [US1] Description with exact/file/path.ts
 - [ ] T002 [P][US1] Another task touching different/file.ts (parallel with T001)
 - [ ] T003 [US2] Depends on T001 — description with path
+- [ ] T004 [TEST][US1] Test covering T001-T002's behavior
 ```
 
 - `[P]` = can run in parallel with other `[P]` tasks in the same group
+- `[TEST]` = writes or updates a test for a sibling task in the same phase; combine with `[P]` (`[P][TEST][US1]`) if the test itself can run in parallel
 - `[US1]`, `[US2]` etc. = which user story this task delivers
 - Every task that creates or modifies a file must include the full path
 
@@ -55,7 +57,8 @@ A well-sized task takes 5–15 minutes. If a task description needs more than on
 - [ ] Every task that touches a file includes the full path
 - [ ] Tasks are ordered so no task depends on a later task
 - [ ] Every user story in `spec.md` is covered by at least one task
-- [ ] The VERIFY tasks at the end map to acceptance scenarios in `spec.md`
+- [ ] Every user story phase includes at least one `[TEST]` task, unless `.specs/constitution.md`'s `Testing` field is "N/A"
+- [ ] The VERIFY tasks at the end map to acceptance scenarios and Non-Functional Requirements in `spec.md`, and to relevant constitution `MUST` principles
 
 ## After Writing
 

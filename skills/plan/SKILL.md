@@ -26,17 +26,21 @@ Before proceeding:
 1. **Read `.specs/constitution.md`** and `.specs/NNN-feature-name/spec.md`
 2. **Explore the current codebase** — understand existing patterns, file structure, dependencies already in use
 3. **Draft the plan** — use `assets/plan-template.md` as the output format. Frontmatter `code` is `PLAN-NNN` (same `NNN` as the feature directory), `version` is `R00`.
-4. **Constitution check** — for every tech choice in the plan, verify it aligns with `.specs/constitution.md`. Flag any conflict explicitly.
-5. **Write `.specs/NNN-feature-name/plan.md`**
-6. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
-7. **On revision request, before approval** — edit `plan.md` directly, then repeat step 6. This loop never changes `Version` — it stays `R00` no matter how many times it repeats, because the document hasn't been approved yet. Only an edit requested **after** the user already approved this plan increments `Version` by one.
+4. **Constitution check** — for every principle section in `.specs/constitution.md` (`Code Principles`, `Security`, `Operational Principles`, `Observability`, `Performance`, `Dependency Policy`), verify this plan doesn't violate a `MUST` and states a reason for any `SHOULD` deviation. Flag any conflict explicitly — a `MUST` violation blocks moving to `tasks` until resolved.
+5. **NFR check** — for every entry in `spec.md`'s `Non-Functional Requirements`, confirm the architecture satisfies it or flag it as unaddressed.
+6. **Write `.specs/NNN-feature-name/plan.md`**
+7. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
+8. **On revision request, before approval** — edit `plan.md` directly, then repeat step 7. This loop never changes `Version` — it stays `R00` no matter how many times it repeats, because the document hasn't been approved yet. Only an edit requested **after** the user already approved this plan increments `Version` by one.
 
 ## Quality Check Before Writing
 
 - [ ] Every file path in the structure refers to a real location in the repo (or explicitly "new file")
 - [ ] No dependency listed contradicts the constitution's constraints
+- [ ] `Constitution Check` covers every principle section that applies — no unaddressed `MUST`, no unexplained `SHOULD` deviation
+- [ ] `NFR Compliance` addresses every Non-Functional Requirement in `spec.md`, or the section is "N/A"
 - [ ] The plan addresses every user story in `spec.md`
 - [ ] No implementation detail that Ponytail would flag as over-engineering (prefer the native/simple path)
+- [ ] A Mermaid diagram is present only if the architecture has more than one component/interaction to show
 
 ## After Writing
 

@@ -25,7 +25,7 @@ Never write `spec.md` while checked out on the repo's default branch (the remote
 1. **Read `.specs/constitution.md`** — understand project principles and constraints before asking anything
 2. **Determine the feature number** — run `scripts/next-feature-number.sh` from the project root to get the next zero-padded NNN
 3. **Check `.specs/backlog.md`** — if it exists, scan for an item related to this feature and use it as context (skip silently if the file doesn't exist yet)
-4. **Ask clarifying questions** — one at a time. Focus on: purpose, who benefits, success criteria, edge cases, explicit non-goals. Mark anything unclear as `[NEEDS CLARIFICATION: <specific question>]` in the draft rather than guessing.
+4. **Ask clarifying questions** — one at a time. Focus on: purpose, who benefits, measurable success criteria, feature-specific non-functional requirements beyond the constitution's baseline, edge cases, assumptions/dependencies on other systems or specs, and explicit non-goals. Mark anything unclear as `[NEEDS CLARIFICATION: <specific question>]` in the draft rather than guessing.
 5. **Draft `spec.md`** — use `assets/spec-template.md` as the output format. Frontmatter `code` is `SPEC-NNN` (same `NNN` as the feature directory), `version` is `R00`.
 6. **Ensure a feature branch is active** — get the repo's default branch (`git symbolic-ref refs/remotes/origin/HEAD` stripped of `refs/remotes/origin/`, falling back to `main`/`master` if no remote is configured) and the current branch (`git branch --show-current`). If they match, create and check out a new branch named exactly like the feature directory: `git checkout -b NNN-short-description`. Never proceed to the next step while still on the default branch.
 7. **Create `.specs/NNN-feature-name/` directory and write `spec.md`**
@@ -43,6 +43,8 @@ Feature directory name: `NNN-short-description` (e.g., `003-user-authentication`
 
 Before saving the file, verify:
 - [ ] Every user story has at least one testable acceptance scenario
+- [ ] Success Metrics and Non-Functional Requirements are measurable or falsifiable — no vague adjectives without a threshold
+- [ ] Non-Functional Requirements only list what's specific to this feature — anything already covered by `.specs/constitution.md`'s baseline stays out
 - [ ] No `[NEEDS CLARIFICATION]` markers remain unless they are intentional open questions for the user to answer
 - [ ] The spec does not describe implementation details (HOW) — only behavior (WHAT)
 - [ ] Nothing in the spec contradicts `.specs/constitution.md`

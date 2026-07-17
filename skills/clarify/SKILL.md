@@ -21,15 +21,15 @@ A `spec.md` must exist for the current feature — if not, stop and invoke `spec
 ## Process
 
 1. **Read `.specs/constitution.md` and the current feature's `spec.md`**
-2. **Scan for ambiguity** across five dimensions: functional scope & edge cases; data model / entities; non-functional quality (performance, security, reliability); integrations & external dependencies; terminology & completion signals. Mark each dimension Clear / Partial / Missing internally (don't print this map).
+2. **Scan for ambiguity** across five dimensions, each mapped to the `spec.md` section it would be written into: `User Stories` & `Edge Cases` (functional scope, missing scenarios, boundary conditions); `Success Metrics` (is the outcome measurable, or vague/missing); `Non-Functional Requirements` (performance, security, reliability thresholds); `Assumptions & Dependencies` (external systems or prior specs relied upon); `Explicit Non-Goals` & terminology (scope boundary clarity, consistent vocabulary). Mark each dimension Clear / Partial / Missing internally (don't print this map).
 3. **Build a prioritized queue** of up to 5 questions — only where the answer would materially change architecture, data model, or test design. Skip anything already answered, or better deferred to `plan`.
 4. **Ask one question at a time**:
    - Multiple-choice: show `**Recommended:** Option X — <1-sentence reasoning>`, then a table of options (max 5), then invite the user to reply with a letter, "yes", or their own answer.
    - Open-ended: show `**Suggested:** <answer> — <1-sentence reasoning>`, and invite "yes" or a short answer (≤5 words) of their own.
 5. **After each accepted answer** — write immediately, never batch:
-   - Create `## Clarifications` in `spec.md` if missing (place right after the summary section), with a `### Session YYYY-MM-DD` subheading for today
+   - Create `## Clarifications` in `spec.md` if missing, using `assets/clarifications-template.md` as the format (place right after the summary section), with a `### Session YYYY-MM-DD` subheading for today
    - Append `- Q: <question> → A: <answer>`
-   - Edit the directly affected section (User Stories, Edge Cases, or Non-Goals) to resolve the ambiguity — replace the vague text, don't just append a caveat next to it
+   - Edit the directly affected section (`User Stories`, `Edge Cases`, `Success Metrics`, `Non-Functional Requirements`, `Assumptions & Dependencies`, or `Explicit Non-Goals`) to resolve the ambiguity — replace the vague text, don't just append a caveat next to it
 6. **Stop** at 5 asked questions, or when the user signals "done"/"enough", or when no high-impact ambiguity remains
 7. **If no meaningful ambiguity is found** — report "No critical ambiguities detected." and suggest proceeding to `plan`, asking nothing
 

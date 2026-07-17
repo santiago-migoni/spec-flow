@@ -24,16 +24,16 @@ Analyze never modifies `spec.md`, `plan.md`, `tasks.md`, or any other file. It o
 
 ## Process
 
-1. **Read `spec.md`** (user stories, acceptance scenarios, edge cases, non-goals), **`plan.md`** (architecture, file structure, data model, dependencies), **`tasks.md`** (task IDs, descriptions, `[P]` markers, file paths), and **`.specs/constitution.md`** (MUST principles)
-2. **Build an internal inventory** (don't print it): one entry per acceptance scenario, one entry per plan decision implying a concrete artifact, one entry per constitution MUST principle relevant to this feature, and a task-coverage map (which requirement/story each task maps to)
+1. **Read `spec.md`** (user stories, acceptance scenarios, edge cases, non-goals, Success Metrics, Non-Functional Requirements, Assumptions & Dependencies), **`plan.md`** (architecture, file structure, data model, dependencies, Constitution Check, NFR Compliance), **`tasks.md`** (task IDs, descriptions, `[P]`/`[TEST]` markers, file paths, `VERIFY` lines), and **`.specs/constitution.md`** (every principle section: `Code Principles`, `Security`, `Operational Principles`, `Observability`, `Performance`, `Dependency Policy`)
+2. **Build an internal inventory** (don't print it): one entry per acceptance scenario, one entry per Non-Functional Requirement and Success Metric in `spec.md`, one entry per plan decision implying a concrete artifact, one entry per `MUST` across every constitution principle section, and a task-coverage map (which requirement/story/NFR each task maps to). Also check `tasks.md` structurally: does every user-story phase have at least one `[TEST]` task, and are the `VERIFY` lines for Non-Functional Requirements and constitution `MUST` principles present.
 3. **Detect findings**:
    - Duplication — near-duplicate requirements
-   - Ambiguity — vague adjectives (fast, robust, intuitive) lacking a measurable criterion; unresolved `TODO`/`[NEEDS CLARIFICATION]` markers
-   - Coverage gaps — requirements with zero tasks, tasks with no mapped requirement
-   - Constitution conflicts — any requirement or plan decision conflicting with a MUST principle
+   - Ambiguity — vague adjectives (fast, robust, intuitive) lacking a measurable criterion, including unmeasurable Success Metrics; unresolved `TODO`/`[NEEDS CLARIFICATION]` markers
+   - Coverage gaps — requirements or NFRs with zero tasks, tasks with no mapped requirement, a user-story phase missing a `[TEST]` task, or a required `VERIFY` line missing from `tasks.md`
+   - Constitution conflicts — any requirement or plan decision conflicting with a `MUST` principle in any constitution section
    - Inconsistency — terminology drift, conflicting requirements, task ordering contradictions
 4. **Assign severity**: `CRITICAL` (constitution MUST violation, or a P1 story with zero task coverage), `HIGH` (conflicting/duplicate requirement, untestable acceptance criterion), `MEDIUM` (terminology drift, missing non-functional coverage), `LOW` (style, minor redundancy). Constitution conflicts are always `CRITICAL`.
-5. **Report** a findings table (`ID | Category | Severity | Location | Summary | Recommendation`), a coverage summary (requirement → has task? → task IDs), and metrics (total requirements, total tasks, coverage %, counts per severity). Cap at 30 rows; summarize any overflow.
+5. **Report** using `assets/report-template.md` as the format: a findings table (`ID | Category | Severity | Location | Summary | Recommendation`), a coverage summary (requirement → has task? → task IDs), and metrics (total requirements, total tasks, coverage %, counts per severity). Cap at 30 rows; summarize any overflow.
 6. **Next Actions** — if any `CRITICAL` finding exists, recommend resolving it before `implement`; otherwise note the user may proceed, with optional improvement suggestions.
 7. **Offer remediation** — ask "Want me to suggest concrete edits for the top issues?" Do not apply them without explicit approval.
 
