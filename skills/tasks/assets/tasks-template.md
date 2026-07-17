@@ -1,8 +1,8 @@
 # Tasks: [Feature Name]
 
-| Name   | Version              | Date         |
-| ---    | ---                  | ---          |
-| [name] | [R00, R01, R02, ...] | [YYYY-MM-DD] |
+| Name   | Code        | Version              | Date         | Status            |
+| ---    | ---         | ---                  | ---          | ---               |
+| [name] | TASKS-[NNN] | [R00, R01, R02, ...] | [YYYY-MM-DD] | [Draft, Approved] |
 
 ## Phase 1: Setup
 

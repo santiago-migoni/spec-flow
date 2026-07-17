@@ -35,7 +35,7 @@ Analyze never modifies `spec.md`, `plan.md`, `tasks.md`, or any other file. It o
 4. **Assign severity**: `CRITICAL` (constitution MUST violation, or a P1 story with zero task coverage), `HIGH` (conflicting/duplicate requirement, untestable acceptance criterion), `MEDIUM` (terminology drift, missing non-functional coverage), `LOW` (style, minor redundancy). Constitution conflicts are always `CRITICAL`.
 5. **Report** using `assets/report-template.md` as the format: a findings table (`ID | Category | Severity | Location | Summary | Recommendation`), a coverage summary (requirement → has task? → task IDs), and metrics (total requirements, total tasks, coverage %, counts per severity). Cap at 30 rows; summarize any overflow.
 6. **Next Actions** — if any `CRITICAL` finding exists, recommend resolving it before `implement`; otherwise note the user may proceed, with optional improvement suggestions.
-7. **Offer remediation** — ask "Want me to suggest concrete edits for the top issues?" Do not apply them without explicit approval.
+7. **Offer remediation** — ask "Want me to suggest concrete edits for the top issues?" Do not apply them without explicit approval. When the user approves applying a finding's specific recommendation as shown, that instruction is itself approval of the resulting content — the phase skill that owns the edited artifact skips its `Draft` interim state and sets `Status` straight to `Approved` (with `Version` bumped) per its own "on edit requested after approval" step, no separate confirmation round.
 
 ## Behavior Rules
 

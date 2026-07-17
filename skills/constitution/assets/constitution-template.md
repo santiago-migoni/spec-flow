@@ -6,9 +6,9 @@ SHOULD — strong default; a deviation needs a stated reason in plan.md.
 MAY — optional, contributor's judgment call.
 If a whole section doesn't apply to this project, replace its bullets with one line: N/A — <why>. -->
 
-| Name   | Version              | Date         |
-| ---    | ---                  | ---          |
-| [name] | [R00, R01, R02, ...] | [YYYY-MM-DD] |
+| Name   | Version              | Date         | Status          |
+| ---    | ---                  | ---          | ---             |
+| [name] | [R00, R01, R02, ...] | [YYYY-MM-DD] | [Draft, Approved] |
 
 ## Purpose
 

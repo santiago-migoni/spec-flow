@@ -2,9 +2,9 @@
 
 <!-- Every claim in this document must be measurable or falsifiable — avoid vague adjectives ("fast", "robust", "intuitive", "seamless") without a concrete threshold or test. spec-flow:analyze flags unmeasurable language as an Ambiguity finding. -->
 
-| Name   | Version              | Date         |
-| ---    | ---                  | ---          |
-| [name] | [R00, R01, R02, ...] | [YYYY-MM-DD] |
+| Name   | Code       | Version              | Date         | Status                        |
+| ---    | ---        | ---                  | ---          | ---                           |
+| [name] | SPEC-[NNN] | [R00, R01, R02, ...] | [YYYY-MM-DD] | [Draft, Approved, Converged]  |
 
 ## Summary
 

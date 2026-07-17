@@ -78,18 +78,7 @@ For each inventory item, inspect the current code. Record a finding only where a
 
 ### 4. Present Findings Summary
 
-**Before writing anything to disk**, output the findings table:
-
-```
-## Convergence Findings
-
-| ID | Gap Type | Severity | Source | Evidence | Remaining Work |
-|----|----------|----------|--------|----------|----------------|
-| F1 | missing  | HIGH     | US1/AC2 | No input validation found in src/auth.ts | Add validation per acceptance scenario |
-
-**Checked**: N acceptance scenarios, M plan decisions, K constitution principles
-**Findings**: X missing, Y partial, Z contradicts, W unrequested
-```
+**Before writing anything to disk**, output the findings table using `assets/convergence-report-template.md` as the format.
 
 Ask the user to confirm before appending tasks, unless there are zero findings.
 
@@ -98,14 +87,7 @@ Ask the user to confirm before appending tasks, unless there are zero findings.
 **If there are findings:**
 
 1. Scan all task IDs in `tasks.md`; let `M` be the highest. Let `N` be highest phase number + 1.
-2. Append to the end of `tasks.md`:
-
-```markdown
-## Phase N: Convergence
-
-- [ ] T{M+1} <imperative action> per <source-ref> (missing)
-- [ ] T{M+2} <imperative action> per <source-ref> (partial)
-```
+2. Append to the end of `tasks.md` using `assets/convergence-report-template.md`'s "Appended to tasks.md" block as the format.
 
 Rules:
 - Order: CRITICAL first, then HIGH, MEDIUM, LOW
@@ -116,7 +98,7 @@ Rules:
 **If there are zero findings:**
 
 - Do not modify `tasks.md`
-- Update `Status` in `spec.md` from `Draft` to `Converged` and set today's date
+- Update `Status` in `spec.md`'s document-control table to `Converged` and set today's date
 - Report: "Converged — the implementation satisfies the spec, plan, and constitution."
 
 ### 6. Handoff
