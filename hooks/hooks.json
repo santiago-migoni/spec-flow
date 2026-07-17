@@ -1,0 +1,17 @@
+{
+  "description": "Blocks invoking the next gated spec-flow phase until the prior artifact's Status is Approved or Converged.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/check-phase-approval.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
