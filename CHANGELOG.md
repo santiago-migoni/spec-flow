@@ -1,5 +1,18 @@
 # Changelog
 
+## Release v0.8.0
+
+### Added
+- `constitution-template.md`, `plan-template.md`, and `tasks-template.md` gain a `Status` column (`Draft`/`Approved`) in their document-control table; `spec-template.md`'s existing `Status` enum gains `Approved` as a middle value between `Draft` and `Converged`. Every gated phase's "on approval" step now sets `Status: Approved` before ending its turn — `constitution/SKILL.md`, `specify/SKILL.md`, `plan/SKILL.md`, and `tasks/SKILL.md` document this as a new final step. This is the signal the in-progress `phase-approval-gate` feature (`.specs/003-phase-approval-gate/`) checks, replacing an earlier draft of that spec which would have added a separate `approved` boolean field — reusing `Status` avoids two overlapping lifecycle fields on the same document.
+- `spec-flow:converge` gains `assets/convergence-report-template.md` — the last of the seven gated/side-channel phases to get a dedicated output template. Captures both the in-conversation "Convergence Findings" report and the exact `## Phase N: Convergence` block appended to `tasks.md`, previously only described inline in `converge/SKILL.md`.
+- `constitution/SKILL.md`, `specify/SKILL.md`, `plan/SKILL.md`, and `tasks/SKILL.md`'s "on edit requested after approval" step now distinguishes two cases: an open-ended request the model must still draft (resets `Status` to `Draft`, asks for approval again) versus the user approving a specific, already-shown edit verbatim — e.g. applying a `spec-flow:analyze` finding's exact recommendation — which skips the `Draft` interim state entirely and sets `Status` straight to `Approved` (with `Version` bumped) in the same edit. `analyze/SKILL.md`'s remediation step documents this. Found via dogfooding: the first version of this rule made every post-approval edit go through a redundant re-confirmation, even when the user's instruction to apply a shown fix already was the approval.
+
+- `.specs/constitution.md` amended twice this session: `R02` carves a narrow exception into the "no hooks/extensions framework" principle — the plugin may use a native Claude Code hook to enforce its own approval gate specifically, not general per-project customization. `R03` migrates the rest of the document into the redesigned template structure (`Security`, `Operational Principles`, `Observability`, `Performance`, `Dependency Policy` sections, `MUST`/`SHOULD`/`MAY` tags), reusing only conventions already practiced in this repo — nothing invented.
+- New `hooks/hooks.json` + `hooks/check-phase-approval.sh` — a `PreToolUse` hook (`.specs/003-phase-approval-gate/`) that denies invoking the next gated phase skill (`spec-flow:specify`/`plan`/`tasks`/`implement`) when the prior artifact's `Status` is `Draft`, with a human-readable reason. Fail-open by design (missing file, missing `Status` column, or a parse error all allow) — this reinforces the existing prose `<HARD-GATE>`, it isn't the only line of defense. Uses only bash/git/awk/sed, no `jq`, no network call.
+
+### Fixed
+- `spec-template.md`, `plan-template.md`, and `tasks-template.md`'s document-control table lost their `Code` column (`SPEC-NNN`/`PLAN-NNN`/`TASKS-NNN`) when it was converted from YAML frontmatter to a markdown table — `spec-template.md` also lost `Status` (`Draft`/`Converged`), which `converge` and `finishing-branch` depend on to know whether a feature is ready to integrate. Both columns are restored on the table. `specify/SKILL.md`, `plan/SKILL.md`, `tasks/SKILL.md`, and `constitution/SKILL.md` no longer say "Frontmatter `code`/`version`" — they now say "the document-control table's `Code`/`Version`", matching the actual storage format.
+
 ## Release v0.7.0
 
 ### Added
