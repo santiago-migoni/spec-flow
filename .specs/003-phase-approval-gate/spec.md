@@ -4,7 +4,7 @@
 
 | Name                 | Code     | Version | Date       | Status   |
 | -------------------- | -------- | ------- | ---------- | -------- |
-| phase-approval-gate  | SPEC-003 | R01     | 2026-07-17 | Approved |
+| phase-approval-gate  | SPEC-003 | R02     | 2026-07-17 | Approved |
 
 ## Summary
 
@@ -20,6 +20,10 @@ Enforce, with a native Claude Code hook rather than prose, that a phase's artifa
 ### Session 2026-07-17 (continued)
 
 - Q: Does that reset-to-`Draft` step apply even when the user's edit request already constitutes approval of the exact resulting content (e.g., approving `spec-flow:analyze`'s suggested fixes, verbatim)? → A: No — if the user has already seen the specific proposed text and explicitly asks to apply it, that instruction is itself the approval. Skip the `Draft` interim state: bump `Version` and set `Status` straight to `Approved` in the same edit. The `Draft` interim state is only for edits where the model must draft content the user hasn't seen yet.
+
+### Session 2026-07-17 (continued II)
+
+- Q: On a branch with no corresponding `.specs/<branch>/` directory (e.g. `main`), the hook can't resolve a prior artifact for `plan`/`tasks`/`implement` at all — should that fail open (allow, same as the grandfathered case) or fail closed (deny)? → A: Fail closed. Grandfathering is specifically for an *existing* artifact that predates the `Status` column (a format gap). Having no resolvable artifact at all means there's no feature context to check against — that's a different, more fundamental problem, and should block with a message telling the user to switch to the correct feature branch, rather than silently allow.
 
 ## Success Metrics
 
@@ -39,6 +43,7 @@ As a spec-flow user, I want the next phase's skill to refuse to run if the prior
 - **Given** `tasks.md`'s document-control table has `Status: Draft`, **When** the model attempts to invoke `spec-flow:implement`, **Then** the tool call is blocked and the model receives a reason it can act on (the artifact is not yet approved).
 - **Given** `spec.md`'s `Status` is `Approved` (or `Converged`), **When** the model invokes `spec-flow:plan`, **Then** the tool call proceeds normally.
 - **Given** the user is invoking `spec-flow:clarify` or `spec-flow:analyze` (side-channel, non-gated skills), **When** the prior artifact's `Status` is `Draft`, **Then** the call is not blocked — this hook only applies to the four gated transitions (`constitution`→`specify`, `specify`→`plan`, `plan`→`tasks`, `tasks`→`implement`).
+- **Given** the current git branch has no corresponding `.specs/<branch>/` directory (e.g. invoking `spec-flow:plan`/`tasks`/`implement` while on `main`, or any non-feature branch), **When** the model attempts the call, **Then** the tool call is blocked with a reason telling the user to switch to the correct feature branch — this is a hard deny, not the grandfathered allow (see Edge Cases).
 
 ### US2 — Record approval as part of the existing confirm step (P1)
 
@@ -61,7 +66,8 @@ As a spec-flow user, when I approve a phase's executive summary (the existing "a
 
 ## Edge Cases
 
-- An artifact predates this feature and has no `Status` column at all (e.g., this repo's own `.specs/001-*` and `.specs/002-*`) — grandfathered: treated as already-approved, does not block the next phase.
+- An artifact **exists** but predates this feature and has no `Status` column at all (e.g., this repo's own `.specs/001-*` and `.specs/002-*`) — grandfathered: treated as already-approved, does not block the next phase. This is the *only* fail-open case.
+- No artifact can be resolved at all — the current branch has no `.specs/<branch>/` directory (e.g. `main`), `git branch --show-current` fails or returns empty, or the specific file within an existing `.specs/<branch>/` doesn't exist yet (the prior phase hasn't run) — denied, not grandfathered. There is no feature context to check approval against, which is a more fundamental problem than an old file format; the reason names what's missing and tells the user to switch to the correct feature branch or run the prior phase first.
 - The user approves via free text that doesn't match any fixed phrase (e.g. "sure, go ahead", "dale") — the hook never parses conversation text; recognizing approval and writing `Status: Approved` is the model's responsibility, same as it already is for the existing prose-based "ask for approval" step.
 - A phase is re-run to revise an artifact that was already `Approved` (e.g. `spec-flow:plan` invoked again to make a change) — the edit resets `Status` to `Draft`; the next gated phase is blocked again until the user re-approves. Exception: if the user already approved the exact resulting text (e.g., a `spec-flow:analyze` finding's specific recommendation), the model skips `Draft` and sets `Status` straight to `Approved`.
 - `spec.md` reaches `Converged` (set only by `spec-flow:converge`) — a `Converged` status must count as approved for gating purposes, same as `Approved`; `constitution.md`/`plan.md`/`tasks.md` never reach `Converged` at all (2-state enum: `Draft`/`Approved` only).
