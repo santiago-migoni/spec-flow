@@ -42,15 +42,18 @@ Write the minimal code that satisfies the acceptance scenario — nothing more. 
 After all implementation tasks are done:
 
 1. **Read every acceptance scenario** in `spec.md`
-2. **Confirm each one is satisfied** by the code written — trace it explicitly: "US1 scenario 1: Given X, When Y, Then Z → satisfied by [file:line]"
-3. **If a scenario is not satisfied** — add a new task to `tasks.md` to fix it, execute it, then re-verify
-4. **Check against constitution** — confirm no principle in `.specs/constitution.md` was violated
+2. **Confirm each one is satisfied** by executing the flow affected by the change and observing the actual behavior — not by tracing to `file:line`. State it explicitly: "US1 scenario 1: Given X, When Y, Then Z → ran [command/flow] → observed [actual behavior]"
+3. **If a scenario is not satisfied** — add a new task to `tasks.md` to fix it, execute it, then re-run the flow and re-verify
+4. **If a change has no executable surface** (prompt-only / docs — e.g. editing a spec-flow `SKILL.md` itself) — degrade to reviewing the artifact's expected behavior instead, and state explicitly why nothing was run. This is not a fallback of last resort — it's the correct path for changes with no runtime to exercise. A change with partial executable surface runs what can be run and degrades only the rest.
+5. **Check against constitution** — confirm no principle in `.specs/constitution.md` was violated
+
+Executing a flow must never run a destructive or irreversible action (data writes, deletions, external calls with side effects) without the explicit per-action confirmation the constitution already requires elsewhere — observe behavior, don't cause damage to observe it.
 
 ## What Counts as Done
 
 A feature is done when:
 - All tasks in `tasks.md` are `[x]`
-- All acceptance scenarios in `spec.md` are traced and confirmed
+- All acceptance scenarios in `spec.md` are executed and confirmed by observed behavior (or reviewed, for changes with no executable surface)
 - No `[NEEDS CLARIFICATION]` markers remain anywhere in `spec.md` or `plan.md`
 - The code compiles / lints / passes existing tests
 

@@ -27,6 +27,8 @@ It must NOT:
 
 When the codebase already satisfies everything, leave `tasks.md` byte-for-byte unchanged and report clean.
 
+This holds even across the same-invocation re-check described in step 6: re-running the assessment after fixes land in the same conversation is still bounded to the same two write paths (append a new `## Phase N+1: Convergence` section, or set `Status: Converged`) — converge never applies a fix itself and never auto-invokes `implement` to make that happen.
+
 ## Process
 
 ### 1. Load Artifacts
@@ -103,6 +105,8 @@ Rules:
 
 ### 6. Handoff
 
-**On tasks appended**: state how many tasks were added under Phase N, then tell the user to run `spec-flow:implement` to complete them. A follow-up converge run will find fewer or no items.
+**On tasks appended**: state how many tasks were added under Phase N. Offer a re-check within this same invocation: once the fixes are applied in this same conversation (by the user or by `implement`), re-run the assessment (steps 2-5) against the updated code — clean re-check sets `Status: Converged` per step 5's zero-findings path; residual gaps append another `## Phase N+1: Convergence` per step 5's findings path. This re-check introduces no write beyond those two existing paths — converge still never applies fixes itself and never auto-invokes `implement`.
 
-**On converged**: the feature is done. Tell the user: "Ready to run `spec-flow:finishing-branch`."
+**If the fixes are not applied in this same conversation** (the user leaves, or defers): converge cannot re-check work that hasn't happened. Report the appended tasks and stop there, same as today — tell the user to run `spec-flow:implement` to complete them, then a follow-up `spec-flow:converge` run will find fewer or no items. The single-pass re-check is the happy path, not an obligation.
+
+**On converged** (whether on the first assessment or after a same-invocation re-check): the feature is done. Tell the user: "Ready to run `spec-flow:finishing-branch`."
