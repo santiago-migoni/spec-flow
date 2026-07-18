@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## Release v0.9.0
 
 ### Added
 - `spec-flow:implement`'s Verification Step now confirms acceptance scenarios by executing the affected flow and observing actual behavior, instead of tracing each one to `file:line` — in dogfooding, every real bug (restic `--no-lock`, filestore chown, orphaned locks, an unpinned version) only surfaced by running the code, never by reading it. Degrades to reviewing expected behavior for changes with no executable surface (prompt-only/docs), and adds a guardrail against destructive actions while executing. `spec-flow:converge`'s handoff now offers a same-invocation re-check once findings are fixed in the same conversation — closing clean or appending residual gaps — instead of requiring a second `spec-flow:converge` run, while staying append-only and never auto-invoking `implement`.
