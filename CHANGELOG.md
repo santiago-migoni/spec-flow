@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- Packaged Spec Flow for Codex with 11 skills, a trusted approval hook, and a GitHub-backed marketplace; kept the portable root manifest and added a matching Codex compatibility fallback.
+
 ## Release v0.9.0-beta
 
 ### Changed

@@ -20,7 +20,7 @@ The hard gates are load-bearing. Each gated `SKILL.md` starts with a `<HARD-GATE
 
 ## Plugin and marketplace layout
 
-- `plugins/spec-flow/plugin.json` is the portable Agent Plugins manifest. OpenAI-specific hook configuration belongs under `extensions.com.openai`.
+- `plugins/spec-flow/plugin.json` is the canonical portable Agent Plugins manifest. Keep `plugins/spec-flow/.codex-plugin/plugin.json` as its Codex compatibility fallback and mirror the identity and OpenAI-specific settings. Hook paths in both manifests resolve from the plugin root.
 - `plugins/spec-flow/skills/<name>/SKILL.md` contains each skill and its optional `assets/` or `scripts/` resources.
 - `plugins/spec-flow/hooks/hooks.json` registers the Codex hook; its Python handler is in the same `hooks/` directory.
 - `plugins/spec-flow/scripts/check-complete.sh` checks task completion.
@@ -45,7 +45,7 @@ When referring to another skill in user guidance, use its Codex name or `$<skill
 
 ## Releasing
 
-The plugin version is `plugins/spec-flow/plugin.json`. Keep the version at `0.9.0` unless a release version bump is explicitly part of the work; pre-release validation may use a SemVer prerelease such as `0.9.0-beta`. A release bump and its `CHANGELOG.md` `## Release vX.Y.Z` heading belong in a separate commit from the feature changes. Collect work in `## Unreleased` until a release is cut.
+Keep the version identical in `plugins/spec-flow/plugin.json` and `plugins/spec-flow/.codex-plugin/plugin.json`. Keep it at `0.9.0` unless a release version bump is explicitly part of the work; pre-release validation may use a SemVer prerelease such as `0.9.0-beta`. A release bump and its `CHANGELOG.md` `## Release vX.Y.Z` heading belong in a separate commit from the feature changes. Collect work in `## Unreleased` until a release is cut.
 
 ## Cross-file conventions
 

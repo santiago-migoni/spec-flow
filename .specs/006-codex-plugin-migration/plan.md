@@ -2,11 +2,11 @@
 
 | Name                  | Code     | Version | Date       | Status |
 | --------------------- | -------- | ------- | ---------- | ------ |
-| codex-plugin-migration | PLAN-006 | R01     | 2026-09-12 | Approved |
+| codex-plugin-migration | PLAN-006 | R02     | 2026-09-12 | Approved |
 
 ## Approach
 
-Move the plugin payload into `plugins/spec-flow/` and package it with the portable Agent Plugins root `plugin.json`; expose that package through `.agents/plugins/marketplace.json`. The marketplace entry retrieves the package from this repository's GitHub URL using `git-subdir`, path `./plugins/spec-flow`, and ref `main`. Convert skill activation and documentation to Codex conventions, retain each prose hard gate, and adapt the approval hook to Codex `PreToolUse` as a supplementary guard for supported artifact writes. Amend the dogfooding constitution and maintainer guidance so they describe the resulting Codex package and its trust limits.
+Move the plugin payload into `plugins/spec-flow/` and package it with the portable Agent Plugins root `plugin.json` plus a matching Codex compatibility manifest at `.codex-plugin/plugin.json`; expose that package through `.agents/plugins/marketplace.json`. The root manifest remains canonical, and both manifests keep the same plugin identity and OpenAI-specific settings. The marketplace entry retrieves the package from this repository's GitHub URL using `git-subdir`, path `./plugins/spec-flow`, and ref `main`. Convert skill activation and documentation to Codex conventions, retain each prose hard gate, and adapt the approval hook to Codex `PreToolUse` as a supplementary guard for supported artifact writes. Amend the dogfooding constitution and maintainer guidance so they describe the resulting Codex package and its trust limits.
 
 ## Constitution Check
 
@@ -21,21 +21,21 @@ Move the plugin payload into `plugins/spec-flow/` and package it with the portab
 
 ## NFR Compliance
 
-- **Portable Agent Plugins package**: Add `plugins/spec-flow/plugin.json` at the package root and place OpenAI-specific hook configuration under `extensions.com.openai`.
+- **Portable Agent Plugins package**: Keep `plugins/spec-flow/plugin.json` as the canonical package-root manifest, with OpenAI-specific settings under `extensions.com.openai`; keep `plugins/spec-flow/.codex-plugin/plugin.json` as a matching Codex compatibility fallback.
 - **Codex skill metadata**: Keep `name` and `description` in every `SKILL.md`, remove Claude-specific model/effort metadata, and validate that Codex discovers all 11 skills from the package's `skills/` directory.
 - **Workflow and artifact parity**: Preserve the seven gated phases, the optional `clarify` and `analyze` skills, the `.specs/` layouts, and approval-state behavior; update invocation examples to the skill names Codex exposes.
-- **GitHub repository marketplace**: Add `.agents/plugins/marketplace.json` with plugin `spec-flow`, source type `git-subdir`, repository URL `https://github.com/santiago-migoni/spec-flow.git`, package path `./plugins/spec-flow`, ref `main`, and the required availability, authentication, and category metadata. Document adding `santiago-migoni/spec-flow` as a marketplace and installing the plugin from it; do not use a local checkout in the installation flow.
+- **GitHub repository marketplace**: Add `.agents/plugins/marketplace.json` with plugin `spec-flow`, source type `git-subdir`, repository URL `https://github.com/santiago-migoni/spec-flow-plugin.git`, package path `./plugins/spec-flow`, ref `main`, and the required availability, authentication, and category metadata. Document adding `santiago-migoni/spec-flow-plugin` as a marketplace and installing the plugin from it; do not use a local checkout in the installation flow.
 - **Codex repository guidance**: Update `README.md`, `AGENTS.md`, and `.specs/constitution.md` together so they describe the same host, package, skills, hook, marketplace, and release paths.
 - **Skills-only package**: Keep the package free of MCP servers, custom UI, runtime network dependencies, and external runtime services; GitHub is used for package retrieval and updates only.
 - **Hook portability and scope**: Use `PLUGIN_ROOT` and Codex's `PreToolUse` input/output schema; match supported local file-writing tools for gated `.specs` artifact writes. Document that hooks require user trust and do not replace skill hard gates.
 
 ## Architecture
 
-The GitHub marketplace at `main` points to the package folder with `git-subdir`, and Codex loads the portable manifest, skills, and bundled resources from that package. Skills remain responsible for the workflow and hard gates. A trusted `PreToolUse` hook checks approval for supported writes to gated `.specs` artifacts; it does not gate skill selection or claim coverage of arbitrary shell or specialized write paths.
+The GitHub marketplace at `main` points to the package folder with `git-subdir`. Codex loads the portable root manifest, with the matching `.codex-plugin/plugin.json` retained as a compatibility fallback; both point to the same skills and bundled resources at the package root. Skills remain responsible for the workflow and hard gates. A trusted `PreToolUse` hook checks approval for supported writes to gated `.specs` artifacts; it does not gate skill selection or claim coverage of arbitrary shell or specialized write paths.
 
 ```mermaid
 flowchart TD
-    M[GitHub marketplace at main] -->|git-subdir: ./plugins/spec-flow| P[plugins/spec-flow/plugin.json]
+    M[GitHub marketplace at main] -->|git-subdir: ./plugins/spec-flow| P[Portable root manifest + Codex fallback]
     P --> S[11 Codex skills and bundled resources]
     P --> H[Trusted PreToolUse hook]
     S --> G[Prose hard gates]
@@ -56,6 +56,7 @@ README.md                                      ← modified: describe Codex inst
 hooks/check-phase-approval.sh                 ← deleted: replace Claude hook implementation with Codex event handling
 .specs/constitution.md                        ← modified: propose R04 Codex runtime and hook guidance for user approval
 plugins/spec-flow/plugin.json                 ← new: portable Agent Plugins manifest at package root
+plugins/spec-flow/.codex-plugin/plugin.json   ← new: Codex compatibility fallback mirroring the root manifest
 plugins/spec-flow/hooks/hooks.json            ← moved and modified: Codex PreToolUse registration
 plugins/spec-flow/hooks/check-phase-approval.py ← new: parse Codex hook input and check gated artifact writes
 plugins/spec-flow/scripts/check-complete.sh   ← moved: retain the task completion helper
@@ -87,8 +88,8 @@ N/A — the change reorganizes plugin files and adds JSON manifests; consuming-p
 
 ## API / Interface Contracts
 
-- Portable package manifest: root `plugin.json` with the Agent Plugins 1.0 schema, package identity and version, and `extensions.com.openai.hooks` pointing to `./hooks/hooks.json`.
-- GitHub repository marketplace: top-level `name: "spec-flow-repo"` and `interface.displayName`; one `plugins[]` entry named `spec-flow` whose `source` is `{ "source": "git-subdir", "url": "https://github.com/santiago-migoni/spec-flow.git", "path": "./plugins/spec-flow", "ref": "main" }`, with `policy.installation: "AVAILABLE"`, `policy.authentication: "ON_INSTALL"`, and `category: "Productivity"`. Document `codex plugin marketplace add santiago-migoni/spec-flow --ref main` followed by `codex plugin add spec-flow@spec-flow-repo`; both commands retrieve the marketplace and package through GitHub, without a local checkout.
+- Portable package manifest: root `plugin.json` with the Agent Plugins 1.0 schema, package identity and version, and `extensions.com.openai.hooks` pointing to `./hooks/hooks.json`; the optional `.codex-plugin/plugin.json` compatibility fallback mirrors the root identity and OpenAI-specific settings.
+- GitHub repository marketplace: top-level `name: "spec-flow-repo"` and `interface.displayName`; one `plugins[]` entry named `spec-flow` whose `source` is `{ "source": "git-subdir", "url": "https://github.com/santiago-migoni/spec-flow-plugin.git", "path": "./plugins/spec-flow", "ref": "main" }`, with `policy.installation: "AVAILABLE"`, `policy.authentication: "ON_INSTALL"`, and `category: "Productivity"`. Document `codex plugin marketplace add santiago-migoni/spec-flow-plugin --ref main` followed by `codex plugin add spec-flow@spec-flow-repo`; both commands retrieve the marketplace and package through GitHub, without a local checkout.
 - Hook: Codex `PreToolUse` matcher for `apply_patch`, `Edit`, and `Write`; consume Codex's JSON event on stdin, use `PLUGIN_ROOT` for bundled files, and return the documented `hookSpecificOutput.permissionDecision` response when denying a gated artifact write. For supported writes to `spec.md`, `plan.md`, and `tasks.md`, deny when the preceding artifact is missing or `Draft`; keep the current behavior for other existing statuses and for grandfathered artifacts without a `Status` column.
 - Skill invocation: README and skills use `$<skill-name>` (or the exact selector Codex reports during package validation), never Claude slash commands.
 
