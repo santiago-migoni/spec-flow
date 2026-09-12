@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- Updated the canonical GitHub repository and marketplace installation commands to use `santiago-migoni/spec-flow` and the `spec-flow` marketplace name.
+
 ## Release v1.0.0
 
 ### Added

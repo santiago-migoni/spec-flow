@@ -49,13 +49,13 @@ These skills are outside the seven-phase gate chain. They are recommended and ne
 Install the stable marketplace from GitHub:
 
 ```bash
-codex plugin marketplace add santiago-migoni/spec-flow-plugin --ref main
-codex plugin add spec-flow@spec-flow-repo
+codex plugin marketplace add santiago-migoni/spec-flow --ref main
+codex plugin add spec-flow@spec-flow
 ```
 
 Both commands resolve the marketplace and plugin package from GitHub `main`. Installation does not use a local checkout of this repository. The marketplace catalog is at `.agents/plugins/marketplace.json`; its `git-subdir` source points to `plugins/spec-flow/` at `main`.
 
-Codex CLI can list configured marketplaces with `codex plugin marketplace list` and refresh them with `codex plugin marketplace upgrade spec-flow-repo`. GitHub access is required to add or refresh the marketplace and retrieve the package; the installed skills do not call external services at runtime.
+Codex CLI can list configured marketplaces with `codex plugin marketplace list` and refresh them with `codex plugin marketplace upgrade spec-flow`. GitHub access is required to add or refresh the marketplace and retrieve the package; the installed skills do not call external services at runtime.
 
 ## Use in Codex
 

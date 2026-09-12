@@ -1,5 +1,5 @@
 {
-  "name": "spec-flow-repo",
+  "name": "spec-flow",
   "interface": {
     "displayName": "Spec Flow"
   },
@@ -8,7 +8,7 @@
       "name": "spec-flow",
       "source": {
         "source": "git-subdir",
-        "url": "https://github.com/santiago-migoni/spec-flow-plugin.git",
+        "url": "https://github.com/santiago-migoni/spec-flow.git",
         "path": "./plugins/spec-flow",
         "ref": "main"
       },

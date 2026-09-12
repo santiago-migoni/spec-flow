@@ -24,7 +24,7 @@ The hard gates are load-bearing. Each gated `SKILL.md` starts with a `<HARD-GATE
 - `plugins/spec-flow/skills/<name>/SKILL.md` contains each skill and its optional `assets/` or `scripts/` resources.
 - `plugins/spec-flow/hooks/hooks.json` registers the Codex hook; its Python handler is in the same `hooks/` directory.
 - `plugins/spec-flow/scripts/check-complete.sh` checks task completion.
-- `.agents/plugins/marketplace.json` declares the repository marketplace. The `spec-flow` entry uses the GitHub `git-subdir` source at `https://github.com/santiago-migoni/spec-flow-plugin.git` and package path `./plugins/spec-flow`. Stable releases use ref `main`; a pre-release branch uses its own ref for both the marketplace and package, then returns to `main` before `v1.0.0`.
+- `.agents/plugins/marketplace.json` declares the repository marketplace. The `spec-flow` entry uses the GitHub `git-subdir` source at `https://github.com/santiago-migoni/spec-flow.git` and package path `./plugins/spec-flow`. Stable releases use ref `main`; a pre-release branch uses its own ref for both the marketplace and package, then returns to `main` before `v1.0.0`.
 
 ## Skill conventions
 
