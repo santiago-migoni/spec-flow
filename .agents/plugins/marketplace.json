@@ -10,7 +10,7 @@
         "source": "git-subdir",
         "url": "https://github.com/santiago-migoni/spec-flow-plugin.git",
         "path": "./plugins/spec-flow",
-        "ref": "006-codex-plugin-migration"
+        "ref": "main"
       },
       "policy": {
         "installation": "AVAILABLE",
