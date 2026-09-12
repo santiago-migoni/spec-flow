@@ -6,6 +6,7 @@
 
 ### Added
 - Packaged Spec Flow for Codex with 11 skills, a trusted approval hook, and a GitHub-backed marketplace; kept the portable root manifest and added a matching Codex compatibility fallback.
+- Added a custom Spec Flow icon for Codex plugin surfaces, referenced by `composerIcon`.
 
 ### Changed
 - Updated the canonical GitHub repository and marketplace installation commands to use `santiago-migoni/spec-flow` and the `spec-flow` marketplace name.
