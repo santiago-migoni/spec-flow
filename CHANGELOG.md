@@ -2,13 +2,13 @@
 
 ## Unreleased
 
-### Changed
-- Updated the canonical GitHub repository and marketplace installation commands to use `santiago-migoni/spec-flow` and the `spec-flow` marketplace name.
-
 ## Release v1.0.0
 
 ### Added
 - Packaged Spec Flow for Codex with 11 skills, a trusted approval hook, and a GitHub-backed marketplace; kept the portable root manifest and added a matching Codex compatibility fallback.
+
+### Changed
+- Updated the canonical GitHub repository and marketplace installation commands to use `santiago-migoni/spec-flow` and the `spec-flow` marketplace name.
 
 ## Release v0.9.0-beta
 
