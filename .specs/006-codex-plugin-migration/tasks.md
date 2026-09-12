@@ -10,7 +10,7 @@
 
 ## Phase 2: User Story 1 — Installable Codex plugin (P1)
 
-- [x] T002 [US1] Create `plugins/spec-flow/plugin.json` with the portable Agent Plugins manifest, version `0.9.0`, and Codex hook path, and `.agents/plugins/marketplace.json` with the GitHub `git-subdir` source (`https://github.com/santiago-migoni/spec-flow.git`, `./plugins/spec-flow`, ref `main`) and marketplace policies.
+- [x] T002 [US1] Create `plugins/spec-flow/plugin.json` with the portable Agent Plugins manifest, version `0.9.0`, and Codex hook path, and `.agents/plugins/marketplace.json` with the GitHub `git-subdir` source (`https://github.com/santiago-migoni/spec-flow-plugin.git`, `./plugins/spec-flow`, stable ref `main`) and marketplace policies.
 - [x] T003 [US1] Move `scripts/check-complete.sh` to `plugins/spec-flow/scripts/check-complete.sh` and keep its task-completion behavior unchanged.
 
 ## Phase 3: User Story 2 — Codex-native skill workflow (P1)
@@ -40,9 +40,9 @@
 
 ## Phase 6: User Story 5 — Install from the repository marketplace (P2)
 
-- [x] T020 [US5] Add the exact `codex plugin marketplace add santiago-migoni/spec-flow --ref main` and `codex plugin add spec-flow@spec-flow-repo` steps to `README.md` and verify they resolve the GitHub marketplace name and package path without a local checkout.
+- [x] T020 [US5] Add the exact `codex plugin marketplace add santiago-migoni/spec-flow-plugin --ref main` and `codex plugin add spec-flow@spec-flow-repo` steps to `README.md` and verify they resolve the GitHub marketplace name and package path without a local checkout.
 - [ ] T021 [US5] In an isolated, reversible Codex configuration, add the marketplace from GitHub at ref `main`, install `spec-flow`, confirm the package and all 11 skills are listed, then remove the test marketplace and plugin. If the migrated commit is not yet available on GitHub `main`, record the remote end-to-end check as pending publication and do not substitute a local source.
-  - Pending publication: publish and validate the `0.9.0-beta` marketplace from GitHub branch `006-codex-plugin-migration` first. This task's `main`-ref installation check remains pending until promotion to `main` for `v1.0.0`; do not substitute a local source.
+  - Pending publication: validate the `0.9.0-beta` marketplace from GitHub repository `santiago-migoni/spec-flow-plugin`, branch `006-codex-plugin-migration`. This task's `main`-ref installation check remains pending until promotion to `main` for `v1.0.0`; do not substitute a local source.
 
 ## Verification
 

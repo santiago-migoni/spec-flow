@@ -8,7 +8,7 @@
       "name": "spec-flow",
       "source": {
         "source": "git-subdir",
-        "url": "https://github.com/santiago-migoni/spec-flow.git",
+        "url": "https://github.com/santiago-migoni/spec-flow-plugin.git",
         "path": "./plugins/spec-flow",
         "ref": "006-codex-plugin-migration"
       },
