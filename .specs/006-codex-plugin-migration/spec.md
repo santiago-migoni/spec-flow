@@ -4,7 +4,7 @@
 
 | Name                  | Code     | Version | Date       | Status |
 | --------------------- | -------- | ------- | ---------- | ------ |
-| codex-plugin-migration | SPEC-006 | R02     | 2026-09-12 | Approved |
+| codex-plugin-migration | SPEC-006 | R02     | 2026-09-12 | Converged |
 
 ## Summary
 

@@ -41,13 +41,13 @@
 ## Phase 6: User Story 5 — Install from the repository marketplace (P2)
 
 - [x] T020 [US5] Add the exact `codex plugin marketplace add santiago-migoni/spec-flow-plugin --ref main` and `codex plugin add spec-flow@spec-flow-repo` steps to `README.md` and verify they resolve the GitHub marketplace name and package path without a local checkout.
-- [ ] T021 [US5] In an isolated, reversible Codex configuration, add the marketplace from GitHub at ref `main`, install `spec-flow`, confirm the package and all 11 skills are listed, then remove the test marketplace and plugin. If the migrated commit is not yet available on GitHub `main`, record the remote end-to-end check as pending publication and do not substitute a local source.
-  - Pending publication: validate the `0.9.0-beta` marketplace from GitHub repository `santiago-migoni/spec-flow-plugin`, branch `006-codex-plugin-migration`. This task's `main`-ref installation check remains pending until promotion to `main` for `v1.0.0`; do not substitute a local source.
+- [x] T021 [US5] In an isolated, reversible Codex configuration, add the marketplace from GitHub at ref `main`, install `spec-flow`, confirm the package and all 11 skills are listed, then remove the test marketplace and plugin. If the migrated commit is not yet available on GitHub `main`, record the remote end-to-end check as pending publication and do not substitute a local source.
+  - Verified 2026-09-12 with Codex CLI 0.135.0: installed version 1.0.0 from GitHub `main`, confirmed both manifests and all 11 skills, then removed the isolated plugin and marketplace.
 
 ## Verification
 
-- [ ] VERIFY All acceptance scenarios in `.specs/006-codex-plugin-migration/spec.md` pass, including marketplace installation and discovery of all 11 skills.
-- [ ] VERIFY All Non-Functional Requirements in `.specs/006-codex-plugin-migration/spec.md` are met, including the portable manifest, marketplace source resolution, Codex metadata, and documented hook limits.
+- [x] VERIFY All acceptance scenarios in `.specs/006-codex-plugin-migration/spec.md` pass, including marketplace installation and discovery of all 11 skills.
+- [x] VERIFY All Non-Functional Requirements in `.specs/006-codex-plugin-migration/spec.md` are met, including the portable manifest, marketplace source resolution, Codex metadata, and documented hook limits.
 - [x] VERIFY No constitution MUST principle relevant to this feature is violated after the user approves `.specs/constitution.md` R04.
 - [x] VERIFY Every created or modified file is listed in `.specs/006-codex-plugin-migration/plan.md` and no plugin payload remains at the old root `skills/`, `hooks/`, or `scripts/` paths.
 - [x] VERIFY No dependencies were added beyond Python 3 standard-library JSON parsing and the existing Bash environment.
