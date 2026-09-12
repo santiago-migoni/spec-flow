@@ -21,6 +21,7 @@
       "hooks": "./hooks/hooks.json",
       "interface": {
         "displayName": "Spec Flow",
+        "composerIcon": "./assets/spec-flow-icon.png",
         "shortDescription": "Seven-phase spec-driven development workflow",
         "longDescription": "Guide features through approved specifications, plans, tasks, implementation, convergence, and branch finishing, with optional clarification, analysis, and backlog skills.",
         "developerName": "Santiago Migoni",
