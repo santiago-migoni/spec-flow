@@ -1,0 +1,22 @@
+{
+  "name": "spec-flow-repo",
+  "interface": {
+    "displayName": "Spec Flow"
+  },
+  "plugins": [
+    {
+      "name": "spec-flow",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/santiago-migoni/spec-flow.git",
+        "path": "./plugins/spec-flow",
+        "ref": "006-codex-plugin-migration"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

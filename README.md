@@ -1,41 +1,39 @@
 # spec-flow
 
-A Claude Code plugin for Spec-Driven Development. Every feature follows a strict artifact chain before any code is written: constitution → specify → plan → tasks → implement → converge → finishing-branch.
+Spec-Flow is a Codex plugin for Spec-Driven Development. It guides a feature through an approved chain of versioned artifacts before implementation: constitution → specify → plan → tasks → implement → converge → finishing-branch.
 
 ## Why
 
-AI coding assistants are fast at generating code and slow at recovering from wrong assumptions. Spec-Flow forces the thinking to happen first — in plain text, in your repo, under version control. By the time code is written, the spec, plan, and task list are all there as ground truth.
+AI coding assistants are fast at generating code and slow at recovering from wrong assumptions. Spec-Flow makes the spec, plan, and task list the source of truth before code is written, so implementation can be checked against reviewed intent rather than conversation memory.
 
 ## The Seven Phases
 
-```
-constitution → specify → plan → tasks → implement → converge → finishing-branch
-```
-
 | Phase | Skill | Output | Gate |
 |---|---|---|---|
-| **constitution** | `spec-flow:constitution` | `.specs/constitution.md` | None — first phase |
-| **specify** | `spec-flow:specify` | `.specs/NNN-feature/spec.md` | constitution must exist |
-| **plan** | `spec-flow:plan` | `.specs/NNN-feature/plan.md` | spec must exist |
-| **tasks** | `spec-flow:tasks` | `.specs/NNN-feature/tasks.md` | plan must exist |
-| **implement** | `spec-flow:implement` | Code changes | tasks must exist |
-| **converge** | `spec-flow:converge` | Gap analysis appended to tasks | implement must have run |
-| **finishing-branch** | `spec-flow:finishing-branch` | CHANGELOG + merge/PR options | spec status must be `Converged` |
+| **constitution** | `$constitution` | `.specs/constitution.md` | None — first phase |
+| **specify** | `$specify` | `.specs/NNN-feature/spec.md` | Constitution must exist |
+| **plan** | `$plan` | `.specs/NNN-feature/plan.md` | Spec must exist and be approved |
+| **tasks** | `$tasks` | `.specs/NNN-feature/tasks.md` | Plan must exist and be approved |
+| **implement** | `$implement` | Code changes | Approved task list must exist |
+| **converge** | `$converge` | Gap analysis appended to tasks | Implement must have run |
+| **finishing-branch** | `$finishing-branch` | Changelog and integration options | Spec status must be `Converged` |
 
-## Optional Commands
+## Optional Skills
 
-Not part of the seven-phase gate chain — recommended, never required:
+These skills are outside the seven-phase gate chain. They are recommended and never required.
 
-| Skill | Run When | Output |
+| Skill | Run when | Output |
 |---|---|---|
-| `spec-flow:clarify` | Right after `specify`, before `plan` | Up to 5 clarifying questions answered directly into `spec.md`'s `## Clarifications` section |
-| `spec-flow:analyze` | After `tasks`, before `implement` | Read-only consistency report across `spec.md`, `plan.md`, `tasks.md` — writes no file |
+| `$clarify` | After `specify`, before `plan` | Up to five questions answered in `spec.md`'s `## Clarifications` section |
+| `$analyze` | After `tasks`, before `implement` | Read-only consistency report across `spec.md`, `plan.md`, and `tasks.md` |
+| `$backlog` | Whenever an idea should be parked | Adds an item to `.specs/backlog.md`; `specify` removes a matching item when it becomes a feature |
 
 ### Artifact layout
 
-```
+```text
 .specs/
-├── constitution.md              ← project-wide principles (created once)
+├── constitution.md
+├── backlog.md
 ├── 001-feature-name/
 │   ├── spec.md
 │   ├── plan.md
@@ -46,53 +44,35 @@ Not part of the seven-phase gate chain — recommended, never required:
     └── tasks.md
 ```
 
-## Installation
+## Install from GitHub marketplace
 
-### Claude Desktop
-
-Download the latest `.plugin` file from [Releases](../../releases) and open it in Claude Desktop.
-
-### Claude Code CLI
+To preview the beta from the migration branch, add that branch's marketplace and install its GitHub-hosted plugin:
 
 ```bash
-claude plugin marketplace add https://github.com/santiago-migoni/spec-flow
-claude plugin install spec-flow
+codex plugin marketplace add santiago-migoni/spec-flow --ref 006-codex-plugin-migration
+codex plugin add spec-flow@spec-flow-repo
 ```
 
-To install only for the current project:
+Both commands resolve the marketplace and plugin package from GitHub. Installation does not use a local checkout of this repository. The beta marketplace catalog is at `.agents/plugins/marketplace.json`; its `git-subdir` source points to `plugins/spec-flow/` at `006-codex-plugin-migration`.
 
-```bash
-claude plugin install spec-flow --scope project
-```
+After the `v1.0.0` release is promoted to `main`, use `codex plugin marketplace add santiago-migoni/spec-flow --ref main` followed by `codex plugin add spec-flow@spec-flow-repo` to install the stable marketplace version.
 
-## Usage
+Codex CLI can list configured marketplaces with `codex plugin marketplace list` and refresh them with `codex plugin marketplace upgrade spec-flow-repo`. GitHub access is required to add or refresh the marketplace and retrieve the package; the installed skills do not call external services at runtime.
 
-Start a session by invoking the bootstrap skill:
+## Use in Codex
 
-```
-/spec-flow:using-spec-flow
-```
+In Codex CLI, run `/skills` to see available plugin skills, or type `$` to select one. Start with `$using-spec-flow` for an overview, or mention a phase skill such as `$constitution` or `$specify` directly. Codex can also select a skill when your request matches its description.
 
-From there, Claude will guide you through the phases in order. Each phase skill can also be invoked directly:
-
-```
-/spec-flow:constitution     ← first time on a new project
-/spec-flow:specify          ← start a new feature
-/spec-flow:plan             ← after spec is written
-/spec-flow:tasks            ← after plan is written
-/spec-flow:implement        ← execute the task list
-/spec-flow:converge         ← gap analysis after implementation
-/spec-flow:finishing-branch ← tests, changelog, merge or PR
-```
+Each gated skill checks its previous artifact before proceeding. The bundled approval hook adds a guard for supported local patch writes to `.specs/spec.md`, `plan.md`, and `tasks.md`. Codex only runs plugin hooks after the user reviews and trusts them; the prose hard gates remain required, and the hook does not cover shell commands or every specialized write path.
 
 ## Ecosystem
 
-Spec-Flow is fully independent and composes naturally with other plugins if installed:
+Spec-Flow is independent and works alongside other plugins when present:
 
-- **[Ponytail](https://github.com/DietrichGebert/ponytail)** — its minimal-code principles apply automatically during implement
-- **[RTK](https://github.com/rtk-ai/rtk)** — transparently compresses CLI outputs during implement and finishing-branch
+- **[Ponytail](https://github.com/DietrichGebert/ponytail)** — its minimal-code principles apply during implementation.
+- **[RTK](https://github.com/rtk-ai/rtk)** — transparently compresses CLI output during implementation and branch finishing.
 
-No configuration needed for either. They activate on their own if present.
+Neither is required.
 
 ## License
 

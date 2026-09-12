@@ -1,0 +1,67 @@
+---
+name: tasks
+description: "Break a plan into an ordered, checkable task list with exact file paths — the direct input for the implement phase. Use this after plan.md is approved and before writing any code."
+---
+
+# Spec-Flow: Tasks
+
+Decompose the implementation plan into atomic, ordered, checkable tasks. This is the last artifact before code is written.
+
+<HARD-GATE>
+Before proceeding:
+1. `.specs/NNN-feature-name/spec.md` must exist
+2. `.specs/NNN-feature-name/plan.md` must exist — if not, stop and invoke `$plan`
+</HARD-GATE>
+
+## When to Run This Phase
+
+- After `plan.md` is written and approved
+- Before any code is written for this feature
+
+## Process
+
+1. **Read `spec.md` and `plan.md`** for the current feature
+2. **Identify task groups** — group by user story so each story can be independently verified
+3. **Order tasks by dependency** — tasks that others depend on come first
+4. **Mark parallel tasks** — use `[P]` for tasks that can run concurrently (they touch different files)
+5. **Include exact file paths** in every task description
+6. **Write `.specs/NNN-feature-name/tasks.md`** using `assets/tasks-template.md` as the output format. The document-control table's `Code` is `TASKS-NNN` (same `NNN` as the feature directory), `Version` is `R00`, `Status` is `Draft`.
+7. **Summarize and confirm** — report an executive summary (150 words max, never the full document — task count per phase/user story is enough), then ask for approval or revisions
+8. **On revision request, before approval** — edit `tasks.md` directly, then repeat step 7. This loop never changes `Version` or `Status` — they stay `R00`/`Draft` no matter how many times it repeats, because the document hasn't been approved yet. Only an edit requested **after** the user already approved this task list increments `Version` by one.
+9. **On approval** — set `Status` to `Approved` in the document-control table before ending the turn.
+10. **On any edit requested after approval** — two cases:
+    - The user must still see the resulting text (an open-ended change, the model drafts new content): reset `Status` to `Draft` before editing (this is what triggers the `Version` bump in step 8), then repeat step 9 once the user approves the result.
+    - The user already saw the exact text and is approving it verbatim (e.g. applying a `$analyze` finding's specific recommendation) — that instruction *is* the approval: skip `Draft`, bump `Version`, and set `Status` straight to `Approved` in the same edit. Do not ask for a second confirmation.
+
+## Task Format
+
+Each task line follows this pattern:
+
+```
+- [ ] T001 [US1] Description with exact/file/path.ts
+- [ ] T002 [P][US1] Another task touching different/file.ts (parallel with T001)
+- [ ] T003 [US2] Depends on T001 — description with path
+- [ ] T004 [TEST][US1] Test covering T001-T002's behavior
+```
+
+- `[P]` = can run in parallel with other `[P]` tasks in the same group
+- `[TEST]` = writes or updates a test for a sibling task in the same phase; combine with `[P]` (`[P][TEST][US1]`) if the test itself can run in parallel
+- `[US1]`, `[US2]` etc. = which user story this task delivers
+- Every task that creates or modifies a file must include the full path
+
+## Sizing Guide
+
+A well-sized task takes 5–15 minutes. If a task description needs more than one sentence, split it. If it needs fewer than 5 minutes, consider merging it with a related task.
+
+## Quality Check Before Writing
+
+- [ ] Every task is atomic — can be completed in one focused step
+- [ ] Every task that touches a file includes the full path
+- [ ] Tasks are ordered so no task depends on a later task
+- [ ] Every user story in `spec.md` is covered by at least one task
+- [ ] Every user story phase includes at least one `[TEST]` task, unless `.specs/constitution.md`'s `Testing` field is "N/A"
+- [ ] The VERIFY tasks at the end map to acceptance scenarios and Non-Functional Requirements in `spec.md`, and to relevant constitution `MUST` principles
+
+## After Writing
+
+Tell the user: "Tasks written to `.specs/NNN-feature-name/tasks.md`. Run `$analyze` first for a consistency check (recommended, not required), or `$implement` directly to begin execution."

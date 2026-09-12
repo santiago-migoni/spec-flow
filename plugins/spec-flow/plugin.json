@@ -1,0 +1,35 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "spec-flow",
+  "version": "0.9.0",
+  "description": "Spec-Driven Development workflow for Codex: constitution, specify, plan, tasks, implement, converge, and finishing-branch, with optional clarify, analyze, and backlog skills.",
+  "author": {
+    "name": "Santiago Migoni",
+    "email": "santiagomigoni@gmail.com"
+  },
+  "repository": "https://github.com/santiago-migoni/spec-flow",
+  "license": "AGPL-3.0",
+  "keywords": [
+    "sdd",
+    "spec-driven",
+    "planning",
+    "specs",
+    "workflows"
+  ],
+  "extensions": {
+    "com.openai": {
+      "hooks": "./hooks/hooks.json",
+      "interface": {
+        "displayName": "Spec Flow",
+        "shortDescription": "Seven-phase spec-driven development workflow",
+        "longDescription": "Guide features through approved specifications, plans, tasks, implementation, convergence, and branch finishing, with optional clarification, analysis, and backlog skills.",
+        "developerName": "Santiago Migoni",
+        "category": "Productivity",
+        "capabilities": [],
+        "defaultPrompt": [
+          "Use Spec Flow to take this feature through its gated specification, planning, tasks, implementation, and convergence workflow."
+        ]
+      }
+    }
+  }
+}

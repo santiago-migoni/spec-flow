@@ -1,0 +1,17 @@
+{
+  "description": "Reinforce Spec Flow's artifact approval gates for supported local patch writes.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "apply_patch|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${PLUGIN_ROOT}/hooks/check-phase-approval.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

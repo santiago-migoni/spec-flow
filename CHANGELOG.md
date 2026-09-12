@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- Migrated spec-flow to Codex's portable Agent Plugins package, moved its 11 skills and helper resources under `plugins/spec-flow/`, and added a repository marketplace that installs the beta package from the GitHub branch `006-codex-plugin-migration` for validation.
+
 ## Release v0.9.0
 
 ### Added
