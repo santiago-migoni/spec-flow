@@ -8,3 +8,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Local Spec Flow development artifacts
+.specs/
