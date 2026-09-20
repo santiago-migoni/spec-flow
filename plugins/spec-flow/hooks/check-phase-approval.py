@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Block writes to gated .specs artifacts until their predecessor is approved."""
+"""Guard supported patch writes on an active Spec Flow feature branch."""
 
 from __future__ import annotations
 
 import json
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -59,6 +60,47 @@ def gate_predecessor(target: str, cwd: Path) -> tuple[Path, str] | None:
     if len(relative) == 2 and relative[1] == "tasks.md":
         return repo_root / ".specs" / relative[0] / "plan.md", "tasks.md"
     return None
+
+
+def active_feature(cwd: Path) -> tuple[Path, Path] | None:
+    """Find tasks.md only when the current branch has a matching feature directory."""
+    try:
+        root = subprocess.run(
+            ["git", "rev-parse", "--show-toplevel"],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+            timeout=2,
+            check=True,
+        ).stdout.strip()
+        branch = subprocess.run(
+            ["git", "branch", "--show-current"],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+            timeout=2,
+            check=True,
+        ).stdout.strip()
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        return None
+    if not re.fullmatch(r"[0-9]{3}-[a-z0-9]+(?:-[a-z0-9]+)*", branch):
+        return None
+    repo_root = Path(root)
+    feature_dir = repo_root / ".specs" / branch
+    if not feature_dir.is_dir():
+        return None
+    return repo_root, feature_dir / "tasks.md"
+
+
+def is_code_path(target: str, cwd: Path, repo_root: Path) -> bool:
+    """Treat writes inside the repository but outside .specs as implementation."""
+    target_path = Path(target.replace("\\", os.sep))
+    absolute = Path(os.path.abspath(target_path if target_path.is_absolute() else cwd / target_path))
+    try:
+        relative = absolute.relative_to(repo_root)
+    except ValueError:
+        return False
+    return bool(relative.parts) and relative.parts[0] != ".specs"
 
 
 def table_cells(line: str) -> list[str]:
@@ -115,7 +157,8 @@ def main() -> int:
     except OSError:
         cwd = Path.cwd()
 
-    for target in patch_paths(command):
+    targets = patch_paths(command)
+    for target in targets:
         requirement = gate_predecessor(target, cwd)
         if requirement is None:
             continue
@@ -159,6 +202,30 @@ def main() -> int:
                 f"{relative_predecessor} has Status: Draft. Ask the user to approve it first."
             )
             return 0
+
+        allowed = {"approved", "converged"} if predecessor.name == "spec.md" else {"approved"}
+        if status.casefold() not in allowed:
+            emit_deny(
+                f"Cannot write {output_name}: required predecessor "
+                f"{relative_predecessor} has Status: {status}. Expected an approved status."
+            )
+            return 0
+
+    feature = active_feature(cwd) if targets else None
+    if feature is not None:
+        repo_root, tasks = feature
+        if any(is_code_path(target, cwd, repo_root) for target in targets):
+            state, status = read_status(tasks)
+            if state != "present" or status is None or status.casefold() != "approved":
+                reason = f"Cannot edit implementation files on this feature branch: {tasks}"
+                if state == "missing":
+                    reason += " does not exist. Complete and approve the tasks phase first."
+                elif state == "present":
+                    reason += f" has Status: {status or '(empty)'}. Approve the tasks phase first."
+                else:
+                    reason += f" cannot prove approval ({state}). Review the tasks artifact first."
+                emit_deny(reason)
+                return 0
 
     return 0
 

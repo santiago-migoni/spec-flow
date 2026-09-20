@@ -9,8 +9,8 @@ Decompose the implementation plan into atomic, ordered, checkable tasks. This is
 
 <HARD-GATE>
 Before proceeding:
-1. `.specs/NNN-feature-name/spec.md` must exist
-2. `.specs/NNN-feature-name/plan.md` must exist — if not, stop and invoke `$plan`
+1. `.specs/NNN-feature-name/spec.md` must exist with document-control `Status: Approved` or `Converged` — otherwise stop and invoke `$specify` or request approval
+2. `.specs/NNN-feature-name/plan.md` must exist with document-control `Status: Approved` — otherwise stop and invoke `$plan` or request approval
 </HARD-GATE>
 
 ## When to Run This Phase

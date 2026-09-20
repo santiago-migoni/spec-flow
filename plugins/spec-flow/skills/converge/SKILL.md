@@ -14,12 +14,12 @@ Before proceeding:
 3. `.specs/NNN-feature-name/tasks.md` must exist and have been through at least one `implement` pass
 </HARD-GATE>
 
-## Core Constraint: Append-Only
+## Core Constraint: Constrained Writes
 
-Converge has exactly one write action: appending a `## Phase N: Convergence` section to `tasks.md`.
+Converge has two mutually exclusive write actions: append a `## Phase N: Convergence` section to `tasks.md` when gaps remain, or set `spec.md` to `Status: Converged` when the assessment is clean.
 
 It must NOT:
-- Modify `spec.md` or `plan.md`
+- Modify `plan.md` or any part of `spec.md` other than its document-control status and date on a clean assessment
 - Rewrite, renumber, or delete existing tasks
 - Write or modify any application code
 

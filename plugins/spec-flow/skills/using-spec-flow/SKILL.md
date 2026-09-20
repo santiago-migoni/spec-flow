@@ -19,13 +19,15 @@ constitution → specify → plan → tasks → implement → converge → finis
 
 Each phase produces a file in `.specs/`. Each phase requires the previous artifact to exist before it can run.
 
+`$implement` stops after each phase's validated commit. Invoke it again to continue with the next unfinished phase; the final phase also verifies all acceptance scenarios before its commit.
+
 | Phase | Skill | Input | Output | Gate |
 |---|---|---|---|---|
 | **constitution** | `$constitution` | User description of project | `.specs/constitution.md` | None — first phase |
-| **specify** | `$specify` | Feature description | `.specs/NNN-feature/spec.md` | `.specs/constitution.md` must exist |
-| **plan** | `$plan` | Feature spec | `.specs/NNN-feature/plan.md` | `spec.md` must exist |
-| **tasks** | `$tasks` | Spec + plan | `.specs/NNN-feature/tasks.md` | `plan.md` must exist |
-| **implement** | `$implement` | Tasks + spec | Code changes | `tasks.md` must exist |
+| **specify** | `$specify` | Feature description | `.specs/NNN-feature/spec.md` | `.specs/constitution.md` must be approved |
+| **plan** | `$plan` | Feature spec | `.specs/NNN-feature/plan.md` | Constitution and `spec.md` must be approved |
+| **tasks** | `$tasks` | Spec + plan | `.specs/NNN-feature/tasks.md` | Spec and `plan.md` must be approved |
+| **implement** | `$implement` | Approved tasks + spec + plan | One validated phase and its commit per invocation | `tasks.md` must be approved |
 | **converge** | `$converge` | Code + spec/plan/tasks | Appends gaps to `tasks.md`, or marks spec as Converged | `tasks.md` must have been through at least one implement pass |
 | **finishing-branch** | `$finishing-branch` | Converged feature + passing tests | CHANGELOG updated, branch merged or pushed as PR | Spec status must be `Converged` |
 

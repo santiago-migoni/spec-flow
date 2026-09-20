@@ -8,7 +8,7 @@ description: "Turn a feature idea into a structured spec with user stories, acce
 Transform a feature idea into a concrete, testable specification before any planning or coding begins.
 
 <HARD-GATE>
-Check that `.specs/constitution.md` exists before proceeding. If it does not exist, stop and invoke `$constitution` first.
+Check that `.specs/constitution.md` exists and its document-control `Status` is `Approved` before proceeding. If it is missing, stop and invoke `$constitution`; if it is `Draft` or has any other status, stop and ask the user to approve or correct it first.
 
 Never write `spec.md` while checked out on the repo's default branch (the remote's HEAD, typically `main` or `master`). Create and check out a feature branch first — see step 6 below.
 </HARD-GATE>

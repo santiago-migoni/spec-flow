@@ -1,5 +1,5 @@
 {
-  "description": "Reinforce Spec Flow's artifact approval gates for supported local patch writes.",
+  "description": "Reinforce Spec Flow's approval gates for supported local patch writes.",
   "hooks": {
     "PreToolUse": [
       {

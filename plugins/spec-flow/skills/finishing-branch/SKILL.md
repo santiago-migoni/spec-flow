@@ -80,16 +80,16 @@ Read the root `CHANGELOG.md` and add an entry under `## Unreleased` (create the 
 
 Write the updated `CHANGELOG.md`. Do not modify any other section.
 
-## Step 4: Stage and Commit Spec Artifacts
+## Step 4: Stage and Commit Remaining Spec Artifacts
 
-Before presenting integration options, provide the commands to commit all spec artifacts and the changelog. Use a [Conventional Commits](https://www.conventionalcommits.org/) message — this commit only touches documentation, so type `docs`, scoped to the feature:
+Before presenting integration options, inspect the worktree and provide the commands to commit any spec artifacts still uncommitted, plus the changelog. `implement` already committed `tasks.md` with each completed phase; do not amend or recommit those phase commits. Use a [Conventional Commits](https://www.conventionalcommits.org/) message — this commit only touches documentation, so type `docs`, scoped to the feature:
 
 ```bash
-git add .specs/NNN-feature-name/ CHANGELOG.md
+git add -- .specs/NNN-feature-name/spec.md .specs/NNN-feature-name/plan.md .specs/NNN-feature-name/tasks.md CHANGELOG.md
 git commit -m "docs(NNN-feature-name): update changelog and spec artifacts"
 ```
 
-This keeps the spec artifacts and changelog separate from the implementation commits.
+Stage explicit paths, inspect the staged diff, and omit unchanged paths. Skip the commit if nothing remains. Earlier per-phase `tasks.md` changes stay with their implementation commits.
 
 ## Step 5: Present Integration Options
 

@@ -4,7 +4,7 @@ Guidance for Codex working in this repository.
 
 ## What this repository contains
 
-`spec-flow` is a Codex plugin, not an application. The distributable package lives in `plugins/spec-flow/` and contains Markdown skills, templates, scripts, and a Codex hook. There is no application build or unit-test suite; verify changes against the package format, task acceptance criteria, scripts, and documented workflows.
+`spec-flow` is a Codex plugin, not an application. The distributable package lives in `plugins/spec-flow/` and contains Markdown skills, templates, scripts, and a Codex hook. There is no application build; verify changes against the package format, task acceptance criteria, scripts, documented workflows, and the hook tests (`python3 -B -m unittest discover -s plugins/spec-flow/hooks -p 'test_*.py'`).
 
 ## Architecture
 
@@ -16,7 +16,7 @@ constitution → specify → plan → tasks → implement → converge → finis
 
 The `clarify` and `analyze` skills are recommended side channels; `backlog` records deferred ideas. Feature artifacts belong to the consuming project's `.specs/` directory: `.specs/NNN-feature-name/{spec,plan,tasks}.md`, plus `.specs/constitution.md` and optionally `.specs/backlog.md`.
 
-The hard gates are load-bearing. Each gated `SKILL.md` starts with a `<HARD-GATE>` block and checks its predecessor artifact before writing or implementing. Preserve the prose gates when editing a skill. The optional Codex `PreToolUse` hook only reinforces approval for supported local patch writes to gated `.specs` artifacts; it does not intercept skill selection or every write path, and Codex runs it only after the user trusts the hook definition.
+The hard gates are load-bearing. Each gated `SKILL.md` starts with a `<HARD-GATE>` block and checks its predecessor artifact before writing or implementing. Preserve the prose gates when editing a skill. The optional Codex `PreToolUse` hook reinforces approval for supported local patch writes to gated `.specs` artifacts and implementation files on a matching feature branch; it does not intercept skill selection or every write path, and Codex runs it only after the user trusts the hook definition.
 
 ## Plugin and marketplace layout
 
@@ -45,7 +45,7 @@ When referring to another skill in user guidance, use its Codex name or `$<skill
 
 ## Releasing
 
-Keep the version identical in `plugins/spec-flow/plugin.json` and `plugins/spec-flow/.codex-plugin/plugin.json`. Keep it at `0.9.0` unless a release version bump is explicitly part of the work; pre-release validation may use a SemVer prerelease such as `0.9.0-beta`. A release bump and its `CHANGELOG.md` `## Release vX.Y.Z` heading belong in a separate commit from the feature changes. Collect work in `## Unreleased` until a release is cut.
+Keep the version identical in `plugins/spec-flow/plugin.json` and `plugins/spec-flow/.codex-plugin/plugin.json`. The current release is `1.0.0`; retain it unless a release version bump is explicitly part of the work. A release bump and its `CHANGELOG.md` `## Release vX.Y.Z` heading belong in a separate commit from the feature changes. Collect work in `## Unreleased` until a release is cut.
 
 ## Cross-file conventions
 

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Changed
+
+- `implement` now completes and commits one validated task phase per invocation, with explicit resumption after failures and final acceptance verification.
+- Phase skills now require approved predecessor statuses; the Codex approval hook also checks supported code patches on an active feature branch and rejects unknown approval states.
+- Clarified the hook's supported `apply_patch` aliases and limits, corrected `converge`'s two write outcomes, and updated repository release guidance to v1.0.0.
+
 ## Release v1.0.0
 
 ### Added

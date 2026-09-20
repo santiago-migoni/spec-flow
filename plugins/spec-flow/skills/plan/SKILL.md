@@ -9,8 +9,8 @@ Turn a spec into an implementation blueprint. The plan defines HOW, while the sp
 
 <HARD-GATE>
 Before proceeding:
-1. `.specs/constitution.md` must exist — if not, stop and invoke `$constitution`
-2. A `spec.md` must exist for the current feature — if not, stop and invoke `$specify`
+1. `.specs/constitution.md` must exist with document-control `Status: Approved` — otherwise stop and invoke `$constitution` or request approval
+2. A `spec.md` must exist for the current feature with document-control `Status: Approved` or `Converged` — otherwise stop and invoke `$specify` or request approval
 3. No `[NEEDS CLARIFICATION]` markers should remain open in `spec.md` — resolve them with the user before planning
 </HARD-GATE>
 

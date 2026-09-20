@@ -11,10 +11,10 @@ AI coding assistants are fast at generating code and slow at recovering from wro
 | Phase | Skill | Output | Gate |
 |---|---|---|---|
 | **constitution** | `$constitution` | `.specs/constitution.md` | None — first phase |
-| **specify** | `$specify` | `.specs/NNN-feature/spec.md` | Constitution must exist |
+| **specify** | `$specify` | `.specs/NNN-feature/spec.md` | Constitution must be approved |
 | **plan** | `$plan` | `.specs/NNN-feature/plan.md` | Spec must exist and be approved |
 | **tasks** | `$tasks` | `.specs/NNN-feature/tasks.md` | Plan must exist and be approved |
-| **implement** | `$implement` | Code changes | Approved task list must exist |
+| **implement** | `$implement` | One validated phase and its commit per invocation | Approved task list must exist |
 | **converge** | `$converge` | Gap analysis appended to tasks | Implement must have run |
 | **finishing-branch** | `$finishing-branch` | Changelog and integration options | Spec status must be `Converged` |
 
@@ -61,7 +61,7 @@ Codex CLI can list configured marketplaces with `codex plugin marketplace list` 
 
 In Codex CLI, run `/skills` to see available plugin skills, or type `$` to select one. Start with `$using-spec-flow` for an overview, or mention a phase skill such as `$constitution` or `$specify` directly. Codex can also select a skill when your request matches its description.
 
-Each gated skill checks its previous artifact before proceeding. The bundled approval hook adds a guard for supported local patch writes to `.specs/spec.md`, `plan.md`, and `tasks.md`. Codex only runs plugin hooks after the user reviews and trusts them; the prose hard gates remain required, and the hook does not cover shell commands or every specialized write path.
+Each gated skill checks its predecessor's recorded approval before proceeding. `$implement` completes one phase per invocation: read its tasks, code, validate, commit, and stop. Run it again to start the next phase. The bundled hook guards supported local patch writes to `.specs/spec.md`, `plan.md`, and `tasks.md`; on a branch matching an existing `.specs/NNN-feature-name/` directory, it also requires approved `tasks.md` before patching other repository files. Codex's `Edit` and `Write` hook matchers are aliases for `apply_patch` and share its `tool_input.command` event format. Codex runs plugin hooks only after the user reviews and trusts them. The hook does not cover shell commands or every specialized write path, so the skill hard gates remain required.
 
 ## Ecosystem
 
