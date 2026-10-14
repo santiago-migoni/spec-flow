@@ -501,6 +501,88 @@ class PhaseController:
                 "release_closure_reasons": closure_reasons,
                 "phase_commits": {phase_id: phase.get("commit", {}).get("sha") for phase_id, phase in state.get("phases", {}).items() if phase.get("status") == "committed"}}
 
+    def _validate_release_review_inputs(self, state: Mapping[str, Any], record: Mapping[str, Any],
+                                        reference: Mapping[str, Any], spec_path: Path, roadmap_path: Path,
+                                        *, review_recorded: bool) -> None:
+        """Revalidate all reviewed inputs before a derived release write or recovery."""
+        self._source_digests(state)
+        if not state["phase_contracts"]:
+            raise EngineError("phase_commits_required", "release review requires at least one reviewed phase")
+        for contract in state["phase_contracts"]:
+            phase_id = contract["id"]
+            phase = state.get("phases", {}).get(phase_id, {})
+            self._validate_recorded_commit(state, phase_id, phase)
+            self._assert_task_evidence(state, phase_id)
+
+        last_phase_id = state["phase_contracts"][-1]["id"]
+        last_commit = state["phases"][last_phase_id]["commit"]["sha"]
+        audit_rows = self._audit_candidates(state["run_id"])
+        head = self._git("rev-parse", "HEAD")
+        if review_recorded and audit_rows:
+            if len(audit_rows) != 1 or audit_rows[0]["subject"] != "docs(spec-flow): record release review" or audit_rows[0]["sha"] != head:
+                raise EngineError("audit_commit_stale", "recorded release-review audit commit is not the exact current branch tip")
+            if audit_rows[0]["parent"] != last_commit:
+                raise EngineError("audit_commit_stale", "final audit commit does not directly follow the last reviewed phase commit")
+            if self._git("status", "--porcelain"):
+                raise EngineError("audit_commit_stale", "worktree changed after the final audit commit")
+        else:
+            if audit_rows:
+                raise EngineError("audit_commit_stale", "an audit commit exists without a durable release-review event")
+            if head != last_commit:
+                raise EngineError("release_review_head_stale", "release review requires the final reviewed phase commit at HEAD",
+                                  details={"expected": last_commit, "actual": head})
+
+        task_files = sorted({path for task_item in state["task_contracts"]
+                             for path in self.e._task_scope_files(state, task_item)})
+        if task_files:
+            compared = subprocess.run(["git", "diff", "--quiet", last_commit, "--", *task_files], cwd=self.e.root)
+            if compared.returncode == 1:
+                raise EngineError("release_review_code_stale", "task code changed after its reviewed phase commit")
+            if compared.returncode != 0:
+                raise EngineError("git_operation_failed", "could not compare task code with the reviewed phase commit")
+
+        for path, expected in ((spec_path, record), (roadmap_path, reference)):
+            relative = path.relative_to(self.e.root).as_posix()
+            current_record = self._generated_record(path.read_text(encoding="utf-8"), path)
+            if review_recorded:
+                if current_record != dict(expected):
+                    raise EngineError("release_review_record_stale", "derived record differs from the durable release review: {}".format(path))
+            else:
+                baseline = self._git("show", "{}:{}".format(last_commit, relative))
+                baseline_record = self._generated_record(baseline, path)
+                if current_record not in (dict(expected), baseline_record):
+                    raise EngineError("release_review_record_stale", "derived record is neither the reviewed baseline nor this run's record: {}".format(path))
+
+        if not (review_recorded and audit_rows):
+            allowed = set(state["documents"]) | {
+                spec_path.relative_to(self.e.root).as_posix(), roadmap_path.relative_to(self.e.root).as_posix(),
+                ".spec-flow/runs/{}/events.jsonl".format(state["run_id"]),
+            }
+            evidence_dir = self.e.store.run_dir(state["run_id"]) / "evidence"
+            if evidence_dir.is_dir():
+                allowed.update(path.relative_to(self.e.root).as_posix() for path in evidence_dir.glob("*.json") if path.is_file())
+            changed = self._changed_paths()
+            outside = sorted(changed - allowed)
+            if outside:
+                raise EngineError("release_review_worktree_stale", "unrelated worktree changes exist before release review",
+                                  details={"paths": outside})
+
+    @staticmethod
+    def _generated_record(text: str, path: Path) -> Optional[Dict[str, Any]]:
+        match = re.search(r"\n<!-- spec-flow:generated:start -->\nSpec-Flow derived record:\n(\{.*\})\n<!-- spec-flow:generated:end -->\n*\Z", text, re.DOTALL)
+        if not match:
+            if "<!-- spec-flow:generated:start -->" in text:
+                raise EngineError("release_review_record_stale", "derived release record is missing or malformed: {}".format(path))
+            return None
+        try:
+            current = json.loads(match.group(1))
+        except json.JSONDecodeError as exc:
+            raise EngineError("release_review_record_stale", "derived release record is invalid JSON: {}".format(path)) from exc
+        canonical = json.dumps(current, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        if not isinstance(current, dict) or canonical != match.group(1):
+            raise EngineError("release_review_record_stale", "derived release record is not canonical JSON: {}".format(path))
+        return current
+
     def release_review(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self.e._fields(payload, ("run_id", "owner", "impact_status"), ("impact_evidence", "delivery_status"))
         state = self.e._state(self.e._nonempty(payload["run_id"], "run_id"))
@@ -522,13 +604,8 @@ class PhaseController:
         if delivery not in {"branch_committed", "branch_retained", "not_integrated"}:
             raise EngineError("invalid_input", "delivery_status is not recognized")
         existing = state.get("release_review")
-        if existing:
-            record = existing["record"]
-            reference = existing["roadmap_reference"]
-            if (record.get("impact_status"), record.get("impact_evidence"), record.get("delivery_status")) != (impact_status, evidence, delivery):
-                raise EngineError("release_review_already_recorded", "a different release-review record is already durable")
-        else:
-            commits = [{"phase_id": item["id"], "sha": state["phases"][item["id"]]["commit"]["sha"]} for item in state["phase_contracts"]]
+        commits = [{"phase_id": item["id"], "sha": state["phases"][item["id"]]["commit"]["sha"]} for item in state["phase_contracts"]]
+        if not existing:
             record = {"schema": "spec-flow.derived-release.v1", "kind": "release-review", "release": state["release"],
                       "run_id": state["run_id"], "technical_status": "complete", "phase_commits": commits,
                       "impact_status": impact_status, "impact_evidence": evidence, "delivery_status": delivery,
@@ -538,6 +615,17 @@ class PhaseController:
             reference = {"schema": "spec-flow.derived-reference.v1", "kind": "roadmap-reference",
                          "release": state["release"], "run_id": state["run_id"],
                          "spec_path": spec_path.relative_to(self.e.root).as_posix(), "impact_status": impact_status}
+        else:
+            record = existing["record"]
+            reference = existing["roadmap_reference"]
+            spec_path = self.e._release_path(state["release"], "spec.md")
+            roadmap_path = self._roadmap_path(state)
+        self._validate_release_review_inputs(state, record, reference, spec_path, roadmap_path,
+                                             review_recorded=bool(existing))
+        if existing:
+            if (record.get("impact_status"), record.get("impact_evidence"), record.get("delivery_status")) != (impact_status, evidence, delivery):
+                raise EngineError("release_review_already_recorded", "a different release-review record is already durable")
+        else:
             self._write_generated(spec_path, record, status="converged")
             self._write_generated(roadmap_path, reference)
             self.e._append(state["run_id"], "release_reviewed", {"record": record, "roadmap_reference": reference,

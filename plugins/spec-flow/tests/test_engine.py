@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 from harness.runtime.engine import Engine, EngineError
 from harness.runtime.contracts import ContractError, document_digest
-from helpers import FakeAdapter, FixtureProductionAdapter, approve_release, make_project, start_run
+from helpers import FakeAdapter, FixtureProductionAdapter, approve_release, make_project, start_run, task
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
 CLI = PLUGIN_ROOT / "scripts" / "spec-flow.py"
@@ -342,6 +342,29 @@ class EngineTests(unittest.TestCase):
         result = self.engine.dispatch("verify", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
         self.assertEqual(result["steps"][0]["exit_code"], 0)
         self.assertIn("verification passed", result["steps"][0]["output"])
+
+    def test_verify_rejects_command_that_mutates_task_code_after_passing_check(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            checks = task(command=["python3", "-c", "from pathlib import Path; p=Path('src/example.py'); assert 'GOOD' in p.read_text(); print('verification passed', flush=True); p.write_text('BROKEN\\n')"])
+            checks["steps"].append({"id": "T-001.002", "action": "Restore the file after the first check.",
+                                    "verification": {"command": ["python3", "-c", "from pathlib import Path; p=Path('src/example.py'); assert 'BROKEN' in p.read_text(); print('verification passed', flush=True); p.write_text('GOOD\\n')"],
+                                                      "expected": "verification passed"}})
+            docs = make_project(root, task_items=[checks])
+            (root / "src/example.py").write_text("GOOD\\n", encoding="utf-8")
+            engine = Engine(root, adapter=FakeAdapter())
+            engine.dispatch("initialize", {})
+            approve_release(engine, docs)
+            run_id = start_run(engine)
+            engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+            engine.dispatch("result", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001", "result": {"summary": "implemented"}})
+            with self.assertRaises(EngineError) as ctx:
+                engine.dispatch("verify", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+            self.assertEqual(ctx.exception.code, "verification_mutated_code")
+            state = engine.dispatch("status", {"run_id": run_id})
+            self.assertNotEqual(state["tasks"]["T-001"]["status"], "verified")
+            with self.assertRaises(EngineError):
+                engine.dispatch("review", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001", "verdict": "pass", "evidence": "Review passed."})
 
     def test_retry_cannot_launder_out_of_scope_change_into_new_baseline(self):
         run_id = self.initialize_approve_start()

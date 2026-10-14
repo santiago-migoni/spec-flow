@@ -127,6 +127,113 @@ class PhaseLifecycleTests(unittest.TestCase):
         completion = self.engine.dispatch("complete", {"release": "1.2.3"})
         self.assertTrue(completion["complete"], completion)
 
+    def test_release_review_rejects_stale_approved_spec_before_writing_derived_records(self):
+        self.close_task()
+        self.ready_review_commit()
+        spec_path = self.docs["spec"]
+        original = spec_path.read_text(encoding="utf-8")
+        head = git(self.root, "rev-parse", "HEAD")
+        events = (self.engine.store.run_dir(self.run_id) / "events.jsonl").read_bytes()
+        spec_path.write_text(original.replace("Approved source decision.", "Changed after approval."), encoding="utf-8")
+        changed = spec_path.read_bytes()
+        with self.assertRaises(EngineError) as ctx:
+            self.release_review()
+        self.assertEqual(ctx.exception.code, "approval_stale")
+        self.assertEqual(spec_path.read_bytes(), changed)
+        self.assertEqual(git(self.root, "rev-parse", "HEAD"), head)
+        self.assertEqual((self.engine.store.run_dir(self.run_id) / "events.jsonl").read_bytes(), events)
+        self.assertIsNone(self.engine.dispatch("status", {"run_id": self.run_id}).get("release_review"))
+
+    def test_release_review_rejects_changed_phase_code_before_writing_derived_records(self):
+        self.close_task()
+        self.ready_review_commit()
+        spec_path = self.docs["spec"]
+        original = spec_path.read_text(encoding="utf-8")
+        head = git(self.root, "rev-parse", "HEAD")
+        events = (self.engine.store.run_dir(self.run_id) / "events.jsonl").read_bytes()
+        (self.root / "src/example.py").write_text("# changed after reviewed phase\\n", encoding="utf-8")
+        with self.assertRaises(EngineError):
+            self.release_review()
+        self.assertEqual(spec_path.read_text(encoding="utf-8"), original)
+        self.assertEqual(git(self.root, "rev-parse", "HEAD"), head)
+        self.assertEqual((self.engine.store.run_dir(self.run_id) / "events.jsonl").read_bytes(), events)
+        self.assertIsNone(self.engine.dispatch("status", {"run_id": self.run_id}).get("release_review"))
+
+    def test_release_review_rejects_unrelated_head_advance_before_writing(self):
+        self.close_task()
+        self.ready_review_commit()
+        spec_path = self.docs["spec"]
+        original = spec_path.read_text(encoding="utf-8")
+        (self.root / "unrelated.txt").write_text("unrelated\\n", encoding="utf-8")
+        git(self.root, "add", "unrelated.txt")
+        git(self.root, "commit", "-qm", "docs: unrelated change")
+        head = git(self.root, "rev-parse", "HEAD")
+        events = (self.engine.store.run_dir(self.run_id) / "events.jsonl").read_bytes()
+        with self.assertRaises(EngineError):
+            self.release_review()
+        self.assertEqual(spec_path.read_text(encoding="utf-8"), original)
+        self.assertEqual(git(self.root, "rev-parse", "HEAD"), head)
+        self.assertEqual((self.engine.store.run_dir(self.run_id) / "events.jsonl").read_bytes(), events)
+        self.assertIsNone(self.engine.dispatch("status", {"run_id": self.run_id}).get("release_review"))
+
+    def test_release_review_allows_roadmap_record_from_reviewed_baseline(self):
+        roadmap = self.docs["roadmap"]
+        previous = {"schema": "spec-flow.derived-reference.v1", "kind": "roadmap-reference",
+                    "release": "v1.2.2", "run_id": "prior-run",
+                    "spec_path": ".specs/release-v1.2.2/spec.md", "impact_status": "pending"}
+        text = roadmap.read_text(encoding="utf-8")
+        roadmap.write_text(text.rstrip() + "\n\n<!-- spec-flow:generated:start -->\nSpec-Flow derived record:\n" +
+                           json.dumps(previous, sort_keys=True, separators=(",", ":")) +
+                           "\n<!-- spec-flow:generated:end -->\n", encoding="utf-8")
+        self.close_task()
+        self.ready_review_commit()
+        result = self.release_review()
+        current_text = roadmap.read_text(encoding="utf-8")
+        self.assertIn('"release":"v1.2.3"', current_text)
+        self.assertNotIn('"release":"v1.2.2"', current_text)
+        self.assertIn("audit_commit_sha", result)
+
+    def test_release_review_recovers_exact_partial_derived_write(self):
+        self.close_task()
+        self.ready_review_commit()
+        controller = self.engine._phase_controller()
+        original_write = controller._write_generated
+        calls = 0
+
+        def fail_after_spec(path, record, *, status=None):
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                raise RuntimeError("crash after spec derived record")
+            return original_write(path, record, status=status)
+
+        with patch.object(controller, "_write_generated", side_effect=fail_after_spec):
+            with self.assertRaises(RuntimeError):
+                self.release_review()
+        self.assertIsNone(self.engine.dispatch("status", {"run_id": self.run_id}).get("release_review"))
+        result = self.release_review()
+        self.assertIn("audit_commit_sha", result)
+        self.assertTrue(self.engine.dispatch("complete", {"release": "1.2.3"})["complete"])
+
+    def test_release_review_recovers_event_before_audit_commit(self):
+        self.close_task()
+        self.ready_review_commit()
+        controller = self.engine._phase_controller()
+        original_git = controller._git
+
+        def fail_before_audit_commit(*args, **kwargs):
+            if args and args[0] == "commit":
+                raise EngineError("git_operation_failed", "simulated interruption before audit commit")
+            return original_git(*args, **kwargs)
+
+        with patch.object(controller, "_git", side_effect=fail_before_audit_commit):
+            with self.assertRaises(EngineError):
+                self.release_review()
+        self.assertIsNotNone(self.engine.dispatch("status", {"run_id": self.run_id}).get("release_review"))
+        self.assertEqual(controller._audit_candidates(self.run_id), [])
+        recovered = self.release_review()
+        self.assertIn("audit_commit_sha", recovered)
+
     def test_code_change_after_phase_commit_stays_incomplete_after_evidence_refresh(self):
         self.close_task()
         self.ready_review_commit()

@@ -1163,6 +1163,15 @@ class Engine:
                     self._verification_failure(payload["run_id"], payload["task_id"], "verification_timeout", "verification step timed out: {}".format(step_id), {"output": str(exc.stdout or "")[-4000:]})
                 except OSError as exc:
                     self._verification_failure(payload["run_id"], payload["task_id"], "verification_failed", "could not run verification step {}: {}".format(step_id, exc))
+                # Verification commands are evidence-producing checks, not
+                # implementation steps. Check immediately after every command
+                # so a later step cannot restore and conceal an earlier edit.
+                during = self._snapshot_code()
+                mutated = self._changed_paths(before, during)
+                if mutated:
+                    self._verification_failure(payload["run_id"], payload["task_id"], "verification_mutated_code",
+                                               "verification command changed project files: {}".format(step_id),
+                                               {"paths": sorted(mutated)})
                 output = completed.stdout or ""
                 lowered = output.lower()
                 if completed.returncode != 0:

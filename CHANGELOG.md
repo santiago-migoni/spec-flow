@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Fixed
+
+- Reject source mutations during each verification step so earlier checks cannot certify later changed code.
+- Revalidate approvals, task evidence, reviewed code, and branch history before release closure; preserve recovery of an interrupted audit without accepting unrelated changes.
+
 ### Added
 
 - Strategy skills for architecture, structure, infrastructure, and roadmap; explicit release planning and independent release review.
