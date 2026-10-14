@@ -6,7 +6,7 @@ description: "Define environments, deployment, observability, and recovery decis
 # Spec-Flow: infrastructure
 
 <HARD-GATE>
-Inspect project configuration and .specs first. If legacy NNN-feature-name artifacts exist, stop and run mandatory migrate before writing. For a new unadopted project, run initialize with empty JSON input {} first. Run the runtime gate for this phase and obey it. Urgency never waives a failed gate. Require current registry approval of constitution and the applicable architecture or structure decisions this infrastructure relies on.
+Inspect project configuration and .specs first. If legacy `.specs/NNN-name/` folders exist, stop before writing and follow the `migrate-preview` → review → `migrate-apply` flow in `$using-spec-flow`; use `migrate-resume` after an interrupted apply. For a new unadopted project, run initialize with empty JSON input {} first. Run the runtime gate for this phase and obey it. Urgency never waives a failed gate. Require current registry approval of constitution and the applicable architecture or structure decisions this infrastructure relies on.
 </HARD-GATE>
 
 Read approved design and actual deployment/configuration files. If this document is not applicable, record N/A with a reason in the roadmap and make no filler document. Write `.specs/infrastructure.md` using `assets/infrastructure-template.md`. It owns environments, external resources, secrets handling, deployment and rollback, observability, operations, and recovery. Distinguish verified current behavior from proposals. Link to component and path IDs instead of copying decisions.

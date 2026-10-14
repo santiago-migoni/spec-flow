@@ -13,7 +13,7 @@ Autorización: el usuario solicitó explícitamente implementar el plan E0–E8 
 | E3 | Aprobaciones, eventos y recuperación | Verificado: 23 pruebas del motor; 44 del plugin y 5 hooks |
 | E4 | Migración obligatoria | Verificada: 12 pruebas de migración; 56 del plugin |
 | E5 | Orquestación Sol–Luna | Verificada con fixtures: 70 pruebas del plugin y 5 hooks; evaluación nativa integral en E7 |
-| E6 | Hook, convergencia y cierre | Pendiente |
+| E6 | Hook, convergencia y cierre | Verificado: 97 pruebas del plugin y 9 hooks; revisión independiente Sol |
 | E7 | Evaluación integral | Pendiente |
 | E8 | Preparación del paquete | Pendiente |
 
@@ -55,3 +55,7 @@ Previsualización de solo lectura, mapeo explícito, candidatos canónicos, orig
 ## E5 — Verificación
 
 Adaptador nativo sin llamadas a modelos desde Python, identidad de Sol/Luna comprobada contra registros del host, propiedad persistente entre worktrees, paquetes acotados y resultados contrastados con archivos reales. La revisión independiente Sol detectó nombres de capacidades incorrectos, identidad opaca y ventanas de caída al transferir control; se corrigieron y añadieron regresiones. La huella del paquete se exige en el mensaje de delegación y la identidad del padre se conserva entre transferencias. Pruebas: 70 del plugin y 5 hooks; suite focalizada del adaptador: 9. Las pruebas con identidad simulada están etiquetadas como fixtures y no sustituyen la evaluación nativa E7. El cierre de fases y la adaptación del hook permanecen en E6.
+
+## E6 — Verificación
+
+Cierre de fases con árbol Git fijado, revisión Sol independiente, commits recuperables y un checkpoint final de auditoría. `complete` comprueba evidencia vigente y correspondencia con código revisado, incluso frente a cambios posteriores ya commiteados. El hook comparte validación y alcance con el runtime, sin bloquear proyectos ajenos. Abandono explícito conserva historial, evidencia aplicable y límites de intentos; la recuperación distingue un agente lanzado sin vínculo de una reserva que nunca llegó a delegarse. Las ventanas de caída al preparar, commitear y liberar propiedad tienen regresiones. Revisión independiente Sol sin bloqueos restantes en el alcance evaluado. Pruebas: 97 del plugin y 9 hooks. Estas pruebas de mecánica no sustituyen la evaluación nativa E7 ni la instalación E8.

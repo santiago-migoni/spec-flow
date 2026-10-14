@@ -44,11 +44,18 @@ class FixtureProductionAdapter(FakeAdapter):
         return {"fixture_attestation": True, "run_id": run_id, "release": release, "owner": owner}
 
     def assert_lease(self, state):
-        if state["status"] == "completed" and state["run_id"] not in self.leases:
+        if state["status"] in {"completed", "abandoned"} and state["run_id"] not in self.leases:
             return None
         if state["run_id"] not in self.leases:
             from harness.runtime.codex_adapter import AdapterError
             raise AdapterError("ownership_lease_missing", "fixture lease is absent")
+
+    def attest_no_spawn(self, owner_session, task_state, inventory):
+        if not isinstance(inventory, dict) or inventory.get("owner_session") != owner_session or not inventory.get("inventory_reference") or inventory.get("agents") != []:
+            from harness.runtime.codex_adapter import AdapterError
+            raise AdapterError("native_inventory_invalid", "fixture inventory must be current, scoped, and empty")
+        return {"owner_session": owner_session, "inventory_reference": inventory["inventory_reference"],
+                "packet_marker": "SPEC_FLOW_PACKET_SHA256=" + task_state["packet_sha256"], "fixture_attestation": True}
 
     def attest_session(self, session_id, role, **kwargs):
         return {"session_id": session_id, "role": role, "model": "gpt-6-luna" if role == "implementer" else "gpt-6-sol",

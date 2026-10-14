@@ -64,6 +64,19 @@ class EngineTests(unittest.TestCase):
         self.assertFalse(gate["ready"])
         self.assertIn(".specs/constitution.md", gate["missing_approvals"])
 
+    def test_exact_approval_retry_reuses_receipt_but_new_statement_is_recorded(self):
+        self.engine.dispatch("initialize", {})
+        path = self.docs["constitution"].relative_to(self.root).as_posix()
+        payload = {"path": path, "actor": "user", "statement": "Approve constitution.", "source": "conversation"}
+        first = self.engine.dispatch("approve", payload)
+        retry = self.engine.dispatch("approve", payload)
+        changed = self.engine.dispatch("approve", {**payload, "statement": "Approve constitution revision."})
+        rows = self.engine.store.approvals()
+        self.assertEqual(first["sequence"], retry["sequence"])
+        self.assertTrue(retry["already_approved"])
+        self.assertNotEqual(changed["sequence"], first["sequence"])
+        self.assertEqual(len(rows), 2)
+
     def test_start_requires_all_current_release_approvals(self):
         self.engine.dispatch("initialize", {})
         with self.assertRaises(EngineError) as ctx:
@@ -140,9 +153,9 @@ class EngineTests(unittest.TestCase):
         result_event = next(item for item in events if item["event"] == "result_received")
         self.assertTrue(prepared["packet_sha256"])
         self.assertEqual(result_event["data"]["host_attestation"]["attestation_sha256"], "fixture-hash")
-        self.assertTrue(closed["run_completed"])
+        self.assertFalse(closed["run_completed"])
         self.assertTrue(duplicate["already_completed"])
-        self.assertEqual(adapter.releases, 1)
+        self.assertEqual(adapter.releases, 0)
 
     def test_fixture_takeover_preserves_original_luna_parent_for_reconciliation(self):
         adapter = FixtureProductionAdapter()
@@ -167,6 +180,40 @@ class EngineTests(unittest.TestCase):
         task_state = engine.dispatch("status", {"run_id": run_id})["tasks"]["T-001"]
         self.assertEqual(task_state["agent"]["parent_session"], "sol-session-1")
 
+    def test_interrupted_unbound_spawn_can_be_late_bound_before_reconciliation(self):
+        adapter = FixtureProductionAdapter()
+        engine = Engine(self.root, adapter=adapter)
+        engine.dispatch("initialize", {})
+        approve_release(engine, self.docs)
+        run_id = engine.dispatch("start", {
+            "release": "1.2.3", "owner": "sol-session-1", "phases": ["PH-01"],
+            "authorization": {"actor": "user", "statement": "Execute PH-01.", "source": "conversation"},
+            "capabilities": {"inventory_reference": "fixture inventory", "operations": {}, "probe_evidence": {}},
+        })["run_id"]
+        engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        engine.dispatch("interrupt", {"run_id": run_id, "owner": "sol-session-1"})
+        engine.dispatch("resume", {"run_id": run_id, "owner": "sol-session-1"})
+        with self.assertRaises(EngineError) as before_binding:
+            engine.dispatch("reconcile", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                            "disposition": "retry", "evidence": "No result accepted."})
+        self.assertEqual(before_binding.exception.code, "agent_binding_required")
+        engine.dispatch("bind-agent", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                        "agent_id": "/root/T-001", "session_id": "luna-session-1", "agent_path": "/root/T-001"})
+        original_code = (self.root / "src/example.py").read_text(encoding="utf-8")
+        (self.root / "src/example.py").write_text("# unbound child may have changed this\n", encoding="utf-8")
+        with self.assertRaises(EngineError) as changed:
+            engine.dispatch("reconcile", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                "disposition": "no_spawn", "evidence": "Inventory has no child, but files changed.",
+                "native_inspection": {"owner_session": "sol-session-1", "inventory_reference": "fixture:list_agents:current",
+                                      "checked_at": "2099-01-01T00:00:00Z", "agents": []}})
+        self.assertEqual(changed.exception.code, "no_spawn_worktree_changed")
+        (self.root / "src/example.py").write_text(original_code, encoding="utf-8")
+        reconciled = engine.dispatch("reconcile", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                                     "disposition": "retry", "evidence": "Inspected the terminal child session before retry.",
+                                                     "reason": "The interrupted agent has no accepted result.",
+                                                     "hypothesis": "A new attempt will complete the task."})
+        self.assertTrue(reconciled["retry_ready"])
+
     def test_prepare_rejects_parallel_active_task_and_result_does_not_close(self):
         run_id = self.initialize_approve_start()
         self.engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
@@ -183,6 +230,22 @@ class EngineTests(unittest.TestCase):
         result = self.engine.dispatch("verify", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
         self.assertEqual(result["steps"][0]["exit_code"], 0)
         self.assertIn("verification passed", result["steps"][0]["output"])
+
+    def test_retry_cannot_launder_out_of_scope_change_into_new_baseline(self):
+        run_id = self.initialize_approve_start()
+        self.engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        self.engine.dispatch("result", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001", "result": {"summary": "attempt one"}})
+        (self.root / "outside.py").write_text("unrelated change\n", encoding="utf-8")
+        with self.assertRaises(EngineError) as ctx:
+            self.engine.dispatch("verify", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        self.assertEqual(ctx.exception.code, "out_of_scope_changes")
+        self.engine.dispatch("retry", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                         "reason": "Remove unrelated change.", "hypothesis": "Retry keeps original scope baseline."})
+        self.engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        self.engine.dispatch("result", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001", "result": {"summary": "attempt two"}})
+        with self.assertRaises(EngineError) as retry_error:
+            self.engine.dispatch("verify", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        self.assertEqual(retry_error.exception.code, "out_of_scope_changes")
 
     def test_verify_rejects_empty_and_zero_test_results(self):
         for command in (["python3", "-c", "pass"], ["python3", "-c", "print('Ran 0 tests')"]):
@@ -307,7 +370,7 @@ class EngineTests(unittest.TestCase):
         result = self.engine.dispatch("verify", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
         self.assertTrue(result["passed"])
 
-    def test_authorize_next_phase_continues_same_run_after_dependency_completion(self):
+    def test_next_phase_requires_prior_phase_commit_even_after_authorization(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             docs = make_project(root, task_items=[
@@ -326,8 +389,9 @@ class EngineTests(unittest.TestCase):
             with self.assertRaises(EngineError):
                 engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-002"})
             engine.dispatch("authorize", {"run_id": run_id, "owner": "sol-session-1", "phases": ["PH-02"], "authorization": {"actor": "user", "statement": "Continue into PH-02.", "source": "conversation"}})
-            result = engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-002"})
-            self.assertEqual(result["run_id"], run_id)
+            with self.assertRaises(EngineError) as ctx:
+                engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-002"})
+            self.assertEqual(ctx.exception.code, "phase_dependency_not_committed")
 
     def test_task_attempts_stop_after_three_rejected_reviews(self):
         run_id = self.initialize_approve_start()
@@ -356,6 +420,124 @@ class EngineTests(unittest.TestCase):
         result = subprocess.run([sys.executable, str(CLI), "--root", str(self.root), "digest", "--input", str(self.root / "missing.json")], capture_output=True, text=True)
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(json.loads(result.stdout)["error"]["code"], "invalid_input")
+
+
+    def _complete_fixture_task(self, run_id):
+        self.engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        (self.root / "src/example.py").write_text("# implemented\n", encoding="utf-8")
+        self.engine.dispatch("result", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                         "result": {"summary": "Implemented."}})
+        self.engine.dispatch("verify", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        self.engine.dispatch("review", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                         "verdict": "pass", "evidence": "Inspected implementation and checks."})
+        self.engine.dispatch("close", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+
+    def _abandon(self, run_id):
+        return self.engine.dispatch("abandon", {"run_id": run_id, "owner": "sol-session-1",
+                                                  "reason": "Approved sources changed; restart with current pins.",
+                                                  "authorization": {"actor": "user", "statement": "Abandon this run and preserve its history.", "source": "conversation"}})
+
+    def test_production_abandon_retries_lease_release_without_duplicate_event(self):
+        adapter = FixtureProductionAdapter()
+        engine = Engine(self.root, adapter=adapter)
+        engine.dispatch("initialize", {})
+        approve_release(engine, self.docs)
+        run_id = engine.dispatch("start", {
+            "release": "1.2.3", "owner": "sol-session-1", "phases": ["PH-01"],
+            "authorization": {"actor": "user", "statement": "Execute PH-01.", "source": "conversation"},
+            "capabilities": {"inventory_reference": "fixture", "operations": {}, "probe_evidence": {}},
+        })["run_id"]
+        with patch.object(adapter, "release", side_effect=[RuntimeError("crash after abandonment event"), None]):
+            with self.assertRaises(RuntimeError):
+                engine.dispatch("abandon", {"run_id": run_id, "owner": "sol-session-1", "reason": "Restart safely.",
+                                              "authorization": {"actor": "user", "statement": "Abandon this run.", "source": "conversation"}})
+            replay = engine.dispatch("abandon", {"run_id": run_id, "owner": "sol-session-1", "reason": "Restart safely.",
+                                                   "authorization": {"actor": "user", "statement": "Abandon this run.", "source": "conversation"}})
+        events = engine.store.read_events(run_id)
+        self.assertTrue(replay["already_abandoned"])
+        self.assertEqual(sum(item["event"] == "abandoned" for item in events), 1)
+
+    def test_abandon_preserves_completed_evidence_for_exact_pins(self):
+        run_id = self.initialize_approve_start()
+        self._complete_fixture_task(run_id)
+        abandoned = self._abandon(run_id)
+        self.assertEqual(abandoned["status"], "abandoned")
+        self.assertIn("history_preserved", abandoned)
+        next_run = start_run(self.engine)
+        state = self.engine.dispatch("status", {"run_id": next_run})
+        self.assertEqual(state["tasks"]["T-001"]["status"], "completed")
+        self.assertEqual(state["tasks"]["T-001"]["prior_run_id"], run_id)
+        self.assertTrue(Path(self.root / state["tasks"]["T-001"]["evidence_path"]).is_file())
+
+    def test_production_prepare_crash_before_spawn_needs_inventory_and_no_change_reconciliation(self):
+        adapter = FixtureProductionAdapter()
+        engine = Engine(self.root, adapter=adapter)
+        engine.dispatch("initialize", {})
+        approve_release(engine, self.docs)
+        run_id = engine.dispatch("start", {
+            "release": "1.2.3", "owner": "sol-session-1", "phases": ["PH-01"],
+            "authorization": {"actor": "user", "statement": "Execute PH-01.", "source": "conversation"},
+            "capabilities": {"inventory_reference": "fixture", "operations": {}, "probe_evidence": {}},
+        })["run_id"]
+        engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        engine.dispatch("interrupt", {"run_id": run_id, "owner": "sol-session-1"})
+        engine.dispatch("resume", {"run_id": run_id, "owner": "sol-session-1"})
+        with self.assertRaises(EngineError) as ctx:
+            engine.dispatch("reconcile", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                           "disposition": "no_spawn", "evidence": "No child was launched."})
+        self.assertEqual(ctx.exception.code, "native_inventory_invalid")
+        original_code = (self.root / "src/example.py").read_text(encoding="utf-8")
+        (self.root / "src/example.py").write_text("# unbound child may have changed this\n", encoding="utf-8")
+        inventory = {"owner_session": "sol-session-1", "inventory_reference": "fixture:list_agents:current",
+                     "checked_at": "2099-01-01T00:00:00Z", "agents": []}
+        with self.assertRaises(EngineError) as changed:
+            engine.dispatch("reconcile", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                "disposition": "no_spawn", "evidence": "Inventory has no child, but files changed.", "native_inspection": inventory})
+        self.assertEqual(changed.exception.code, "no_spawn_worktree_changed")
+        (self.root / "src/example.py").write_text(original_code, encoding="utf-8")
+        reconciled = engine.dispatch("reconcile", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+            "disposition": "no_spawn", "evidence": "Owner inventory inspected; no matching child exists; task files unchanged.",
+            "native_inspection": inventory})
+        self.assertEqual(reconciled["disposition"], "no_spawn")
+        self.assertEqual(engine.dispatch("status", {"run_id": run_id})["tasks"]["T-001"]["status"], "needs_changes")
+        self._abandon(run_id)
+        self.assertEqual(engine.dispatch("status", {"run_id": run_id})["status"], "abandoned")
+
+    def test_abandon_rejects_active_attempt_until_reconciled(self):
+        run_id = self.initialize_approve_start()
+        self.engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        with self.assertRaises(EngineError) as ctx:
+            self._abandon(run_id)
+        self.assertEqual(ctx.exception.code, "active_task_requires_reconciliation")
+        self.engine.dispatch("interrupt", {"run_id": run_id, "owner": "sol-session-1"})
+        self.engine.dispatch("resume", {"run_id": run_id, "owner": "sol-session-1"})
+        self.engine.dispatch("reconcile", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                             "disposition": "retry", "evidence": "No native child was started in this mechanics fixture.",
+                                             "reason": "Restart from a clean attempt.", "hypothesis": "No implementation changes were made."})
+        self._abandon(run_id)
+        self.assertEqual(self.engine.dispatch("status", {"run_id": run_id})["status"], "abandoned")
+
+    def test_abandon_then_restart_carries_attempt_limit_and_does_not_reuse_stale_source_evidence(self):
+        run_id = self.initialize_approve_start()
+        self._complete_fixture_task(run_id)
+        self._abandon(run_id)
+        self.docs["tasks"].write_text(self.docs["tasks"].read_text(encoding="utf-8").replace("Approved source decision.", "Updated task source decision."), encoding="utf-8")
+        self.engine.dispatch("approve", {"path": ".specs/release-v1.2.3/tasks.md", "actor": "user",
+                                          "statement": "Approve updated task source.", "source": "conversation"})
+        next_run = start_run(self.engine)
+        state = self.engine.dispatch("status", {"run_id": next_run})
+        self.assertEqual(state["tasks"].get("T-001", {}).get("status"), None)
+        prepared = self.engine.dispatch("prepare", {"run_id": next_run, "owner": "sol-session-1", "task_id": "T-001"})
+        self.assertEqual(prepared["attempt"], 2)
+        self.engine.dispatch("interrupt", {"run_id": next_run, "owner": "sol-session-1"})
+        self.engine.dispatch("resume", {"run_id": next_run, "owner": "sol-session-1"})
+        self.engine.dispatch("reconcile", {"run_id": next_run, "owner": "sol-session-1", "task_id": "T-001",
+                                             "disposition": "retry", "evidence": "Second attempt was reconciled.",
+                                             "reason": "Run is stale after source change.", "hypothesis": "No unapproved code changed."})
+        self._abandon(next_run)
+        final_run = start_run(self.engine)
+        third_attempt = self.engine.dispatch("prepare", {"run_id": final_run, "owner": "sol-session-1", "task_id": "T-001"})
+        self.assertEqual(third_attempt["attempt"], 3)
 
 
 if __name__ == "__main__":

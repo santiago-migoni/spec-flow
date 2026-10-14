@@ -1,31 +1,19 @@
-<!-- Two parts below. Part 1 is shown in conversation before anything is written to disk — never written to a file itself. Part 2 is the exact block appended to tasks.md, only if findings exist. -->
+# Convergence assessment: vX.Y.Z
 
-## Convergence Findings
+Conversation output only. Cite approved source IDs and current code/evidence; do not save this report as another editable artifact.
 
-<!-- Order: CRITICAL first, then HIGH, MEDIUM, LOW. A constitution MUST violation is always CRITICAL, never downgraded. -->
+| ID | Gap | Severity | Canonical source | Observed evidence | Proposed change |
+| --- | --- | --- | --- | --- | --- |
+| F-01 | missing / partial / contradicts / unrequested | CRITICAL / HIGH / MEDIUM / LOW | AC-001, plan decision, or constitution MUST | File, behavior, command, or missing evidence | Exact task or decision revision |
 
-| ID | Gap Type | Severity | Source | Evidence | Remaining Work |
-|---|---|---|---|---|---|
-| F1 | [missing\|partial\|contradicts\|unrequested] | [CRITICAL\|HIGH\|MEDIUM\|LOW] | [USn/ACn or plan decision] | [what was found, or not found, in the code] | [imperative next step] |
+## Coverage
 
-**Checked**: [N] acceptance scenarios, [M] plan decisions, [K] constitution principles
-**Findings**: [X] missing, [Y] partial, [Z] contradicts, [W] unrequested
+| AC or decision ID | Task and phase | Evidence | Result |
+| --- | --- | --- | --- |
+| AC-001 | T-001, PH-01 | Run evidence and commit SHA | satisfied / gap |
 
-Ask the user to confirm before appending tasks, unless there are zero findings.
+## Handoff
 
-## Appended to tasks.md (only when findings exist)
-
-<!-- M = highest existing task ID in tasks.md, N = highest existing phase number + 1. Never reuse, renumber, or edit an existing task ID. -->
-
-```markdown
-## Phase N: Convergence
-
-- [ ] T{M+1} [imperative action] per [source-ref] (missing)
-- [ ] T{M+2} [imperative action] per [source-ref] (partial)
-```
-
-## When There Are Zero Findings
-
-- `tasks.md` stays byte-for-byte unchanged — do not append an empty `## Phase N: Convergence` section.
-- Update `Status` in `spec.md`'s document-control table to `Converged` and set today's date.
-- Report: "Converged — the implementation satisfies the spec, plan, and constitution."
+- Zero findings: mark derived technical convergence in the spec and proceed to `$review-release`.
+- Implementation gap: show the proposed canonical tasks contract change for approval, then return to `$implement`.
+- Decision gap: return to the owning spec, plan, roadmap, or shared design document and review only affected dependent approvals.

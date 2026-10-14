@@ -6,7 +6,7 @@ description: "Define shared component responsibilities and interfaces from an ap
 # Spec-Flow: architecture
 
 <HARD-GATE>
-Inspect project configuration and .specs first. If legacy NNN-feature-name artifacts exist, stop and run mandatory migrate before writing. For a new unadopted project, run initialize with empty JSON input {} first. Run the runtime gate for this phase and obey it. Urgency never waives a failed gate. Require current registry approval for the exact constitution digest; a Markdown label is insufficient.
+Inspect project configuration and .specs first. If legacy `.specs/NNN-name/` folders exist, stop before writing and follow the `migrate-preview` → review → `migrate-apply` flow in `$using-spec-flow`; use `migrate-resume` after an interrupted apply. For a new unadopted project, run initialize with empty JSON input {} first. Run the runtime gate for this phase and obey it. Urgency never waives a failed gate. Require current registry approval for the exact constitution digest; a Markdown label is insufficient.
 </HARD-GATE>
 
 Read the constitution and current code. Write `.specs/architecture.md` using `assets/architecture-template.md`. This document owns shared components, responsibility boundaries, interfaces, data flow, and cross-release technical decisions. Decide only what planned releases need. Refer to constitution principles without copying them.

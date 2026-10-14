@@ -89,6 +89,20 @@ class DocumentValidationTests(unittest.TestCase):
             result = validate_document(root, path)
             self.assertEqual(result["contract"]["kind"], "tasks")
 
+    def test_direct_document_validation_rejects_malformed_plan_and_roadmap(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            plan = write_document(root / "plan.md", base_contract("plan", phases=[
+                {"id": "PH-01", "description": "Build.", "depends_on": ["PH-99"]}
+            ]))
+            with self.assertRaises(ContractError):
+                validate_document(root, plan)
+            roadmap = write_document(root / "roadmap.md", base_contract("roadmap", releases=[
+                {"version": "v1.2.3", "objective": "Deliver behavior.", "status": "maybe"}
+            ]))
+            with self.assertRaises(ContractError):
+                validate_document(root, roadmap)
+
     def test_rejects_missing_task_dependency_and_cycles(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

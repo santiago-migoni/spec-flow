@@ -1,110 +1,22 @@
 ---
 name: converge
-description: "Assess the current codebase against the feature's spec, plan, and tasks. Classify gaps, then append any remaining work as new tasks to tasks.md so implement can complete it. Use this after implement has run at least once to close the loop between artifacts and code."
+description: "Assess a committed release against approved acceptance and shared decisions, then route residual work to its canonical source."
 ---
 
 # Spec-Flow: Converge
 
-Close the gap between what the artifacts say should exist and what the code actually contains. This phase runs after `implement` and produces either a clean confirmation or new convergence tasks.
-
 <HARD-GATE>
-Before proceeding:
-1. `.specs/NNN-feature-name/spec.md` must exist
-2. `.specs/NNN-feature-name/plan.md` must exist
-3. `.specs/NNN-feature-name/tasks.md` must exist and have been through at least one `implement` pass
+Require an adopted release with valid spec, plan, and tasks; current registry approvals; at least one verified implementation pass; and reviewed phase commits for all phases claimed complete. Run the controller gate and evidence-based `complete` query; proceed to technical convergence only when `technical_complete` is true. The query also reports `release_review_pending` and `audit_pending` for the later closure steps. Checked boxes or a Markdown Converged label alone do not satisfy this gate.
 </HARD-GATE>
 
-## Core Constraint: Constrained Writes
+## Assessment
 
-Converge has two mutually exclusive write actions: append a `## Phase N: Convergence` section to `tasks.md` when gaps remain, or set `spec.md` to `Status: Converged` when the assessment is clean.
+Read the release's acceptance IDs, edge cases, non-goals, plan deliverables, task evidence and phase commits, and applicable constitution and technical decisions. Inspect only code and interfaces within the approved scope. Use the controller's real verification results and current code, not an agent's PASS claim. Classify gaps as missing, partial, contradictory, or unrequested. A constitution MUST violation is CRITICAL. A clean result has zero findings.
 
-It must NOT:
-- Modify `plan.md` or any part of `spec.md` other than its document-control status and date on a clean assessment
-- Rewrite, renumber, or delete existing tasks
-- Write or modify any application code
+Report findings in the conversation using `assets/convergence-report-template.md`. Do not write application code, retry a task, or spawn Luna from this skill. For an implementation gap, propose a concrete task with stable ID, phase, AC references, steps, expected verification, closure, and file scope in the canonical `tasks.md` contract. Do not create a second editable gap list. If the gap changes behavior or acceptance, return to `$specify`; if it changes solution, return to `$plan`; if it changes shared design or priorities, return to that strategic document. Show the proposed decision change before applying it. An exact recommendation accepted verbatim can serve as the user's approval; open-ended wording needs review. Revision and approval changes affect only dependent decisions that actually adopt the new base.
 
-When the codebase already satisfies everything, leave `tasks.md` byte-for-byte unchanged and report clean.
+When residual work is approved and added to its canonical source, hand execution back to `$implement` under the appropriate authorization. A subsequent convergence pass inspects the new code and evidence. This skill never fixes the gap itself.
 
-This holds even across the same-invocation re-check described in step 6: re-running the assessment after fixes land in the same conversation is still bounded to the same two write paths (append a new `## Phase N+1: Convergence` section, or set `Status: Converged`) — converge never applies a fix itself and never auto-invokes `implement` to make that happen.
+## Clean outcome
 
-## Process
-
-### 1. Load Artifacts
-
-Read the following — load only what's needed for assessment, not the full text verbatim:
-
-**From `spec.md`**: user stories, acceptance scenarios, edge cases, explicit non-goals.
-
-**From `plan.md`**: architecture decisions, file structure, data model, API contracts, dependencies listed.
-
-**From `tasks.md`**: all existing task IDs (to determine next ID), the highest phase number (to determine next phase).
-
-**From `.specs/constitution.md`**: MUST principles that impose buildable obligations.
-
-### 2. Build the Intent Inventory
-
-Construct an internal map (do not print this):
-- One entry per acceptance scenario (`US1/AC1`, `US1/AC2`, `US2/AC1`…)
-- One entry per plan decision that implies a concrete artifact (file, endpoint, data model field)
-- One entry per constitution MUST principle relevant to this feature
-
-Derive the code scope from file paths named in `plan.md` and `tasks.md`. Bound the assessment to those files — do not invent scope beyond what the artifacts define.
-
-### 3. Assess and Classify Findings
-
-For each inventory item, inspect the current code. Record a finding only where a gap exists.
-
-**Gap types:**
-
-| Type | Meaning |
-|---|---|
-| `missing` | Required work is entirely absent from the code |
-| `partial` | Work exists but does not fully satisfy the requirement |
-| `contradicts` | Code conflicts with stated intent or a constitution MUST principle |
-| `unrequested` | Code exists that no artifact called for — flag for awareness only |
-
-**Severity:**
-
-| Severity | Criteria |
-|---|---|
-| `CRITICAL` | Violates a constitution MUST principle, or blocks a P1 user story entirely |
-| `HIGH` | Missing or partial gap on a core acceptance scenario or plan decision |
-| `MEDIUM` | Partial gap on a secondary requirement, or unrequested addition without clear justification |
-| `LOW` | Minor polish, edge case gap, or low-risk unrequested addition |
-
-**Edge cases:**
-- If there is little or no code yet, treat the full scope as `missing` rather than failing.
-- If nothing remains, produce zero findings.
-
-### 4. Present Findings Summary
-
-**Before writing anything to disk**, output the findings table using `assets/convergence-report-template.md` as the format.
-
-Ask the user to confirm before appending tasks, unless there are zero findings.
-
-### 5. Append Convergence Tasks (or report clean)
-
-**If there are findings:**
-
-1. Scan all task IDs in `tasks.md`; let `M` be the highest. Let `N` be highest phase number + 1.
-2. Append to the end of `tasks.md` using `assets/convergence-report-template.md`'s "Appended to tasks.md" block as the format.
-
-Rules:
-- Order: CRITICAL first, then HIGH, MEDIUM, LOW
-- Each task: imperative verb, exact file path if known, source reference, gap type in parentheses
-- Constitution violations are always first and labeled CRITICAL
-- Never reuse or modify existing task IDs
-
-**If there are zero findings:**
-
-- Do not modify `tasks.md`
-- Update `Status` in `spec.md`'s document-control table to `Converged` and set today's date
-- Report: "Converged — the implementation satisfies the spec, plan, and constitution."
-
-### 6. Handoff
-
-**On tasks appended**: state how many tasks were added under Phase N. Offer a re-check within this same invocation: once the fixes are applied in this same conversation (by the user or by `implement`), re-run the assessment (steps 2-5) against the updated code — clean re-check sets `Status: Converged` per step 5's zero-findings path; residual gaps append another `## Phase N+1: Convergence` per step 5's findings path. This re-check introduces no write beyond those two existing paths — converge still never applies fixes itself and never auto-invokes `implement`.
-
-**If the fixes are not applied in this same conversation** (the user leaves, or defers): converge cannot re-check work that hasn't happened. Report the appended tasks and stop there, same as today — tell the user to run `$implement` to complete them, then a follow-up `$converge` run will find fewer or no items. The single-pass re-check is the happy path, not an obligation.
-
-**On converged** (whether on the first assessment or after a same-invocation re-check): the feature is done. Tell the user: "Ready to run `$finishing-branch`."
+If no gaps remain, leave `tasks.md` and approved decision content unchanged. Report the read-only controller result from `complete.technical_complete` in the conversation, citing the release, reviewed phase commits, and current evidence. Do not write a separate convergence document or generated closure note; `$review-release` records the combined derived release outcome after the technical review. Technical convergence does not prove impact or authorize publication.

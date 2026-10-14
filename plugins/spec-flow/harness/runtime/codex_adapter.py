@@ -118,6 +118,83 @@ class NativeCodexAdapter:
         attestation["attestation_sha256"] = self._record_hash(attestation)
         return attestation
 
+    def attest_no_spawn(self, owner_session: str, task_state: Mapping[str, Any], inventory: Any) -> Dict[str, Any]:
+        """Prove there is no task child to bind before reconciling a prepared attempt.
+
+        The host must provide a fresh `list_agents` snapshot scoped to the owner.
+        Local rollout metadata and delegated user prompts are then inspected for
+        children created during this attempt; a matching packet marker requires
+        late binding, never an inferred absence.
+        """
+        if not isinstance(inventory, dict):
+            raise AdapterError("native_inventory_required", "no-spawn reconciliation requires a native agent inventory snapshot")
+        owner = self._nonempty_report_reference(inventory.get("owner_session"))
+        reference = self._nonempty_report_reference(inventory.get("inventory_reference"))
+        checked_at = inventory.get("checked_at")
+        after = task_state.get("prepared_at")
+        marker = "SPEC_FLOW_PACKET_SHA256=" + str(task_state.get("packet_sha256", ""))
+        agents = inventory.get("agents")
+        if owner != owner_session or not isinstance(checked_at, str) or not after or checked_at < after:
+            raise AdapterError("native_inventory_invalid", "agent inventory must identify this owner and be newer than task preparation")
+        if not isinstance(agents, list):
+            raise AdapterError("native_inventory_invalid", "agent inventory requires an agents list with paths and statuses")
+        valid_statuses = {"active", "running", "queued", "pending", "completed", "aborted", "interrupted"}
+        paths = []
+        for item in agents:
+            if not isinstance(item, dict) or not isinstance(item.get("agent_path"), str) or not item["agent_path"].strip() or item.get("status") not in valid_statuses:
+                raise AdapterError("native_inventory_invalid", "each inventory agent requires a canonical path and known lifecycle status")
+            paths.append(item["agent_path"])
+        if len(paths) != len(set(paths)):
+            raise AdapterError("native_inventory_invalid", "agent inventory contains duplicate paths")
+        active = [item["agent_path"] for item in agents if item["status"] in {"active", "running", "queued", "pending"}]
+        if active:
+            raise AdapterError("native_agent_still_active", "native inventory still contains active agents", details={"agent_paths": active})
+        owner_attestation = self.attest_session(owner_session, "orchestrator", after=after)
+        codex_home = os.environ.get("CODEX_HOME")
+        base = Path(codex_home).expanduser() if codex_home else Path.home() / ".codex"
+        sessions = base / "sessions"
+        if not sessions.is_dir():
+            raise AdapterError("host_logs_unavailable", "Codex session log directory is unavailable")
+        child_hashes = []
+        for path in sessions.rglob("rollout-*.jsonl"):
+            try:
+                with path.open("r", encoding="utf-8") as stream:
+                    first = json.loads(stream.readline())
+            except (OSError, UnicodeError, json.JSONDecodeError):
+                continue
+            if not isinstance(first, dict) or first.get("type") != "session_meta":
+                continue
+            meta = first.get("payload")
+            source = meta.get("source") if isinstance(meta, dict) else None
+            lineage = source.get("subagent", {}).get("thread_spawn", {}) if isinstance(source, dict) else {}
+            if not isinstance(meta, dict) or not isinstance(lineage, dict) or lineage.get("parent_thread_id") != owner_session:
+                continue
+            records = self._read_records(path)
+            turns = [row for row in records if row.get("type") == "turn_context" and isinstance(row.get("timestamp"), str)]
+            timestamps = [row["timestamp"] for row in turns]
+            if not timestamps:
+                raise AdapterError("host_evidence_pending", "a native child session has no timestamped turn records", details={"session_id": meta.get("id")})
+            if max(timestamps) < after:
+                continue
+            agent_path = lineage.get("agent_path")
+            if agent_path not in paths:
+                raise AdapterError("native_inventory_incomplete", "fresh inventory omitted a child created during this task attempt",
+                                   details={"session_id": meta.get("id"), "agent_path": agent_path})
+            user_prompts = [row for row in records if row.get("type") == "response_item" and isinstance(row.get("payload"), dict)
+                            and row["payload"].get("type") == "message" and row["payload"].get("role") == "user"]
+            if any(marker in self._strings(row) for row in user_prompts):
+                raise AdapterError("task_agent_found_bind_before_reconcile", "a child received this task packet; bind its native session before reconciliation",
+                                   details={"session_id": meta.get("id"), "agent_path": lineage.get("agent_path")})
+            lifecycle = self._agent_lifecycle(records)
+            if lifecycle not in {"completed", "aborted"}:
+                raise AdapterError("native_agent_still_active", "a child created during this attempt is not terminal", details={"session_id": meta.get("id"), "agent_lifecycle": lifecycle})
+            child_hashes.append({"session_meta": self._record_hash(first), "turn_contexts": [self._record_hash(row) for row in turns],
+                                 "lifecycle": self._record_hash([row for row in records if row.get("type") == "event_msg"])})
+        return {"session_id": owner_session, "role": "orchestrator", "owner_attestation_sha256": owner_attestation["attestation_sha256"],
+                "packet_marker": marker, "inventory_reference": reference, "inventory_sha256": self._record_hash(inventory),
+                "child_record_hashes": child_hashes, "attestation_sha256": self._record_hash({"owner": owner_attestation["attestation_sha256"],
+                    "inventory": self._record_hash(inventory), "children": child_hashes, "marker": marker})}
+
     @staticmethod
     def _agent_lifecycle(records: Iterable[Mapping[str, Any]]) -> str:
         lifecycle = "unknown"
@@ -173,7 +250,7 @@ class NativeCodexAdapter:
         try:
             value = json.loads(registry.read_text(encoding="utf-8"))
         except (OSError, UnicodeError, json.JSONDecodeError) as exc:
-            if state.get("status") == "completed" and not registry.exists():
+            if state.get("status") in {"completed", "abandoned"} and not registry.exists():
                 return
             raise AdapterError("ownership_lease_missing", "persistent controller ownership is missing or unreadable") from exc
         expected = {"run_id": state["run_id"], "release": state["release"], "worktree": str(self.root), "owner": state["owner"]}
@@ -186,7 +263,7 @@ class NativeCodexAdapter:
         lock_path = common / "spec-flow-active-controller.lock"
         with lock_path.open("a+b") as lock:
             fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
-            if state.get("status") == "completed" and not registry.exists():
+            if state.get("status") in {"completed", "abandoned"} and not registry.exists():
                 fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
                 return
             self.assert_lease(state)

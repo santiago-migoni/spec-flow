@@ -6,7 +6,7 @@ description: "Prioritize outcomes and group stories into explicit SemVer release
 # Spec-Flow: roadmap
 
 <HARD-GATE>
-Inspect project configuration and .specs first. If legacy NNN-feature-name artifacts exist, stop and run mandatory migrate before writing. For a new unadopted project, run initialize with empty JSON input {} first. Run the runtime gate for this phase and obey it. Urgency never waives a failed gate. Require current registry approval of constitution and applicable shared design. Do not start a release spec until the roadmap selects its vX.Y.Z release and is approved.
+Inspect project configuration and .specs first. If legacy `.specs/NNN-name/` folders exist, stop before writing and follow the `migrate-preview` → review → `migrate-apply` flow in `$using-spec-flow`; use `migrate-resume` after an interrupted apply. For a new unadopted project, run initialize with empty JSON input {} first. Run the runtime gate for this phase and obey it. Urgency never waives a failed gate. Require current registry approval of constitution and applicable shared design. Do not start a release spec until the roadmap selects its vX.Y.Z release and is approved.
 </HARD-GATE>
 
 Read approved strategy and backlog. Write `.specs/roadmap.md` using `assets/roadmap-template.md`. It owns priorities, sequence, outcome targets, release grouping, and selected release identifiers in the canonical `releases` array with `version`, `objective`, and `status`. Do not duplicate the sequence in prose. Use strict numeric `vX.Y.Z` and one active release at a time, with multiple stories or features allowed in that release. A roadmap entry names intended outcomes; spec owns behavior and acceptance, plan owns the technical solution.

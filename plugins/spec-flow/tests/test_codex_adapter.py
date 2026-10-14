@@ -92,6 +92,30 @@ class CodexAdapterTests(unittest.TestCase):
                                             agent_path="/root/T-001", task_marker=marker)
         self.assertEqual(ctx.exception.code, "host_task_marker_missing")
 
+    def test_no_spawn_reconciliation_requires_current_empty_native_inventory(self):
+        self.write_session(self.owner)
+        task_state = {"packet_sha256": "abc123", "prepared_at": "2026-10-14T11:59:00Z", "attempt_baseline": {}}
+        inventory = {"owner_session": self.owner, "inventory_reference": "list_agents result ref",
+                     "checked_at": "2026-10-14T12:01:00Z", "agents": []}
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.base / "codex")}):
+            result = self.adapter.attest_no_spawn(self.owner, task_state, inventory)
+            self.assertEqual(result["packet_marker"], "SPEC_FLOW_PACKET_SHA256=abc123")
+            with self.assertRaises(AdapterError) as ctx:
+                self.adapter.attest_no_spawn(self.owner, task_state, {**inventory, "agents": [{"agent_path": "/root/T-001", "status": "active"}]})
+        self.assertEqual(ctx.exception.code, "native_agent_still_active")
+
+    def test_packet_child_found_during_no_spawn_inspection_requires_late_binding(self):
+        self.write_session(self.owner)
+        marker = "SPEC_FLOW_PACKET_SHA256=abc123"
+        self.write_session(self.child, model="gpt-6-luna", parent=self.owner, agent_path="/root/T-001", marker=marker)
+        task_state = {"packet_sha256": "abc123", "prepared_at": "2026-10-14T11:59:00Z", "attempt_baseline": {}}
+        inventory = {"owner_session": self.owner, "inventory_reference": "list_agents result ref",
+                     "checked_at": "2026-10-14T12:01:00Z", "agents": [{"agent_path": "/root/T-001", "status": "completed"}]}
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.base / "codex")}):
+            with self.assertRaises(AdapterError) as ctx:
+                self.adapter.attest_no_spawn(self.owner, task_state, inventory)
+        self.assertEqual(ctx.exception.code, "task_agent_found_bind_before_reconcile")
+
     def test_malformed_or_partial_log_fails_closed(self):
         path = self.write_session(self.owner)
         with path.open("a", encoding="utf-8") as stream:

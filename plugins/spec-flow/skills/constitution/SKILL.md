@@ -6,7 +6,7 @@ description: "Create or revise project purpose, users, outcomes, principles, and
 # Spec-Flow: constitution
 
 <HARD-GATE>
-Inspect project configuration and .specs first. If legacy NNN-feature-name artifacts exist, stop and run mandatory migrate before writing. For a new unadopted project, run initialize with empty JSON input {} first. Run the runtime gate for this phase and obey it. Urgency never waives a failed gate. This first decision document must be approved in the registry before dependent work.
+Inspect project configuration and .specs first. If legacy `.specs/NNN-name/` folders exist, stop before writing and follow the `migrate-preview` → review → `migrate-apply` flow in `$using-spec-flow`; use `migrate-resume` after an interrupted apply. For a new unadopted project, run initialize with empty JSON input {} first. Run the runtime gate for this phase and obey it. Urgency never waives a failed gate. This first decision document must be approved in the registry before dependent work.
 </HARD-GATE>
 
 Read the repository, README, AGENTS.md, and root configuration for current facts. Ask the user about purpose, users, outcomes, principles, and boundaries whenever human direction is unknown; these product choices cannot be inferred from code. Write `.specs/constitution.md` using `assets/constitution-template.md`. It owns product purpose, goals, and principles. Component design belongs in architecture, paths in structure, environments in infrastructure, and priorities in roadmap.

@@ -97,15 +97,66 @@ def _strip_generated_tail(text: str) -> str:
     lines = progress.splitlines()
     header = bool(lines and re.fullmatch(r"Progress(?: view)?(?: is)? maintained by (?:the )?(?:Spec-Flow )?harness\.", lines[0]))
     checkbox_lines = lines[1:] if header else lines
-    if any(
-        not re.fullmatch(r"- \[[ xX]\] T-[0-9]{3,}", line)
-        and not re.fullmatch(r"progress: [0-9]{1,3}%", line, re.IGNORECASE)
-        for line in checkbox_lines
-    ):
-        raise ContractError("generated block may contain only task progress checkbox lines")
+    if header:
+        if any(
+            not re.fullmatch(r"- \[[ xX]\] T-[0-9]{3,}", line)
+            and not re.fullmatch(r"progress: [0-9]{1,3}%", line, re.IGNORECASE)
+            for line in checkbox_lines
+        ):
+            raise ContractError("generated progress block may contain only task progress lines")
+    else:
+        # Historical task progress blocks omitted the explanatory header. Keep
+        # accepting that exact narrow shape while rejecting arbitrary prose.
+        if lines and all(
+            re.fullmatch(r"- \[[ xX]\] T-[0-9]{3,}", line)
+            or re.fullmatch(r"progress: [0-9]{1,3}%", line, re.IGNORECASE)
+            for line in lines
+        ):
+            return text[:match.start()].rstrip("\r\n") + "\n"
+        record_match = re.fullmatch(r"\n<!-- spec-flow:generated:start -->\nSpec-Flow derived record:\n(\{.*\})\n<!-- spec-flow:generated:end -->\n*", body, re.DOTALL)
+        if record_match is None:
+            raise ContractError("generated release record must be one strict trailing JSON record")
+        try:
+            record = json.loads(record_match.group(1))
+        except json.JSONDecodeError as exc:
+            raise ContractError("generated release record contains invalid JSON") from exc
+        if not isinstance(record, dict) or json.dumps(record, ensure_ascii=False, sort_keys=True, separators=(",", ":")) != record_match.group(1):
+            raise ContractError("generated release record must use canonical JSON")
+        _validate_generated_record(record)
     # Progress insertion is defined to add a trailing block after a blank-line
     # boundary. Canonicalize only that boundary, preserving decision prose.
     return text[:match.start()].rstrip("\r\n") + "\n"
+
+
+def _validate_generated_record(record: Mapping[str, Any]) -> None:
+    if record.get("schema") == "spec-flow.derived-release.v1":
+        required = {"schema", "kind", "release", "run_id", "technical_status", "phase_commits",
+                    "impact_status", "impact_evidence", "delivery_status", "publication", "external_side_effects"}
+        _require(set(record) == required and record.get("kind") == "release-review", "derived release record has an unsupported shape")
+        _require(record.get("technical_status") == "complete", "derived release record technical_status must be complete")
+        _require(record.get("impact_status") in {"observed", "pending", "unavailable"}, "derived release record has an invalid impact status")
+        _require(record.get("delivery_status") in {"branch_committed", "branch_retained", "not_integrated"}, "derived release record has an invalid delivery status")
+        _require(record.get("publication") is False and record.get("external_side_effects") is False, "derived release record cannot claim publication or external side effects")
+        _require(isinstance(record.get("run_id"), str) and bool(record["run_id"]), "derived release record requires run_id")
+        _require(isinstance(record.get("impact_evidence"), list) and all(isinstance(ref, str) and ref.strip() and "\n" not in ref for ref in record["impact_evidence"]), "derived release record impact evidence must contain references")
+        commits = record.get("phase_commits")
+        _require(isinstance(commits, list) and bool(commits), "derived release record requires phase commit references")
+        for item in commits:
+            _require(isinstance(item, dict) and set(item) == {"phase_id", "sha"}, "derived phase commit reference has an invalid shape")
+            _require(isinstance(item["phase_id"], str) and re.fullmatch(r"PH-[0-9]{2,}", item["phase_id"]) is not None, "derived phase ID is invalid")
+            _require(isinstance(item["sha"], str) and re.fullmatch(r"[0-9a-f]{40,64}", item["sha"]) is not None, "derived phase commit SHA is invalid")
+    elif record.get("schema") == "spec-flow.derived-reference.v1":
+        required = {"schema", "kind", "release", "run_id", "spec_path", "impact_status"}
+        _require(set(record) == required and record.get("kind") == "roadmap-reference", "roadmap derived reference has an unsupported shape")
+        _require(isinstance(record.get("run_id"), str) and bool(record["run_id"]), "roadmap derived reference requires run_id")
+        _require(isinstance(record.get("spec_path"), str) and re.fullmatch(r"\.specs/release-v[0-9]+\.[0-9]+\.[0-9]+/spec\.md", record["spec_path"]) is not None, "roadmap derived reference has an invalid spec path")
+        _require(record.get("impact_status") in {"observed", "pending", "unavailable"}, "roadmap derived reference has an invalid impact status")
+    else:
+        raise ContractError("generated record schema is not recognized")
+    try:
+        normalize_release(record.get("release"))
+    except ContractError as exc:
+        raise ContractError("generated record release must be strict numeric semver") from exc
 
 
 def _digest_content(text: str) -> bytes:
@@ -275,6 +326,62 @@ def _validate_tasks(contract: Mapping[str, Any], root: Path) -> None:
         visit(identifier)
 
 
+def _validate_plan(contract: Mapping[str, Any]) -> None:
+    phases = contract.get("phases")
+    _require(isinstance(phases, list) and bool(phases), "plan must declare a nonempty phases array")
+    phase_ids: Set[str] = set()
+    dependencies: Dict[str, List[str]] = {}
+    for phase in phases:
+        _require(isinstance(phase, dict), "each plan phase must be an object")
+        identifier = phase.get("id")
+        _require(isinstance(identifier, str) and re.fullmatch(r"PH-[0-9]{2,}", identifier) is not None,
+                 "plan phase ID must use PH- followed by at least two digits")
+        _require(identifier not in phase_ids, "duplicate plan phase id: {}".format(identifier))
+        _require(_nonempty_string(phase.get("description")), "plan phase {} requires a description".format(identifier))
+        refs = phase.get("depends_on")
+        _require(isinstance(refs, list) and all(isinstance(item, str) and item for item in refs),
+                 "plan phase {} depends_on must be a list of phase IDs".format(identifier))
+        _require(len(refs) == len(set(refs)), "plan phase {} has duplicate dependencies".format(identifier))
+        phase_ids.add(identifier)
+        dependencies[identifier] = refs
+    for identifier, refs in dependencies.items():
+        _require(all(ref in phase_ids for ref in refs), "plan phase {} depends on an unknown phase".format(identifier))
+    visiting: Set[str] = set()
+    visited: Set[str] = set()
+
+    def visit(identifier: str) -> None:
+        _require(identifier not in visiting, "plan phase dependency graph contains a cycle at {}".format(identifier))
+        if identifier in visited:
+            return
+        visiting.add(identifier)
+        for dependency in dependencies[identifier]:
+            visit(dependency)
+        visiting.remove(identifier)
+        visited.add(identifier)
+
+    for identifier in phase_ids:
+        visit(identifier)
+
+
+def _validate_roadmap(contract: Mapping[str, Any]) -> None:
+    releases = contract.get("releases")
+    _require(isinstance(releases, list) and bool(releases), "roadmap must declare a nonempty releases array")
+    seen: Set[str] = set()
+    for release in releases:
+        _require(isinstance(release, dict), "each roadmap release must be an object")
+        version = release.get("version")
+        try:
+            normalized = normalize_release(version)
+        except ContractError as exc:
+            raise ContractError("roadmap release version must be strict numeric semver") from exc
+        _require(normalized == version, "roadmap release version must use canonical vX.Y.Z form")
+        _require(version not in seen, "duplicate roadmap release version: {}".format(version))
+        seen.add(version)
+        _require(_nonempty_string(release.get("objective")), "roadmap release {} requires an objective".format(version))
+        _require(release.get("status") in {"planned", "active", "completed", "deferred", "cancelled"},
+                 "roadmap release {} has an unknown status".format(version))
+
+
 def validate_document(root: Union[str, Path], path: Union[str, Path], check_dependencies: bool = True) -> Dict[str, Any]:
     """Validate one document and, by default, its referenced document digests."""
     root_path = Path(root).resolve()
@@ -304,6 +411,10 @@ def validate_document(root: Union[str, Path], path: Union[str, Path], check_depe
     _require(not PLACEHOLDER_RE.search(document["prose"]), "document prose contains a placeholder")
     if contract["kind"] == "spec":
         _validate_spec(contract)
+    if contract["kind"] == "plan":
+        _validate_plan(contract)
+    if contract["kind"] == "roadmap":
+        _validate_roadmap(contract)
     if contract["kind"] == "tasks":
         _validate_tasks(contract, root_path)
     if check_dependencies:

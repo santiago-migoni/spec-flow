@@ -6,7 +6,7 @@ description: "Define code organization and placement conventions from approved s
 # Spec-Flow: structure
 
 <HARD-GATE>
-Inspect project configuration and .specs first. If legacy NNN-feature-name artifacts exist, stop and run mandatory migrate before writing. For a new unadopted project, run initialize with empty JSON input {} first. Run the runtime gate for this phase and obey it. Urgency never waives a failed gate. Require current registry approval of constitution and any architecture decision this structure relies on.
+Inspect project configuration and .specs first. If legacy `.specs/NNN-name/` folders exist, stop before writing and follow the `migrate-preview` → review → `migrate-apply` flow in `$using-spec-flow`; use `migrate-resume` after an interrupted apply. For a new unadopted project, run initialize with empty JSON input {} first. Run the runtime gate for this phase and obey it. Urgency never waives a failed gate. Require current registry approval of constitution and any architecture decision this structure relies on.
 </HARD-GATE>
 
 Inspect the repository tree and approved architecture. If this document is not applicable, record N/A with a reason in the roadmap and make no filler document. Write `.specs/structure.md` using `assets/structure-template.md`. It owns module boundaries, directory purposes, placement rules, naming, and dependency direction. Refer to architecture IDs instead of restating component responsibilities. Distinguish existing paths from proposed paths.

@@ -1,180 +1,20 @@
 ---
 name: finishing-branch
-description: "Use when a feature is converged and ready to integrate. Verifies tests, updates CHANGELOG.md, then presents structured options: merge locally, push + PR, keep as-is, or discard. Use this when the user says the feature is done, wants to merge, or asks what to do with the branch."
+description: "Finish a reviewed Spec-Flow release branch through final checks, audit checkpoint, and an explicitly authorized integration choice."
 ---
 
 # Spec-Flow: Finishing Branch
 
-Guide the integration of a completed feature branch — tests, changelog, then a clear choice about where the work goes.
-
 <HARD-GATE>
-Before proceeding:
-1. `.specs/NNN-feature-name/tasks.md` must exist — resolve the plugin package root from this skill's installed `SKILL.md` path in Codex's skill inventory, then run the bundled `<plugin-root>/scripts/check-complete.sh .specs/NNN-feature-name/tasks.md` to confirm all tasks are `[x]`
-2. Converge must have run — either the spec's `Status` is `Converged`, or the user explicitly confirms they want to finish without converging
+Require evidence-based task completion, independently reviewed and committed implementation phases, technical convergence, and the release review recorded in the spec's derived section. Verify current source digests, task evidence, phase receipts, and the closed run's final audit checkpoint. `release-review` already releases controller ownership after recording that checkpoint. A generated checkbox or status label is insufficient. Production execution and phase commits require the isolated linked Git worktree. If a required condition fails, stop with the owning phase to resolve it.
 </HARD-GATE>
 
-## Step 1: Converge Check
+## Prepare a reviewable result
 
-Read `.specs/NNN-feature-name/spec.md`. If `Status` is not `Converged`, surface this:
+Run the consuming project's required test suite on the final release state and record actual results; zero executed cases do not count as a passing suite. Check the branch diff and worktree for unrelated edits or secrets. Read the consuming repository's AGENTS.md and release conventions before touching version or release notes. Update its changelog only when those conventions call for it; do not create or edit a forbidden changelog. Change a package version or publish only when that action is explicitly authorized. Keep any release metadata changes in the commits required by the consuming repository's process.
 
-```
-Converge has not been run for this feature.
-Run $converge first, or confirm you want to finish without it.
-```
+Verify the final audit checkpoint created by `release-review`. That operation captures the last phase receipt, derived spec/roadmap records, and release-review event in exactly one audit-only commit, then releases controller ownership. Do not create a second housekeeping commit or receipt for that audit commit. Generated state and bounded packets may remain local; compact events, receipts, and evidence needed to assess the release stay tracked. The code-phase commits must still match their independently reviewed staged trees.
 
-Wait for explicit user confirmation before continuing.
+Present the resulting release version, passed checks, phase commit SHAs, audit checkpoint, and proposed integration action. Reuse any explicit integration authorization the user already gave for this exact branch and destination. If that authority is absent, ask for a choice after the concrete result is ready: keep the branch, merge locally, or push and create a PR. Execute only the chosen action. For discard, show the exact branch/commit range and require explicit confirmation before deletion. Re-run relevant tests after a merge. Never force-push without an explicit request.
 
-## Step 2: Verify Tests
-
-Run the project's test suite:
-
-```bash
-npm test / cargo test / pytest / go test ./... / <project-specific command>
-```
-
-**If tests fail** — stop completely:
-
-```
-Tests failing (N failures). Fix before finishing:
-
-[Show failures]
-
-Cannot proceed until tests pass.
-```
-
-Do not proceed to Step 3.
-
-**If tests pass** — continue.
-
-## Step 3: Update CHANGELOG.md
-
-Read `.specs/NNN-feature-name/spec.md` to extract:
-- Feature name and summary
-- User stories delivered (and their priorities)
-
-Check the branch's commit history for its [Conventional Commits](https://www.conventionalcommits.org/) types:
-
-```bash
-git log <base-branch>..HEAD --oneline
-```
-
-Use the heading driven by the commit types found (fall back to judgment from the spec summary if commits aren't typed):
-- `Added` — branch contains `feat` commits
-- `Fixed` — branch contains `fix` commits (and no `feat`)
-- `Changed` — everything else (`refactor`, `perf`, `style`, etc.)
-
-If any commit has a `!` after its type/scope or a `BREAKING CHANGE:` footer, call that out explicitly in the entry.
-
-The same scan gives the [SemVer](https://semver.org/) bump this branch calls for — carry it to Step 5, don't act on it here:
-- **MAJOR** — any `!` or `BREAKING CHANGE:` footer
-- **MINOR** — no breaking change, but at least one `feat`
-- **PATCH** — no breaking change or `feat`, but at least one `fix` or `refactor`
-- **none** — only `chore`/`docs`/`style`/etc., no user-facing change
-
-Read the root `CHANGELOG.md` and add an entry under `## Unreleased` (create the section if it does not exist):
-
-```markdown
-### Added / Changed / Fixed
-- [Feature name] — [one-line summary of what was delivered, derived from spec summary]
-```
-
-Write the updated `CHANGELOG.md`. Do not modify any other section.
-
-## Step 4: Stage and Commit Remaining Spec Artifacts
-
-Before presenting integration options, inspect the worktree and provide the commands to commit any spec artifacts still uncommitted, plus the changelog. `implement` already committed `tasks.md` with each completed phase; do not amend or recommit those phase commits. Use a [Conventional Commits](https://www.conventionalcommits.org/) message — this commit only touches documentation, so type `docs`, scoped to the feature:
-
-```bash
-git add -- .specs/NNN-feature-name/spec.md .specs/NNN-feature-name/plan.md .specs/NNN-feature-name/tasks.md CHANGELOG.md
-git commit -m "docs(NNN-feature-name): update changelog and spec artifacts"
-```
-
-Stage explicit paths, inspect the staged diff, and omit unchanged paths. Skip the commit if nothing remains. Earlier per-phase `tasks.md` changes stay with their implementation commits.
-
-## Step 5: Present Integration Options
-
-```
-Feature NNN-feature-name is complete. Tests pass. CHANGELOG updated.
-Recommended version bump: <MAJOR|MINOR|PATCH|none> — <reason, e.g. "feat commits present">
-
-1. Merge into <base-branch> locally
-2. Push and create a Pull Request
-3. Keep the branch as-is (handle later)
-4. Discard this work
-
-Which option?
-```
-
-Don't edit any version file (`package.json`, `Cargo.toml`, `plugin.json`, etc.) — its location and format vary per project. The bump is a recommendation for whoever cuts the release.
-
-Detect base branch:
-```bash
-git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null
-```
-
-If base branch is ambiguous, ask: "Which branch should this merge into?"
-
-## Step 6: Execute Choice
-
-### Option 1 — Merge locally
-
-Provide the commands:
-```bash
-git checkout <base-branch>
-git pull
-git merge <feature-branch>
-```
-
-Run tests again on the merged result. If they pass, provide:
-```bash
-git branch -d <feature-branch>
-```
-
-Report: "Merged and branch deleted. Feature complete."
-
-### Option 2 — Push and create PR
-
-Provide the commands:
-```bash
-git push -u origin <feature-branch>
-gh pr create --title "<feature name>" --body "Closes spec: .specs/NNN-feature-name/"
-```
-
-Do not delete the branch — the user needs it alive for PR feedback.
-
-Report: "Branch pushed and PR created. Branch preserved for iteration."
-
-### Option 3 — Keep as-is
-
-Report: "Branch kept as-is. Run $finishing-branch again when ready."
-
-### Option 4 — Discard
-
-**Require explicit confirmation first:**
-
-```
-This will permanently delete:
-- Branch <feature-branch>
-- All commits since <base-branch>: <commit-list>
-
-Type 'discard' to confirm.
-```
-
-Wait for exact input `discard`. On confirmation, provide:
-
-```bash
-git checkout <base-branch>
-git branch -D <feature-branch>
-```
-
-Report: "Branch discarded."
-
-## Red Flags
-
-| Never | Because |
-|---|---|
-| Proceed with failing tests | Merges broken code |
-| Force-push without explicit user request | Rewrites shared history |
-| Delete the branch on Option 2 | User needs it for PR iteration |
-| Skip the discard confirmation | Permanent data loss |
-| Modify CHANGELOG sections other than Unreleased | Breaks release history |
+A planned release identifier such as `v2.0.0` does not by itself authorize a package version change, publication, or deployment. Report which of those actions, if any, were actually authorized and completed.

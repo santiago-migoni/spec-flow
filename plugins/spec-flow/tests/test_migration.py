@@ -345,7 +345,7 @@ class MigrationTests(unittest.TestCase):
         self.assertEqual(state["tasks"]["T-001"]["status"], "completed")
         self.assertEqual(sum(event["event"] == "migration_credited" for event in self.engine.store.read_events(started["run_id"])), 1)
         repeated = self.engine.dispatch("start", start_payload)
-        self.assertTrue(repeated["already_completed"])
+        self.assertTrue(repeated["already_running"])
         self.assertEqual(sum(event["event"] == "migration_credited" for event in self.engine.store.read_events(started["run_id"])), 1)
 
     def test_resume_repairs_partial_promotion_without_duplicate_archive(self):

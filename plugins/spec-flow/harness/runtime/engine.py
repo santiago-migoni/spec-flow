@@ -74,8 +74,16 @@ class Engine:
             "close": self._close,
             "resume": self._resume,
             "takeover": self._takeover,
+            "phase-ready": self._phase_ready,
+            "review-phase": self._review_phase,
+            "commit-phase": self._commit_phase,
+            "refresh-evidence": self._refresh_evidence,
+            "release-review": self._release_review,
+            "complete": self._complete,
+            "hook-check": self._hook_check,
             "status": self._status,
             "interrupt": self._interrupt,
+            "abandon": self._abandon,
             "migrate-preview": self._migrate_preview,
             "migrate-apply": self._migrate_apply,
             "migrate-resume": self._migrate_resume,
@@ -87,7 +95,7 @@ class Engine:
         if operation in {"migrate-apply", "migrate-resume"}:
             with self.store.locked(create=True):
                 return methods[operation](payload)
-        if operation == "status":
+        if operation in {"status", "complete", "hook-check"}:
             self._reject_legacy_if_present()
             return methods[operation](payload)
         self._reject_legacy_if_present()
@@ -189,11 +197,124 @@ class Engine:
         config_path = self._config_path()
         if config_path.exists():
             self._config()
+            self._ensure_registry_gitignore()
             return {"status": "initialized", "config_path": str(config_path), "already_initialized": True}
         config = {"schema_version": 1, "profiles": PROFILES, "retry_limit": 3}
         self.store.write_json_atomic(config_path, config)
         (self.root / ".spec-flow" / "runs").mkdir(parents=True, exist_ok=True)
+        self._ensure_registry_gitignore()
         return {"status": "initialized", "config_path": str(config_path), "already_initialized": False}
+
+    def _ensure_registry_gitignore(self) -> None:
+        path = self.root / ".spec-flow" / ".gitignore"
+        lines = ["# Spec-Flow generated state and bounded context packets", "/lock", "/runs/*/state.json", "/runs/*/packets/"]
+        existing = path.read_text(encoding="utf-8") if path.exists() else ""
+        additions = [line for line in lines if line not in existing.splitlines()]
+        if additions:
+            with path.open("a", encoding="utf-8") as stream:
+                if existing and not existing.endswith("\n"):
+                    stream.write("\n")
+                stream.write("\n".join(additions) + "\n")
+
+    def _phase_controller(self):
+        from .phases import PhaseController
+        controller = getattr(self, "_phases", None)
+        if controller is None:
+            controller = self._phases = PhaseController(self)
+        return controller
+
+    def _phase_ready(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        return self._phase_controller().ready(payload)
+
+    def _review_phase(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        return self._phase_controller().review(payload)
+
+    def _commit_phase(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        return self._phase_controller().commit(payload)
+
+    def _refresh_evidence(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        return self._phase_controller().refresh_evidence(payload)
+
+    def _release_review(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        return self._phase_controller().release_review(payload)
+
+    def _complete(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        return self._phase_controller().complete(payload)
+
+    def _hook_check(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        """Read-only PreToolUse authorization for explicitly supported writes."""
+        self._fields(payload, ("paths",))
+        paths = payload["paths"]
+        if not isinstance(paths, list) or not paths or not all(isinstance(item, str) and item.strip() for item in paths):
+            raise EngineError("invalid_input", "hook paths must be a nonempty list of project-relative strings")
+        targets: List[str] = []
+        for value in paths:
+            if Path(value).is_absolute() or ".." in Path(value).parts:
+                raise EngineError("unsafe_path", "hook paths must be relative and must not traverse the project root")
+            path = self._project_path(value)
+            relative = path.relative_to(self.root).as_posix()
+            if relative == ".spec-flow" or relative.startswith(".spec-flow/"):
+                raise EngineError("protected_runtime_state", "Codex tools cannot patch Spec-Flow runtime, registry, packet, or audit state")
+            targets.append(relative)
+
+        docs = []
+        code_targets = []
+        for relative in targets:
+            parts = Path(relative).parts
+            if len(parts) == 3 and parts[0] == ".specs" and parts[1].startswith("release-v") and parts[2] in {"spec.md", "plan.md", "tasks.md"}:
+                docs.append(relative)
+            elif len(parts) == 2 and parts[0] == ".specs" and parts[1] in {"architecture.md", "structure.md", "infrastructure.md", "roadmap.md"}:
+                docs.append(relative)
+            elif parts and parts[0] == ".specs":
+                continue
+            else:
+                code_targets.append(relative)
+
+        for relative in docs:
+            path = self._project_path(relative)
+            name = path.name
+            release = self._infer_release(path)
+            if name in {"architecture.md", "structure.md", "infrastructure.md"}:
+                prerequisites = [self._project_path(".specs/constitution.md")]
+            elif name == "roadmap.md":
+                if path.exists():
+                    try:
+                        doc = validate_document(self.root, path)
+                        prerequisites = self._gate_prerequisites("roadmap", path, doc["contract"], release)
+                    except ContractError as exc:
+                        raise EngineError("contract_invalid", str(exc)) from exc
+                else:
+                    prerequisites = [self._project_path(".specs/constitution.md")]
+            else:
+                predecessor = {"spec.md": ".specs/roadmap.md", "plan.md": self._release_path(release, "spec.md").relative_to(self.root).as_posix(),
+                               "tasks.md": self._release_path(release, "plan.md").relative_to(self.root).as_posix()}.get(name)
+                prerequisites = [self._project_path(predecessor)] if predecessor else []
+            for prerequisite in prerequisites:
+                self._require_approved(prerequisite)
+
+        if code_targets:
+            active = []
+            for run_id in self.store.run_ids():
+                state = self._state(run_id)
+                if state.get("status") == "active" and state.get("active_task"):
+                    active.append(state)
+            if len(active) != 1:
+                raise EngineError("active_task_required", "implementation writes require exactly one active, authorized task")
+            state = active[0]
+            task_id = state["active_task"]
+            task = self._task_contract(state, task_id)
+            task_state = state.get("tasks", {}).get(task_id, {})
+            if task["phase"] not in state["authorized_phases"]:
+                raise EngineError("phase_not_authorized", "active task phase lacks current execution authorization")
+            if task_state.get("status") != "running" or not task_state.get("agent"):
+                raise EngineError("native_agent_required", "implementation writes require a prepared task with a bound native agent")
+            self._owned_state({"run_id": state["run_id"], "owner": state["owner"]})
+            self._ensure_approvals_current(state)
+            allowed = self._allowed_paths(task)
+            outside = sorted(set(code_targets) - allowed)
+            if outside:
+                raise EngineError("out_of_scope_changes", "write paths exceed the active task's approved file scope", details={"paths": outside, "task_id": task_id})
+        return {"allowed": True, "paths": targets, "active_task": active[0]["active_task"] if code_targets else None}
 
     def _digest(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, ("path",))
@@ -300,6 +421,12 @@ class Engine:
                 raise EngineError("dependency_not_approved", "approve dependencies first: {}".format(dependency.relative_to(self.root)))
         digest = document_digest(path)
         receipt = {"path": path.relative_to(self.root).as_posix(), "digest": digest, "actor": actor, "statement": statement, "source": source, "created_at": self._now()}
+        # Approval retries are common after a lost CLI response. Reuse the
+        # exact receipt, while preserving a new receipt for a changed statement.
+        for existing in self.store.approvals():
+            if all(existing.get(key) == receipt[key] for key in ("path", "digest", "actor", "statement", "source")):
+                return {"approved": True, "path": receipt["path"], "digest": digest,
+                        "sequence": existing.get("seq"), "already_approved": True}
         try:
             row = self.store.append_approval(receipt)
         except StoreError as exc:
@@ -429,6 +556,10 @@ class Engine:
     def _start(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, ("release", "owner", "authorization", "capabilities"), ("phases",))
         self._config()
+        # Migration may create the runtime config directly, without going
+        # through initialize. Install cache ignores on the first mutating run
+        # entry while preserving tracked event/audit evidence.
+        self._ensure_registry_gitignore()
         version = self._release_version(payload["release"])
         owner = self._nonempty(payload["owner"], "owner")
         auth = self._authorization(payload["authorization"])
@@ -456,11 +587,15 @@ class Engine:
             raise EngineError("invalid_input", "phases must be a nonempty string list")
         if set(phases) - set(task_phases):
             raise EngineError("invalid_input", "authorized phases must occur in tasks.md")
+        prior_attempts: Dict[str, int] = {}
         for run_id in self.store.run_ids():
             try:
                 existing = self.store.read_state(run_id, self._reduce_events)
             except StoreError as exc:
                 raise EngineError(exc.code, str(exc)) from exc
+            if existing.get("release") == version:
+                for task_id, task_state in existing.get("tasks", {}).items():
+                    prior_attempts[task_id] = max(prior_attempts.get(task_id, 0), int(task_state.get("attempt", 0)))
             if existing["status"] in {"active", "interrupted"}:
                 if existing["release"] == version and existing["owner"] == owner:
                     self._adapter_call("acquire", run_id, version, owner)
@@ -471,8 +606,11 @@ class Engine:
                             "imported_completed": imported["completed"], "pending_imports": imported["pending"]}
                 raise EngineError("run_already_active", "another run owns the project")
             if existing["status"] == "completed" and existing["release"] == version and existing["owner"] == owner:
-                return {"run_id": run_id, "status": "completed", "already_completed": True,
-                        "authorized_phases": existing["authorized_phases"], "imported_completed": [], "pending_imports": []}
+                closure = self._phase_controller().complete({"release": version, "run_id": run_id})
+                if closure["complete"]:
+                    return {"run_id": run_id, "status": "completed", "already_completed": True,
+                            "authorized_phases": existing["authorized_phases"], "imported_completed": [], "pending_imports": []}
+                raise EngineError("run_closure_pending", "phase work is committed but final release audit/closure is incomplete", details={"reasons": closure["reasons"]})
         run_id = str(uuid.uuid4())
         self.store.create_run(run_id)
         try:
@@ -482,6 +620,7 @@ class Engine:
                 "documents": {path.relative_to(self.root).as_posix(): document_digest(path) for path in self._document_closure(approval_roots)},
                 "task_ids": [item["id"] for item in task_items], "task_contracts": task_items,
                 "phase_contracts": validated["plan"]["contract"]["phases"],
+                "prior_attempts": prior_attempts,
             }, self._reduce_events)
         except StoreError as exc:
             shutil.rmtree(self.store.run_dir(run_id), ignore_errors=True)
@@ -492,17 +631,63 @@ class Engine:
             shutil.rmtree(self.store.run_dir(run_id), ignore_errors=True)
             raise
         try:
+            reused = self._credit_prior_run_evidence(run_id)
             imported = self._credit_migrated_evidence(run_id, version, task_items)
         except StoreError as exc:
             raise EngineError(exc.code, str(exc)) from exc
         state = self._state(run_id)
         return {"run_id": run_id, "status": state["status"], "authorized_phases": list(dict.fromkeys(phases)),
-                "imported_completed": imported["completed"], "pending_imports": imported["pending"]}
+                "reused_completed": reused, "imported_completed": imported["completed"], "pending_imports": imported["pending"]}
 
     def _capabilities(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, ("owner", "report"))
         owner = self._nonempty(payload["owner"], "owner")
         return self._adapter_call("capabilities", payload["report"], owner)
+
+    def _credit_prior_run_evidence(self, run_id: str) -> List[str]:
+        """Reuse only exact, still-current completed evidence from an earlier same-release run."""
+        state = self._state(run_id)
+        credited: List[str] = []
+        for task in state["task_contracts"]:
+            task_id = task["id"]
+            current = self._state(run_id).get("tasks", {}).get(task_id, {})
+            if current.get("status") == "completed":
+                continue
+            for prior_id in reversed(self.store.run_ids()):
+                if prior_id == run_id:
+                    continue
+                prior = self._state(prior_id)
+                if prior.get("release") != state["release"]:
+                    continue
+                prior_task = next((item for item in prior["task_contracts"] if item.get("id") == task_id), None)
+                evidence = prior.get("tasks", {}).get(task_id, {})
+                if (prior_task != task or evidence.get("status") != "completed"
+                        or evidence.get("source_digests") != state["documents"]
+                        or not evidence.get("step_evidence") or not evidence.get("code_fingerprint")):
+                    continue
+                try:
+                    self._ensure_evidence_current(prior, task_id, evidence, enforce_snapshot=False)
+                except EngineError:
+                    continue
+                expected_steps = {step["id"] for step in task["steps"]}
+                if set(evidence["step_evidence"]) != expected_steps:
+                    continue
+                if any(item.get("source_digests") != state["documents"] for item in evidence["step_evidence"].values()):
+                    continue
+                evidence_path = self.store.run_dir(run_id) / "evidence" / "{}-prior-{}.json".format(task_id, prior_id)
+                record = {"task_id": task_id, "prior_run_id": prior_id, "source_digests": state["documents"],
+                          "code_fingerprint": evidence["code_fingerprint"], "verified_snapshot": evidence.get("verified_snapshot"),
+                          "steps": list(evidence["step_evidence"].values()), "review": evidence.get("review"),
+                          "prior_evidence_path": evidence.get("evidence_path")}
+                self.store.write_json_atomic(evidence_path, record)
+                self._append(run_id, "prior_run_credited", {"task_id": task_id, "prior_run_id": prior_id,
+                    "steps": record["steps"], "code_fingerprint": record["code_fingerprint"],
+                    "attempt": int(state.get("prior_attempts", {}).get(task_id, 0)),
+                    "verified_snapshot": record["verified_snapshot"], "source_digests": record["source_digests"],
+                    "evidence_path": evidence_path.relative_to(self.root).as_posix(), "review": record["review"]})
+                credited.append(task_id)
+                break
+        return credited
 
     def _credit_migrated_evidence(self, run_id: str, release: str,
                                   task_items: Sequence[Mapping[str, Any]]) -> Dict[str, List[Any]]:
@@ -639,9 +824,10 @@ class Engine:
             raise EngineError("contract_invalid", "task phase is absent from the approved plan")
         phase_dependencies: Set[str] = set()
         for prior_phase in phase["depends_on"]:
-            unfinished = [item["id"] for item in state["task_contracts"] if item["phase"] == prior_phase and state["tasks"].get(item["id"], {}).get("status") != "completed"]
-            if unfinished:
-                raise EngineError("phase_dependency_not_complete", "phase dependency still has open tasks: {}".format(", ".join(unfinished)))
+            prior_state = state.get("phases", {}).get(prior_phase, {})
+            if prior_state.get("status") != "committed":
+                raise EngineError("phase_dependency_not_committed", "phase dependency requires a validated prior phase commit: {}".format(prior_phase))
+            self._phase_controller()._validate_recorded_commit(state, prior_phase, prior_state)
             phase_dependencies.update(item["id"] for item in state["task_contracts"] if item["phase"] == prior_phase)
         completed_dependencies = set(task["depends_on"]) | phase_dependencies
         for dependency in task["depends_on"]:
@@ -652,7 +838,7 @@ class Engine:
             if dependency_state.get("status") == "completed":
                 self._ensure_evidence_current(state, dependency, dependency_state, enforce_snapshot=False)
         self._ensure_approvals_current(state)
-        attempt = int(task_state.get("attempt", 0)) + 1
+        attempt = int(state.get("prior_attempts", {}).get(task_id, 0)) + int(task_state.get("attempt", 0)) + 1
         retry_limit = self._config()["retry_limit"]
         if attempt > retry_limit:
             raise EngineError("retry_limit", "task reached the maximum of {} attempts".format(retry_limit))
@@ -698,7 +884,8 @@ class Engine:
         self._write_immutable_json(packet_path, packet)
         self._append(payload["run_id"], "prepared", {
             "task_id": task_id, "attempt": attempt, "packet_path": packet_path.relative_to(self.root).as_posix(),
-            "packet_sha256": packet["packet_sha256"], "baseline": baseline, "scope_files": sorted(scoped_files), "source_digests": state["documents"],
+            "packet_sha256": packet["packet_sha256"], "baseline": baseline, "scope_files": sorted(scoped_files),
+            "source_digests": state["documents"], "attempt_owner": state["owner"],
         })
         return {"run_id": payload["run_id"], "task_id": task_id, "attempt": attempt, "packet_path": str(packet_path), "packet_sha256": packet["packet_sha256"], "scope_files": sorted(scoped_files)}
 
@@ -776,7 +963,7 @@ class Engine:
         state = self._owned_state(payload)
         self._require_active_task(state, payload["task_id"])
         task_state = state.get("tasks", {}).get(payload["task_id"], {})
-        if task_state.get("status") != "running" or task_state.get("agent"):
+        if task_state.get("status") not in {"running", "reconciliation_required"} or task_state.get("agent"):
             raise EngineError("invalid_transition", "bind-agent requires one prepared attempt without a bound agent")
         agent_id = self._nonempty(payload["agent_id"], "agent_id")
         session_id = self._nonempty(payload["session_id"], "session_id")
@@ -784,11 +971,12 @@ class Engine:
         if agent_id != agent_path:
             raise EngineError("host_agent_mismatch", "agent_id must equal the canonical agent_path returned by the native spawn response")
         marker = "SPEC_FLOW_PACKET_SHA256=" + task_state.get("packet_sha256", "")
-        evidence = self._adapter_call("attest_session", session_id, "implementer", parent_session=state["owner"], agent_path=agent_path,
+        parent_session = task_state.get("attempt_owner", state["owner"])
+        evidence = self._adapter_call("attest_session", session_id, "implementer", parent_session=parent_session, agent_path=agent_path,
                                       task_marker=marker, after=task_state.get("prepared_at"))
         self._append(payload["run_id"], "agent_bound", {"task_id": payload["task_id"], "attempt": task_state["attempt"],
                                                           "agent_id": agent_id, "session_id": session_id,
-                                                          "agent_path": agent_path, "parent_session": state["owner"],
+                                                          "agent_path": agent_path, "parent_session": parent_session,
                                                           "attestation": evidence})
         return {"run_id": payload["run_id"], "task_id": payload["task_id"], "agent_id": agent_id, "session_id": session_id, "bound": True}
 
@@ -823,7 +1011,7 @@ class Engine:
         return {"run_id": payload["run_id"], "task_id": payload["task_id"], "retry_ready": True}
 
     def _reconcile(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
-        self._fields(payload, ("run_id", "owner", "task_id", "disposition", "evidence"), ("result", "reason", "hypothesis"))
+        self._fields(payload, ("run_id", "owner", "task_id", "disposition", "evidence"), ("result", "reason", "hypothesis", "native_inspection"))
         state = self._owned_state(payload)
         self._require_owner(state, payload["owner"])
         task_id = self._nonempty(payload["task_id"], "task_id")
@@ -831,6 +1019,18 @@ class Engine:
             raise EngineError("reconciliation_not_required", "task has no interrupted attempt requiring reconciliation")
         evidence = self._nonempty(payload["evidence"], "evidence")
         task_state = state["tasks"][task_id]
+        if payload["disposition"] == "no_spawn":
+            native = None
+            if getattr(self.adapter, "production", False):
+                native = self._adapter_call("attest_no_spawn", state["owner"], task_state, payload.get("native_inspection"))
+                baseline = task_state.get("attempt_baseline", task_state.get("baseline", {}))
+                changed = self._changed_paths(baseline, self._snapshot_code())
+                if changed:
+                    raise EngineError("no_spawn_worktree_changed", "task files changed after preparation; bind and reconcile the native child instead of claiming no spawn",
+                                      details={"paths": sorted(changed)})
+            self._append(payload["run_id"], "reconciled_no_spawn", {"task_id": task_id, "attempt": task_state["attempt"],
+                "evidence": evidence, "native_attestation": native, "at": self._now()})
+            return {"run_id": payload["run_id"], "task_id": task_id, "disposition": "no_spawn", "retry_ready": True}
         if getattr(self.adapter, "production", False):
             native = self._attest_bound_agent(state, task_id, task_state)
             if native.get("agent_lifecycle") not in {"completed", "aborted"}:
@@ -854,7 +1054,7 @@ class Engine:
                 "task_id": task_id, "evidence": evidence, "reason": reason, "hypothesis": hypothesis,
             })
             return {"run_id": payload["run_id"], "task_id": task_id, "disposition": "retry", "retry_ready": True}
-        raise EngineError("invalid_input", "reconciliation disposition must be accept_result or retry")
+        raise EngineError("invalid_input", "reconciliation disposition must be accept_result, retry, or no_spawn")
 
     def _verify(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, ("run_id", "owner", "task_id"), ("inspection_evidence", "timeout_seconds"))
@@ -933,7 +1133,7 @@ class Engine:
         self._append(payload["run_id"], "verified", {
             "task_id": payload["task_id"], "attempt": attempt, "steps": outputs,
             "code_fingerprint": fingerprint, "evidence_path": evidence_path.relative_to(self.root).as_posix(),
-            "verified_snapshot": after,
+            "verified_snapshot": after, "source_digests": state["documents"],
         })
         return {"run_id": payload["run_id"], "task_id": payload["task_id"], "passed": True, "steps": outputs, "evidence_path": str(evidence_path)}
 
@@ -966,8 +1166,6 @@ class Engine:
         task_id = self._nonempty(payload["task_id"], "task_id")
         task_state = state["tasks"].get(task_id, {})
         if task_state.get("status") == "completed":
-            if state.get("status") == "completed":
-                self._adapter_call("release", state)
             self._update_task_progress(state)
             return {"run_id": payload["run_id"], "task_id": task_id, "status": "completed", "already_completed": True, "run_dir": str(self.store.run_dir(payload["run_id"]))}
         self._require_active_task(state, task_id)
@@ -975,19 +1173,42 @@ class Engine:
             raise EngineError("review_required", "a passing review is required before close")
         self._ensure_evidence_current(state, task_id, task_state)
         self._ensure_approvals_current(state)
-        finished = all(state["tasks"].get(item, {}).get("status") == "completed" for item in state["task_ids"] if item != task_id)
-        run_completed = finished
-        self._append(payload["run_id"], "closed", {"task_id": task_id, "closed_at": self._now(), "run_completed": run_completed})
+        self._append(payload["run_id"], "closed", {"task_id": task_id, "closed_at": self._now(), "run_completed": False})
         updated_state = self._state(payload["run_id"])
-        if run_completed:
-            self._adapter_call("release", updated_state)
         self._update_task_progress(updated_state)
         return {
             "run_id": payload["run_id"], "task_id": task_id,
-            "status": "completed", "already_completed": False, "run_completed": run_completed,
+            "status": "completed", "already_completed": False, "run_completed": False,
             "run_dir": str(self.store.run_dir(payload["run_id"])),
             "tasks_digest": document_digest(self._release_path(state["release"], "tasks.md")),
         }
+
+    def _abandon(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        self._fields(payload, ("run_id", "owner", "reason", "authorization"))
+        run_id = self._nonempty(payload["run_id"], "run_id")
+        owner = self._nonempty(payload["owner"], "owner")
+        reason = self._nonempty(payload["reason"], "reason")
+        authorization = self._authorization(payload["authorization"])
+        state = self._state(run_id)
+        self._require_owner(state, owner)
+        if state.get("status") == "abandoned":
+            if getattr(self.adapter, "production", False):
+                self._adapter_call("release", state)
+            return {"run_id": run_id, "status": "abandoned", "already_abandoned": True, "history_preserved": True}
+        if state.get("status") not in {"active", "interrupted", "completed"}:
+            raise EngineError("run_not_abandonable", "only an active, interrupted, or closure-pending run can be abandoned")
+        if state.get("release_review"):
+            raise EngineError("run_not_abandonable", "a run with a final release-review audit cannot be abandoned")
+        if state.get("active_task"):
+            raise EngineError("active_task_requires_reconciliation", "inspect and reconcile the active native task before abandoning the run",
+                              details={"task_id": state["active_task"], "task_status": state.get("tasks", {}).get(state["active_task"], {}).get("status")})
+        if getattr(self.adapter, "production", False):
+            self._adapter_call("assert_lease", state)
+            self._adapter_call("attest_session", owner, "orchestrator")
+        self._append(run_id, "abandoned", {"reason": reason, "authorization": authorization, "abandoned_at": self._now()})
+        updated = self._state(run_id)
+        self._adapter_call("release", updated)
+        return {"run_id": run_id, "status": "abandoned", "already_abandoned": False, "history_preserved": True}
 
     def _interrupt(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, ("run_id", "owner"))
@@ -1352,7 +1573,8 @@ class Engine:
                     "authorization": [data["authorization"]], "capabilities": data["capabilities"],
                     "documents": dict(data["documents"]), "task_ids": list(data["task_ids"]),
                     "task_contracts": list(data["task_contracts"]), "phase_contracts": list(data["phase_contracts"]),
-                    "tasks": {}, "active_task": None, "migration_evidence_pending": [],
+                    "tasks": {}, "phases": {}, "active_task": None, "migration_evidence_pending": [],
+                    "prior_attempts": dict(data.get("prior_attempts", {})),
                 }
             elif not state:
                 raise StoreError("corrupt_log", "run event precedes start event")
@@ -1367,10 +1589,14 @@ class Engine:
                                                                            "at": data["transferred_at"]})
             elif kind == "prepared":
                 task = state["tasks"].setdefault(data["task_id"], {})
+                # Keep the first attempt baseline as the task's cumulative
+                # authorization boundary; retries must not make earlier
+                # out-of-scope edits disappear from later verification.
+                original_baseline = task.get("baseline", data["baseline"])
                 task.update({"attempt": data["attempt"], "status": "running", "packet_path": data["packet_path"],
                              "packet_sha256": data.get("packet_sha256"), "prepared_at": event.get("at"),
-                             "baseline": data["baseline"], "scope_files": data["scope_files"],
-                             "source_digests": data["source_digests"], "result": None,
+                             "baseline": original_baseline, "attempt_baseline": data["baseline"], "scope_files": data["scope_files"],
+                             "source_digests": data["source_digests"], "attempt_owner": data.get("attempt_owner", state["owner"]), "result": None,
                              "step_evidence": {}, "review": None, "code_fingerprint": None})
                 state["active_task"] = data["task_id"]
                 state["reconciliation_required"] = False
@@ -1398,6 +1624,13 @@ class Engine:
                 task["retry_reason"] = data["reason"]
                 task["retry_hypothesis"] = data["hypothesis"]
                 state["active_task"] = None
+            elif kind == "reconciled_no_spawn":
+                task = state["tasks"].setdefault(data["task_id"], {})
+                task["status"] = "needs_changes"
+                task["reconciliation_evidence"] = data["evidence"]
+                task["no_spawn_attestation"] = data.get("native_attestation")
+                state["active_task"] = None
+                state["reconciliation_required"] = False
             elif kind == "reconciled_retry":
                 task = state["tasks"].setdefault(data["task_id"], {})
                 task["status"] = "needs_changes"
@@ -1412,6 +1645,7 @@ class Engine:
                 task["verified_snapshot"] = data["verified_snapshot"]
                 task["evidence_path"] = data["evidence_path"]
                 task["status"] = "verified"
+                task["source_digests"] = dict(data.get("source_digests", {}))
             elif kind == "reviewed":
                 task = state["tasks"].setdefault(data["task_id"], {})
                 task["review"] = {"verdict": data["verdict"], "evidence": data["evidence"], "at": data["reviewed_at"]}
@@ -1420,22 +1654,50 @@ class Engine:
                 else:
                     task["status"] = "needs_changes"
                     state["active_task"] = None
+            elif kind == "task_evidence_refreshed":
+                task = state["tasks"].setdefault(data["task_id"], {})
+                task.update({"step_evidence": {item["step_id"]: item for item in data["steps"]},
+                             "code_fingerprint": data["code_fingerprint"], "verified_snapshot": data["verified_snapshot"],
+                             "source_digests": data["source_digests"], "evidence_path": data["evidence_path"]})
+            elif kind == "phase_ready":
+                state.setdefault("phases", {})[data["phase_id"]] = {"status": "ready", "parent": data["parent"],
+                    "tree": data["tree"], "diff_sha256": data["diff_sha256"], "staged_paths": data["staged_paths"],
+                    "source_digests": data["source_digests"], "packet_path": data["packet_path"],
+                    "packet_sha256": data["packet_sha256"], "marker": data["marker"], "ready_at": data["at"], "review": None}
+            elif kind == "phase_reviewed":
+                phase = state.setdefault("phases", {}).setdefault(data["phase_id"], {})
+                phase["review"] = {key: data[key] for key in ("verdict", "reviewer_session", "reviewer_agent_id", "evidence", "review_packet_sha256", "host_attestation", "reviewed_at")}
+                phase["status"] = "reviewed" if data["verdict"] == "pass" else "ready"
+            elif kind == "phase_committed":
+                phase = state.setdefault("phases", {}).setdefault(data["phase_id"], {})
+                phase.update({"status": "committed", "commit": data["commit"], "receipt_path": data["receipt_path"]})
+                if all(state.get("phases", {}).get(item["id"], {}).get("status") == "committed" for item in state["phase_contracts"]):
+                    state["status"] = "completed"
+            elif kind == "release_reviewed":
+                state["release_review"] = {"record": data["record"], "roadmap_reference": data["roadmap_reference"], "reviewed_at": data["reviewed_at"]}
             elif kind == "closed":
                 task = state["tasks"].setdefault(data["task_id"], {})
                 task["status"] = "completed"
                 task["closed_at"] = data["closed_at"]
                 state["active_task"] = None
                 state["reconciliation_required"] = False
-                if data.get("run_completed"):
-                    state["status"] = "completed"
+            elif kind == "prior_run_credited":
+                task = state["tasks"].setdefault(data["task_id"], {})
+                task.update({"status": "completed", "step_evidence": {item["step_id"]: item for item in data["steps"]},
+                             "code_fingerprint": data["code_fingerprint"], "verified_snapshot": data["verified_snapshot"],
+                             "source_digests": dict(data["source_digests"]), "attempt": int(data.get("attempt", 0)),
+                             "evidence_path": data["evidence_path"],
+                             "review": data.get("review"), "prior_run_id": data["prior_run_id"], "closed_at": event.get("at")})
+            elif kind == "abandoned":
+                state["status"] = "abandoned"
+                state["abandonment"] = {"reason": data["reason"], "authorization": data["authorization"],
+                                         "abandoned_at": data["abandoned_at"]}
             elif kind == "migration_credited":
                 task = state["tasks"].setdefault(data["task_id"], {})
                 task.update({"status": "completed", "historical_evidence": list(data["steps"]),
                              "migration_ids": list(data["migration_ids"]), "closed_at": data["credited_at"],
                              "verified_snapshot": data["verified_snapshot"],
                              "code_fingerprint": data["code_fingerprint"]})
-                if all(state["tasks"].get(task_id, {}).get("status") == "completed" for task_id in state["task_ids"]):
-                    state["status"] = "completed"
             elif kind == "interrupted":
                 state["status"] = "interrupted"
             elif kind == "resumed":

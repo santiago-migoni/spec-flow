@@ -1,73 +1,33 @@
 ---
 name: implement
-description: "Implement one phase of approved tasks.md per invocation: read its tasks, code, validate, and commit that phase. Use this when tasks.md exists and it's time to write code."
+description: "Execute an authorized release phase through native Sol-Luna delegation, verified tasks, independent phase review, and a validated commit."
 ---
 
 # Spec-Flow: Implement
 
-Execute the task list one phase per invocation. Within that phase, complete tasks in order and close the phase with validation and a commit before moving on in a later invocation.
-
 <HARD-GATE>
-Before proceeding:
-1. `.specs/NNN-feature-name/tasks.md` must exist with document-control `Status: Approved` — otherwise stop and invoke `$tasks` or request approval
-2. `.specs/NNN-feature-name/spec.md` must exist with document-control `Status: Approved` or `Converged` — otherwise stop and invoke `$specify` or request approval
-3. `.specs/NNN-feature-name/plan.md` must exist with document-control `Status: Approved` — otherwise stop and invoke `$plan` or request approval
+Require a migrated/adopted project, current registry approvals for the exact release spec, plan, tasks, and their strategic dependencies, and explicit execution authorization covering the selected phase. Run the controller gate and release validator; Markdown status and generated checkboxes are not authority. Production execution requires an isolated linked Git worktree, a persistent controller owner, available native Codex delegation, and attested Sol high orchestration. If any check fails, stop with its cause. Do not implement against legacy .specs/NNN-feature-name artifacts.
 </HARD-GATE>
 
-## When to Run This Phase
+## Scope and roles
 
-- After `tasks.md` is written and approved
-- This is the only phase where code is written
+The release lives in `.specs/release-vX.Y.Z/`. The approved tasks contract is the executable source. Sol high owns the run and reviews each task; one Luna high implementer works on one scoped task at a time; a distinct Sol high reviewer assesses the integrated phase before its commit. Use the native adapter in `harness/adapters/codex/README.md` and the role files. Python does not spawn models. Never substitute a model silently. If the calling chat is not Sol high, hand actual orchestration to an attested Sol high child.
 
-## Code Philosophy
-
-Write the minimal code that satisfies the acceptance scenario — nothing more. If a task can be done in 5 lines instead of 20, do it in 5. Do not add abstractions, helpers, or "nice to have" structure unless a task explicitly requires it.
+Default to one authorized phase per invocation. An explicit user authorization may cover several phases, but every phase must still close with its own independent review and validated commit before the next phase begins. Reuse authorization within its exact scope; do not ask again for each task.
 
 ## Process
 
-1. **Read `tasks.md`, `spec.md`, and `plan.md`** — identify the first phase with unchecked tasks and read all tasks in that phase. If no tasks remain, run the bundled `check-complete.sh` and report that implementation is ready for `$converge`; do not create an empty commit.
-2. **Inspect the worktree and recent commits** — confirm that any changes already present in the phase's files and `tasks.md` are understood. Preserve unrelated edits. If the phase's changes cannot be separated safely from pre-existing work, stop and explain the overlap.
-3. **Execute only that phase's tasks in order**, one at a time:
-   - Announce which task you are starting: "Starting T002 [US1] — ..."
-   - Complete the task
-   - Mark it done in `tasks.md`: change `- [ ]` to `- [x]`
-   - Confirm completion before moving to the next task
-4. **For `[P]` tasks** — execute in sequence within the same session (no subagents); the `[P]` marker is informational, indicating they touch independent files.
-5. **Validate the phase** — run the tests or checks relevant to its tasks and observe any acceptance scenarios the phase makes executable. If this is the final phase, complete the full Verification Step below before committing. If a check fails, fix it within the same phase and rerun it. If validation remains blocked, report the failure and leave the phase uncommitted; resume this phase next time.
-6. **Commit the validated phase** — stage only the phase's changed files and `tasks.md`, using explicit paths. Inspect the staged diff and status to confirm it contains no unrelated work or secrets, then create one Conventional Commit describing the phase. If committing is unavailable or unsafe, stop before the next phase and report why.
-7. **Stop after this phase** — report its completed task IDs, validation evidence, and commit SHA. On the next `$implement` invocation, resume with the first phase that still has unchecked tasks. Never automatically start the next phase in the same invocation.
+1. Read controller status, approved source digests, plan phase dependencies, and actual Git state. Select the first ready task in the first unfinished authorized phase. If a prior attempt or commit may have happened during an interruption, reconcile it before doing new work. Preserve unrelated edits; stop if they cannot be separated.
+2. Ask the controller to prepare one immutable, bounded task packet. It contains the selected task and steps, selected acceptance criteria, applicable shared decisions, exact source digests, expected checks, and allowed paths. A packet that cannot fit without losing a governing rule blocks delegation.
+3. Spawn one Luna high child with isolated history. Bind its native agent identity and real host session attestation to this attempt. The child edits only authorized files and returns changed paths, actual work, test observations, and unresolved questions. Do not trust a claimed PASS or model string.
+4. Record the result. Have the controller verify specified commands or concrete inspections on the actual code and capture outputs and code fingerprint. Sol reviews the diff against approved criteria. Close the task only with current verification and a passing review; the controller updates generated progress. Do not manually mark checkboxes.
+5. On failure, give Luna the observed failure, a new hypothesis, and a targeted check. The first attempt plus at most two corrections are allowed. Stop and escalate when the limit is reached or a decision change is needed. A decision change returns to the owning canonical document; only affected downstream approval pins are reconsidered.
+6. When all tasks in the phase are closed, confirm the phase's acceptance and constitution checks. Stage only phase files, generated task progress, and any prior pending compact audit receipt. Inspect the staged diff. Ask a distinct attested Sol high reviewer to assess that stable diff and controller evidence. If the staged tree changes, obtain a new review.
+7. Commit exactly the independently reviewed staged tree with a Conventional Commit and the controller's run/phase identity. Record the verified SHA as a compact phase receipt. That receipt may remain the sole pending audit change until the next phase or final audit checkpoint. Never start the next phase on closed tasks alone; it requires the prior phase's reviewed commit.
+8. Report task IDs, observed verification, reviewer outcome, commit SHA, and next authorized phase. After the final phase, query evidence-based completion and hand off to `$converge`.
 
-## Verification Step
+## Recovery and limits
 
-When the phase just completed is the final phase, do the full verification below before its commit:
+Before replaying an interrupted attempt, inspect the native agent status and worktree. Use controller resume/reconcile: accept an actual completed result with evidence or retry with reason and hypothesis. If a Git commit succeeded before its receipt was recorded, identify the unique matching run/phase commit and adopt its SHA once; do not commit twice. Ambiguous or changed state stops for reconciliation.
 
-1. **Read every acceptance scenario** in `spec.md`
-2. **Confirm each one is satisfied** by executing the flow affected by the change and observing the actual behavior — not by tracing to `file:line`. State it explicitly: "US1 scenario 1: Given X, When Y, Then Z → ran [command/flow] → observed [actual behavior]"
-3. **If a scenario is not satisfied** — add a task to the current phase in `tasks.md`, fix it, then re-run the flow and re-verify before committing
-4. **If a change has no executable surface** (prompt-only / docs — e.g. editing a spec-flow `SKILL.md` itself) — degrade to reviewing the artifact's expected behavior instead, and state explicitly why nothing was run. This is not a fallback of last resort — it's the correct path for changes with no runtime to exercise. A change with partial executable surface runs what can be run and degrades only the rest.
-5. **Check against constitution** — confirm no principle in `.specs/constitution.md` was violated
-6. **Run completion check** — resolve the plugin package root from this skill's installed `SKILL.md` path in Codex's skill inventory, then run its `scripts/check-complete.sh .specs/NNN-feature-name/tasks.md`
-
-Executing a flow must never run a destructive or irreversible action (data writes, deletions, external calls with side effects) without the explicit per-action confirmation the constitution already requires elsewhere — observe behavior, don't cause damage to observe it.
-
-## What Counts as Done
-
-A feature is done when:
-- All tasks in `tasks.md` are `[x]`
-- All acceptance scenarios in `spec.md` are executed and confirmed by observed behavior (or reviewed, for changes with no executable surface)
-- No `[NEEDS CLARIFICATION]` markers remain anywhere in `spec.md` or `plan.md`
-- The code compiles / lints / passes existing tests
-
-## Anti-Patterns
-
-| Thought | Reality |
-|---|---|
-| "I'll fix T003 while doing T002, it's related" | Complete T002, mark it done, then start T003. |
-| "The task says X but Y is clearly better" | Update `tasks.md` with the revised approach and get confirmation first. Don't silently deviate. |
-| "I'll add a helper utility while I'm here" | Ponytail: if the task doesn't require it, don't write it. |
-| "I'll run every remaining phase now" | Finish and commit the current phase, then stop. The next invocation starts the next phase. |
-| "I'll verify only after every phase is done" | Validate each phase before its commit; run all acceptance scenarios after the final phase. |
-
-## After Verification
-
-After an intermediate phase, tell the user which phase was committed and which phase is next. After the final phase, tell the user: "All tasks complete. Feature `NNN-feature-name` is done. Acceptance scenarios verified. Ready to run `$converge`."
+Use observed acceptance flows where executable. For prompt or documentation work with no executable surface, provide a specific inspection against expected behavior; run any partial executable surface. Never run destructive or irreversible verification actions without the authorization already required for them. Push, merge, publication, and deployment remain separate decisions.
