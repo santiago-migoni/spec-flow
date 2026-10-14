@@ -69,9 +69,17 @@ class Engine:
             "resume": self._resume,
             "status": self._status,
             "interrupt": self._interrupt,
+            "migrate-preview": self._migrate_preview,
+            "migrate-apply": self._migrate_apply,
+            "migrate-resume": self._migrate_resume,
         }
         if operation not in methods:
             raise EngineError("unknown_operation", "unknown operation: {}".format(operation))
+        if operation == "migrate-preview":
+            return methods[operation](payload)
+        if operation in {"migrate-apply", "migrate-resume"}:
+            with self.store.locked(create=True):
+                return methods[operation](payload)
         if operation == "status":
             self._reject_legacy_if_present()
             return methods[operation](payload)
@@ -100,6 +108,15 @@ class Engine:
         return value.strip()
 
     def _reject_legacy_if_present(self) -> None:
+        registry = self.root / ".spec-flow" / "migrations"
+        if registry.exists():
+            try:
+                safe_path(self.root, ".spec-flow/migrations")
+            except ContractError as exc:
+                raise EngineError("unsafe_registry", str(exc)) from exc
+            for directory in registry.iterdir():
+                if directory.is_dir() and not (directory / "complete.json").is_file():
+                    raise EngineError("migration_incomplete", "migration journal requires migrate-resume", details={"migration_id": directory.name})
         specs = self.root / ".specs"
         if not specs.exists():
             return
@@ -109,6 +126,35 @@ class Engine:
             raise EngineError("unsafe_path", str(exc)) from exc
         if any(path.is_dir() and re.match(r"^[0-9]{3}-.+", path.name) for path in specs.iterdir()):
             raise EngineError("migration_required", "legacy .specs/NNN-feature directories require migration before harness operations")
+
+    def _migrate_preview(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        self._fields(payload, ("mapping", "candidate_dir"), ("replacements", "imports"))
+        from .migration import Migration, MigrationError
+        try:
+            return Migration(self.root, self.store).preview(payload["mapping"], payload["candidate_dir"],
+                                                            payload.get("replacements", []), payload.get("imports", {}))
+        except MigrationError as exc:
+            raise EngineError(exc.code, str(exc), details=exc.details) from exc
+
+    def _migrate_apply(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        self._fields(payload, ("manifest", "digest", "candidate_dir", "authorization"))
+        from .migration import Migration, MigrationError
+        try:
+            return Migration(self.root, self.store).apply(payload["manifest"], payload["digest"], payload["candidate_dir"], payload["authorization"])
+        except MigrationError as exc:
+            raise EngineError(exc.code, str(exc), details=exc.details) from exc
+        except StoreError as exc:
+            raise EngineError(exc.code, str(exc)) from exc
+
+    def _migrate_resume(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        self._fields(payload, ("migration_id",))
+        from .migration import Migration, MigrationError
+        try:
+            return Migration(self.root, self.store).resume(payload["migration_id"])
+        except MigrationError as exc:
+            raise EngineError(exc.code, str(exc), details=exc.details) from exc
+        except StoreError as exc:
+            raise EngineError(exc.code, str(exc)) from exc
 
     def _config_path(self) -> Path:
         try:
@@ -409,8 +455,15 @@ class Engine:
                 raise EngineError(exc.code, str(exc)) from exc
             if existing["status"] in {"active", "interrupted"}:
                 if existing["release"] == version and existing["owner"] == owner:
-                    return {"run_id": run_id, "status": existing["status"], "already_running": True, "authorized_phases": existing["authorized_phases"]}
+                    imported = self._credit_migrated_evidence(run_id, version, task_items)
+                    current = self._state(run_id)
+                    return {"run_id": run_id, "status": current["status"], "already_running": True,
+                            "authorized_phases": current["authorized_phases"],
+                            "imported_completed": imported["completed"], "pending_imports": imported["pending"]}
                 raise EngineError("run_already_active", "another run owns the project")
+            if existing["status"] == "completed" and existing["release"] == version and existing["owner"] == owner:
+                return {"run_id": run_id, "status": "completed", "already_completed": True,
+                        "authorized_phases": existing["authorized_phases"], "imported_completed": [], "pending_imports": []}
         run_id = str(uuid.uuid4())
         try:
             self.store.create_run(run_id)
@@ -421,9 +474,104 @@ class Engine:
                 "task_ids": [item["id"] for item in task_items], "task_contracts": task_items,
                 "phase_contracts": validated["plan"]["contract"]["phases"],
             }, self._reduce_events)
+            imported = self._credit_migrated_evidence(run_id, version, task_items)
         except StoreError as exc:
             raise EngineError(exc.code, str(exc)) from exc
-        return {"run_id": run_id, "status": "active", "authorized_phases": list(dict.fromkeys(phases))}
+        state = self._state(run_id)
+        return {"run_id": run_id, "status": state["status"], "authorized_phases": list(dict.fromkeys(phases)),
+                "imported_completed": imported["completed"], "pending_imports": imported["pending"]}
+
+    def _credit_migrated_evidence(self, run_id: str, release: str,
+                                  task_items: Sequence[Mapping[str, Any]]) -> Dict[str, List[Any]]:
+        """Credit only explicit historical step records that still match this release and code."""
+        registry = safe_path(self.root, ".spec-flow/migrations")
+        if not registry.is_dir():
+            return {"completed": [], "pending": []}
+        documents = self._state(run_id)["documents"]
+        tasks_path = ".specs/release-{}/tasks.md".format(release)
+        migration_rows: List[Tuple[str, Dict[str, Any]]] = []
+        pending: List[Dict[str, Any]] = []
+        for directory in sorted(registry.iterdir()):
+            if not directory.is_dir() or not (directory / "complete.json").is_file():
+                continue
+            evidence_path = safe_path(self.root, directory.relative_to(self.root) / "imported-evidence.jsonl")
+            try:
+                rows = self.store.read_jsonl(evidence_path, sequence_field="seq")
+            except StoreError as exc:
+                raise EngineError(exc.code, str(exc)) from exc
+            for row in rows:
+                if row.get("release") != release:
+                    continue
+                if row.get("status") != "imported":
+                    pending.append({"migration_id": directory.name, "source": row.get("source"),
+                                   "reason": row.get("reason", "historical evidence is pending"),
+                                   "task_id": (row.get("record") or {}).get("task_id") if isinstance(row.get("record"), dict) else None})
+                    continue
+                migration_rows.append((directory.name, row))
+
+        completed: List[str] = []
+        contracts = {item["id"]: item for item in task_items}
+        groups: Dict[str, List[Tuple[str, Dict[str, Any]]]] = {}
+        for ident, row in migration_rows:
+            task_id = row.get("task_id")
+            if task_id not in contracts:
+                pending.append({"migration_id": ident, "source": row.get("source"), "task_id": task_id,
+                                "reason": "task no longer exists in the approved release"})
+                continue
+            groups.setdefault(task_id, []).append((ident, row))
+        for task_id, contract in contracts.items():
+            rows = groups.get(task_id, [])
+            if not rows:
+                continue
+            current_state = self._state(run_id)
+            if current_state["tasks"].get(task_id, {}).get("status") == "completed" or current_state.get("active_task") == task_id:
+                continue
+            by_step = {row.get("step_id"): (ident, row) for ident, row in rows}
+            reasons = []
+            if len(by_step) != len(rows):
+                reasons.append("duplicate imported step records")
+            if set(by_step) != {step["id"] for step in contract["steps"]}:
+                reasons.append("imported evidence does not cover every current task step")
+            pinned_task_digest = documents.get(tasks_path)
+            current_task_digest = document_digest(self._project_path(tasks_path))
+            if current_task_digest != pinned_task_digest:
+                raise EngineError("approval_stale", "approved task document changed while starting run")
+            code_files = set(contract["files"])
+            fingerprint = {}
+            for filename in sorted(code_files):
+                path = self._project_path(filename)
+                fingerprint[filename] = hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() and not path.is_symlink() else None
+            canonical_hash = hashlib.sha256(json.dumps(fingerprint, ensure_ascii=False, sort_keys=True,
+                                                        separators=(",", ":")).encode("utf-8")).hexdigest()
+            steps = []
+            for step in contract["steps"]:
+                imported = by_step.get(step["id"])
+                if imported is None:
+                    continue
+                ident, row = imported
+                if row.get("task_digest") != pinned_task_digest or row.get("source_digests") != documents:
+                    reasons.append("imported source pins differ from the currently approved document closure")
+                if set(row.get("code_files", {})) != code_files or row.get("code_files") != fingerprint or row.get("record", {}).get("code_hash") != canonical_hash:
+                    reasons.append("tested code no longer matches imported evidence")
+                proof = row.get("verified_step", {})
+                verification = step["verification"]
+                if proof.get("command") != verification.get("command") or proof.get("expected") != verification.get("expected") or proof.get("exit_code") != 0 or not proof.get("observed", "").strip():
+                    reasons.append("imported verification differs from the current step")
+                steps.append({"step_id": step["id"], "migration_id": ident, "import_id": row.get("import_id"),
+                              "code_files": row.get("code_files"), "verified_step": proof})
+            if reasons:
+                pending.extend({"task_id": task_id, "reason": reason} for reason in dict.fromkeys(reasons))
+                continue
+            snapshot = self._snapshot_code()
+            scope = self._task_scope_files(self._state(run_id), contract)
+            self._append(run_id, "migration_credited", {
+                "task_id": task_id, "migration_ids": sorted({ident for ident, _ in rows}),
+                "imports": [row.get("import_id") for _, row in rows], "steps": steps,
+                "verified_snapshot": snapshot, "code_fingerprint": self._scope_fingerprint(snapshot, scope),
+                "credited_at": self._now(),
+            })
+            completed.append(task_id)
+        return {"completed": completed, "pending": pending}
 
     def _authorize(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, ("run_id", "owner", "phases", "authorization"))
@@ -708,9 +856,11 @@ class Engine:
             task_state = state["tasks"].get(active_task, {})
             if not task_state.get("result"):
                 self._append(payload["run_id"], "reconciliation_required", {"task_id": active_task, "reason": "attempt interrupted before an agent result was recorded"})
+        imported = self._credit_migrated_evidence(payload["run_id"], state["release"], state["task_contracts"])
         new_state = self._state(payload["run_id"])
         self._update_task_progress(new_state)
-        return {"run_id": payload["run_id"], "status": new_state["status"], "reconciliation_required": bool(new_state.get("active_task"))}
+        return {"run_id": payload["run_id"], "status": new_state["status"], "reconciliation_required": bool(new_state.get("active_task")),
+                "imported_completed": imported["completed"], "pending_imports": imported["pending"]}
 
     def _status(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, (), ("run_id",))
@@ -960,7 +1110,7 @@ class Engine:
                     "authorization": [data["authorization"]], "capabilities": data["capabilities"],
                     "documents": dict(data["documents"]), "task_ids": list(data["task_ids"]),
                     "task_contracts": list(data["task_contracts"]), "phase_contracts": list(data["phase_contracts"]),
-                    "tasks": {}, "active_task": None,
+                    "tasks": {}, "active_task": None, "migration_evidence_pending": [],
                 }
             elif not state:
                 raise StoreError("corrupt_log", "run event precedes start event")
@@ -1023,6 +1173,14 @@ class Engine:
                 state["active_task"] = None
                 state["reconciliation_required"] = False
                 if data.get("run_completed"):
+                    state["status"] = "completed"
+            elif kind == "migration_credited":
+                task = state["tasks"].setdefault(data["task_id"], {})
+                task.update({"status": "completed", "historical_evidence": list(data["steps"]),
+                             "migration_ids": list(data["migration_ids"]), "closed_at": data["credited_at"],
+                             "verified_snapshot": data["verified_snapshot"],
+                             "code_fingerprint": data["code_fingerprint"]})
+                if all(state["tasks"].get(task_id, {}).get("status") == "completed" for task_id in state["task_ids"]):
                     state["status"] = "completed"
             elif kind == "interrupted":
                 state["status"] = "interrupted"

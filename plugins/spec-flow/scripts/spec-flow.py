@@ -30,6 +30,7 @@ def main(argv: list[str] | None = None) -> int:
         choices=(
             "initialize", "digest", "validate", "approve", "gate", "start", "authorize",
             "prepare", "result", "retry", "reconcile", "verify", "review", "close", "resume", "status", "interrupt",
+            "migrate-preview", "migrate-apply", "migrate-resume",
         ),
     )
     parser.add_argument("--input", required=True, help="path to a JSON object containing operation input")

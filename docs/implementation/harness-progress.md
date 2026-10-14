@@ -11,8 +11,8 @@ Autorización: el usuario solicitó explícitamente implementar el plan E0–E8 
 | E1 | Contratos y validación | Verificado: 17 pruebas + 5 hooks |
 | E2 | Skills y plantillas por release | Skills y plantillas verificadas; integración pendiente de E3/E4 |
 | E3 | Aprobaciones, eventos y recuperación | Verificado: 23 pruebas del motor; 44 del plugin y 5 hooks |
-| E4 | Migración obligatoria | Pendiente |
-| E5 | Orquestación Sol–Luna | Pendiente |
+| E4 | Migración obligatoria | Verificada: 12 pruebas de migración; 56 del plugin |
+| E5 | Orquestación Sol–Luna | Documentación de roles preparada; runtime pendiente |
 | E6 | Hook, convergencia y cierre | Pendiente |
 | E7 | Evaluación integral | Pendiente |
 | E8 | Preparación del paquete | Pendiente |
@@ -47,3 +47,7 @@ Cuatro pruebas estructurales aprobadas. Revisión independiente Sol: conserva de
 ## E3 — Verificación
 
 Registro secuencial con bloqueo, snapshots atómicos reconstruibles, aprobaciones transitivas y CLI estructurada. La revisión independiente Sol detectó transiciones inválidas, cambios posteriores a verificación y recuperación incompleta; se corrigieron con pruebas de regresión. Una interrupción exige reconciliación explícita; no vuelve a ejecutar automáticamente. Se verificaron 44 pruebas del plugin y 5 del hook. La identidad nativa de agentes y el cierre de fase siguen reservados para E5/E6.
+
+## E4 — Verificación
+
+Previsualización de solo lectura, mapeo explícito, candidatos canónicos, originales fijados a Git, archivo con procedencia y diario recuperable. Se corrigieron por revisión Sol la recuperación de copia/promoción, repetición de importaciones, límites de destinos y equivalencia de decisiones. Las aprobaciones históricas requieren declaración identificable y equivalencia completa; las etiquetas aisladas quedan pendientes. Evidencia histórica con fuentes, pasos y código coincidentes se acredita sin ejecutar otra vez las comprobaciones; un cambio de aceptación la deja pendiente. La adopción se recupera tras una caída entre inicio y crédito sin duplicación. Las conversiones de prosa sin equivalencia demostrable conservan su historial y requieren resolver la evidencia faltante. Verificación: 56 pruebas del plugin y 5 del hook.
