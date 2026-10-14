@@ -1,0 +1,135 @@
+[
+  {
+    "data": {},
+    "event": "started",
+    "seq": 1
+  },
+  {
+    "data": {
+      "attempt": 1,
+      "packet_sha256": "563959ef9ef9b7859faeea1ee532ae6f043dcca1fc5e0a12588735e4e4033df0",
+      "task_id": "T-001"
+    },
+    "event": "prepared",
+    "seq": 2
+  },
+  {
+    "data": {
+      "agent_id": "/root/e7_native/luna_83801ad26aa420d88629b74047ce7bac356d4e1fe7e4d12ea107fc8290121972",
+      "attempt": 1,
+      "host_attestation": {
+        "agent_lifecycle": "active",
+        "agent_path": "/root/e7_native/luna_83801ad26aa420d88629b74047ce7bac356d4e1fe7e4d12ea107fc8290121972",
+        "attestation_sha256": "bee65678aebf093509ca9e7e25d76c6ebc7ad0f88b777f18b03fb00bbe057829",
+        "effort": "high",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b74-cd6a-7b22-a5dd-78f0743a10b5"
+      },
+      "session_id": "01a13b74-cd6a-7b22-a5dd-78f0743a10b5",
+      "task_id": "T-001"
+    },
+    "event": "agent_bound",
+    "seq": 3
+  },
+  {
+    "data": {
+      "host_attestation": {
+        "agent_lifecycle": "completed",
+        "agent_path": "/root/e7_native/luna_83801ad26aa420d88629b74047ce7bac356d4e1fe7e4d12ea107fc8290121972",
+        "attestation_sha256": "c8df05ad0324c7d6c704f24e0af0b96de0e60c140d1fd30b34b363f8f3cf0dc8",
+        "effort": "high",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b74-cd6a-7b22-a5dd-78f0743a10b5"
+      },
+      "task_id": "T-001"
+    },
+    "event": "result_received",
+    "seq": 4
+  },
+  {
+    "data": {
+      "task_id": "T-001"
+    },
+    "event": "verification_failed",
+    "seq": 5
+  },
+  {
+    "data": {
+      "hypothesis": "Narrow the decimal component grammar to reject leading zeros; this controlled correction intentionally leaves Unicode-digit handling to prove another failed verification is not accepted.",
+      "reason": "Four test methods ran; first injected attempt failed on four leading-zero inputs and one Unicode digit.",
+      "task_id": "T-001"
+    },
+    "event": "retry_requested",
+    "seq": 6
+  },
+  {
+    "data": {
+      "attempt": 2,
+      "packet_sha256": "a64828f1cafd0e673f5b569a92f8f54422677ddf082acc64dc640461f8fce646",
+      "task_id": "T-001"
+    },
+    "event": "prepared",
+    "seq": 7
+  },
+  {
+    "data": {
+      "agent_id": "/root/e7_native/luna_209c731b3f7769c872d002454c99ee2e6cc84c70f0bcfb124081c97c9e53cf41",
+      "attempt": 2,
+      "host_attestation": {
+        "agent_lifecycle": "active",
+        "agent_path": "/root/e7_native/luna_209c731b3f7769c872d002454c99ee2e6cc84c70f0bcfb124081c97c9e53cf41",
+        "attestation_sha256": "147f3d488af196a2e3738314e8dee01b8822fba728c95edd0ea1617db9c0f704",
+        "effort": "high",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b75-591b-7f01-b3f6-d4890b5d7340"
+      },
+      "session_id": "01a13b75-591b-7f01-b3f6-d4890b5d7340",
+      "task_id": "T-001"
+    },
+    "event": "agent_bound",
+    "seq": 8
+  },
+  {
+    "data": {
+      "host_attestation": {
+        "agent_lifecycle": "completed",
+        "agent_path": "/root/e7_native/luna_209c731b3f7769c872d002454c99ee2e6cc84c70f0bcfb124081c97c9e53cf41",
+        "attestation_sha256": "0a21f7e42e68d1499bcef781cd5ea27ce20915655d1ef70dc41ea9fad5e46c3e",
+        "effort": "high",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b75-591b-7f01-b3f6-d4890b5d7340"
+      },
+      "task_id": "T-001"
+    },
+    "event": "result_received",
+    "seq": 9
+  },
+  {
+    "data": {
+      "task_id": "T-001"
+    },
+    "event": "verification_failed",
+    "seq": 10
+  },
+  {
+    "data": {
+      "hypothesis": "Python Unicode \\d still admits Arabic-Indic digits; a complete future fix would require ASCII [0-9] or re.ASCII, but this negative fixture ends here.",
+      "reason": "Controlled correction still failed one malformed-string subcase, 1.2.٣; no review or task closure credited.",
+      "task_id": "T-001"
+    },
+    "event": "retry_requested",
+    "seq": 11
+  },
+  {
+    "data": {
+      "abandoned_at": "2026-10-14T17:29:11Z",
+      "reason": "E7 controlled negative fixture concluded after two real failed native attempts; preserve failure history without release closure."
+    },
+    "event": "abandoned",
+    "seq": 12
+  }
+]

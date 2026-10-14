@@ -54,6 +54,34 @@ class PhaseLifecycleTests(unittest.TestCase):
         return self.engine.dispatch("release-review", {"run_id": self.run_id, "owner": "sol-session-1",
                                                        "impact_status": "pending", "impact_evidence": []})
 
+    def test_restore_packet_recovers_missing_phase_review_cache_with_same_pin(self):
+        adapter = FixtureProductionAdapter()
+        engine = Engine(self.root, adapter=adapter)
+        engine.dispatch("initialize", {})
+        approve_release(engine, self.docs)
+        run_id = start_run(engine)
+        engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        (self.root / "src/example.py").write_text("# implementation\n", encoding="utf-8")
+        engine.dispatch("bind-agent", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                        "agent_id": "/root/T-001", "session_id": "luna-session-1", "agent_path": "/root/T-001"})
+        result = {"summary": "Implemented.", "files_modified": ["src/example.py"],
+                  "checks": [{"step_id": "T-001.001", "check": "python check", "result": "passed"}],
+                  "evidence": [{"kind": "diff", "reference": "src/example.py", "description": "Implementation diff."}],
+                  "blockers": []}
+        engine.dispatch("result", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001", "result": result})
+        engine.dispatch("verify", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        engine.dispatch("review", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001", "verdict": "pass", "evidence": "Reviewed."})
+        engine.dispatch("close", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        ready = engine.dispatch("phase-ready", {"run_id": run_id, "owner": "sol-session-1", "phase_id": "PH-01"})
+        packet_path = Path(ready["packet_path"])
+        original = json.loads(packet_path.read_text(encoding="utf-8"))
+        packet_path.unlink()
+        restored = engine.dispatch("restore-packet", {"run_id": run_id, "owner": "sol-session-1", "kind": "phase", "phase_id": "PH-01"})
+        self.assertTrue(restored["restored"])
+        self.assertEqual(restored["packet_sha256"], ready["packet_sha256"])
+        self.assertEqual(json.loads(packet_path.read_text(encoding="utf-8")), original)
+        self.assertEqual(engine.dispatch("status", {"run_id": run_id})["phases"]["PH-01"]["tree"], ready["tree"])
+
     def test_close_last_task_does_not_complete_run_or_release_lease(self):
         self.close_task()
         state = self.engine.dispatch("status", {"run_id": self.run_id})

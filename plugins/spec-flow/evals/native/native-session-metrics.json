@@ -1,0 +1,385 @@
+[
+  {
+    "agent_path": "/root/e7_native",
+    "final_cumulative_token_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 22380928,
+      "input_tokens": 22556554,
+      "output_tokens": 36313,
+      "reasoning_output_tokens": 7717,
+      "total_tokens": 22592867
+    },
+    "lifecycle": [
+      {
+        "at": "2026-10-14T17:09:01.054Z",
+        "kind": "task_started"
+      },
+      {
+        "at": "2026-10-14T17:22:16.396Z",
+        "kind": "task_complete"
+      },
+      {
+        "at": "2026-10-14T17:23:01.827Z",
+        "kind": "task_started"
+      }
+    ],
+    "observed_active_duration_ms": 795342,
+    "parent_session": "01a13adc-9094-7710-a4f5-d9a365a176b5",
+    "profiles": [
+      [
+        "gpt-6-sol",
+        "high"
+      ]
+    ],
+    "session_id": "01a13b63-876e-7621-a3ea-66cddc36b5d7",
+    "turn_context_count": 2,
+    "turns": [
+      {
+        "duration_ms": 795342,
+        "end": "2026-10-14T17:22:16.396Z",
+        "end_kind": "task_complete",
+        "start": "2026-10-14T17:09:01.054Z"
+      }
+    ]
+  },
+  {
+    "agent_path": "/root/e7_native/luna_209c731b3f7769c872d002454c99ee2e6cc84c70f0bcfb124081c97c9e53cf41",
+    "final_cumulative_token_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 243200,
+      "input_tokens": 248400,
+      "output_tokens": 1051,
+      "reasoning_output_tokens": 320,
+      "total_tokens": 249451
+    },
+    "lifecycle": [
+      {
+        "at": "2026-10-14T17:28:28.968Z",
+        "kind": "task_started"
+      },
+      {
+        "at": "2026-10-14T17:28:48.587Z",
+        "kind": "task_complete"
+      }
+    ],
+    "observed_active_duration_ms": 19619,
+    "parent_session": "01a13b63-876e-7621-a3ea-66cddc36b5d7",
+    "profiles": [
+      [
+        "gpt-6-luna",
+        "high"
+      ]
+    ],
+    "session_id": "01a13b75-591b-7f01-b3f6-d4890b5d7340",
+    "turn_context_count": 1,
+    "turns": [
+      {
+        "duration_ms": 19619,
+        "end": "2026-10-14T17:28:48.587Z",
+        "end_kind": "task_complete",
+        "start": "2026-10-14T17:28:28.968Z"
+      }
+    ]
+  },
+  {
+    "agent_path": "/root/e7_native/review_3e14cd8438acac300cb0c2debb51a2d4554ac326c2ea354976dbb74be88e4e43",
+    "final_cumulative_token_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 427136,
+      "input_tokens": 452431,
+      "output_tokens": 4062,
+      "reasoning_output_tokens": 1909,
+      "total_tokens": 456493
+    },
+    "lifecycle": [
+      {
+        "at": "2026-10-14T17:22:07.559Z",
+        "kind": "task_started"
+      },
+      {
+        "at": "2026-10-14T17:22:15.872Z",
+        "kind": "task_complete"
+      },
+      {
+        "at": "2026-10-14T17:23:19.544Z",
+        "kind": "task_started"
+      },
+      {
+        "at": "2026-10-14T17:24:25.715Z",
+        "kind": "task_complete"
+      }
+    ],
+    "observed_active_duration_ms": 74484,
+    "parent_session": "01a13b63-876e-7621-a3ea-66cddc36b5d7",
+    "profiles": [
+      [
+        "gpt-6-sol",
+        "high"
+      ]
+    ],
+    "session_id": "01a13b6f-87c1-7063-90b2-0929a2153186",
+    "turn_context_count": 2,
+    "turns": [
+      {
+        "duration_ms": 8313,
+        "end": "2026-10-14T17:22:15.872Z",
+        "end_kind": "task_complete",
+        "start": "2026-10-14T17:22:07.559Z"
+      },
+      {
+        "duration_ms": 66171,
+        "end": "2026-10-14T17:24:25.715Z",
+        "end_kind": "task_complete",
+        "start": "2026-10-14T17:23:19.544Z"
+      }
+    ]
+  },
+  {
+    "agent_path": "/root/e7_native/luna_f983205c12a739370d215e15075912ee1c9c903e726db96cbe2aa2d21696b726",
+    "final_cumulative_token_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 294144,
+      "input_tokens": 301774,
+      "output_tokens": 1009,
+      "reasoning_output_tokens": 307,
+      "total_tokens": 302783
+    },
+    "lifecycle": [
+      {
+        "at": "2026-10-14T17:17:29.009Z",
+        "kind": "task_started"
+      },
+      {
+        "at": "2026-10-14T17:17:50.542Z",
+        "kind": "turn_aborted"
+      }
+    ],
+    "observed_active_duration_ms": 21533,
+    "parent_session": "01a13b63-876e-7621-a3ea-66cddc36b5d7",
+    "profiles": [
+      [
+        "gpt-6-luna",
+        "high"
+      ]
+    ],
+    "session_id": "01a13b6b-47b1-7e42-852f-47f78d348baa",
+    "turn_context_count": 1,
+    "turns": [
+      {
+        "duration_ms": 21533,
+        "end": "2026-10-14T17:17:50.542Z",
+        "end_kind": "turn_aborted",
+        "start": "2026-10-14T17:17:29.009Z"
+      }
+    ]
+  },
+  {
+    "agent_path": "/root/e7_native/review_b391fcb014b019432f57be1d2f916ba6d5e9cedec01c673e9d603c9abd315b00",
+    "final_cumulative_token_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 866176,
+      "input_tokens": 904694,
+      "output_tokens": 5415,
+      "reasoning_output_tokens": 1806,
+      "total_tokens": 910109
+    },
+    "lifecycle": [
+      {
+        "at": "2026-10-14T17:25:34.918Z",
+        "kind": "task_started"
+      },
+      {
+        "at": "2026-10-14T17:27:13.570Z",
+        "kind": "task_complete"
+      }
+    ],
+    "observed_active_duration_ms": 98652,
+    "parent_session": "01a13b63-876e-7621-a3ea-66cddc36b5d7",
+    "profiles": [
+      [
+        "gpt-6-sol",
+        "high"
+      ]
+    ],
+    "session_id": "01a13b72-b1c7-7fd2-8d62-5bc2c624fb12",
+    "turn_context_count": 1,
+    "turns": [
+      {
+        "duration_ms": 98652,
+        "end": "2026-10-14T17:27:13.570Z",
+        "end_kind": "task_complete",
+        "start": "2026-10-14T17:25:34.918Z"
+      }
+    ]
+  },
+  {
+    "agent_path": "/root/e7_native/luna_73adc27193679eb19495996ede9186676702475d6aaebadf4c1d6c958c321fd4",
+    "final_cumulative_token_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 294144,
+      "input_tokens": 302830,
+      "output_tokens": 1195,
+      "reasoning_output_tokens": 354,
+      "total_tokens": 304025
+    },
+    "lifecycle": [
+      {
+        "at": "2026-10-14T17:24:54.691Z",
+        "kind": "task_started"
+      },
+      {
+        "at": "2026-10-14T17:25:15.615Z",
+        "kind": "task_complete"
+      }
+    ],
+    "observed_active_duration_ms": 20924,
+    "parent_session": "01a13b63-876e-7621-a3ea-66cddc36b5d7",
+    "profiles": [
+      [
+        "gpt-6-luna",
+        "high"
+      ]
+    ],
+    "session_id": "01a13b72-14a5-7d61-8426-168080a16f38",
+    "turn_context_count": 1,
+    "turns": [
+      {
+        "duration_ms": 20924,
+        "end": "2026-10-14T17:25:15.615Z",
+        "end_kind": "task_complete",
+        "start": "2026-10-14T17:24:54.691Z"
+      }
+    ]
+  },
+  {
+    "agent_path": "/root/e7_native/luna_10192b89b7a604d9206a697a51c9268ada1d993a3a871c8e9a2436be11644372",
+    "final_cumulative_token_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 222976,
+      "input_tokens": 234996,
+      "output_tokens": 1236,
+      "reasoning_output_tokens": 498,
+      "total_tokens": 236232
+    },
+    "lifecycle": [
+      {
+        "at": "2026-10-14T17:18:25.557Z",
+        "kind": "task_started"
+      },
+      {
+        "at": "2026-10-14T17:18:44.682Z",
+        "kind": "task_complete"
+      }
+    ],
+    "observed_active_duration_ms": 19125,
+    "parent_session": "01a13b63-876e-7621-a3ea-66cddc36b5d7",
+    "profiles": [
+      [
+        "gpt-6-luna",
+        "high"
+      ]
+    ],
+    "session_id": "01a13b6c-2470-70e2-8840-986bfc83bd2f",
+    "turn_context_count": 1,
+    "turns": [
+      {
+        "duration_ms": 19125,
+        "end": "2026-10-14T17:18:44.682Z",
+        "end_kind": "task_complete",
+        "start": "2026-10-14T17:18:25.557Z"
+      }
+    ]
+  },
+  {
+    "agent_path": "/root/e7_native/new_attempt1",
+    "final_cumulative_token_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 274688,
+      "input_tokens": 299725,
+      "output_tokens": 930,
+      "reasoning_output_tokens": 313,
+      "total_tokens": 300655
+    },
+    "lifecycle": [
+      {
+        "at": "2026-10-14T17:11:26.509Z",
+        "kind": "task_started"
+      },
+      {
+        "at": "2026-10-14T17:12:03.799Z",
+        "kind": "turn_aborted"
+      },
+      {
+        "at": "2026-10-14T17:12:14.152Z",
+        "kind": "task_started"
+      },
+      {
+        "at": "2026-10-14T17:12:19.576Z",
+        "kind": "task_complete"
+      }
+    ],
+    "observed_active_duration_ms": 42714,
+    "parent_session": "01a13b63-876e-7621-a3ea-66cddc36b5d7",
+    "profiles": [
+      [
+        "gpt-6-luna",
+        "high"
+      ]
+    ],
+    "session_id": "01a13b65-bfaf-70f3-b856-fd0bb28926a7",
+    "turn_context_count": 2,
+    "turns": [
+      {
+        "duration_ms": 37290,
+        "end": "2026-10-14T17:12:03.799Z",
+        "end_kind": "turn_aborted",
+        "start": "2026-10-14T17:11:26.509Z"
+      },
+      {
+        "duration_ms": 5424,
+        "end": "2026-10-14T17:12:19.576Z",
+        "end_kind": "task_complete",
+        "start": "2026-10-14T17:12:14.152Z"
+      }
+    ]
+  },
+  {
+    "agent_path": "/root/e7_native/luna_83801ad26aa420d88629b74047ce7bac356d4e1fe7e4d12ea107fc8290121972",
+    "final_cumulative_token_usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 163840,
+      "input_tokens": 170232,
+      "output_tokens": 898,
+      "reasoning_output_tokens": 372,
+      "total_tokens": 171130
+    },
+    "lifecycle": [
+      {
+        "at": "2026-10-14T17:27:53.071Z",
+        "kind": "task_started"
+      },
+      {
+        "at": "2026-10-14T17:28:06.637Z",
+        "kind": "task_complete"
+      }
+    ],
+    "observed_active_duration_ms": 13566,
+    "parent_session": "01a13b63-876e-7621-a3ea-66cddc36b5d7",
+    "profiles": [
+      [
+        "gpt-6-luna",
+        "high"
+      ]
+    ],
+    "session_id": "01a13b74-cd6a-7b22-a5dd-78f0743a10b5",
+    "turn_context_count": 1,
+    "turns": [
+      {
+        "duration_ms": 13566,
+        "end": "2026-10-14T17:28:06.637Z",
+        "end_kind": "task_complete",
+        "start": "2026-10-14T17:27:53.071Z"
+      }
+    ]
+  }
+]

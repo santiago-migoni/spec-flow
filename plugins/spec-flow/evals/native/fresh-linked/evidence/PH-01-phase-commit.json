@@ -1,0 +1,14 @@
+{
+  "adopted_after_crash": false,
+  "committed_at": "2026-10-14T17:24:33Z",
+  "evidence": "Independent Sol high inspected exact staged tree 7d0370a546aa939dd2f5e56045417ec3ccb9bbc2 and release.py SHA caa01813; reran four unit tests and git diff --cached --check; no findings or edits. Native host attestation validated separately by controller.",
+  "parent": "36815ef7e8a44d81798c6e43a0de210f61afd97a",
+  "phase_id": "PH-01",
+  "release": "v1.2.3",
+  "review_packet_sha256": "24e9a568fba95d9d50b9cf214929bf376b1007a1f35345971422cd9d1ae5a8f0",
+  "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+  "schema": "spec-flow-phase-receipt.v1",
+  "sha": "250dcad90a9288ed6f63259a83137b698f97a6b5",
+  "subject": "feat(release): normalize strict version strings",
+  "tree": "7d0370a546aa939dd2f5e56045417ec3ccb9bbc2"
+}

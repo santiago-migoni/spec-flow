@@ -1,0 +1,369 @@
+[
+  {
+    "at": "2026-10-14T17:14:20.209706+00:00",
+    "duration_ms": 0.96,
+    "ok": true,
+    "operation": "initialize",
+    "result": {
+      "status": "initialized"
+    }
+  },
+  {
+    "at": "2026-10-14T17:14:20.261013+00:00",
+    "duration_ms": 1.08,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:14:20.312839+00:00",
+    "duration_ms": 1.79,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:14:20.365126+00:00",
+    "duration_ms": 2.33,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:14:20.417378+00:00",
+    "duration_ms": 2.71,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:14:20.469813+00:00",
+    "duration_ms": 3.18,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:15:07.969531+00:00",
+    "duration_ms": 5.74,
+    "ok": true,
+    "operation": "gate",
+    "result": {
+      "missing_approvals": []
+    }
+  },
+  {
+    "at": "2026-10-14T17:15:08.025541+00:00",
+    "duration_ms": 5.82,
+    "ok": true,
+    "operation": "capabilities",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:15:08.112923+00:00",
+    "duration_ms": 38.08,
+    "ok": true,
+    "operation": "start",
+    "result": {
+      "imported_completed": [],
+      "pending_imports": [],
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "status": "active"
+    }
+  },
+  {
+    "at": "2026-10-14T17:15:08.193336+00:00",
+    "duration_ms": 30.71,
+    "ok": true,
+    "operation": "prepare",
+    "result": {
+      "attempt": 1,
+      "native_task_name": "luna_f983205c12a739370d215e15075912ee1c9c903e726db96cbe2aa2d21696b726",
+      "packet_sha256": "d84692270d08a25c8002d2eda65ff4946a6d140112b64e032be2d54550dabf4d",
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:17:37.180299+00:00",
+    "duration_ms": 47.13,
+    "ok": true,
+    "operation": "bind-agent",
+    "result": {
+      "agent_id": "/root/e7_native/luna_f983205c12a739370d215e15075912ee1c9c903e726db96cbe2aa2d21696b726",
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "session_id": "01a13b6b-47b1-7e42-852f-47f78d348baa",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:17:54.041007+00:00",
+    "duration_ms": 42.16,
+    "ok": true,
+    "operation": "interrupt",
+    "result": {
+      "reconciliation_required": true,
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "status": "interrupted"
+    }
+  },
+  {
+    "at": "2026-10-14T17:17:56.276015+00:00",
+    "duration_ms": 38.97,
+    "ok": true,
+    "operation": "resume",
+    "result": {
+      "imported_completed": [],
+      "native_agent": {
+        "agent_lifecycle": "aborted",
+        "agent_path": "/root/e7_native/luna_f983205c12a739370d215e15075912ee1c9c903e726db96cbe2aa2d21696b726",
+        "attestation_sha256": "5f3ef6695a49efc02cb4f8a64134fd58d3fc0a41374e4f9587e1d21e8a17378a",
+        "effort": "high",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b6b-47b1-7e42-852f-47f78d348baa"
+      },
+      "pending_imports": [],
+      "reconciliation_required": true,
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "status": "active"
+    }
+  },
+  {
+    "at": "2026-10-14T17:18:04.705886+00:00",
+    "duration_ms": 43.91,
+    "ok": true,
+    "operation": "reconcile",
+    "result": {
+      "disposition": "accept_result",
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:18:08.671088+00:00",
+    "duration_ms": 67.69,
+    "error": {
+      "code": "verification_failed",
+      "details": {
+        "exit_code": 1,
+        "output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... \n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='01.2.3') ... FAIL\n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.02.3') ... FAIL\n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003') ... FAIL\n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='v00.0.0') ... FAIL\n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.٣') ... FAIL\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='01.2.3')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-native-evidence/fresh-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.02.3')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-native-evidence/fresh-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-native-evidence/fresh-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='v00.0.0')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-native-evidence/fresh-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.٣')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-native-evidence/fresh-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (failures=5)\n"
+      },
+      "message": "verification command failed: T-001.001"
+    },
+    "ok": false,
+    "operation": "verify"
+  },
+  {
+    "at": "2026-10-14T17:18:13.412874+00:00",
+    "duration_ms": 26.42,
+    "ok": true,
+    "operation": "retry",
+    "result": {
+      "retry_ready": true,
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:18:16.717447+00:00",
+    "duration_ms": 35.05,
+    "ok": true,
+    "operation": "prepare",
+    "result": {
+      "attempt": 2,
+      "native_task_name": "luna_10192b89b7a604d9206a697a51c9268ada1d993a3a871c8e9a2436be11644372",
+      "packet_sha256": "ba33cdc9dff85e0890b7b71ad46173bcf8830c83048c29823c97ef899df271ad",
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:18:34.066108+00:00",
+    "duration_ms": 29.09,
+    "error": {
+      "code": "invalid_transition",
+      "details": {},
+      "message": "bind-agent requires one prepared attempt without a bound agent"
+    },
+    "ok": false,
+    "operation": "bind-agent"
+  },
+  {
+    "at": "2026-10-14T17:18:36.682379+00:00",
+    "duration_ms": 0.71,
+    "ok": true,
+    "operation": "status",
+    "result": {
+      "reconciliation_required": false,
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "status": "active"
+    }
+  },
+  {
+    "at": "2026-10-14T17:21:36.399465+00:00",
+    "duration_ms": 44.1,
+    "ok": true,
+    "operation": "bind-agent",
+    "result": {
+      "agent_id": "/root/e7_native/luna_10192b89b7a604d9206a697a51c9268ada1d993a3a871c8e9a2436be11644372",
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "session_id": "01a13b6c-2470-70e2-8840-986bfc83bd2f",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:21:41.068831+00:00",
+    "duration_ms": 34.47,
+    "ok": true,
+    "operation": "result",
+    "result": {
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:21:43.939358+00:00",
+    "duration_ms": 68.85,
+    "ok": true,
+    "operation": "verify",
+    "result": {
+      "passed": true,
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "steps": [
+        {
+          "code_fingerprint": {
+            "release.py": "caa01813e009c2914d1407f0f8c9559001d7d32f897959e1e8a51e2eb27a0971"
+          },
+          "exit_code": 0,
+          "output_sha256": "4bc37de48396900fa809512e7dd0dab3bd004e90fde5e293b7612630ff5084fb",
+          "step_id": "T-001.001"
+        }
+      ],
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:21:56.272437+00:00",
+    "duration_ms": 30.34,
+    "ok": true,
+    "operation": "review",
+    "result": {
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "task_id": "T-001",
+      "verdict": "pass"
+    }
+  },
+  {
+    "at": "2026-10-14T17:21:56.360299+00:00",
+    "duration_ms": 34.76,
+    "ok": true,
+    "operation": "close",
+    "result": {
+      "already_completed": false,
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "status": "completed",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:21:59.426891+00:00",
+    "duration_ms": 107.28,
+    "ok": true,
+    "operation": "phase-ready",
+    "result": {
+      "diff_sha256": "12ac9ec812e570b12b5c9db54248be32f309bf83323f553a64bd768a267f37b1",
+      "native_task_name": "review_3e14cd8438acac300cb0c2debb51a2d4554ac326c2ea354976dbb74be88e4e43",
+      "packet_sha256": "24e9a568fba95d9d50b9cf214929bf376b1007a1f35345971422cd9d1ae5a8f0",
+      "phase_id": "PH-01",
+      "phase_marker": "SPEC_FLOW_PHASE_REVIEW=1ee6f582-5509-40a5-ac97-0a6bd9f27d2b/PH-01/7d0370a546aa939dd2f5e56045417ec3ccb9bbc2",
+      "phase_status": "ready",
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "tree": "7d0370a546aa939dd2f5e56045417ec3ccb9bbc2"
+    }
+  },
+  {
+    "at": "2026-10-14T17:24:30.260364+00:00",
+    "duration_ms": 82.91,
+    "ok": true,
+    "operation": "review-phase",
+    "result": {
+      "phase_id": "PH-01",
+      "phase_status": "reviewed",
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "verdict": "pass"
+    }
+  },
+  {
+    "at": "2026-10-14T17:24:33.140434+00:00",
+    "duration_ms": 104.26,
+    "ok": true,
+    "operation": "commit-phase",
+    "result": {
+      "commit_sha": "250dcad90a9288ed6f63259a83137b698f97a6b5",
+      "phase_id": "PH-01",
+      "phase_status": "committed",
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b"
+    }
+  },
+  {
+    "at": "2026-10-14T17:24:36.385020+00:00",
+    "duration_ms": 50.86,
+    "ok": true,
+    "operation": "complete",
+    "result": {
+      "audit_pending": true,
+      "complete": true,
+      "phase_commits": {
+        "PH-01": "250dcad90a9288ed6f63259a83137b698f97a6b5"
+      },
+      "release_review_pending": true,
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "technical_complete": true
+    }
+  },
+  {
+    "at": "2026-10-14T17:24:39.564042+00:00",
+    "duration_ms": 136.73,
+    "ok": true,
+    "operation": "release-review",
+    "result": {
+      "audit_commit_sha": "918f365f43ab1ffc626d29c79ac1960c9e3063fb",
+      "release_review": {
+        "delivery_status": "branch_retained",
+        "external_side_effects": false,
+        "impact_evidence": [],
+        "impact_status": "pending",
+        "kind": "release-review",
+        "phase_commits": [
+          {
+            "phase_id": "PH-01",
+            "sha": "250dcad90a9288ed6f63259a83137b698f97a6b5"
+          }
+        ],
+        "publication": false,
+        "release": "v1.2.3",
+        "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+        "schema": "spec-flow.derived-release.v1",
+        "technical_status": "complete"
+      },
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b"
+    }
+  },
+  {
+    "at": "2026-10-14T17:24:43.252867+00:00",
+    "duration_ms": 65.73,
+    "ok": true,
+    "operation": "complete",
+    "result": {
+      "audit_pending": false,
+      "complete": true,
+      "phase_commits": {
+        "PH-01": "250dcad90a9288ed6f63259a83137b698f97a6b5"
+      },
+      "release_review_pending": false,
+      "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+      "technical_complete": true
+    }
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "attempt": 1,
+  "code_fingerprint": {
+    "release.py": "224d838cd502ca77885342f9da77089ade26ee7439e06624ac7d63732cb1c905"
+  },
+  "steps": [
+    {
+      "code_fingerprint": {
+        "release.py": "224d838cd502ca77885342f9da77089ade26ee7439e06624ac7d63732cb1c905"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_release.py"
+      ],
+      "exit_code": 0,
+      "expected": "Four tests pass.",
+      "inspection": null,
+      "observed": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+      "output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+      "output_sha256": "4bc37de48396900fa809512e7dd0dab3bd004e90fde5e293b7612630ff5084fb",
+      "source_digests": {
+        ".specs/constitution.md": "c1cef0b0a4724f6af41f19e25049474b5ae9f70377772d2f936e0134639fa5cd",
+        ".specs/release-v1.2.3/plan.md": "0d01d0f64d997f48e97044557e1ab56fca4b372b61f60c5288a3dfe27f6ebec7",
+        ".specs/release-v1.2.3/spec.md": "04efe4ab0763b9fc2c25f64db9de84aeeda02ebac2428fc0a442eb090dd71878",
+        ".specs/release-v1.2.3/tasks.md": "0859de147ea58bc4b44fbbd6b9b19fea1cfe71600cb28ae8590de8576ca6807f",
+        ".specs/roadmap.md": "e517c28f265bc86ac48cd9fb436790be43e4c21ae9272d699746c0192439def8"
+      },
+      "step_id": "T-001.001"
+    }
+  ],
+  "task_id": "T-001"
+}

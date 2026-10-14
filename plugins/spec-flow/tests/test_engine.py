@@ -157,6 +157,118 @@ class EngineTests(unittest.TestCase):
         self.assertTrue(duplicate["already_completed"])
         self.assertEqual(adapter.releases, 0)
 
+    def test_production_retry_clears_previous_binding_and_uses_packet_created_at(self):
+        adapter = FixtureProductionAdapter()
+        adapter.attest_calls = []
+        original_attest = adapter.attest_session
+        def record_attest(session_id, role, **kwargs):
+            adapter.attest_calls.append((session_id, role, kwargs))
+            return original_attest(session_id, role, **kwargs)
+        adapter.attest_session = record_attest
+        engine = Engine(self.root, adapter=adapter)
+        engine.dispatch("initialize", {})
+        approve_release(engine, self.docs)
+        run_id = engine.dispatch("start", {
+            "release": "1.2.3", "owner": "sol-session-1", "phases": ["PH-01"],
+            "authorization": {"actor": "user", "statement": "Execute PH-01.", "source": "conversation"},
+            "capabilities": {"inventory_reference": "fixture inventory", "operations": {}, "probe_evidence": {}},
+        })["run_id"]
+        first = engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        first_packet = json.loads(Path(first["packet_path"]).read_text())
+        (self.root / "src/example.py").write_text("# attempt one\n", encoding="utf-8")
+        engine.dispatch("bind-agent", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                        "agent_id": "/root/T-001-one", "session_id": "luna-session-1", "agent_path": "/root/T-001-one"})
+        result = {"summary": "First attempt.", "files_modified": ["src/example.py"],
+                  "checks": [{"step_id": "T-001.001", "check": "python check", "result": "passed"}],
+                  "evidence": [{"kind": "diff", "reference": "src/example.py", "description": "Attempt one change."}],
+                  "blockers": []}
+        engine.dispatch("result", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001", "result": result})
+        with patch("harness.runtime.engine.subprocess.run", return_value=subprocess.CompletedProcess([], 1, "failed\n")):
+            with self.assertRaises(EngineError):
+                engine.dispatch("verify", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        engine.dispatch("retry", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                   "reason": "First verification failed.", "hypothesis": "A clean second attempt will pass."})
+        second = engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        state = engine.dispatch("status", {"run_id": run_id})["tasks"]["T-001"]
+        second_packet = json.loads(Path(second["packet_path"]).read_text())
+        self.assertEqual(state["attempt"], 2)
+        self.assertIsNone(state.get("agent"))
+        self.assertIsNone(state.get("result"))
+        self.assertIsNone(state.get("review"))
+        self.assertEqual(state["prepared_at"], second_packet["created_at"])
+        # Simulate an already-recorded native attempt from before the explicit
+        # prepared_at event field existed; state loading must recover the pinned
+        # packet timestamp, not trust a later event timestamp or re-prepare.
+        events = engine.store.read_events(run_id)
+        second_prepared = [event for event in events if event["event"] == "prepared"][1]
+        second_prepared["data"].pop("prepared_at")
+        events_path = engine.store.run_dir(run_id) / "events.jsonl"
+        events_path.write_text("".join(json.dumps(event, sort_keys=True, separators=(",", ":")) + "\n" for event in events), encoding="utf-8")
+        recovered = engine._state(run_id)["tasks"]["T-001"]
+        self.assertEqual(recovered["prepared_at"], second_packet["created_at"])
+        prepared_events = [event["data"] for event in engine.store.read_events(run_id) if event["event"] == "prepared"]
+        self.assertEqual(state["baseline"], prepared_events[0]["baseline"])
+        self.assertEqual(state["attempt_baseline"], prepared_events[1]["baseline"])
+        self.assertNotEqual(state["attempt_baseline"], state["baseline"])
+        engine.dispatch("bind-agent", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                        "agent_id": "/root/T-001-two", "session_id": "luna-session-2", "agent_path": "/root/T-001-two"})
+        second_bind = [item for item in adapter.attest_calls if item[0] == "luna-session-2"][-1]
+        self.assertEqual(second_bind[2]["after"], second_packet["created_at"])
+
+    def test_restore_packet_recovers_missing_task_cache_without_resetting_attempt_or_binding(self):
+        adapter = FixtureProductionAdapter()
+        engine = Engine(self.root, adapter=adapter)
+        engine.dispatch("initialize", {})
+        approve_release(engine, self.docs)
+        run_id = engine.dispatch("start", {
+            "release": "1.2.3", "owner": "sol-session-1", "phases": ["PH-01"],
+            "authorization": {"actor": "user", "statement": "Execute PH-01.", "source": "conversation"},
+            "capabilities": {"inventory_reference": "fixture inventory", "operations": {}, "probe_evidence": {}},
+        })["run_id"]
+        prepared = engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        packet_path = Path(prepared["packet_path"])
+        packet = json.loads(packet_path.read_text())
+        engine.dispatch("bind-agent", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                        "agent_id": "/root/T-001", "session_id": "luna-session-1", "agent_path": "/root/T-001"})
+        packet_path.unlink()
+        restored = engine.dispatch("restore-packet", {"run_id": run_id, "owner": "sol-session-1", "kind": "task", "task_id": "T-001"})
+        self.assertTrue(restored["restored"])
+        again = engine.dispatch("restore-packet", {"run_id": run_id, "owner": "sol-session-1", "kind": "task", "task_id": "T-001"})
+        self.assertFalse(again["restored"])
+        self.assertEqual(restored["packet_sha256"], prepared["packet_sha256"])
+        self.assertEqual(json.loads(packet_path.read_text()), packet)
+        state = engine.dispatch("status", {"run_id": run_id})["tasks"]["T-001"]
+        self.assertEqual(state["attempt"], 1)
+        self.assertEqual(state["agent"]["session_id"], "luna-session-1")
+        engine.dispatch("interrupt", {"run_id": run_id, "owner": "sol-session-1"})
+        resumed = engine.dispatch("resume", {"run_id": run_id, "owner": "sol-session-1"})
+        self.assertTrue(resumed["reconciliation_required"])
+
+    def test_restore_packet_fails_closed_for_stale_sources_and_corrupt_existing_cache(self):
+        adapter = FixtureProductionAdapter()
+        engine = Engine(self.root, adapter=adapter)
+        engine.dispatch("initialize", {})
+        approve_release(engine, self.docs)
+        run_id = engine.dispatch("start", {
+            "release": "1.2.3", "owner": "sol-session-1", "phases": ["PH-01"],
+            "authorization": {"actor": "user", "statement": "Execute PH-01.", "source": "conversation"},
+            "capabilities": {"inventory_reference": "fixture inventory", "operations": {}, "probe_evidence": {}},
+        })["run_id"]
+        prepared = engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        packet_path = Path(prepared["packet_path"])
+        packet_path.unlink()
+        original = self.docs["spec"].read_text(encoding="utf-8")
+        self.docs["spec"].write_text(original + "\nChanged after approval.\n", encoding="utf-8")
+        with self.assertRaises(EngineError) as stale:
+            engine.dispatch("restore-packet", {"run_id": run_id, "owner": "sol-session-1", "kind": "task", "task_id": "T-001"})
+        self.assertEqual(stale.exception.code, "approval_stale")
+        self.docs["spec"].write_text(original, encoding="utf-8")
+        packet_path.write_text("{corrupt", encoding="utf-8")
+        with self.assertRaises(EngineError) as corrupt:
+            engine.dispatch("restore-packet", {"run_id": run_id, "owner": "sol-session-1", "kind": "task", "task_id": "T-001"})
+        self.assertEqual(corrupt.exception.code, "packet_corrupt")
+        self.assertEqual(packet_path.read_text(encoding="utf-8"), "{corrupt")
+
     def test_fixture_takeover_preserves_original_luna_parent_for_reconciliation(self):
         adapter = FixtureProductionAdapter()
         engine = Engine(self.root, adapter=adapter)

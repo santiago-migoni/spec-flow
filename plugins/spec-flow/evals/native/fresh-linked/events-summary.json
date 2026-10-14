@@ -1,0 +1,217 @@
+[
+  {
+    "data": {},
+    "event": "started",
+    "seq": 1
+  },
+  {
+    "data": {
+      "attempt": 1,
+      "packet_sha256": "d84692270d08a25c8002d2eda65ff4946a6d140112b64e032be2d54550dabf4d",
+      "task_id": "T-001"
+    },
+    "event": "prepared",
+    "seq": 2
+  },
+  {
+    "data": {
+      "agent_id": "/root/e7_native/luna_f983205c12a739370d215e15075912ee1c9c903e726db96cbe2aa2d21696b726",
+      "attempt": 1,
+      "host_attestation": {
+        "agent_lifecycle": "active",
+        "agent_path": "/root/e7_native/luna_f983205c12a739370d215e15075912ee1c9c903e726db96cbe2aa2d21696b726",
+        "attestation_sha256": "81b958ef5a1c1f04644fbac850d785d3968278d206f0977972bc8c9df2e5d885",
+        "effort": "high",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b6b-47b1-7e42-852f-47f78d348baa"
+      },
+      "session_id": "01a13b6b-47b1-7e42-852f-47f78d348baa",
+      "task_id": "T-001"
+    },
+    "event": "agent_bound",
+    "seq": 3
+  },
+  {
+    "data": {},
+    "event": "interrupted",
+    "seq": 4
+  },
+  {
+    "data": {},
+    "event": "resumed",
+    "seq": 5
+  },
+  {
+    "data": {
+      "reason": "attempt interrupted before an agent result was recorded",
+      "task_id": "T-001"
+    },
+    "event": "reconciliation_required",
+    "seq": 6
+  },
+  {
+    "data": {
+      "evidence": "Native Luna wrote release.py then was interrupted while active; host lifecycle aborted; SHA256 8390f4d42c23fb03ffacf5cd6ff83857e40c0edbe717a871c91cb6c5ea8363c8 matches the surviving file; no replay.",
+      "host_attestation": {
+        "agent_lifecycle": "aborted",
+        "agent_path": "/root/e7_native/luna_f983205c12a739370d215e15075912ee1c9c903e726db96cbe2aa2d21696b726",
+        "attestation_sha256": "5f3ef6695a49efc02cb4f8a64134fd58d3fc0a41374e4f9587e1d21e8a17378a",
+        "effort": "high",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b6b-47b1-7e42-852f-47f78d348baa"
+      },
+      "task_id": "T-001"
+    },
+    "event": "reconciled_result",
+    "seq": 7
+  },
+  {
+    "data": {
+      "task_id": "T-001"
+    },
+    "event": "verification_failed",
+    "seq": 8
+  },
+  {
+    "data": {
+      "hypothesis": "The first regex uses Unicode \\d and permits arbitrary multi-digit components; replace it with ASCII [0-9] components constrained to 0 or nonzero-leading decimals.",
+      "reason": "Controller verification ran four methods and failed five malformed-string subcases: four leading-zero values and one Arabic-Indic digit.",
+      "task_id": "T-001"
+    },
+    "event": "retry_requested",
+    "seq": 9
+  },
+  {
+    "data": {
+      "attempt": 2,
+      "packet_sha256": "ba33cdc9dff85e0890b7b71ad46173bcf8830c83048c29823c97ef899df271ad",
+      "task_id": "T-001"
+    },
+    "event": "prepared",
+    "seq": 10
+  },
+  {
+    "data": {
+      "agent_id": "/root/e7_native/luna_10192b89b7a604d9206a697a51c9268ada1d993a3a871c8e9a2436be11644372",
+      "attempt": 2,
+      "host_attestation": {
+        "agent_lifecycle": "completed",
+        "agent_path": "/root/e7_native/luna_10192b89b7a604d9206a697a51c9268ada1d993a3a871c8e9a2436be11644372",
+        "attestation_sha256": "63b1d2983fdbe46ecba0b9e38714a7ca11249e38929d754b64fcfac283db13c5",
+        "effort": "high",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b6c-2470-70e2-8840-986bfc83bd2f"
+      },
+      "session_id": "01a13b6c-2470-70e2-8840-986bfc83bd2f",
+      "task_id": "T-001"
+    },
+    "event": "agent_bound",
+    "seq": 11
+  },
+  {
+    "data": {
+      "host_attestation": {
+        "agent_lifecycle": "completed",
+        "agent_path": "/root/e7_native/luna_10192b89b7a604d9206a697a51c9268ada1d993a3a871c8e9a2436be11644372",
+        "attestation_sha256": "63b1d2983fdbe46ecba0b9e38714a7ca11249e38929d754b64fcfac283db13c5",
+        "effort": "high",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b6c-2470-70e2-8840-986bfc83bd2f"
+      },
+      "task_id": "T-001"
+    },
+    "event": "result_received",
+    "seq": 12
+  },
+  {
+    "data": {
+      "attempt": 2,
+      "code_fingerprint": {
+        "release.py": "caa01813e009c2914d1407f0f8c9559001d7d32f897959e1e8a51e2eb27a0971"
+      },
+      "task_id": "T-001"
+    },
+    "event": "verified",
+    "seq": 13
+  },
+  {
+    "data": {
+      "evidence": "Inspected release.py: ASCII [0-9], component 0-or-nonzero-leading, fullmatch, explicit TypeError/ValueError. Controller executed four methods with exit 0, source pins and code fingerprint current.",
+      "reviewed_at": "2026-10-14T17:21:56Z",
+      "task_id": "T-001",
+      "verdict": "pass"
+    },
+    "event": "reviewed",
+    "seq": 14
+  },
+  {
+    "data": {
+      "closed_at": "2026-10-14T17:21:56Z",
+      "task_id": "T-001"
+    },
+    "event": "closed",
+    "seq": 15
+  },
+  {
+    "data": {
+      "packet_sha256": "24e9a568fba95d9d50b9cf214929bf376b1007a1f35345971422cd9d1ae5a8f0",
+      "phase_id": "PH-01",
+      "tree": "7d0370a546aa939dd2f5e56045417ec3ccb9bbc2"
+    },
+    "event": "phase_ready",
+    "seq": 16
+  },
+  {
+    "data": {
+      "evidence": "Independent Sol high inspected exact staged tree 7d0370a546aa939dd2f5e56045417ec3ccb9bbc2 and release.py SHA caa01813; reran four unit tests and git diff --cached --check; no findings or edits. Native host attestation validated separately by controller.",
+      "host_attestation": {
+        "agent_lifecycle": "completed",
+        "agent_path": "/root/e7_native/review_3e14cd8438acac300cb0c2debb51a2d4554ac326c2ea354976dbb74be88e4e43",
+        "attestation_sha256": "3d58f422990941acda1ecf0abd28893661e779459886544df32322cd6eab6e79",
+        "effort": "high",
+        "model": "gpt-6-sol",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b6f-87c1-7063-90b2-0929a2153186"
+      },
+      "phase_id": "PH-01",
+      "reviewed_at": "2026-10-14T17:24:30Z",
+      "reviewer_agent_id": "/root/e7_native/review_3e14cd8438acac300cb0c2debb51a2d4554ac326c2ea354976dbb74be88e4e43",
+      "reviewer_session": "01a13b6f-87c1-7063-90b2-0929a2153186",
+      "verdict": "pass"
+    },
+    "event": "phase_reviewed",
+    "seq": 17
+  },
+  {
+    "data": {
+      "commit": {
+        "adopted_after_crash": false,
+        "committed_at": "2026-10-14T17:24:33Z",
+        "evidence": "Independent Sol high inspected exact staged tree 7d0370a546aa939dd2f5e56045417ec3ccb9bbc2 and release.py SHA caa01813; reran four unit tests and git diff --cached --check; no findings or edits. Native host attestation validated separately by controller.",
+        "parent": "36815ef7e8a44d81798c6e43a0de210f61afd97a",
+        "phase_id": "PH-01",
+        "release": "v1.2.3",
+        "review_packet_sha256": "24e9a568fba95d9d50b9cf214929bf376b1007a1f35345971422cd9d1ae5a8f0",
+        "run_id": "1ee6f582-5509-40a5-ac97-0a6bd9f27d2b",
+        "schema": "spec-flow-phase-receipt.v1",
+        "sha": "250dcad90a9288ed6f63259a83137b698f97a6b5",
+        "subject": "feat(release): normalize strict version strings",
+        "tree": "7d0370a546aa939dd2f5e56045417ec3ccb9bbc2"
+      },
+      "phase_id": "PH-01"
+    },
+    "event": "phase_committed",
+    "seq": 18
+  },
+  {
+    "data": {
+      "reviewed_at": "2026-10-14T17:24:39Z"
+    },
+    "event": "release_reviewed",
+    "seq": 19
+  }
+]

@@ -169,9 +169,49 @@ class PhaseController:
         self.e._append(state["run_id"], "phase_ready", {"phase_id": phase_id, **pin,
                        "staged_paths": staged_paths, "source_digests": digests,
                        "packet_path": packet_path.relative_to(self.e.root).as_posix(),
-                       "packet_sha256": packet["packet_sha256"], "marker": marker})
+                       "packet_sha256": packet["packet_sha256"], "marker": marker,
+                       "packet_created_at": packet["created_at"]})
         return {"run_id": state["run_id"], "phase_id": phase_id, "phase_status": "ready", **pin,
-                "staged_paths": staged_paths, "packet_path": str(packet_path), "packet_sha256": packet["packet_sha256"], "phase_marker": marker}
+                "staged_paths": staged_paths, "packet_path": str(packet_path), "packet_sha256": packet["packet_sha256"],
+                "phase_marker": marker, "native_task_name": self.e._native_task_name("review_", marker)}
+
+    def restore_packet(self, state: Mapping[str, Any], phase_id: str) -> Dict[str, Any]:
+        phase = self._require_approved_phase(state, phase_id)
+        phase_state = state.get("phases", {}).get(phase_id, {})
+        if phase_state.get("status") not in {"ready", "reviewed"}:
+            raise EngineError("phase_packet_pin_missing", "phase has no ready packet pin to restore")
+        created_at = phase_state.get("packet_created_at")
+        if not created_at:
+            raise EngineError("packet_timestamp_unavailable", "the original phase packet timestamp was not recorded; restore cannot invent one")
+        self._verify_review_tree(state, phase_id)
+        digests = self._source_digests(state)
+        if digests != phase_state.get("source_digests"):
+            raise EngineError("phase_packet_restore_mismatch", "current approved sources differ from the pinned phase review packet")
+        marker = phase_state["marker"]
+        packet = {"schema": "spec-flow-phase-review.v1", "run_id": state["run_id"], "release": state["release"],
+                  "phase_id": phase_id, "parent": phase_state["parent"], "tree": phase_state["tree"],
+                  "diff_sha256": phase_state["diff_sha256"], "staged_paths": phase_state["staged_paths"],
+                  "task_ids": sorted(task["id"] for task in state["task_contracts"] if task["phase"] == phase_id),
+                  "source_digests": digests, "marker": marker, "created_at": created_at}
+        packet["packet_sha256"] = self._sha(json.dumps(packet, sort_keys=True, separators=(",", ":")).encode("utf-8"))
+        expected_hash = phase_state["packet_sha256"]
+        if packet["packet_sha256"] != expected_hash:
+            raise EngineError("phase_packet_restore_mismatch", "current phase pin does not reproduce the recorded review packet")
+        path = self.e._project_path(phase_state["packet_path"])
+        if path.exists():
+            try:
+                existing = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+                raise EngineError("phase_packet_corrupt", "existing phase packet is unreadable; refusing to replace it") from exc
+            unhashed = {key: value for key, value in existing.items() if key != "packet_sha256"} if isinstance(existing, dict) else {}
+            actual = self._sha(json.dumps(unhashed, sort_keys=True, separators=(",", ":")).encode("utf-8"))
+            if not isinstance(existing, dict) or existing.get("packet_sha256") != expected_hash or actual != expected_hash:
+                raise EngineError("phase_packet_corrupt", "existing phase packet does not match its event pin; refusing to replace it")
+            return {"run_id": state["run_id"], "kind": "phase", "phase_id": phase_id, "packet_path": str(path),
+                    "packet_sha256": expected_hash, "restored": False}
+        self._write_packet(path, packet)
+        return {"run_id": state["run_id"], "kind": "phase", "phase_id": phase_id, "packet_path": str(path),
+                "packet_sha256": expected_hash, "restored": True}
 
     def _write_packet(self, path: Path, packet: Mapping[str, Any]) -> Dict[str, Any]:
         if path.exists():

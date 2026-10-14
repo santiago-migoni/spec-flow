@@ -1,0 +1,4 @@
+069e9289f3663551ed2a349be66b22ae6139a283	a2e9a5f113e1f96b9e4b170f941a16878ae49774	docs(spec-flow): record release review
+8726e61f44fc3099b52e066e93352193154bc678	00cbcdde962335c82df9cb22ec785b19d9a3991a	feat(release): normalize migrated version strings
+a9c7cb06f363edcfaddd3bd77461c93b96f7336c	5a9c2702c259628a3b71020ce66daaa3dca58948	chore: checkpoint E7 legacy migration
+e1ee4c5a2ed450733cf46d02eb7933a1cc728274	e0e922a22d956c3978fe912006112bc255fc7927	test: seed legacy evaluation source

@@ -1,0 +1,66 @@
+{
+  "authorization": {
+    "actor": "user",
+    "source": "E7 user-authorized evaluation plan",
+    "statement": "E7 disposable evaluation authorizes applying this exact legacy-to-v1.2.3 conversion; no production product approval or publication."
+  },
+  "completed_at": "2026-10-14T17:13:42.707725+00:00",
+  "digest": "50babda4f8b31f21f4220d96c29209e74fa4696b67e1acb4a3acc0d74858b7c5",
+  "manifest": {
+    "candidate_dir": "/private/tmp/spec-flow-e7-native-evidence/legacy-candidates",
+    "candidates": [
+      {
+        "path": ".specs/constitution.md",
+        "sha256": "e86c4507aa2c2b189706881bcdb72dfc65f929daaeed471ddaebc73ed083a906"
+      },
+      {
+        "path": ".specs/release-v1.2.3/plan.md",
+        "sha256": "a3c82fa168375ad45f57768fa155a386ccdc70efc3d35505df427222bdeeae4a"
+      },
+      {
+        "path": ".specs/release-v1.2.3/spec.md",
+        "sha256": "f53857be55213a92d4785c7f047150f436518cfb240d820fa18c198fc5a3e141"
+      },
+      {
+        "path": ".specs/release-v1.2.3/tasks.md",
+        "sha256": "865d4ee458a104152e1094f9dadf44a61e037d7fd26353f2be095bee915f9f12"
+      },
+      {
+        "path": ".specs/roadmap.md",
+        "sha256": "9e5625ea323c82c5bc83f4a82ec1bf2fc65926967b1a6629583a28866550defa"
+      }
+    ],
+    "git_head": "e1ee4c5a2ed450733cf46d02eb7933a1cc728274",
+    "imports": {
+      "approvals": [],
+      "evidence": []
+    },
+    "mapping": [
+      {
+        "legacy": ".specs/001-normalize-release",
+        "release": "v1.2.3"
+      }
+    ],
+    "migration_id": "784ba60ef4a356c8b74381aa1c65ef62",
+    "project_root": "/private/tmp/spec-flow-e7-native-evidence/legacy-primary",
+    "replacements": [],
+    "schema_version": 1,
+    "sources": [
+      {
+        "path": ".specs/001-normalize-release/plan.md",
+        "sha256": "0f73db0a694cf14b917599e1f0756e2be9ccae7cbb5a098b0d287afb54323ad5"
+      },
+      {
+        "path": ".specs/001-normalize-release/spec.md",
+        "sha256": "ad0637f05eef9ef79e109f5bf7dfa9345769bf090488be81bda93490ccd65516"
+      },
+      {
+        "path": ".specs/001-normalize-release/tasks.md",
+        "sha256": "3780698614ffc934b85a7da9da0c8852ce165799e34175a2bb6c25772998c06c"
+      }
+    ]
+  },
+  "migration_id": "784ba60ef4a356c8b74381aa1c65ef62",
+  "schema_version": 1,
+  "status": "completed"
+}

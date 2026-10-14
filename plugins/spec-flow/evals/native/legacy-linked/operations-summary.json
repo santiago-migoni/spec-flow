@@ -1,0 +1,259 @@
+[
+  {
+    "at": "2026-10-14T17:14:15.322761+00:00",
+    "duration_ms": 5.49,
+    "ok": true,
+    "operation": "gate",
+    "result": {
+      "missing_approvals": [
+        ".specs/constitution.md",
+        ".specs/roadmap.md",
+        ".specs/release-v1.2.3/spec.md",
+        ".specs/release-v1.2.3/plan.md",
+        ".specs/release-v1.2.3/tasks.md"
+      ]
+    }
+  },
+  {
+    "at": "2026-10-14T17:14:19.952664+00:00",
+    "duration_ms": 1.38,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:14:20.004177+00:00",
+    "duration_ms": 1.83,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:14:20.055347+00:00",
+    "duration_ms": 2.09,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:14:20.106906+00:00",
+    "duration_ms": 2.63,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:14:20.159657+00:00",
+    "duration_ms": 3.19,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:15:10.069834+00:00",
+    "duration_ms": 5.78,
+    "ok": true,
+    "operation": "gate",
+    "result": {
+      "missing_approvals": []
+    }
+  },
+  {
+    "at": "2026-10-14T17:15:10.125445+00:00",
+    "duration_ms": 5.85,
+    "ok": true,
+    "operation": "capabilities",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:15:10.218276+00:00",
+    "duration_ms": 40.64,
+    "ok": true,
+    "operation": "start",
+    "result": {
+      "imported_completed": [],
+      "pending_imports": [],
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+      "status": "active"
+    }
+  },
+  {
+    "at": "2026-10-14T17:15:10.300456+00:00",
+    "duration_ms": 31.68,
+    "ok": true,
+    "operation": "prepare",
+    "result": {
+      "attempt": 1,
+      "native_task_name": "luna_73adc27193679eb19495996ede9186676702475d6aaebadf4c1d6c958c321fd4",
+      "packet_sha256": "29645c7572b8db542b3c786c7d7ae2706afd0525ad73841b8ef712c74492160e",
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:25:03.749343+00:00",
+    "duration_ms": 36.7,
+    "ok": true,
+    "operation": "bind-agent",
+    "result": {
+      "agent_id": "/root/e7_native/luna_73adc27193679eb19495996ede9186676702475d6aaebadf4c1d6c958c321fd4",
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+      "session_id": "01a13b72-14a5-7d61-8426-168080a16f38",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:25:21.247014+00:00",
+    "duration_ms": 34.84,
+    "ok": true,
+    "operation": "result",
+    "result": {
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:25:21.367488+00:00",
+    "duration_ms": 70.05,
+    "ok": true,
+    "operation": "verify",
+    "result": {
+      "passed": true,
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+      "steps": [
+        {
+          "code_fingerprint": {
+            "release.py": "224d838cd502ca77885342f9da77089ade26ee7439e06624ac7d63732cb1c905"
+          },
+          "exit_code": 0,
+          "output_sha256": "4bc37de48396900fa809512e7dd0dab3bd004e90fde5e293b7612630ff5084fb",
+          "step_id": "T-001.001"
+        }
+      ],
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:25:29.282474+00:00",
+    "duration_ms": 30.41,
+    "ok": true,
+    "operation": "review",
+    "result": {
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+      "task_id": "T-001",
+      "verdict": "pass"
+    }
+  },
+  {
+    "at": "2026-10-14T17:25:29.364716+00:00",
+    "duration_ms": 30.99,
+    "ok": true,
+    "operation": "close",
+    "result": {
+      "already_completed": false,
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+      "status": "completed",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:25:29.522723+00:00",
+    "duration_ms": 106.52,
+    "ok": true,
+    "operation": "phase-ready",
+    "result": {
+      "diff_sha256": "917523c49f95dff3d85e3e5a4b3bb381403a2d48d5ff6345d59b73bd0e516f69",
+      "native_task_name": "review_b391fcb014b019432f57be1d2f916ba6d5e9cedec01c673e9d603c9abd315b00",
+      "packet_sha256": "67b78a72a053ebec2c1a4ac968e3cf23d8efb570facad75f7ae21409ed898b57",
+      "phase_id": "PH-01",
+      "phase_marker": "SPEC_FLOW_PHASE_REVIEW=8e1d23f6-35b2-41b8-8424-545f3b51f3b2/PH-01/00cbcdde962335c82df9cb22ec785b19d9a3991a",
+      "phase_status": "ready",
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+      "tree": "00cbcdde962335c82df9cb22ec785b19d9a3991a"
+    }
+  },
+  {
+    "at": "2026-10-14T17:27:21.202847+00:00",
+    "duration_ms": 91.28,
+    "ok": true,
+    "operation": "review-phase",
+    "result": {
+      "phase_id": "PH-01",
+      "phase_status": "reviewed",
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+      "verdict": "pass"
+    }
+  },
+  {
+    "at": "2026-10-14T17:27:21.358196+00:00",
+    "duration_ms": 104.68,
+    "ok": true,
+    "operation": "commit-phase",
+    "result": {
+      "commit_sha": "8726e61f44fc3099b52e066e93352193154bc678",
+      "phase_id": "PH-01",
+      "phase_status": "committed",
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2"
+    }
+  },
+  {
+    "at": "2026-10-14T17:27:25.235566+00:00",
+    "duration_ms": 44.19,
+    "ok": true,
+    "operation": "complete",
+    "result": {
+      "audit_pending": true,
+      "complete": true,
+      "phase_commits": {
+        "PH-01": "8726e61f44fc3099b52e066e93352193154bc678"
+      },
+      "release_review_pending": true,
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+      "technical_complete": true
+    }
+  },
+  {
+    "at": "2026-10-14T17:27:25.393942+00:00",
+    "duration_ms": 126.08,
+    "ok": true,
+    "operation": "release-review",
+    "result": {
+      "audit_commit_sha": "069e9289f3663551ed2a349be66b22ae6139a283",
+      "release_review": {
+        "delivery_status": "branch_retained",
+        "external_side_effects": false,
+        "impact_evidence": [],
+        "impact_status": "pending",
+        "kind": "release-review",
+        "phase_commits": [
+          {
+            "phase_id": "PH-01",
+            "sha": "8726e61f44fc3099b52e066e93352193154bc678"
+          }
+        ],
+        "publication": false,
+        "release": "v1.2.3",
+        "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+        "schema": "spec-flow.derived-release.v1",
+        "technical_status": "complete"
+      },
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2"
+    }
+  },
+  {
+    "at": "2026-10-14T17:27:25.495327+00:00",
+    "duration_ms": 69.84,
+    "ok": true,
+    "operation": "complete",
+    "result": {
+      "audit_pending": false,
+      "complete": true,
+      "phase_commits": {
+        "PH-01": "8726e61f44fc3099b52e066e93352193154bc678"
+      },
+      "release_review_pending": false,
+      "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+      "technical_complete": true
+    }
+  }
+]

@@ -14,7 +14,7 @@ Autorización: el usuario solicitó explícitamente implementar el plan E0–E8 
 | E4 | Migración obligatoria | Verificada: 12 pruebas de migración; 56 del plugin |
 | E5 | Orquestación Sol–Luna | Verificada con fixtures: 70 pruebas del plugin y 5 hooks; evaluación nativa integral en E7 |
 | E6 | Hook, convergencia y cierre | Verificado: 97 pruebas del plugin y 9 hooks; revisión independiente Sol |
-| E7 | Evaluación integral | Pendiente |
+| E7 | Evaluación integral | Verificada: proyecto nuevo y migrado nativos, interrupción y corrección fallida; 107 pruebas del plugin + 9 hooks |
 | E8 | Preparación del paquete | Pendiente |
 
 ## E0 — Evidencia
@@ -59,3 +59,11 @@ Adaptador nativo sin llamadas a modelos desde Python, identidad de Sol/Luna comp
 ## E6 — Verificación
 
 Cierre de fases con árbol Git fijado, revisión Sol independiente, commits recuperables y un checkpoint final de auditoría. `complete` comprueba evidencia vigente y correspondencia con código revisado, incluso frente a cambios posteriores ya commiteados. El hook comparte validación y alcance con el runtime, sin bloquear proyectos ajenos. Abandono explícito conserva historial, evidencia aplicable y límites de intentos; la recuperación distingue un agente lanzado sin vínculo de una reserva que nunca llegó a delegarse. Las ventanas de caída al preparar, commitear y liberar propiedad tienen regresiones. Revisión independiente Sol sin bloqueos restantes en el alcance evaluado. Pruebas: 97 del plugin y 9 hooks. Estas pruebas de mecánica no sustituyen la evaluación nativa E7 ni la instalación E8.
+
+## E7 — Verificación
+
+Dos releases desechables completaron el flujo de producción con Sol high como propietario, Luna high como implementador y un Sol high independiente revisando cada fase. Ambas terminaron con commit de fase, auditoría final, evidencia vigente y worktree limpio; impacto pendiente y publicación falsa. Una interrupción posterior a escritura conservó el código y se reconcilió sin repetirlo. Un tercer escenario de corrección deliberadamente incompleta produjo una prueba fallida y el controlador rechazó revisión aprobatoria/cierre. Evidencia portable en `plugins/spec-flow/evals/native/evaluation-report.md`, junto con fuentes, resultados, procedencia, métricas y hashes.
+
+La evaluación real detectó dos defectos que los fixtures anteriores no mostraban: el host cifra los prompts de delegación y el reducer conservaba el agente del intento previo. El adaptador ahora vincula la llamada nativa por hash del marcador, salida exacta y parentesco; el segundo intento limpia el vínculo anterior y conserva su tiempo original. Se añadió restauración explícita de paquetes ignorados por Git: reconstrucción con el mismo hash y sin nuevo intento, con pruebas deterministas y revisión Sol independiente. La restauración de paquetes no se presenta como ensayo nativo. Suite final de esta etapa: 107 pruebas del plugin y 9 hooks.
+
+La referencia Sol usa exactamente la misma suite de cuatro métodos. Se registraron duración y consumo disponible; la evaluación incluye preparación, fallos inyectados, reparación del harness y una interrupción por límite de uso. No demuestra ahorro de tiempo ni costo.

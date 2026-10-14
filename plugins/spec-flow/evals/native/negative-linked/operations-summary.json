@@ -1,0 +1,240 @@
+[
+  {
+    "at": "2026-10-14T17:27:43.156775+00:00",
+    "duration_ms": 1.14,
+    "ok": true,
+    "operation": "initialize",
+    "result": {
+      "status": "initialized"
+    }
+  },
+  {
+    "at": "2026-10-14T17:27:43.212190+00:00",
+    "duration_ms": 1.48,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:27:43.268093+00:00",
+    "duration_ms": 1.81,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:27:43.323571+00:00",
+    "duration_ms": 2.11,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:27:43.379427+00:00",
+    "duration_ms": 3.1,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:27:43.435286+00:00",
+    "duration_ms": 3.41,
+    "ok": true,
+    "operation": "approve",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:27:43.528057+00:00",
+    "duration_ms": 6.2,
+    "ok": true,
+    "operation": "gate",
+    "result": {
+      "missing_approvals": []
+    }
+  },
+  {
+    "at": "2026-10-14T17:27:43.640337+00:00",
+    "duration_ms": 28.89,
+    "ok": true,
+    "operation": "capabilities",
+    "result": {}
+  },
+  {
+    "at": "2026-10-14T17:27:43.743457+00:00",
+    "duration_ms": 48.4,
+    "ok": true,
+    "operation": "start",
+    "result": {
+      "imported_completed": [],
+      "pending_imports": [],
+      "run_id": "84b13889-8bdf-44e4-9629-f123163e4d17",
+      "status": "active"
+    }
+  },
+  {
+    "at": "2026-10-14T17:27:43.836912+00:00",
+    "duration_ms": 39.69,
+    "ok": true,
+    "operation": "prepare",
+    "result": {
+      "attempt": 1,
+      "native_task_name": "luna_83801ad26aa420d88629b74047ce7bac356d4e1fe7e4d12ea107fc8290121972",
+      "packet_sha256": "563959ef9ef9b7859faeea1ee532ae6f043dcca1fc5e0a12588735e4e4033df0",
+      "run_id": "84b13889-8bdf-44e4-9629-f123163e4d17",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:28:00.694751+00:00",
+    "duration_ms": 41.57,
+    "ok": true,
+    "operation": "bind-agent",
+    "result": {
+      "agent_id": "/root/e7_native/luna_83801ad26aa420d88629b74047ce7bac356d4e1fe7e4d12ea107fc8290121972",
+      "run_id": "84b13889-8bdf-44e4-9629-f123163e4d17",
+      "session_id": "01a13b74-cd6a-7b22-a5dd-78f0743a10b5",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:28:12.786197+00:00",
+    "duration_ms": 35.35,
+    "ok": true,
+    "operation": "result",
+    "result": {
+      "run_id": "84b13889-8bdf-44e4-9629-f123163e4d17",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:28:12.909018+00:00",
+    "duration_ms": 72.46,
+    "error": {
+      "code": "verification_failed",
+      "details": {
+        "exit_code": 1,
+        "output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... \n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='01.2.3') ... FAIL\n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.02.3') ... FAIL\n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003') ... FAIL\n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='v00.0.0') ... FAIL\n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.٣') ... FAIL\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='01.2.3')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-native-evidence/negative-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.02.3')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-native-evidence/negative-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-native-evidence/negative-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='v00.0.0')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-native-evidence/negative-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.٣')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-native-evidence/negative-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (failures=5)\n"
+      },
+      "message": "verification command failed: T-001.001"
+    },
+    "ok": false,
+    "operation": "verify"
+  },
+  {
+    "at": "2026-10-14T17:28:20.333253+00:00",
+    "duration_ms": 37.33,
+    "ok": true,
+    "operation": "retry",
+    "result": {
+      "retry_ready": true,
+      "run_id": "84b13889-8bdf-44e4-9629-f123163e4d17",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:28:20.439146+00:00",
+    "duration_ms": 38.04,
+    "ok": true,
+    "operation": "prepare",
+    "result": {
+      "attempt": 2,
+      "native_task_name": "luna_209c731b3f7769c872d002454c99ee2e6cc84c70f0bcfb124081c97c9e53cf41",
+      "packet_sha256": "a64828f1cafd0e673f5b569a92f8f54422677ddf082acc64dc640461f8fce646",
+      "run_id": "84b13889-8bdf-44e4-9629-f123163e4d17",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:28:36.229883+00:00",
+    "duration_ms": 42.7,
+    "ok": true,
+    "operation": "bind-agent",
+    "result": {
+      "agent_id": "/root/e7_native/luna_209c731b3f7769c872d002454c99ee2e6cc84c70f0bcfb124081c97c9e53cf41",
+      "run_id": "84b13889-8bdf-44e4-9629-f123163e4d17",
+      "session_id": "01a13b75-591b-7f01-b3f6-d4890b5d7340",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:28:53.670144+00:00",
+    "duration_ms": 39.28,
+    "ok": true,
+    "operation": "result",
+    "result": {
+      "run_id": "84b13889-8bdf-44e4-9629-f123163e4d17",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:28:53.936655+00:00",
+    "duration_ms": 164.72,
+    "error": {
+      "code": "verification_failed",
+      "details": {
+        "exit_code": 1,
+        "output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... \n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.٣') ... FAIL\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.٣')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-native-evidence/negative-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (failures=1)\n"
+      },
+      "message": "verification command failed: T-001.001"
+    },
+    "ok": false,
+    "operation": "verify"
+  },
+  {
+    "at": "2026-10-14T17:29:02.952496+00:00",
+    "duration_ms": 26.31,
+    "error": {
+      "code": "review_required",
+      "details": {},
+      "message": "a passing review is required before close"
+    },
+    "ok": false,
+    "operation": "close"
+  },
+  {
+    "at": "2026-10-14T17:29:06.072015+00:00",
+    "duration_ms": 24.8,
+    "error": {
+      "code": "verification_required",
+      "details": {},
+      "message": "task requires current verification before review"
+    },
+    "ok": false,
+    "operation": "review"
+  },
+  {
+    "at": "2026-10-14T17:29:11.840166+00:00",
+    "duration_ms": 27.8,
+    "ok": true,
+    "operation": "retry",
+    "result": {
+      "retry_ready": true,
+      "run_id": "84b13889-8bdf-44e4-9629-f123163e4d17",
+      "task_id": "T-001"
+    }
+  },
+  {
+    "at": "2026-10-14T17:29:11.949716+00:00",
+    "duration_ms": 58.25,
+    "ok": true,
+    "operation": "abandon",
+    "result": {
+      "run_id": "84b13889-8bdf-44e4-9629-f123163e4d17",
+      "status": "abandoned"
+    }
+  },
+  {
+    "at": "2026-10-14T17:29:14.416794+00:00",
+    "duration_ms": 29.12,
+    "ok": true,
+    "operation": "complete",
+    "result": {
+      "audit_pending": true,
+      "complete": false,
+      "phase_commits": {},
+      "release_review_pending": true,
+      "run_id": "84b13889-8bdf-44e4-9629-f123163e4d17",
+      "technical_complete": false
+    }
+  }
+]

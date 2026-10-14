@@ -81,8 +81,12 @@ class NativeCodexAdapter:
             raise AdapterError("host_agent_mismatch", "native child session agent_path does not match the spawn response")
         prompt_rows = [row for row in records if row.get("type") == "response_item" and isinstance(row.get("payload"), dict)
                        and row["payload"].get("type") == "message" and row["payload"].get("role") == "user"]
-        if task_marker is not None and not any(task_marker in self._strings(row) for row in prompt_rows):
-            raise AdapterError("host_task_marker_missing", "native session does not contain the prepared task packet marker")
+        marker_rows = [row for row in prompt_rows if task_marker is not None and task_marker in self._strings(row)]
+        delegation = None
+        if task_marker is not None and not marker_rows:
+            if parent_session is None or agent_path is None:
+                raise AdapterError("host_task_marker_missing", "native session does not contain the prepared task packet marker")
+            delegation = self._attest_spawn(parent_session, role, task_marker, agent_path, after)
         if after is not None:
             timestamps = [row.get("timestamp") for row in records if row.get("type") == "turn_context" and isinstance(row.get("timestamp"), str)]
             if not timestamps or max(timestamps) < after:
@@ -107,16 +111,92 @@ class NativeCodexAdapter:
             raise AdapterError("agent_still_active", "native agent has no terminal lifecycle record", details={"lifecycle": lifecycle})
         lifecycle_rows = [row for row in records if row.get("type") == "event_msg" and isinstance(row.get("payload"), dict)
                           and row["payload"].get("type") in {"task_started", "task_complete", "turn_aborted"}]
-        marker_rows = [row for row in prompt_rows if task_marker is not None and task_marker in self._strings(row)]
         attestation = {"session_id": session_id, "role": role, "model": expected_model, "effort": expected_effort,
                        "log_path": str(path), "agent_lifecycle": lifecycle, "parent_session": lineage.get("parent_thread_id") if isinstance(lineage, dict) else None,
                        "agent_path": lineage.get("agent_path") if isinstance(lineage, dict) else None,
+                       "packet_marker_source": "child_user_message" if marker_rows else "native_spawn_task_name" if delegation else None,
                        "record_hashes": {"session_meta": self._record_hash(metas[0]),
                                          "turn_contexts": [self._record_hash(row) for row in turns],
                                          "lifecycle": self._record_hash(lifecycle_rows),
-                                         "task_marker": self._record_hash(marker_rows) if task_marker is not None else None}}
+                                         "task_marker": self._record_hash(marker_rows) if marker_rows else None,
+                                         "delegation": delegation["record_hash"] if delegation else None}}
         attestation["attestation_sha256"] = self._record_hash(attestation)
         return attestation
+
+    def _attest_spawn(self, parent_session: str, role: str, task_marker: str, agent_path: str,
+                      after: Optional[str]) -> Dict[str, str]:
+        """Correlate a hash-named native spawn with its successful path response.
+
+        Some Codex hosts encrypt the delegated message in the local parent log.
+        In that case only the clear native task_name is usable as delegation
+        evidence. The name binds the full marker (including run/phase/tree for
+        reviews), while a call-id-linked result and child session lineage bind
+        that invocation to this exact child. No assistant prose or child output
+        can satisfy this check.
+        """
+        if not isinstance(task_marker, str) or not task_marker:
+            raise AdapterError("host_task_marker_missing", "delegation marker is required")
+        expected_name = ("review_" if role == "reviewer" else "luna_" if role == "implementer" else "") + hashlib.sha256(task_marker.encode("utf-8")).hexdigest()
+        if not expected_name.startswith(("review_", "luna_")):
+            raise AdapterError("host_task_marker_missing", "native delegation evidence is only supported for child roles")
+        parent_path = self._find_session(parent_session)
+        records = self._read_records(parent_path)
+        calls: Dict[str, Mapping[str, Any]] = {}
+        outputs: Dict[str, Mapping[str, Any]] = {}
+        for row in records:
+            if row.get("type") != "response_item" or not isinstance(row.get("payload"), dict):
+                continue
+            payload = row["payload"]
+            call_id = payload.get("call_id")
+            if not isinstance(call_id, str):
+                continue
+            if payload.get("type") == "function_call" and payload.get("namespace") == "collaboration" and payload.get("name") == "spawn_agent":
+                calls[call_id] = row
+            elif payload.get("type") == "function_call_output":
+                outputs[call_id] = row
+        for call_id, call in calls.items():
+            payload = call["payload"]
+            args = payload.get("arguments")
+            if isinstance(args, str):
+                try:
+                    args = json.loads(args)
+                except json.JSONDecodeError:
+                    continue
+            expected_model, expected_effort = self.PROFILES[role]
+            if (not isinstance(args, dict) or args.get("task_name") != expected_name
+                    or args.get("model") != expected_model or args.get("reasoning_effort") != expected_effort
+                    or args.get("fork_turns") != "none"):
+                continue
+            called_at = call.get("timestamp")
+            output = outputs.get(call_id)
+            output_at = output.get("timestamp") if output else None
+            if not output or not isinstance(called_at, str) or not isinstance(output_at, str):
+                continue
+            if after is not None and called_at < after:
+                continue
+            if output_at < called_at:
+                continue
+            output_payload = output.get("payload", {})
+            output_value = output_payload.get("output") if isinstance(output_payload, dict) else None
+            if isinstance(output_value, str):
+                try:
+                    output_value = json.loads(output_value)
+                except json.JSONDecodeError:
+                    continue
+            if (not isinstance(output_value, dict) or output_value.get("task_name") != agent_path
+                    or "error" in output_value or output_value.get("status") == "error"):
+                continue
+            return {"call_record_hash": self._record_hash(call), "output_record_hash": self._record_hash(output),
+                    "record_hash": self._record_hash({"call": call, "output": output})}
+        raise AdapterError("host_task_marker_missing", "parent log has no successful native spawn bound to this packet marker and child path")
+
+    @staticmethod
+    def native_task_name(role: str, marker: str) -> str:
+        """Return the native task_name that binds an opaque delegated prompt."""
+        prefix = {"implementer": "luna_", "reviewer": "review_"}.get(role)
+        if prefix is None or not isinstance(marker, str) or not marker:
+            raise AdapterError("host_task_marker_missing", "cannot derive a native task name for this role/marker")
+        return prefix + hashlib.sha256(marker.encode("utf-8")).hexdigest()
 
     def attest_no_spawn(self, owner_session: str, task_state: Mapping[str, Any], inventory: Any) -> Dict[str, Any]:
         """Prove there is no task child to bind before reconciling a prepared attempt.
@@ -182,14 +262,19 @@ class NativeCodexAdapter:
                                    details={"session_id": meta.get("id"), "agent_path": agent_path})
             user_prompts = [row for row in records if row.get("type") == "response_item" and isinstance(row.get("payload"), dict)
                             and row["payload"].get("type") == "message" and row["payload"].get("role") == "user"]
-            if any(marker in self._strings(row) for row in user_prompts):
+            found_marker = any(marker in self._strings(row) for row in user_prompts)
+            if not found_marker:
+                try:
+                    self._attest_spawn(owner_session, "implementer", marker, agent_path, after)
+                    found_marker = True
+                except AdapterError as exc:
+                    if exc.code != "host_task_marker_missing":
+                        raise
+            if found_marker:
                 raise AdapterError("task_agent_found_bind_before_reconcile", "a child received this task packet; bind its native session before reconciliation",
                                    details={"session_id": meta.get("id"), "agent_path": lineage.get("agent_path")})
-            lifecycle = self._agent_lifecycle(records)
-            if lifecycle not in {"completed", "aborted"}:
-                raise AdapterError("native_agent_still_active", "a child created during this attempt is not terminal", details={"session_id": meta.get("id"), "agent_lifecycle": lifecycle})
-            child_hashes.append({"session_meta": self._record_hash(first), "turn_contexts": [self._record_hash(row) for row in turns],
-                                 "lifecycle": self._record_hash([row for row in records if row.get("type") == "event_msg"])})
+            raise AdapterError("native_child_unattributed", "a child was created during this attempt but its task association cannot be proven; no-spawn reconciliation is unsafe",
+                               details={"session_id": meta.get("id"), "agent_path": lineage.get("agent_path")})
         return {"session_id": owner_session, "role": "orchestrator", "owner_attestation_sha256": owner_attestation["attestation_sha256"],
                 "packet_marker": marker, "inventory_reference": reference, "inventory_sha256": self._record_hash(inventory),
                 "child_record_hashes": child_hashes, "attestation_sha256": self._record_hash({"owner": owner_attestation["attestation_sha256"],

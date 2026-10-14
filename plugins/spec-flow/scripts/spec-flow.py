@@ -29,7 +29,7 @@ def main(argv: list[str] | None = None) -> int:
         "operation",
         choices=(
             "initialize", "digest", "validate", "approve", "gate", "capabilities", "start", "authorize",
-            "prepare", "bind-agent", "result", "retry", "reconcile", "verify", "review", "close", "resume", "takeover", "status", "interrupt",
+            "prepare", "restore-packet", "bind-agent", "result", "retry", "reconcile", "verify", "review", "close", "resume", "takeover", "status", "interrupt",
             "phase-ready", "review-phase", "commit-phase", "refresh-evidence", "release-review", "complete", "hook-check",
             "migrate-preview", "migrate-apply", "migrate-resume", "abandon",
         ),

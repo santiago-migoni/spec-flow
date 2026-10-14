@@ -81,8 +81,97 @@ class CodexAdapterTests(unittest.TestCase):
                                             agent_path="/root/T-001", task_marker=marker)
         self.assertEqual(ctx.exception.code, "host_parent_mismatch")
 
+    def write_spawn(self, owner, task_name, agent_path, *, output_path=None, output_error=None, role="implementer"):
+        parent_path = self.sessions / ("rollout-2026-10-14T12-00-00-" + owner + ".jsonl")
+        call_id = "call-spawn-" + task_name
+        arguments = {"task_name": task_name,
+                     "model": "gpt-6-sol" if role == "reviewer" else "gpt-6-luna", "reasoning_effort": "high",
+                     "fork_turns": "none", "message": "encrypted-prompt-payload"}
+        call = {"type": "response_item", "timestamp": "2026-10-14T12:00:01Z",
+                "payload": {"type": "function_call", "namespace": "collaboration", "name": "spawn_agent",
+                            "call_id": call_id, "arguments": json.dumps(arguments)}}
+        output_value = {"task_name": output_path or agent_path}
+        if output_error:
+            output_value["error"] = output_error
+        output = {"type": "response_item", "timestamp": "2026-10-14T12:00:02Z",
+                  "payload": {"type": "function_call_output", "call_id": call_id,
+                              "output": json.dumps(output_value)}}
+        with parent_path.open("a", encoding="utf-8") as stream:
+            stream.write(json.dumps(call) + "\n")
+            stream.write(json.dumps(output) + "\n")
+        return call_id
+
+    def test_encrypted_native_prompt_uses_hash_bearing_spawn_name_and_linked_output(self):
+        packet_hash = "a" * 64
+        marker = "SPEC_FLOW_PACKET_SHA256=" + packet_hash
+        agent_path = "/root/T-001"
+        self.write_session(self.owner)
+        task_name = self.adapter.native_task_name("implementer", marker)
+        self.write_spawn(self.owner, task_name, agent_path)
+        self.write_session(self.child, model="gpt-6-luna", parent=self.owner, agent_path=agent_path, marker=None)
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.base / "codex")}):
+            result = self.adapter.attest_session(self.child, "implementer", parent_session=self.owner,
+                                                 agent_path=agent_path, task_marker=marker,
+                                                 after="2026-10-14T11:59:00Z")
+        self.assertEqual(result["packet_marker_source"], "native_spawn_task_name")
+        self.assertTrue(result["record_hashes"]["delegation"])
+
+    def test_phase_review_marker_binds_full_run_phase_and_tree_in_native_name(self):
+        marker = "SPEC_FLOW_PHASE_REVIEW=run-9/PH03/" + ("d" * 40)
+        agent_path = "/root/review-PH03"
+        self.write_session(self.owner)
+        name = self.adapter.native_task_name("reviewer", marker)
+        self.write_spawn(self.owner, name, agent_path, role="reviewer")
+        self.write_session(self.child, parent=self.owner, agent_path=agent_path, marker=None)
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.base / "codex")}):
+            result = self.adapter.attest_session(self.child, "reviewer", parent_session=self.owner,
+                                                 agent_path=agent_path, task_marker=marker)
+        self.assertEqual(result["packet_marker_source"], "native_spawn_task_name")
+
+    def test_encrypted_native_spawn_output_must_return_exact_child_path(self):
+        marker = "SPEC_FLOW_PACKET_SHA256=" + ("e" * 64)
+        agent_path = "/root/T-001"
+        self.write_session(self.owner)
+        self.write_spawn(self.owner, self.adapter.native_task_name("implementer", marker),
+                         agent_path, output_path=agent_path + "-prefix")
+        self.write_session(self.child, model="gpt-6-luna", parent=self.owner, agent_path=agent_path, marker=None)
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.base / "codex")}):
+            with self.assertRaises(AdapterError) as ctx:
+                self.adapter.attest_session(self.child, "implementer", parent_session=self.owner,
+                                            agent_path=agent_path, task_marker=marker)
+        self.assertEqual(ctx.exception.code, "host_task_marker_missing")
+
+    def test_encrypted_native_spawn_error_output_cannot_bind(self):
+        marker = "SPEC_FLOW_PACKET_SHA256=" + ("f" * 64)
+        agent_path = "/root/T-001"
+        self.write_session(self.owner)
+        self.write_spawn(self.owner, self.adapter.native_task_name("implementer", marker), agent_path,
+                         output_error="spawn failed")
+        self.write_session(self.child, model="gpt-6-luna", parent=self.owner, agent_path=agent_path, marker=None)
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.base / "codex")}):
+            with self.assertRaises(AdapterError) as ctx:
+                self.adapter.attest_session(self.child, "implementer", parent_session=self.owner,
+                                            agent_path=agent_path, task_marker=marker)
+        self.assertEqual(ctx.exception.code, "host_task_marker_missing")
+
+    def test_encrypted_native_prompt_rejects_wrong_or_unlinked_spawn_evidence(self):
+        packet_hash = "b" * 64
+        marker = "SPEC_FLOW_PACKET_SHA256=" + packet_hash
+        agent_path = "/root/T-001"
+        self.write_session(self.owner)
+        wrong_marker = "SPEC_FLOW_PACKET_SHA256=" + ("c" * 64)
+        self.write_spawn(self.owner, self.adapter.native_task_name("implementer", wrong_marker), agent_path)
+        self.write_session(self.child, model="gpt-6-luna", parent=self.owner, agent_path=agent_path, marker=None)
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.base / "codex")}):
+            with self.assertRaises(AdapterError) as ctx:
+                self.adapter.attest_session(self.child, "implementer", parent_session=self.owner,
+                                            agent_path=agent_path, task_marker=marker,
+                                            after="2026-10-14T11:59:00Z")
+        self.assertEqual(ctx.exception.code, "host_task_marker_missing")
+
     def test_packet_marker_in_agent_output_does_not_attest_delegated_prompt(self):
         marker = "SPEC_FLOW_PACKET_SHA256=abc123"
+        self.write_session(self.owner)
         path = self.write_session(self.child, model="gpt-6-luna", parent=self.owner, agent_path="/root/T-001", marker=None)
         rows = path.read_text(encoding="utf-8") + json.dumps({"type": "response_item", "payload": {"type": "message", "role": "assistant", "content": marker}}) + "\n"
         path.write_text(rows, encoding="utf-8")
@@ -115,6 +204,17 @@ class CodexAdapterTests(unittest.TestCase):
             with self.assertRaises(AdapterError) as ctx:
                 self.adapter.attest_no_spawn(self.owner, task_state, inventory)
         self.assertEqual(ctx.exception.code, "task_agent_found_bind_before_reconcile")
+
+    def test_no_spawn_reconciliation_rejects_unattributed_new_child(self):
+        self.write_session(self.owner)
+        self.write_session(self.child, model="gpt-6-luna", parent=self.owner, agent_path="/root/unrelated", marker=None)
+        task_state = {"packet_sha256": "abc123", "prepared_at": "2026-10-14T11:59:00Z", "attempt_baseline": {}}
+        inventory = {"owner_session": self.owner, "inventory_reference": "list_agents result ref",
+                     "checked_at": "2026-10-14T12:01:00Z", "agents": [{"agent_path": "/root/unrelated", "status": "completed"}]}
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.base / "codex")}):
+            with self.assertRaises(AdapterError) as ctx:
+                self.adapter.attest_no_spawn(self.owner, task_state, inventory)
+        self.assertEqual(ctx.exception.code, "native_child_unattributed")
 
     def test_malformed_or_partial_log_fails_closed(self):
         path = self.write_session(self.owner)

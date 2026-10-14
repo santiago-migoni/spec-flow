@@ -65,6 +65,7 @@ class Engine:
             "start": self._start,
             "authorize": self._authorize,
             "prepare": self._prepare,
+            "restore-packet": self._restore_packet,
             "bind-agent": self._bind_agent,
             "result": self._result,
             "retry": self._retry,
@@ -115,6 +116,10 @@ class Engine:
             raise EngineError("invalid_input", "missing input fields: {}".format(", ".join(missing)))
         if unknown:
             raise EngineError("invalid_input", "unknown input fields: {}".format(", ".join(unknown)))
+
+    @staticmethod
+    def _native_task_name(prefix: str, marker: str) -> str:
+        return prefix + hashlib.sha256(marker.encode("utf-8")).hexdigest()
 
     @staticmethod
     def _nonempty(value: Any, name: str) -> str:
@@ -843,33 +848,10 @@ class Engine:
         if attempt > retry_limit:
             raise EngineError("retry_limit", "task reached the maximum of {} attempts".format(retry_limit))
         baseline = self._snapshot_code()
-        scoped_files = self._task_scope_files(state, task)
-        release_docs = self._release_documents(state["release"])
-        source_rows = []
-        packet_sources = []
-        for relative, digest in sorted(state["documents"].items()):
-            path = self._project_path(relative)
-            doc = read_document(path)
-            projected = self._packet_source_projection(relative, doc["contract"], doc["prose"], task, state)
-            packet_sources.append({
-                "path": path.relative_to(self.root).as_posix(),
-                "digest": digest,
-                "contract": projected["contract"],
-                "prose": projected["prose"],
-            })
-        selected_acceptance = {criterion["id"]: criterion for criterion in read_document(self._release_path(state["release"], "spec.md"))["contract"]["acceptance"]
-                               if criterion["id"] in task["acceptance"]}
-        source_rows = packet_sources
-        packet = {
-            "run_id": payload["run_id"], "task_id": task_id, "attempt": attempt,
-            "owner": state["owner"], "task": task, "sources": source_rows,
-            "selected_acceptance": selected_acceptance,
-            "scope_files": sorted(scoped_files), "source_digests": state["documents"], "created_at": self._now(),
-        }
-        canonical_packet = json.dumps(packet, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
-        if len(canonical_packet) > MAX_PACKET_BYTES:
-            raise EngineError("packet_too_large", "task context packet exceeds the configured size bound", details={"bytes": len(canonical_packet), "maximum": MAX_PACKET_BYTES})
-        packet["packet_sha256"] = hashlib.sha256(canonical_packet).hexdigest()
+        packet = self._build_task_packet(state, payload["run_id"], task_id, attempt, self._now(), state["owner"])
+        scoped_files = set(packet["scope_files"])
+        source_rows = packet["sources"]
+        selected_acceptance = packet["selected_acceptance"]
         packet_path = self.store.run_dir(payload["run_id"]) / "packets" / "{}-{}.json".format(task_id, attempt)
         self._ensure_approvals_current(state)
         if packet_path.exists():
@@ -886,8 +868,93 @@ class Engine:
             "task_id": task_id, "attempt": attempt, "packet_path": packet_path.relative_to(self.root).as_posix(),
             "packet_sha256": packet["packet_sha256"], "baseline": baseline, "scope_files": sorted(scoped_files),
             "source_digests": state["documents"], "attempt_owner": state["owner"],
+            "prepared_at": packet["created_at"],
         })
-        return {"run_id": payload["run_id"], "task_id": task_id, "attempt": attempt, "packet_path": str(packet_path), "packet_sha256": packet["packet_sha256"], "scope_files": sorted(scoped_files)}
+        marker = "SPEC_FLOW_PACKET_SHA256=" + packet["packet_sha256"]
+        return {"run_id": payload["run_id"], "task_id": task_id, "attempt": attempt, "packet_path": str(packet_path),
+                "packet_sha256": packet["packet_sha256"], "native_task_name": self._native_task_name("luna_", marker),
+                "scope_files": sorted(scoped_files)}
+
+    def _build_task_packet(self, state: Mapping[str, Any], run_id: str, task_id: str, attempt: int,
+                           created_at: str, owner: str) -> Dict[str, Any]:
+        task = self._task_contract(state, task_id)
+        scoped_files = self._task_scope_files(state, task)
+        packet_sources = []
+        for relative, digest in sorted(state["documents"].items()):
+            path = self._project_path(relative)
+            doc = read_document(path)
+            projected = self._packet_source_projection(relative, doc["contract"], doc["prose"], task, state)
+            packet_sources.append({"path": path.relative_to(self.root).as_posix(), "digest": digest,
+                                   "contract": projected["contract"], "prose": projected["prose"]})
+        selected_acceptance = {criterion["id"]: criterion for criterion in read_document(self._release_path(state["release"], "spec.md"))["contract"]["acceptance"]
+                               if criterion["id"] in task["acceptance"]}
+        packet = {"run_id": run_id, "task_id": task_id, "attempt": attempt,
+                  "owner": owner, "task": task, "sources": packet_sources,
+                  "selected_acceptance": selected_acceptance, "scope_files": sorted(scoped_files),
+                  "source_digests": state["documents"], "created_at": created_at}
+        canonical = json.dumps(packet, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        if len(canonical) > MAX_PACKET_BYTES:
+            raise EngineError("packet_too_large", "task context packet exceeds the configured size bound", details={"bytes": len(canonical), "maximum": MAX_PACKET_BYTES})
+        packet["packet_sha256"] = hashlib.sha256(canonical).hexdigest()
+        return packet
+
+    def _restore_packet(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        self._fields(payload, ("run_id", "owner", "kind"), ("task_id", "phase_id"))
+        run_id = self._nonempty(payload["run_id"], "run_id")
+        owner = self._nonempty(payload["owner"], "owner")
+        kind = payload["kind"]
+        if kind not in {"task", "phase"}:
+            raise EngineError("invalid_input", "restore-packet kind must be task or phase")
+        if (kind == "task" and ("task_id" not in payload or "phase_id" in payload)) or (kind == "phase" and ("phase_id" not in payload or "task_id" in payload)):
+            raise EngineError("invalid_input", "restore-packet requires exactly task_id or phase_id for its kind")
+        try:
+            state = self.store.read_state(run_id, self._reduce_events, repair=False)
+        except StoreError as exc:
+            raise EngineError(exc.code, str(exc)) from exc
+        self._require_owner(state, owner)
+        if getattr(self.adapter, "production", False):
+            self._adapter_call("assert_lease", state)
+            self._adapter_call("attest_session", owner, "orchestrator")
+        self._ensure_approvals_current(state)
+        if kind == "task":
+            task_id = self._nonempty(payload["task_id"], "task_id")
+            task_state = state.get("tasks", {}).get(task_id, {})
+            if not task_state.get("attempt") or not task_state.get("packet_path") or not task_state.get("packet_sha256"):
+                raise EngineError("packet_pin_missing", "task has no recorded packet pin to restore")
+            created_at = task_state.get("packet_created_at")
+            if not created_at:
+                raise EngineError("packet_timestamp_unavailable", "the original task packet timestamp was not recorded; restore cannot invent one")
+            packet = self._build_task_packet(state, run_id, task_id, task_state["attempt"], created_at,
+                                             task_state.get("attempt_owner", owner))
+            path = self._project_path(task_state["packet_path"])
+            expected_hash = task_state["packet_sha256"]
+            if packet["packet_sha256"] != expected_hash:
+                raise EngineError("packet_restore_mismatch", "current approved sources or task scope do not reproduce the recorded task packet")
+            restored = self._restore_task_packet_file(path, packet, expected_hash)
+            return {"run_id": run_id, "kind": kind, "task_id": task_id, "packet_path": str(path),
+                    "packet_sha256": expected_hash, "restored": restored, "attempt": task_state["attempt"]}
+        phase_id = self._nonempty(payload["phase_id"], "phase_id")
+        phase_state = state.get("phases", {}).get(phase_id, {})
+        if phase_state.get("status") not in {"ready", "reviewed"} or not phase_state.get("packet_path") or not phase_state.get("packet_sha256"):
+            raise EngineError("phase_packet_pin_missing", "phase has no ready packet pin to restore")
+        return self._phase_controller().restore_packet(state, phase_id)
+
+    def _restore_task_packet_file(self, path: Path, packet: Mapping[str, Any], expected_hash: str) -> bool:
+        if path.exists():
+            try:
+                current = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+                raise EngineError("packet_corrupt", "existing task packet is unreadable; refusing to replace it") from exc
+            actual = current.get("packet_sha256") if isinstance(current, dict) else None
+            unhashed = {key: value for key, value in current.items() if key != "packet_sha256"} if isinstance(current, dict) else {}
+            actual_content_hash = hashlib.sha256(json.dumps(unhashed, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+            if actual != expected_hash or actual_content_hash != expected_hash:
+                raise EngineError("packet_corrupt", "existing task packet does not match its immutable event pin; refusing to replace it")
+            return False
+        if packet.get("packet_sha256") != expected_hash:
+            raise EngineError("packet_restore_mismatch", "rebuilt task packet does not match its immutable event pin")
+        self._write_immutable_json(path, packet)
+        return True
 
     def _packet_source_projection(self, relative: str, contract: Mapping[str, Any], prose: str,
                                   task: Mapping[str, Any], state: Mapping[str, Any]) -> Dict[str, Any]:
@@ -1308,9 +1375,30 @@ class Engine:
 
     def _state(self, run_id: str) -> Dict[str, Any]:
         try:
-            return self.store.read_state(run_id, self._reduce_events, repair=False)
+            state = self.store.read_state(run_id, self._reduce_events, repair=False)
         except StoreError as exc:
             raise EngineError(exc.code, str(exc)) from exc
+        active_task = state.get("active_task")
+        task_state = state.get("tasks", {}).get(active_task, {}) if active_task else {}
+        packet_path = task_state.get("packet_path")
+        packet_sha = task_state.get("packet_sha256")
+        if packet_path and packet_sha:
+            path = self._project_path(packet_path)
+            try:
+                packet = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+                raise EngineError("packet_corrupt", "active attempt packet is unavailable or unreadable") from exc
+            unhashed = {key: value for key, value in packet.items() if key != "packet_sha256"} if isinstance(packet, dict) else {}
+            actual_sha = hashlib.sha256(json.dumps(unhashed, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+            if (not isinstance(packet, dict) or actual_sha != packet_sha or packet.get("run_id") != run_id
+                    or packet.get("task_id") != active_task or packet.get("attempt") != task_state.get("attempt")
+                    or not isinstance(packet.get("created_at"), str) or not packet["created_at"]):
+                raise EngineError("packet_corrupt", "active attempt packet does not match its immutable event pin")
+            # Older prepared events did not persist a separate prepared_at field.
+            # Recover the exact immutable packet timestamp without changing the
+            # event log or allowing a child predating this attempt to bind.
+            task_state["prepared_at"] = packet["created_at"]
+        return state
 
     def _owned_state(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         run_id = self._nonempty(payload.get("run_id"), "run_id")
@@ -1594,10 +1682,15 @@ class Engine:
                 # out-of-scope edits disappear from later verification.
                 original_baseline = task.get("baseline", data["baseline"])
                 task.update({"attempt": data["attempt"], "status": "running", "packet_path": data["packet_path"],
-                             "packet_sha256": data.get("packet_sha256"), "prepared_at": event.get("at"),
+                             "packet_sha256": data.get("packet_sha256"),
+                             "prepared_at": data.get("prepared_at", data.get("at")),
+                             "packet_created_at": data.get("prepared_at"),
                              "baseline": original_baseline, "attempt_baseline": data["baseline"], "scope_files": data["scope_files"],
-                             "source_digests": data["source_digests"], "attempt_owner": data.get("attempt_owner", state["owner"]), "result": None,
-                             "step_evidence": {}, "review": None, "code_fingerprint": None})
+                             "source_digests": data["source_digests"], "attempt_owner": data.get("attempt_owner", state["owner"]),
+                             "agent": None, "result": None, "failure": None, "step_evidence": {}, "review": None,
+                             "code_fingerprint": None, "verified_snapshot": None, "evidence_path": None,
+                             "reconciliation_evidence": None, "no_spawn_attestation": None,
+                             "retry_reason": None, "retry_hypothesis": None, "closed_at": None})
                 state["active_task"] = data["task_id"]
                 state["reconciliation_required"] = False
             elif kind == "agent_bound":
@@ -1663,7 +1756,8 @@ class Engine:
                 state.setdefault("phases", {})[data["phase_id"]] = {"status": "ready", "parent": data["parent"],
                     "tree": data["tree"], "diff_sha256": data["diff_sha256"], "staged_paths": data["staged_paths"],
                     "source_digests": data["source_digests"], "packet_path": data["packet_path"],
-                    "packet_sha256": data["packet_sha256"], "marker": data["marker"], "ready_at": data["at"], "review": None}
+                    "packet_sha256": data["packet_sha256"], "marker": data["marker"], "ready_at": data["at"],
+                    "packet_created_at": data.get("packet_created_at"), "review": None}
             elif kind == "phase_reviewed":
                 phase = state.setdefault("phases", {}).setdefault(data["phase_id"], {})
                 phase["review"] = {key: data[key] for key in ("verdict", "reviewer_session", "reviewer_agent_id", "evidence", "review_packet_sha256", "host_attestation", "reviewed_at")}

@@ -1,0 +1,138 @@
+[
+  {
+    "data": {},
+    "event": "started",
+    "seq": 1
+  },
+  {
+    "data": {
+      "attempt": 1,
+      "packet_sha256": "29645c7572b8db542b3c786c7d7ae2706afd0525ad73841b8ef712c74492160e",
+      "task_id": "T-001"
+    },
+    "event": "prepared",
+    "seq": 2
+  },
+  {
+    "data": {
+      "agent_id": "/root/e7_native/luna_73adc27193679eb19495996ede9186676702475d6aaebadf4c1d6c958c321fd4",
+      "attempt": 1,
+      "host_attestation": {
+        "agent_lifecycle": "active",
+        "agent_path": "/root/e7_native/luna_73adc27193679eb19495996ede9186676702475d6aaebadf4c1d6c958c321fd4",
+        "attestation_sha256": "d40f48e11aaa05f07d40c6732baeb0836ada959fcc27e348cbb7910d24fff1e7",
+        "effort": "high",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b72-14a5-7d61-8426-168080a16f38"
+      },
+      "session_id": "01a13b72-14a5-7d61-8426-168080a16f38",
+      "task_id": "T-001"
+    },
+    "event": "agent_bound",
+    "seq": 3
+  },
+  {
+    "data": {
+      "host_attestation": {
+        "agent_lifecycle": "completed",
+        "agent_path": "/root/e7_native/luna_73adc27193679eb19495996ede9186676702475d6aaebadf4c1d6c958c321fd4",
+        "attestation_sha256": "0ca353cfb5b2d91969d9bce7871006c93f6edaf65eb93698e68052343e134128",
+        "effort": "high",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b72-14a5-7d61-8426-168080a16f38"
+      },
+      "task_id": "T-001"
+    },
+    "event": "result_received",
+    "seq": 4
+  },
+  {
+    "data": {
+      "attempt": 1,
+      "code_fingerprint": {
+        "release.py": "224d838cd502ca77885342f9da77089ade26ee7439e06624ac7d63732cb1c905"
+      },
+      "task_id": "T-001"
+    },
+    "event": "verified",
+    "seq": 5
+  },
+  {
+    "data": {
+      "evidence": "Inspected scoped release.py fullmatch with ASCII decimal components, no leading zeros, explicit errors. Controller verified four substantive tests, exit 0; migration checkpoint and current approvals remain pinned.",
+      "reviewed_at": "2026-10-14T17:25:29Z",
+      "task_id": "T-001",
+      "verdict": "pass"
+    },
+    "event": "reviewed",
+    "seq": 6
+  },
+  {
+    "data": {
+      "closed_at": "2026-10-14T17:25:29Z",
+      "task_id": "T-001"
+    },
+    "event": "closed",
+    "seq": 7
+  },
+  {
+    "data": {
+      "packet_sha256": "67b78a72a053ebec2c1a4ac968e3cf23d8efb570facad75f7ae21409ed898b57",
+      "phase_id": "PH-01",
+      "tree": "00cbcdde962335c82df9cb22ec785b19d9a3991a"
+    },
+    "event": "phase_ready",
+    "seq": 8
+  },
+  {
+    "data": {
+      "evidence": "Independent Sol high verified exact pinned staged tree 00cbcdde, provenance/migration records, five explicit fixture approvals, release.py contract, and reran four tests. No edits; no concerns.",
+      "host_attestation": {
+        "agent_lifecycle": "completed",
+        "agent_path": "/root/e7_native/review_b391fcb014b019432f57be1d2f916ba6d5e9cedec01c673e9d603c9abd315b00",
+        "attestation_sha256": "7132cfbe11a67bedf43626ec3ff4ec9630c62b09881ed5b85a249837615ae7d9",
+        "effort": "high",
+        "model": "gpt-6-sol",
+        "packet_marker_source": "native_spawn_task_name",
+        "session_id": "01a13b72-b1c7-7fd2-8d62-5bc2c624fb12"
+      },
+      "phase_id": "PH-01",
+      "reviewed_at": "2026-10-14T17:27:21Z",
+      "reviewer_agent_id": "/root/e7_native/review_b391fcb014b019432f57be1d2f916ba6d5e9cedec01c673e9d603c9abd315b00",
+      "reviewer_session": "01a13b72-b1c7-7fd2-8d62-5bc2c624fb12",
+      "verdict": "pass"
+    },
+    "event": "phase_reviewed",
+    "seq": 9
+  },
+  {
+    "data": {
+      "commit": {
+        "adopted_after_crash": false,
+        "committed_at": "2026-10-14T17:27:21Z",
+        "evidence": "Independent Sol high verified exact pinned staged tree 00cbcdde, provenance/migration records, five explicit fixture approvals, release.py contract, and reran four tests. No edits; no concerns.",
+        "parent": "a9c7cb06f363edcfaddd3bd77461c93b96f7336c",
+        "phase_id": "PH-01",
+        "release": "v1.2.3",
+        "review_packet_sha256": "67b78a72a053ebec2c1a4ac968e3cf23d8efb570facad75f7ae21409ed898b57",
+        "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+        "schema": "spec-flow-phase-receipt.v1",
+        "sha": "8726e61f44fc3099b52e066e93352193154bc678",
+        "subject": "feat(release): normalize migrated version strings",
+        "tree": "00cbcdde962335c82df9cb22ec785b19d9a3991a"
+      },
+      "phase_id": "PH-01"
+    },
+    "event": "phase_committed",
+    "seq": 10
+  },
+  {
+    "data": {
+      "reviewed_at": "2026-10-14T17:27:25Z"
+    },
+    "event": "release_reviewed",
+    "seq": 11
+  }
+]

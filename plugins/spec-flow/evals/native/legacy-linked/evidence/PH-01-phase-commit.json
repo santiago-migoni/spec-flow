@@ -1,0 +1,14 @@
+{
+  "adopted_after_crash": false,
+  "committed_at": "2026-10-14T17:27:21Z",
+  "evidence": "Independent Sol high verified exact pinned staged tree 00cbcdde, provenance/migration records, five explicit fixture approvals, release.py contract, and reran four tests. No edits; no concerns.",
+  "parent": "a9c7cb06f363edcfaddd3bd77461c93b96f7336c",
+  "phase_id": "PH-01",
+  "release": "v1.2.3",
+  "review_packet_sha256": "67b78a72a053ebec2c1a4ac968e3cf23d8efb570facad75f7ae21409ed898b57",
+  "run_id": "8e1d23f6-35b2-41b8-8424-545f3b51f3b2",
+  "schema": "spec-flow-phase-receipt.v1",
+  "sha": "8726e61f44fc3099b52e066e93352193154bc678",
+  "subject": "feat(release): normalize migrated version strings",
+  "tree": "00cbcdde962335c82df9cb22ec785b19d9a3991a"
+}

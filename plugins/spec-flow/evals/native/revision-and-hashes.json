@@ -1,0 +1,18 @@
+{
+  "E6_git_HEAD": "d19cda750f57b1b235f30bc441958ec52afc49d8",
+  "fixture_sha256": {
+    "fresh-linked": "caa01813e009c2914d1407f0f8c9559001d7d32f897959e1e8a51e2eb27a0971",
+    "legacy-linked": "224d838cd502ca77885342f9da77089ade26ee7439e06624ac7d63732cb1c905",
+    "negative-linked": "820b2dddbeee9e0c20e5324ae3c9d3a01e270af0207c03e975f45b27d9a9b267"
+  },
+  "note": "Runtime files include uncommitted E7 host-format and retry-state fixes after the E6 HEAD; hashes identify the exact code observed during final packaging.",
+  "reference_test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+  "runtime_sha256": {
+    "harness/runtime/codex_adapter.py": "edfbe8f4a778e14f73e71f5e044997ec94606dc6556bd7426d6b4e9b515fe678",
+    "harness/runtime/engine.py": "c1876adfd01393ffdd1b33e29e9f578b19d0ee43b6519725424b72ffe8e34518",
+    "harness/runtime/migration.py": "78bab564f0e70399732308bcadb93f98f83321f6c13577ed5b3276fc9e37b39b",
+    "harness/runtime/phases.py": "23cb10a4a9d778aafc1cf7757e18ed214adad6e1ba8b5c73038291f65108b838",
+    "harness/runtime/store.py": "bbaff0cc3a10a6cdd4dc685b05921a583f5781170922daf654502538e92d84d6",
+    "scripts/spec-flow.py": "fcab06cee52aac214788a4b028042be48cf8bbe7f2263d38c8343140242007c1"
+  }
+}
