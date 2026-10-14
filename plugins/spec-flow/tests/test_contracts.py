@@ -170,9 +170,9 @@ class ReleaseValidationTests(unittest.TestCase):
             root = Path(temp)
             release = root / ".specs" / "release-v1.2.3"
             constitution = write_document(root / ".specs" / "constitution.md", base_contract("constitution"))
-            roadmap = write_document(root / ".specs" / "roadmap.md", base_contract("roadmap", depends_on=[{"path": ".specs/constitution.md", "digest": document_digest(constitution)}]))
+            roadmap = write_document(root / ".specs" / "roadmap.md", base_contract("roadmap", depends_on=[{"path": ".specs/constitution.md", "digest": document_digest(constitution)}], releases=[{"version": "v1.2.3", "objective": "Deliver the behavior.", "status": "planned"}]))
             spec = write_document(release / "spec.md", base_contract("spec", depends_on=[{"path": ".specs/roadmap.md", "digest": document_digest(roadmap)}], acceptance=[{"id": "AC-001", "description": "Works."}]))
-            plan = write_document(release / "plan.md", base_contract("plan", depends_on=[{"path": ".specs/release-v1.2.3/spec.md", "digest": document_digest(spec)}]))
+            plan = write_document(release / "plan.md", base_contract("plan", depends_on=[{"path": ".specs/release-v1.2.3/spec.md", "digest": document_digest(spec)}], phases=[{"id": "PH-01", "description": "Implement the release.", "depends_on": []}]))
             write_document(release / "tasks.md", base_contract("tasks", depends_on=[{"path": ".specs/release-v1.2.3/plan.md", "digest": document_digest(plan)}], tasks=[task(acceptance=["AC-001"])]))
             result = validate_release(root, "1.2.3")
             self.assertEqual(result["release"], "v1.2.3")
@@ -182,9 +182,9 @@ class ReleaseValidationTests(unittest.TestCase):
             root = Path(temp)
             release = root / ".specs" / "release-v1.2.3"
             constitution = write_document(root / ".specs" / "constitution.md", base_contract("constitution"))
-            roadmap = write_document(root / ".specs" / "roadmap.md", base_contract("roadmap", depends_on=[{"path": ".specs/constitution.md", "digest": document_digest(constitution)}]))
+            roadmap = write_document(root / ".specs" / "roadmap.md", base_contract("roadmap", depends_on=[{"path": ".specs/constitution.md", "digest": document_digest(constitution)}], releases=[{"version": "v1.2.3", "objective": "Deliver the behavior.", "status": "planned"}]))
             spec = write_document(release / "spec.md", base_contract("spec", depends_on=[{"path": ".specs/roadmap.md", "digest": document_digest(roadmap)}], acceptance=[{"id": "AC-001", "description": "Works."}]))
-            plan = write_document(release / "plan.md", base_contract("plan", depends_on=[{"path": ".specs/release-v1.2.3/spec.md", "digest": document_digest(spec)}]))
+            plan = write_document(release / "plan.md", base_contract("plan", depends_on=[{"path": ".specs/release-v1.2.3/spec.md", "digest": document_digest(spec)}], phases=[{"id": "PH-01", "description": "Implement the release.", "depends_on": []}]))
             write_document(release / "tasks.md", base_contract("tasks", depends_on=[{"path": ".specs/release-v1.2.3/plan.md", "digest": document_digest(plan)}], tasks=[task(acceptance=["AC-999"])]))
             with self.assertRaises(ContractError):
                 validate_release(root, "v1.2.3")
@@ -194,9 +194,9 @@ class ReleaseValidationTests(unittest.TestCase):
             root = Path(temp)
             release = root / ".specs" / "release-v1.2.3"
             constitution = write_document(root / ".specs" / "constitution.md", base_contract("constitution"))
-            roadmap = write_document(root / ".specs" / "roadmap.md", base_contract("roadmap", depends_on=[{"path": ".specs/constitution.md", "digest": document_digest(constitution)}]))
+            roadmap = write_document(root / ".specs" / "roadmap.md", base_contract("roadmap", depends_on=[{"path": ".specs/constitution.md", "digest": document_digest(constitution)}], releases=[{"version": "v1.2.3", "objective": "Deliver the behavior.", "status": "planned"}]))
             spec = write_document(release / "spec.md", base_contract("spec", depends_on=[{"path": ".specs/roadmap.md", "digest": document_digest(roadmap)}], acceptance=[{"id": "AC-001", "description": "Works."}]))
-            plan = write_document(release / "plan.md", base_contract("plan", depends_on=[{"path": ".specs/release-v1.2.3/spec.md", "digest": document_digest(spec)}]))
+            plan = write_document(release / "plan.md", base_contract("plan", depends_on=[{"path": ".specs/release-v1.2.3/spec.md", "digest": document_digest(spec)}], phases=[{"id": "PH-01", "description": "Implement the release.", "depends_on": []}]))
             write_document(release / "tasks.md", base_contract("tasks", depends_on=[{"path": ".specs/release-v1.2.3/plan.md", "digest": document_digest(plan)}], tasks=[task(acceptance=["AC-001"])]))
             write_document(constitution, base_contract("constitution"), "Changed constitutional decision.")
             with self.assertRaises(ContractError):

@@ -87,7 +87,25 @@ def _strip_generated_tail(text: str) -> str:
         return text
     if start_count != 1 or end_count != 1 or len(matches) != 1:
         raise ContractError("generated progress must be one complete trailing generated block")
-    return GENERATED_BLOCK_RE.sub("\n", text, count=1)
+    match = matches[0]
+    body = text[match.start():match.end()]
+    progress = re.sub(
+        r"\A\n<!-- spec-flow:generated:start -->\r?\n|\r?\n<!-- spec-flow:generated:end -->(?:\r?\n)*\Z",
+        "",
+        body,
+    )
+    lines = progress.splitlines()
+    header = bool(lines and re.fullmatch(r"Progress(?: view)?(?: is)? maintained by (?:the )?(?:Spec-Flow )?harness\.", lines[0]))
+    checkbox_lines = lines[1:] if header else lines
+    if any(
+        not re.fullmatch(r"- \[[ xX]\] T-[0-9]{3,}", line)
+        and not re.fullmatch(r"progress: [0-9]{1,3}%", line, re.IGNORECASE)
+        for line in checkbox_lines
+    ):
+        raise ContractError("generated block may contain only task progress checkbox lines")
+    # Progress insertion is defined to add a trailing block after a blank-line
+    # boundary. Canonicalize only that boundary, preserving decision prose.
+    return text[:match.start()].rstrip("\r\n") + "\n"
 
 
 def _digest_content(text: str) -> bytes:
@@ -174,14 +192,19 @@ def _validate_tasks(contract: Mapping[str, Any], root: Path) -> None:
         _require(isinstance(task, dict), "each task must be an object")
         identifier = task.get("id")
         _require(_nonempty_string(identifier), "task id must be nonempty")
+        _require(re.fullmatch(r"T-[0-9]{3,}", identifier) is not None, "task id must use T- followed by at least three digits")
         _require(identifier not in task_ids, "duplicate task id: {}".format(identifier))
         task_ids.add(identifier)
         by_id[identifier] = task
         for field in ("phase", "story", "closure"):
             _require(_nonempty_string(task.get(field)), "task {} requires nonempty {}".format(identifier, field))
+        _require(re.fullmatch(r"PH-[0-9]{2,}", task["phase"]) is not None, "task {} phase must use PH- followed by at least two digits".format(identifier))
+        _require(re.fullmatch(r"US-[0-9]{3,}", task["story"]) is not None, "task {} story must use US- followed by at least three digits".format(identifier))
         refs = task.get("acceptance")
         _require(isinstance(refs, list) and bool(refs) and all(_nonempty_string(ref) for ref in refs),
                  "task {} requires acceptance criterion IDs".format(identifier))
+        _require(all(re.fullmatch(r"AC-[0-9]{3,}", ref) is not None for ref in refs),
+                 "task {} acceptance refs must use AC- followed by at least three digits".format(identifier))
         files = task.get("files")
         _require(isinstance(files, list) and bool(files) and all(_nonempty_string(name) for name in files),
                  "task {} requires nonempty files".format(identifier))
@@ -199,6 +222,8 @@ def _validate_tasks(contract: Mapping[str, Any], root: Path) -> None:
             _require(isinstance(step, dict), "each task step must be an object")
             step_id = step.get("id")
             _require(_nonempty_string(step_id), "step id must be nonempty")
+            _require(re.fullmatch(re.escape(identifier) + r"\.[0-9]{3,}", step_id) is not None,
+                     "step {} must use its task ID and a numeric step suffix".format(step_id))
             _require(step_id not in step_ids, "duplicate step id: {}".format(step_id))
             step_ids.add(step_id)
             _require(_nonempty_string(step.get("action")), "step {} requires an action".format(step_id))
@@ -341,10 +366,49 @@ def validate_release(root: Union[str, Path], release: str) -> Dict[str, Any]:
         if read_document(safe_path(root_path, reference["path"]))["contract"].get("kind") == "roadmap"
     )
     roadmap_contract = read_document(roadmap_path)["contract"]
+    roadmap_releases = roadmap_contract.get("releases")
+    _require(isinstance(roadmap_releases, list), "roadmap must declare a releases array")
+    selected = [item for item in roadmap_releases if isinstance(item, dict) and item.get("version") == version and item.get("status") == "planned"]
+    _require(bool(selected), "roadmap must select this release as planned: {}".format(version))
     _require(bool(_dependency_kinds(root_path, roadmap_path, roadmap_contract) & {"constitution"}),
              "roadmap must depend on a constitution document")
     _require(_has_dependency(root_path, plan_path, plan_contract, spec_path), "release plan must depend on spec.md")
     _require(_has_dependency(root_path, tasks_path, tasks_contract, plan_path), "release tasks must depend on plan.md")
+    phases = plan_contract.get("phases")
+    _require(isinstance(phases, list) and bool(phases), "plan must declare a nonempty phases array")
+    phase_ids: Set[str] = set()
+    phase_dependencies: Dict[str, List[str]] = {}
+    for phase in phases:
+        _require(isinstance(phase, dict), "each plan phase must be an object")
+        phase_id = phase.get("id")
+        _require(isinstance(phase_id, str) and bool(phase_id.strip()), "plan phase id must be nonempty")
+        _require(re.fullmatch(r"PH-[0-9]{2,}", phase_id) is not None, "plan phase ID must use PH- followed by at least two digits")
+        _require(phase_id not in phase_ids, "duplicate plan phase id: {}".format(phase_id))
+        _require(isinstance(phase.get("description"), str) and bool(phase["description"].strip()), "plan phase description must be nonempty")
+        deps = phase.get("depends_on")
+        _require(isinstance(deps, list), "plan phase depends_on must be a list")
+        phase_ids.add(phase_id)
+        phase_dependencies[phase_id] = deps
+    for phase_id, deps in phase_dependencies.items():
+        _require(all(isinstance(dependency, str) and dependency in phase_ids for dependency in deps),
+                 "plan phase {} depends on an unknown phase".format(phase_id))
+    visiting_phases: Set[str] = set()
+    visited_phases: Set[str] = set()
+
+    def visit_phase(phase_id: str) -> None:
+        _require(phase_id not in visiting_phases, "plan phase dependency graph contains a cycle")
+        if phase_id in visited_phases:
+            return
+        visiting_phases.add(phase_id)
+        for dependency in phase_dependencies[phase_id]:
+            visit_phase(dependency)
+        visiting_phases.remove(phase_id)
+        visited_phases.add(phase_id)
+
+    for phase_id in phase_ids:
+        visit_phase(phase_id)
+    _require(all(task_item.get("phase") in phase_ids for task_item in tasks_contract["tasks"]),
+             "each task phase must be declared in plan.md")
     acceptance_ids = {criterion["id"] for criterion in spec_contract["acceptance"]}
     covered: Set[str] = set()
     for task_item in tasks_contract["tasks"]:
