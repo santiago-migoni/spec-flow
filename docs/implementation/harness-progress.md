@@ -8,9 +8,9 @@ Autorización: el usuario solicitó explícitamente implementar el plan E0–E8 
 | Etapa | Resultado | Estado |
 | --- | --- | --- |
 | E0 | Viabilidad nativa Codex | Verificado en esta sesión |
-| E1 | Contratos y validación | En curso |
-| E2 | Skills y plantillas por release | Pendiente |
-| E3 | Aprobaciones, eventos y recuperación | Pendiente |
+| E1 | Contratos y validación | Verificado: 17 pruebas + 5 hooks |
+| E2 | Skills y plantillas por release | En curso |
+| E3 | Aprobaciones, eventos y recuperación | En curso |
 | E4 | Migración obligatoria | Pendiente |
 | E5 | Orquestación Sol–Luna | Pendiente |
 | E6 | Hook, convergencia y cierre | Pendiente |
@@ -35,3 +35,7 @@ Límites: demuestra estas capacidades en este host/sesión; no acredita todas la
 - Runtime Python con biblioteca estándar. Contratos estructurados en un bloque JSON `spec-flow` dentro del Markdown canónico; no se crea una segunda copia editable de requisitos.
 - Progreso generado fuera del contenido decisorio. Las aprobaciones fijan digest de decisiones y declaración humana; no son una frontera de seguridad frente a un actor con permisos de escritura.
 - Un solo implementador activo. Scripts locales nunca invocan modelos; el controlador Codex usa herramientas nativas.
+
+## E1 — Verificación
+
+Validadores y contrato JSON canónico en Markdown. Pruebas: 17 de contratos y 5 del hook existente. Revisión independiente Sol detectó y motivó correcciones de digest, entradas malformadas y validación transitiva. Sin dependencias externas.
