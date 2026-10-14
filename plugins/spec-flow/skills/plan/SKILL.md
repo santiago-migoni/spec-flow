@@ -1,49 +1,20 @@
 ---
 name: plan
-description: "Translate a feature spec into a concrete implementation plan: architecture, tech choices, project structure, and data contracts — all cross-checked against the project constitution. Use this after spec.md is approved and before breaking work into tasks."
+description: "Plan the technical delivery of an approved release spec against shared decisions."
 ---
 
-# Spec-Flow: Plan
-
-Turn a spec into an implementation blueprint. The plan defines HOW, while the spec defined WHAT.
+# Spec-Flow: plan
 
 <HARD-GATE>
-Before proceeding:
-1. `.specs/constitution.md` must exist with document-control `Status: Approved` — otherwise stop and invoke `$constitution` or request approval
-2. A `spec.md` must exist for the current feature with document-control `Status: Approved` or `Converged` — otherwise stop and invoke `$specify` or request approval
-3. No `[NEEDS CLARIFICATION]` markers should remain open in `spec.md` — resolve them with the user before planning
+Require current registry approval of release spec and its roadmap and strategic dependencies. Run gate for plan; unresolved material spec questions block planning.
 </HARD-GATE>
 
-## When to Run This Phase
+Read approved spec and applicable architecture, structure, infrastructure, and constitution. Inspect current code. Write .specs/release-vX.Y.Z/plan.md using assets/plan-template.md. The plan owns solution choices, phase boundaries in the canonical `phases` array (`id`, `description`, `depends_on`), deliverables, dependencies, file scope, and risk response for this release. Refer to strategic decision IDs rather than copying them. Do not repeat task-level commands or acceptance criteria prose; link to AC IDs.
 
-- After `spec.md` is written and approved
-- When the implementation approach needs to be decided before breaking into tasks
+The contract uses kind plan, id PLAN-X.Y.Z, revision R00, and an exact-digest depends_on entry for this release's spec path. Include shared documents whose decisions directly shape the plan. Check every applicable constitution MUST, each spec nonfunctional requirement, and each AC's planned delivery. Flag conflicts; a MUST violation blocks tasks. Validate and request approval.
 
-## Process
+## Runtime discipline
 
-1. **Read `.specs/constitution.md`** and `.specs/NNN-feature-name/spec.md`
-2. **Explore the current codebase** — understand existing patterns, file structure, dependencies already in use
-3. **Draft the plan** — use `assets/plan-template.md` as the output format. The document-control table's `Code` is `PLAN-NNN` (same `NNN` as the feature directory), `Version` is `R00`, `Status` is `Draft`.
-4. **Constitution check** — for every principle section in `.specs/constitution.md` (`Code Principles`, `Security`, `Operational Principles`, `Observability`, `Performance`, `Dependency Policy`), verify this plan doesn't violate a `MUST` and states a reason for any `SHOULD` deviation. Flag any conflict explicitly — a `MUST` violation blocks moving to `tasks` until resolved.
-5. **NFR check** — for every entry in `spec.md`'s `Non-Functional Requirements`, confirm the architecture satisfies it or flag it as unaddressed.
-6. **Write `.specs/NNN-feature-name/plan.md`**
-7. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
-8. **On revision request, before approval** — edit `plan.md` directly, then repeat step 7. This loop never changes `Version` or `Status` — they stay `R00`/`Draft` no matter how many times it repeats, because the document hasn't been approved yet. Only an edit requested **after** the user already approved this plan increments `Version` by one.
-9. **On approval** — set `Status` to `Approved` in the document-control table before ending the turn.
-10. **On any edit requested after approval** — two cases:
-    - The user must still see the resulting text (an open-ended change, the model drafts new content): reset `Status` to `Draft` before editing (this is what triggers the `Version` bump in step 8), then repeat step 9 once the user approves the result.
-    - The user already saw the exact text and is approving it verbatim (e.g. applying a `$analyze` finding's specific recommendation) — that instruction *is* the approval: skip `Draft`, bump `Version`, and set `Status` straight to `Approved` in the same edit. Do not ask for a second confirmation.
+Resolve <plugin-root> from this installed SKILL.md. Run python3 <plugin-root>/scripts/spec-flow.py --root <project> OP --input <json-file>. Use validate with {"path":"..."} or {"release":"vX.Y.Z"}, digest with {"path":"..."}, gate with {"kind":"<phase>","release":"vX.Y.Z"}, and status with {}. Registry approval of the exact decision digest controls gates; a Markdown status is only a view. If legacy NNN-feature-name artifacts exist, stop and run mandatory migrate before writing. For a new unadopted project, run initialize with empty JSON input {} first. Do not silently convert historical approvals or checked boxes.
 
-## Quality Check Before Writing
-
-- [ ] Every file path in the structure refers to a real location in the repo (or explicitly "new file")
-- [ ] No dependency listed contradicts the constitution's constraints
-- [ ] `Constitution Check` covers every principle section that applies — no unaddressed `MUST`, no unexplained `SHOULD` deviation
-- [ ] `NFR Compliance` addresses every Non-Functional Requirement in `spec.md`, or the section is "N/A"
-- [ ] The plan addresses every user story in `spec.md`
-- [ ] No implementation detail that Ponytail would flag as over-engineering (prefer the native/simple path)
-- [ ] A Mermaid diagram is present only if the architecture has more than one component/interaction to show
-
-## After Writing
-
-Tell the user: "Plan written to `.specs/NNN-feature-name/plan.md`. Run `$tasks` to break this into executable tasks."
+Validate the resulting document. Present its concrete draft for human approval. On explicit approval call approve with {"path":"<project-relative path>","actor":"<human>","statement":"<their approval>","source":"<conversation reference>"}. A substantive edit after approval increments RNN and requires new approval; inspect affected downstream pins and adopt a new base only with explicit approval. Do not approve on behalf of the user.

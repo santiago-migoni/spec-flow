@@ -1,66 +1,47 @@
-# Plan: [Feature Name]
+# Release Plan: vX.Y.Z
 
-| Name   | Code       | Version              | Date         | Status            |
-| ---    | ---        | ---                  | ---          | ---               |
-| [name] | PLAN-[NNN] | [R00, R01, R02, ...] | [YYYY-MM-DD] | [Draft, Approved] |
-
-## Approach
-
-[2-3 sentences: the chosen implementation strategy and why]
-
-## Constitution Check
-
-<!-- One line per constitution section that applies. For principle sections (Code Principles, Security, Operational Principles, Observability, Performance, Dependency Policy), name any MUST this plan cannot satisfy (blocking — resolve before writing tasks) and any SHOULD it deviates from (state the reason here). Write "N/A" for a section genuinely irrelevant to this feature. -->
-
-- **Tech Stack**: [Confirm alignment with constitution or flag conflict]
-- **Code Principles**: [Relevant MUST/SHOULD and how this plan satisfies it, or "N/A"]
-- **Security**: [Relevant MUST/SHOULD and how this plan satisfies it, or "N/A"]
-- **Operational Principles**: [Relevant MUST/SHOULD and how this plan satisfies it, or "N/A"]
-- **Observability**: [Relevant MUST/SHOULD and how this plan satisfies it, or "N/A"]
-- **Performance**: [Relevant MUST/SHOULD and how this plan satisfies it, or "N/A"]
-- **Dependency Policy**: [Relevant MUST/SHOULD and how this plan satisfies it, or "N/A"]
-- **Constraints**: [Any constitution constraint that shapes this plan]
-
-## NFR Compliance
-
-<!-- One line per Non-Functional Requirement in spec.md — how the architecture satisfies it, or flag it as unaddressed. Write "N/A" if spec.md's Non-Functional Requirements section is "N/A". -->
-
-- [NFR from spec.md]: [How this plan satisfies it, or flag as unaddressed]
-
-## Architecture
-
-[Describe the architecture. Keep it to what matters for this feature — don't redesign the whole system.]
-
-<!-- Include a Mermaid diagram when more than one component/interaction is involved — flowchart for structure, sequenceDiagram for request/data flow. Skip the fence for a single-file, single-responsibility change; a diagram of one box adds nothing. -->
-
-```mermaid
-flowchart TD
-    A[Component A] --> B[Component B]
+```spec-flow
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "revision": "R00",
+  "id": "PLAN-X.Y.Z",
+  "depends_on": [
+    {
+      "path": ".specs/release-vX.Y.Z/spec.md",
+      "digest": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "phases": [
+    {
+      "id": "PH-01",
+      "description": "[Phase goal and deliverable.]",
+      "depends_on": []
+    }
+  ]
+}
 ```
 
-## File Structure
+## Technical approach
 
-<!-- Exact paths of every file this feature creates or modifies — no placeholders, no "etc." -->
+[Solution choices for this release; link applicable shared decision IDs.]
 
-```text
-src/
-├── new-file.ts          ← new: [what it contains]
-└── modified-file.ts     ← modified: [what changes]
-```
+## Phases and deliverables
 
-## Data Model
+The canonical phases array above owns phase IDs, descriptions, and dependencies. Here explain delivery choices and AC mapping by ID without copying phase definitions.
 
-[If applicable: entities, fields, relationships. If not applicable, write "N/A".]
+## File scope and dependencies
 
-## API / Interface Contracts
+[Relative paths to create or change and dependency order. Refer to structure and architecture decisions.]
 
-[If applicable: function signatures, endpoint contracts, CLI interface. If not applicable, write "N/A".]
+## Constitution and nonfunctional checks
 
-## Dependencies
+[Map applicable MUST rules and release NFRs to the approach; flag conflicts.]
 
-[New packages or tools required. If none, write "None — existing dependencies suffice".]
+## Risks and verification strategy
 
-## Risks & Unknowns
+[Identify technical risks and how the tasks will verify them. Detailed commands belong in tasks.]
 
-- [Risk 1 and mitigation]
-- [NEEDS CLARIFICATION: anything that can't be decided until implementation starts]
+<!-- spec-flow:generated:start -->
+Progress is maintained by the Spec-Flow harness.
+<!-- spec-flow:generated:end -->

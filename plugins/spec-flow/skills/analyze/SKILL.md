@@ -1,47 +1,18 @@
 ---
 name: analyze
-description: "Read-only cross-check of spec.md, plan.md, and tasks.md for duplication, ambiguity, coverage gaps, and constitution conflicts. Run after $tasks, before $implement. Recommended, never required, and never writes any file."
+description: "Read-only cross-check of approved release documents, acceptance coverage, and strategic constraints."
 ---
 
-# Spec-Flow: Analyze
-
-Cross-check the three core artifacts for consistency before any code is written. This is the one phase in Spec-Flow that never writes to disk.
+# Spec-Flow: analyze
 
 <HARD-GATE>
-`spec.md`, `plan.md`, and `tasks.md` must all exist for the current feature — if `tasks.md` is missing, stop and invoke `$tasks` first.
+Require a release spec, plan, and tasks. Run gate for analyze and validate the release; report failed validation instead of treating malformed artifacts as ready.
 </HARD-GATE>
 
-## When to Run This Phase
+Read the release contract chain and decision prose. Report duplication, ambiguity, stale dependencies, uncovered AC IDs, task steps without concrete expected verification, constitution MUST conflicts, and plan/strategy mismatch. Use assets/report-template.md for a conversation-only report, including severity, location, evidence, and suggested correction. Do not write any file or alter approvals. A CRITICAL finding blocks recommending implementation. Offer exact edits for the owner skill to apply after the user authorizes the change; the owner skill validates the changed content and records the user's approval; accepting exact proposed wording is itself approval, without a redundant confirmation. Zero findings is valid; do not invent issues.
 
-- After `tasks.md` is written, before `$implement`
-- Recommended, never required — `implement`'s hard-gate does not check whether `analyze` has run
+## Runtime discipline
 
-## Operating Constraint: Read-Only
+Resolve <plugin-root> from this installed SKILL.md. Run python3 <plugin-root>/scripts/spec-flow.py --root <project> OP --input <json-file>. Use validate with {"path":"..."} or {"release":"vX.Y.Z"}, digest with {"path":"..."}, gate with {"kind":"<phase>","release":"vX.Y.Z"}, and status with {}. Registry approval of the exact decision digest controls gates; a Markdown status is only a view. If legacy NNN-feature-name artifacts exist, stop and run mandatory migrate before writing. For a new unadopted project, run initialize with empty JSON input {} first. Do not silently convert historical approvals or checked boxes.
 
-Analyze never modifies `spec.md`, `plan.md`, `tasks.md`, or any other file. It only produces a report in the conversation. This is a deliberate exception to Spec-Flow's "every phase writes one artifact" principle — cross-checking read-only is the whole point of this phase.
-
-## Process
-
-1. **Read `spec.md`** (user stories, acceptance scenarios, edge cases, non-goals, Success Metrics, Non-Functional Requirements, Assumptions & Dependencies), **`plan.md`** (architecture, file structure, data model, dependencies, Constitution Check, NFR Compliance), **`tasks.md`** (task IDs, descriptions, `[P]`/`[TEST]` markers, file paths, `VERIFY` lines), and **`.specs/constitution.md`** (every principle section: `Code Principles`, `Security`, `Operational Principles`, `Observability`, `Performance`, `Dependency Policy`)
-2. **Build an internal inventory** (don't print it): one entry per acceptance scenario, one entry per Non-Functional Requirement and Success Metric in `spec.md`, one entry per plan decision implying a concrete artifact, one entry per `MUST` across every constitution principle section, and a task-coverage map (which requirement/story/NFR each task maps to). Also check `tasks.md` structurally: does every user-story phase have at least one `[TEST]` task, and are the `VERIFY` lines for Non-Functional Requirements and constitution `MUST` principles present.
-3. **Detect findings**:
-   - Duplication — near-duplicate requirements
-   - Ambiguity — vague adjectives (fast, robust, intuitive) lacking a measurable criterion, including unmeasurable Success Metrics; unresolved `TODO`/`[NEEDS CLARIFICATION]` markers
-   - Coverage gaps — requirements or NFRs with zero tasks, tasks with no mapped requirement, a user-story phase missing a `[TEST]` task, or a required `VERIFY` line missing from `tasks.md`
-   - Constitution conflicts — any requirement or plan decision conflicting with a `MUST` principle in any constitution section
-   - Inconsistency — terminology drift, conflicting requirements, task ordering contradictions
-4. **Assign severity**: `CRITICAL` (constitution MUST violation, or a P1 story with zero task coverage), `HIGH` (conflicting/duplicate requirement, untestable acceptance criterion), `MEDIUM` (terminology drift, missing non-functional coverage), `LOW` (style, minor redundancy). Constitution conflicts are always `CRITICAL`.
-5. **Report** using `assets/report-template.md` as the format: a findings table (`ID | Category | Severity | Location | Summary | Recommendation`), a coverage summary (requirement → has task? → task IDs), and metrics (total requirements, total tasks, coverage %, counts per severity). Cap at 30 rows; summarize any overflow.
-6. **Next Actions** — if any `CRITICAL` finding exists, recommend resolving it before `implement`; otherwise note the user may proceed, with optional improvement suggestions.
-7. **Offer remediation** — ask "Want me to suggest concrete edits for the top issues?" Do not apply them without explicit approval. When the user approves applying a finding's specific recommendation as shown, that instruction is itself approval of the resulting content — the phase skill that owns the edited artifact skips its `Draft` interim state and sets `Status` straight to `Approved` (with `Version` bumped) per its own "on edit requested after approval" step, no separate confirmation round.
-
-## Behavior Rules
-
-- Never modify any file — this is the one read-only phase in Spec-Flow
-- Never hallucinate a missing section — report it as missing
-- Constitution conflicts are always `CRITICAL`, never downgraded
-- Zero findings is a valid, clean outcome — report it as such, don't invent issues to fill the report
-
-## After Analysis
-
-Tell the user the finding counts by severity and the recommended next step: "Analysis complete for `NNN-feature-name`. [N CRITICAL — resolve before implement / No CRITICAL findings — ready for `$implement`]."
+Analyze is optional and read-only. It does not grant execution authorization or replace the runtime gate.

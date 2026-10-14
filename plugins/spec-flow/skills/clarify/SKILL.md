@@ -1,43 +1,20 @@
 ---
 name: clarify
-description: "Ask up to 5 targeted questions to resolve ambiguity in the current feature's spec.md, writing answers directly into a Clarifications section. Recommended before $plan, never required. Use this right after specify when the spec has vague or underspecified areas."
+description: "Resolve consequential ambiguity in a release spec before planning."
 ---
 
-# Spec-Flow: Clarify
-
-Surface and resolve ambiguity in a spec before planning locks in the wrong assumptions.
+# Spec-Flow: clarify
 
 <HARD-GATE>
-A `spec.md` must exist for the current feature — if not, stop and invoke `$specify` first.
+Require an existing release spec and run gate for clarify. Read its current registry approval before editing; an approved spec must not be changed under the old digest.
 </HARD-GATE>
 
-## When to Run This Phase
+Read the release spec, constitution, and applicable decisions. Ask up to five questions, one at a time, only where answers change scope, acceptance, architecture, data, or testing. Use assets/clarifications-template.md for a dated question/answer section in the spec, and revise the directly affected acceptance or prose so no contradiction remains. Do not create a second editable requirements file.
 
-- Right after `spec.md` is written, before `$plan`
-- Recommended, never required — `plan`'s hard-gate does not check whether `clarify` has run
+If the spec was approved, increment its revision and return it to draft while wording is open; get a new explicit approval of the final content and inspect affected downstream pins and adopt a new base only with explicit approval. If the user approved exact proposed wording verbatim, that declaration can approve the resulting revision once validated. If no meaningful ambiguity exists, report clean and make no write.
 
-## Process
+## Runtime discipline
 
-1. **Read `.specs/constitution.md` and the current feature's `spec.md`**
-2. **Scan for ambiguity** across five dimensions, each mapped to the `spec.md` section it would be written into: `User Stories` & `Edge Cases` (functional scope, missing scenarios, boundary conditions); `Success Metrics` (is the outcome measurable, or vague/missing); `Non-Functional Requirements` (performance, security, reliability thresholds); `Assumptions & Dependencies` (external systems or prior specs relied upon); `Explicit Non-Goals` & terminology (scope boundary clarity, consistent vocabulary). Mark each dimension Clear / Partial / Missing internally (don't print this map).
-3. **Build a prioritized queue** of up to 5 questions — only where the answer would materially change architecture, data model, or test design. Skip anything already answered, or better deferred to `plan`.
-4. **Ask one question at a time**:
-   - Multiple-choice: show `**Recommended:** Option X — <1-sentence reasoning>`, then a table of options (max 5), then invite the user to reply with a letter, "yes", or their own answer.
-   - Open-ended: show `**Suggested:** <answer> — <1-sentence reasoning>`, and invite "yes" or a short answer (≤5 words) of their own.
-5. **After each accepted answer** — write immediately, never batch:
-   - Create `## Clarifications` in `spec.md` if missing, using `assets/clarifications-template.md` as the format (place right after the summary section), with a `### Session YYYY-MM-DD` subheading for today
-   - Append `- Q: <question> → A: <answer>`
-   - Edit the directly affected section (`User Stories`, `Edge Cases`, `Success Metrics`, `Non-Functional Requirements`, `Assumptions & Dependencies`, or `Explicit Non-Goals`) to resolve the ambiguity — replace the vague text, don't just append a caveat next to it
-6. **Stop** at 5 asked questions, or when the user signals "done"/"enough", or when no high-impact ambiguity remains
-7. **If no meaningful ambiguity is found** — report "No critical ambiguities detected." and suggest proceeding to `plan`, asking nothing
+Resolve <plugin-root> from this installed SKILL.md. Run python3 <plugin-root>/scripts/spec-flow.py --root <project> OP --input <json-file>. Use validate with {"path":"..."} or {"release":"vX.Y.Z"}, digest with {"path":"..."}, gate with {"kind":"<phase>","release":"vX.Y.Z"}, and status with {}. Registry approval of the exact decision digest controls gates; a Markdown status is only a view. If legacy NNN-feature-name artifacts exist, stop and run mandatory migrate before writing. For a new unadopted project, run initialize with empty JSON input {} first. Do not silently convert historical approvals or checked boxes.
 
-## Quality Check Before Finishing
-
-- [ ] No more than 5 questions were asked
-- [ ] Every accepted answer has exactly one bullet under `## Clarifications` and is reflected in the relevant section
-- [ ] No contradictory earlier statement remains in `spec.md`
-- [ ] `plan`'s hard-gate is unaffected — `clarify` is a recommendation, never a requirement
-
-## After Writing
-
-Tell the user: "N clarifications recorded in `.specs/NNN-feature-name/spec.md`. Run `$plan` when ready." If no questions were needed: "No critical ambiguities detected — proceed to `$plan` whenever you're ready."
+Validate the resulting document. Present its concrete draft for human approval. On explicit approval call approve with {"path":"<project-relative path>","actor":"<human>","statement":"<their approval>","source":"<conversation reference>"}. A substantive edit after approval increments RNN and requires new approval; inspect affected downstream pins and adopt a new base only with explicit approval. Do not approve on behalf of the user.

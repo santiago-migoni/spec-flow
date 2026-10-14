@@ -1,83 +1,36 @@
 # Project Constitution
 
-<!-- Code Principles, Security, Operational Principles, Observability, Performance, and Dependency Policy tag every bullet with an RFC 2119 keyword:
-MUST — non-negotiable; plan/analyze/converge treat a violation as CRITICAL.
-SHOULD — strong default; a deviation needs a stated reason in plan.md.
-MAY — optional, contributor's judgment call.
-If a whole section doesn't apply to this project, replace its bullets with one line: N/A — <why>. -->
+```spec-flow
+{
+  "schema_version": 1,
+  "kind": "constitution",
+  "revision": "R00",
+  "id": "CONST-PROJECT",
+  "depends_on": []
+}
+```
 
-| Name   | Version              | Date         | Status          |
-| ---    | ---                  | ---          | ---             |
-| [name] | [R00, R01, R02, ...] | [YYYY-MM-DD] | [Draft, Approved] |
+## Purpose and users
 
-## Purpose
+[State the human-approved product purpose and intended users.]
 
-[One paragraph: what this project does and who it's for]
+## Outcomes and boundaries
 
-## Tech Stack
+[State measurable outcomes and explicit non-goals.]
 
-- **Language**: [e.g., TypeScript 5.x]
-- **Runtime / Framework**: [e.g., Node.js 22, Express]
-- **Database**: [e.g., PostgreSQL 16 via Drizzle ORM, or "N/A"]
-- **Testing**: [e.g., Vitest, or "N/A"]
-- **Linting / Formatting**: [e.g., ESLint + Prettier, or "N/A"]
+## Principles
 
-## Code Principles
+- MUST: [Testable, enduring project rule.]
+- SHOULD: [Default and when a deviation is acceptable.]
 
-- **MUST**: [e.g., "All public functions have at least one test"]
-- **SHOULD**: [e.g., "Prefer native platform APIs over third-party libraries (Ponytail philosophy)"]
-- **MAY**: [e.g., "Use a functional style where it doesn't hurt readability"]
+## Decision references
 
-## Security
+[Link sources for facts. Keep component design, paths, operations, and release priorities in their own documents.]
 
-<!-- Trust-boundary rules this codebase always follows — not a full threat model. -->
+## Amendment history
 
-- **MUST**: [e.g., "Never log secrets, tokens, or full request bodies containing PII"]
-- **MUST**: [e.g., "Validate and sanitize all input at the API boundary before it reaches business logic"]
-- **SHOULD**: [e.g., "Prefer parameterized queries over string-built SQL"]
+[Record approved revisions and why they changed.]
 
-## Operational Principles
-
-<!-- How this system is deployed, rolled back, and recovered — day-two concerns that shape architecture before day one is over. -->
-
-- **MUST**: [e.g., "Database migrations must be backward compatible — old and new code run against the same schema during rollout"]
-- **MUST**: [e.g., "Every deploy is rollback-able within [X] minutes without data loss"]
-- **SHOULD**: [e.g., "Roll out changes to a critical path behind a feature flag before 100% exposure"]
-
-## Observability
-
-<!-- What gets logged or measured, and how a failure surfaces — keeps plan.md from inventing conventions per feature. -->
-
-- **MUST**: [e.g., "Every unhandled error is logged with a stack trace and request context"]
-- **SHOULD**: [e.g., "Use structured (JSON) logging, not string concatenation"]
-
-## Performance
-
-<!-- Budgets and defaults that shape architecture decisions — not a full perf spec, just what plan.md must respect by default. -->
-
-- **MUST**: [e.g., "p95 response time under 300ms for user-facing endpoints"]
-- **SHOULD**: [e.g., "Avoid N+1 queries in hot paths"]
-- **MAY**: [e.g., "Optimize only after profiling shows a measured bottleneck — no speculative performance work"]
-
-## Dependency Policy
-
-<!-- When plan.md may reach for a new package. -->
-
-- **MUST**: [e.g., "Check the standard library and already-installed dependencies before adding a new package"]
-- **SHOULD**: [e.g., "Prefer dependencies with no transitive dependencies of their own"]
-
-## Naming Conventions
-
-- [e.g., "Files: kebab-case. Classes: PascalCase. Functions: camelCase."]
-
-## Constraints
-
-- [e.g., "Must run offline", "No paid dependencies", "Must support Node 18+"]
-
-## Out of Scope
-
-- [Things explicitly excluded — prevents scope creep during plan phases]
-
-## Amendments Log
-
-<!-- Append-only — never edit or reorder existing lines. One line per revision made after this constitution was first approved. Format: - RNN (YYYY-MM-DD): <what changed and why> -->
+<!-- spec-flow:generated:start -->
+Progress is maintained by the Spec-Flow harness.
+<!-- spec-flow:generated:end -->

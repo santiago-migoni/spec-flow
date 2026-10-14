@@ -1,11 +1,9 @@
-## Clarifications
+# Clarifications
 
-<!-- Spliced into spec.md, directly after the Summary section. One `### Session` subsection per $clarify run — never edit a prior session's bullets, append a new session instead. -->
 
-| Name   | Version              | Date         |
-| ---    | ---                  | ---          |
-| [name] | [R00, R01, R02, ...] | [YYYY-MM-DD] |
 
-### Session [YYYY-MM-DD]
+## Session YYYY-MM-DD
 
-- Q: [question asked] → A: [answer given]
+- Q: [Question that changes scope or verification?] A: [User's answer.]
+
+[Revise the directly affected spec prose or AC. A Q/A bullet alone does not resolve a contradiction.]

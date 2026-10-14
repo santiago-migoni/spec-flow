@@ -1,58 +1,56 @@
-# Spec: [Feature Name]
+# Release Spec: vX.Y.Z
 
-<!-- Every claim in this document must be measurable or falsifiable — avoid vague adjectives ("fast", "robust", "intuitive", "seamless") without a concrete threshold or test. $analyze flags unmeasurable language as an Ambiguity finding. -->
+```spec-flow
+{
+  "schema_version": 1,
+  "kind": "spec",
+  "revision": "R00",
+  "id": "SPEC-X.Y.Z",
+  "depends_on": [
+    {
+      "path": ".specs/roadmap.md",
+      "digest": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "AC-001",
+      "description": "[Observable release behavior and criterion.]"
+    }
+  ]
+}
+```
 
-| Name   | Code       | Version              | Date         | Status                        |
-| ---    | ---        | ---                  | ---          | ---                           |
-| [name] | SPEC-[NNN] | [R00, R01, R02, ...] | [YYYY-MM-DD] | [Draft, Approved, Converged]  |
+## Release outcome
 
-## Summary
+[Describe the outcome selected by the roadmap; link its entry.]
 
-[One sentence: what this feature does and why it exists]
+## User stories
 
-## Success Metrics
+### US-001 — [Title]
 
-<!-- How you'll know this feature worked, beyond "the acceptance scenarios passed" — a business or usage outcome. Skip if this feature has no measurable outcome beyond correctness; write "N/A" rather than inventing one. -->
+[Who needs what and why.]
 
-- [Metric]: [target] — [how it's measured, e.g., "Checkout completion rate: +5% within 30 days — tracked via analytics funnel"]
+## Acceptance criteria
 
-## User Stories
+- AC-001: [Given a concrete condition, when an action occurs, then observable result.]
 
-<!-- One block per story, ordered by priority. P1 = must-ship, P2 = should-ship, P3 = nice-to-have. Repeat as US2, US3, ... for each additional story. -->
+## Release-specific nonfunctional requirements
 
-### US1 — [Title] (P1)
+[Measurable thresholds beyond the constitution baseline, or N/A with reason.]
 
-[Describe the scenario in plain language]
+## Edge cases and non-goals
 
-**Acceptance Scenarios**:
+[Expected edge behavior and explicit exclusions.]
 
-- **Given** [initial state], **When** [action], **Then** [expected outcome]
-- **Given** [initial state], **When** [action], **Then** [expected outcome]
+## Outcome measurement
 
-## Non-Functional Requirements
+[How post-delivery results will be measured, or N/A with reason.]
 
-<!-- Feature-specific quality bar, additive to constitution.md's global MUSTs — don't repeat a constitution principle here, only what this feature specifically needs. Write "N/A" if the constitution's baseline already covers this feature with no exceptions. -->
+## Open questions
 
-- **MUST**: [e.g., "Search results return within 200ms at P95"]
-- **SHOULD**: [e.g., "Degrade to cached results if the search index is unavailable"]
+[Resolve material questions before plan.]
 
-## Edge Cases
-
-- [Edge case 1 and expected behavior]
-- [Edge case 2 and expected behavior]
-
-## Assumptions & Dependencies
-
-<!-- External systems, prior specs, or data this feature assumes already exist. Write "None" if there are none. -->
-
-- [e.g., "Assumes .specs/003-user-auth is implemented and session tokens are available"]
-
-## Explicit Non-Goals
-
-- [Thing this feature intentionally does NOT do]
-
-## Open Questions
-
-<!-- Empty section is a valid, finished state — don't invent a question to fill it. -->
-
-- [NEEDS CLARIFICATION: question that must be answered before planning]
+<!-- spec-flow:generated:start -->
+Progress is maintained by the Spec-Flow harness.
+<!-- spec-flow:generated:end -->

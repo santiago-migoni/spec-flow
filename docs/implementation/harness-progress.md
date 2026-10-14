@@ -9,7 +9,7 @@ Autorización: el usuario solicitó explícitamente implementar el plan E0–E8 
 | --- | --- | --- |
 | E0 | Viabilidad nativa Codex | Verificado en esta sesión |
 | E1 | Contratos y validación | Verificado: 17 pruebas + 5 hooks |
-| E2 | Skills y plantillas por release | En curso |
+| E2 | Skills y plantillas por release | Skills y plantillas verificadas; integración pendiente de E3/E4 |
 | E3 | Aprobaciones, eventos y recuperación | En curso |
 | E4 | Migración obligatoria | Pendiente |
 | E5 | Orquestación Sol–Luna | Pendiente |
@@ -39,3 +39,7 @@ Límites: demuestra estas capacidades en este host/sesión; no acredita todas la
 ## E1 — Verificación
 
 Validadores y contrato JSON canónico en Markdown. Pruebas: 17 de contratos y 5 del hook existente. Revisión independiente Sol detectó y motivó correcciones de digest, entradas malformadas y validación transitiva. Sin dependencias externas.
+
+## E2 — Verificación
+
+Cuatro pruebas estructurales aprobadas. Revisión independiente Sol: conserva decisiones y referencias aprobadas, documentación técnica condicional y múltiples historias por release. La migración citada por las skills depende de E4; el flujo completo todavía no está activado. Se corrigió el bootstrap para consultar la fase destino, no su propio nombre.

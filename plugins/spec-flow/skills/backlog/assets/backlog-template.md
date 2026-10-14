@@ -1,6 +1,8 @@
 # Backlog
 
-Ideas, deferred work, and future features not yet turned into a spec. Ordered by priority — items are removed automatically once `$specify` turns them into a spec.
+
+
+Ideas and deferred work. An item does not select a release or grant approval.
 
 ## P0 — Critical
 
@@ -8,6 +10,6 @@ Ideas, deferred work, and future features not yet turned into a spec. Ordered by
 
 ## P2 — Medium
 
-- [ ] B001 <one-line description> (noted YYYY-MM-DD, from <phase or context>)
+- [ ] B001 [One-line idea] (noted YYYY-MM-DD, source [context], release [unassigned])
 
 ## P3 — Low

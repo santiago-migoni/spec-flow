@@ -32,7 +32,7 @@ A `spec` adds a nonempty `acceptance` array of `{ "id": "AC-001", "description":
   "revision": "R00",
   "id": "TASKS-1.2.3",
   "depends_on": [
-    {"path": "plan.md", "digest": "<64 lowercase hex characters>"}
+    {"path": ".specs/release-v1.2.3/plan.md", "digest": "<64 lowercase hex characters>"}
   ],
   "tasks": [
     {

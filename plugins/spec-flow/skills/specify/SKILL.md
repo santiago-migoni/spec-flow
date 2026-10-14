@@ -1,56 +1,22 @@
 ---
 name: specify
-description: "Turn a feature idea into a structured spec with user stories, acceptance scenarios, and explicit unknowns. Creates .specs/NNN-feature-name/spec.md. Use this whenever the user describes a feature they want to build, a change to make, or a bug to fix that will take more than 30 minutes."
+description: "Specify one selected SemVer release as stories and measurable acceptance criteria."
 ---
 
-# Spec-Flow: Specify
-
-Transform a feature idea into a concrete, testable specification before any planning or coding begins.
+# Spec-Flow: specify
 
 <HARD-GATE>
-Check that `.specs/constitution.md` exists and its document-control `Status` is `Approved` before proceeding. If it is missing, stop and invoke `$constitution`; if it is `Draft` or has any other status, stop and ask the user to approve or correct it first.
-
-Never write `spec.md` while checked out on the repo's default branch (the remote's HEAD, typically `main` or `master`). Create and check out a feature branch first — see step 6 below.
+Require an approved roadmap selecting the explicit vX.Y.Z release and current registry approval of its exact digest. Run gate for specify and the release. If a legacy feature directory or unadopted configuration exists, migrate first. Do not write on the repository default branch.
 </HARD-GATE>
 
-## When to Run This Phase
+Read constitution, roadmap entry, applicable shared design, and backlog. Ask one high-impact question at a time. Resolve the selected release version from the user and roadmap; do not infer it from a directory number. Use .specs/release-vX.Y.Z/spec.md and assets/spec-template.md. Create or switch to a release branch before writing; preserve unrelated work.
 
-- Starting any new feature, change, or bug fix that will take more than 30 minutes
-- When a user says "I want to build X", "add Y", "change Z"
+The spec owns this release's behavior, user stories, acceptance criteria, edge cases, release-specific nonfunctional requirements, non-goals, and outcome measures. It can include multiple stories but one active release at a time, with multiple stories or features allowed in that release. It does not restate roadmap priorities or architectural decisions. Acceptance criteria need stable AC IDs, each with a falsifiable description. The contract uses kind spec, id SPEC-X.Y.Z, revision R00, a nonempty acceptance array, and a depends_on entry for the exact roadmap digest. Include other approved strategic sources only when directly used. Keep open questions explicit and resolve material ones before plan.
 
-## Process
+Run validate with {"release":"vX.Y.Z"} only after spec, plan, and tasks all exist; for this phase validate the spec path alone. Backlog items become linked or removed only after a valid spec draft is written; never claim a release from an unchecked idea.
 
-1. **Read `.specs/constitution.md`** — understand project principles and constraints before asking anything
-2. **Determine the feature number** — Codex includes this skill's installed `SKILL.md` path in its skill inventory. Resolve the directory containing that file and run its bundled `scripts/next-feature-number.sh` with `.specs` as the argument; do not look for the helper in the consuming project's root.
-3. **Check `.specs/backlog.md`** — if it exists, scan for an item related to this feature and use it as context (skip silently if the file doesn't exist yet)
-4. **Ask clarifying questions** — one at a time. Focus on: purpose, who benefits, measurable success criteria, feature-specific non-functional requirements beyond the constitution's baseline, edge cases, assumptions/dependencies on other systems or specs, and explicit non-goals. Mark anything unclear as `[NEEDS CLARIFICATION: <specific question>]` in the draft rather than guessing.
-5. **Draft `spec.md`** — use `assets/spec-template.md` as the output format. The document-control table's `Code` is `SPEC-NNN` (same `NNN` as the feature directory), `Version` is `R00`, `Status` is `Draft`.
-6. **Ensure a feature branch is active** — get the repo's default branch (`git symbolic-ref refs/remotes/origin/HEAD` stripped of `refs/remotes/origin/`, falling back to `main`/`master` if no remote is configured) and the current branch (`git branch --show-current`). If they match, create and check out a new branch named exactly like the feature directory: `git checkout -b NNN-short-description`. Never proceed to the next step while still on the default branch.
-7. **Create `.specs/NNN-feature-name/` directory and write `spec.md`**
-8. **Remove the backlog item** — if this spec was drafted from a `.specs/backlog.md` entry, delete that line now
-9. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
-10. **On revision request, before approval** — edit `spec.md` directly, then repeat step 9. This loop never changes `Version` or `Status` — they stay `R00`/`Draft` no matter how many times it repeats, because the document hasn't been approved yet. Only an edit requested **after** the user already approved this spec increments `Version` by one.
-11. **On approval** — set `Status` to `Approved` in the document-control table before ending the turn. (`Status` later becomes `Converged`, but only `$converge` sets that.)
-12. **On any edit requested after approval** — two cases:
-    - The user must still see the resulting text (an open-ended change, the model drafts new content): reset `Status` to `Draft` before editing (this is what triggers the `Version` bump in step 10), then repeat step 11 once the user approves the result.
-    - The user already saw the exact text and is approving it verbatim (e.g. applying a `$analyze` finding's specific recommendation) — that instruction *is* the approval: skip `Draft`, bump `Version`, and set `Status` straight to `Approved` in the same edit. Do not ask for a second confirmation.
+## Runtime discipline
 
-## Naming Convention
+Resolve <plugin-root> from this installed SKILL.md. Run python3 <plugin-root>/scripts/spec-flow.py --root <project> OP --input <json-file>. Use validate with {"path":"..."} or {"release":"vX.Y.Z"}, digest with {"path":"..."}, gate with {"kind":"<phase>","release":"vX.Y.Z"}, and status with {}. Registry approval of the exact decision digest controls gates; a Markdown status is only a view. If legacy NNN-feature-name artifacts exist, stop and run mandatory migrate before writing. For a new unadopted project, run initialize with empty JSON input {} first. Do not silently convert historical approvals or checked boxes.
 
-Feature directory name: `NNN-short-description` (e.g., `003-user-authentication`)
-- `NNN`: zero-padded 3-digit number returned by this skill's bundled `scripts/next-feature-number.sh`
-- `short-description`: kebab-case, 2-4 words, describes the feature not the implementation — this is also the document-control table's `Name` value
-
-## Quality Check Before Writing
-
-Before saving the file, verify:
-- [ ] Every user story has at least one testable acceptance scenario
-- [ ] Success Metrics and Non-Functional Requirements are measurable or falsifiable — no vague adjectives without a threshold
-- [ ] Non-Functional Requirements only list what's specific to this feature — anything already covered by `.specs/constitution.md`'s baseline stays out
-- [ ] No `[NEEDS CLARIFICATION]` markers remain unless they are intentional open questions for the user to answer
-- [ ] The spec does not describe implementation details (HOW) — only behavior (WHAT)
-- [ ] Nothing in the spec contradicts `.specs/constitution.md`
-
-## After Writing
-
-Tell the user: "Spec written to `.specs/NNN-feature-name/spec.md`. Run `$clarify` first if anything is ambiguous (recommended, not required), or `$plan` directly when ready."
+Validate the resulting document. Present its concrete draft for human approval. On explicit approval call approve with {"path":"<project-relative path>","actor":"<human>","statement":"<their approval>","source":"<conversation reference>"}. A substantive edit after approval increments RNN and requires new approval; inspect affected downstream pins and adopt a new base only with explicit approval. Do not approve on behalf of the user.

@@ -1,51 +1,20 @@
 ---
 name: constitution
-description: "Create or update the project constitution — the single source of truth for principles, tech stack, and standards that all subsequent phases must respect. Use this whenever starting a new project with spec-flow, or when the tech stack or core principles change."
+description: "Create or revise project purpose, users, outcomes, principles, and boundaries."
 ---
 
-# Spec-Flow: Constitution
-
-The constitution is a per-project file that defines what is true about this project before any feature work begins. Every `plan` phase cross-checks against it.
+# Spec-Flow: constitution
 
 <HARD-GATE>
-This is the first phase — no gate. But do NOT proceed to `$specify` until `.specs/constitution.md` exists and the user has reviewed it.
+Inspect project configuration and .specs first. If legacy NNN-feature-name artifacts exist, stop and run mandatory migrate before writing. For a new unadopted project, run initialize with empty JSON input {} first. Run the runtime gate for this phase and obey it. Urgency never waives a failed gate. This first decision document must be approved in the registry before dependent work.
 </HARD-GATE>
 
-## When to Run This Phase
+Read the repository, README, AGENTS.md, and root configuration for current facts. Ask the user about purpose, users, outcomes, principles, and boundaries whenever human direction is unknown; these product choices cannot be inferred from code. Write `.specs/constitution.md` using `assets/constitution-template.md`. It owns product purpose, goals, and principles. Component design belongs in architecture, paths in structure, environments in infrastructure, and priorities in roadmap.
 
-- First time Spec-Flow is used in a project (no `.specs/constitution.md` exists)
-- When the project's tech stack, principles, or constraints change significantly
-- When a `plan` phase reveals a conflict with unstated principles
+Use `kind: "constitution"` and `depends_on: []`. Make MUST statements testable and leave unknowns as questions. An approved amendment requires a new revision and approval; downstream dependency digests may become stale.
 
-## Process
+## Runtime and approval
 
-1. **Check for existing constitution** — read `.specs/constitution.md` if it exists (this may be an update, not a creation)
-2. **Explore the project** — read `README.md`, `AGENTS.md` if present, `package.json` / `Cargo.toml` / `pyproject.toml`, and other root config files to infer the current stack and conventions
-3. **Ask targeted questions** — only about things that can't be inferred from the codebase; one question at a time
-4. **Draft the constitution** — use `assets/constitution-template.md` as the output format
-5. **Write `.specs/constitution.md`** — create the `.specs/` directory if needed. The document-control table's `Version` is `R00` and `Status` is `Draft` for a brand-new constitution.
-6. **Summarize and confirm** — report an executive summary (150 words max, never the full document) of what was written, then ask for approval or revisions
-7. **On revision request, before approval** — edit `.specs/constitution.md` directly, then repeat step 6. This loop never changes `Version` or `Status` — they stay `R00`/`Draft` (or whatever they already were) no matter how many times it repeats, because the document hasn't been approved yet.
-8. **On approval** — set `Status` to `Approved` in the document-control table before ending the turn.
+Resolve the plugin root from this installed skill. Run `python3 <plugin-root>/scripts/spec-flow.py --root <project> validate --input <json-file>` with `{"path":"<project-relative path>"}` after writing. Use `digest` with the same input to capture exact dependency digests. One fenced `spec-flow` JSON block holds `schema_version: 1`, `kind`, stable `id`, `revision: "R00"` initially, and `depends_on` references. Decision prose remains outside the block. Only generated progress and optional lowercase `status` may be updated as views.
 
-## Principle Keywords
-
-`Code Principles`, `Security`, `Operational Principles`, `Observability`, `Performance`, and `Dependency Policy` tag every bullet with an RFC 2119 keyword — `MUST`, `SHOULD`, or `MAY`. This is what makes a principle checkable downstream:
-
-- `MUST` — non-negotiable. `plan` must flag any conflict; `analyze` and `converge` always classify a violation as `CRITICAL`.
-- `SHOULD` — strong default. A feature may deviate, but `plan.md` must state the reason.
-- `MAY` — optional, left to the implementer's judgment.
-
-If a section genuinely doesn't apply to this project (e.g., no `Security`-relevant surface), write a single bullet: `N/A — <why>`, rather than inventing content to fill the section.
-
-## Versioning
-
-`Version` only increments when the user asks for a change to a constitution that was **already approved** in a previous session (i.e., this run started at step 1 with an existing, previously-approved file — not a same-session draft/revise loop). On that kind of edit:
-- If the user must still see the resulting text (the model drafts new wording): set `Status` back to `Draft` while the amendment is drafted/revised, then to `Approved` once the user approves it.
-- If the user already saw the exact text and is approving it verbatim (e.g. applying a `$analyze` finding's specific recommendation) — that instruction *is* the approval: skip `Draft`, set `Status` straight to `Approved` in the same edit, no second confirmation needed.
-- Increment `Version` by one (`R00` → `R01`, etc.) either way.
-- Append one line to `## Amendments Log`: `- RNN (YYYY-MM-DD): <what changed and why>` — append-only, never edit or reorder existing lines
-
-## After Writing
-
-Tell the user: "Constitution written to `.specs/constitution.md`. You can now run `$specify` to start a feature."
+Present the draft for human approval. On explicit approval, call `approve --input <json-file>` with `{"path":"<path>","actor":"<human>","statement":"<their approval>","source":"<conversation reference>"}`. The registry binds exact decision content. A substantive postapproval edit increments `RNN` and needs new approval; inspect affected downstream pins and adopt a new base only with explicit approval. Neither a Markdown status nor old approval of different content is authority. Do not approve on the user's behalf.
