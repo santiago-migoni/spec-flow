@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+### Added
+
+- Strategy skills for architecture, structure, infrastructure, and roadmap; explicit release planning and independent release review.
+- Python standard-library harness with decision-bound human approvals, durable events, atomic recovery, task reservation, scoped attempt packets, and evidence-based closure.
+- Native Codex Sol orchestration and independent review with one Luna implementer, host identity checks, bounded corrections, interruption reconciliation, and phase commits.
+- Mandatory previewed legacy migration preserving originals, provenance, and reusable verified evidence.
+
+### Changed
+
+- Replaced numbered features with explicitly selected releases. This is a breaking workflow change; existing projects must migrate before continuing.
+- Shared runtime validation with supported write hooks and completion checks; manual checkboxes no longer authorize closure.
+- Aligned all 16 skills, templates, manifests, bootstrap, migration guidance, and recovery documentation.
+
+### Validation
+
+- 107 plugin tests and 9 hook tests passed, including from a relocated package. Native fresh and migrated releases completed; failed correction could not close, and interrupted work was retained.
+- A separate temporary installation preserved 112 resource hashes; a fresh Sol chat discovered all 16 skills. Temporary installation was removed and prior plugin/marketplace listings were unchanged.
+- No demonstrated cost or duration savings. Hook trust/interception was not enabled in the installation test. Version remains 1.1.0; proposed 2.0.0 requires a separately authorized release commit.
+
 ## Release v1.1.0
 
 ### Changed

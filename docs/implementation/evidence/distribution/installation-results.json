@@ -1,0 +1,44 @@
+[
+  {
+    "step": "market-add",
+    "returncode": 0
+  },
+  {
+    "step": "plugin-add",
+    "returncode": 0
+  },
+  {
+    "step": "installed-list",
+    "returncode": 0
+  },
+  {
+    "step": "installed-resource-hashes",
+    "count": 112,
+    "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0",
+    "passed": true
+  },
+  {
+    "step": "scratch-git-init",
+    "returncode": 0
+  },
+  {
+    "step": "clean-session",
+    "returncode": 1
+  },
+  {
+    "step": "plugin-remove",
+    "returncode": 0
+  },
+  {
+    "step": "market-remove",
+    "returncode": 0
+  },
+  {
+    "step": "plugins-after",
+    "returncode": 0
+  },
+  {
+    "step": "marketplaces-after",
+    "returncode": 0
+  }
+]

@@ -1,7 +1,7 @@
 {
   "name": "spec-flow",
   "interface": {
-    "displayName": "Spec Flow"
+    "displayName": "Spec Flow — Release Workflow"
   },
   "plugins": [
     {

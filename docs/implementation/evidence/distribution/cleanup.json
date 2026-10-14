@@ -1,0 +1,26 @@
+[
+  {
+    "step": "final-plugin-remove",
+    "returncode": 0
+  },
+  {
+    "step": "final-market-remove",
+    "returncode": 0
+  },
+  {
+    "step": "final-plugins",
+    "returncode": 0
+  },
+  {
+    "step": "final-marketplaces",
+    "returncode": 0
+  },
+  {
+    "check": "plugins unchanged",
+    "passed": true
+  },
+  {
+    "check": "marketplaces unchanged",
+    "passed": true
+  }
+]

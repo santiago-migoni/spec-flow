@@ -15,7 +15,7 @@ Autorización: el usuario solicitó explícitamente implementar el plan E0–E8 
 | E5 | Orquestación Sol–Luna | Verificada con fixtures: 70 pruebas del plugin y 5 hooks; evaluación nativa integral en E7 |
 | E6 | Hook, convergencia y cierre | Verificado: 97 pruebas del plugin y 9 hooks; revisión independiente Sol |
 | E7 | Evaluación integral | Verificada: proyecto nuevo y migrado nativos, interrupción y corrección fallida; 107 pruebas del plugin + 9 hooks |
-| E8 | Preparación del paquete | Pendiente |
+| E8 | Preparación del paquete | Verificada: instalación aislada, 16 skills en chat nuevo Sol, 112 recursos, 107 + 9 pruebas reubicadas |
 
 ## E0 — Evidencia
 
@@ -67,3 +67,9 @@ Dos releases desechables completaron el flujo de producción con Sol high como p
 La evaluación real detectó dos defectos que los fixtures anteriores no mostraban: el host cifra los prompts de delegación y el reducer conservaba el agente del intento previo. El adaptador ahora vincula la llamada nativa por hash del marcador, salida exacta y parentesco; el segundo intento limpia el vínculo anterior y conserva su tiempo original. Se añadió restauración explícita de paquetes ignorados por Git: reconstrucción con el mismo hash y sin nuevo intento, con pruebas deterministas y revisión Sol independiente. La restauración de paquetes no se presenta como ensayo nativo. Suite final de esta etapa: 107 pruebas del plugin y 9 hooks.
 
 La referencia Sol usa exactamente la misma suite de cuatro métodos. Se registraron duración y consumo disponible; la evaluación incluye preparación, fallos inyectados, reparación del harness y una interrupción por límite de uso. No demuestra ahorro de tiempo ni costo.
+
+## E8 — Verificación
+
+Paquete instalado con identidad temporal independiente y rutas con espacios; 112 recursos coinciden por hash. Las suites reubicadas pasaron 107 pruebas del plugin y 9 hooks. Un cliente nuevo de app-server descubrió las 16 skills; Sol inició un proyecto vacío desde el runtime instalado y obtuvo el gate de constitución habilitado. Un chat nuevo adicional, autorizado explícitamente, recibió las 16 skills en su catálogo inicial y verificó referencias. La prueba del CLI independiente rechazó el modelo Sol; no se sustituyó, y la evaluación se realizó mediante Codex Desktop. Se retiraron plugin y marketplace temporales y se verificaron listados previos idénticos. Detalles y límites en [harness-distribution.md](harness-distribution.md).
+
+README, guía del repositorio, manifiestos, marketplace y Unreleased reflejan el alcance evaluado. Propuesta de versión incompatible: **2.0.0**, pendiente de autorización de corte; ambos manifiestos conservan **1.1.0**. Sin tag, publicación ni integración en main.

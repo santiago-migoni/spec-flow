@@ -1,0 +1,14 @@
+{
+  "thread_id": "01a13b83-af74-75c2-b539-995a6380520b",
+  "host_log_sha256": "59fb33cabd72403769adabf87f4da5a0e2f24d49b6cfeeee5f634511676c6d8d",
+  "turn_contexts": [
+    {
+      "model": "gpt-6-sol",
+      "effort": "high"
+    }
+  ],
+  "initial_catalog_skill_count": 16,
+  "referenced_contracts_present": 2,
+  "referenced_scripts_present": 2,
+  "read_only": true
+}

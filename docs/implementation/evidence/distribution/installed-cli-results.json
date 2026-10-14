@@ -1,0 +1,32 @@
+{
+  "installed_root": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0",
+  "operations": [
+    {
+      "operation": "initialize",
+      "exit_code": 0,
+      "result": {
+        "already_initialized": false,
+        "config_path": "/private/tmp/spec-flow-e8-evaluation/installed-cli-project/.spec-flow/config.json",
+        "status": "initialized"
+      }
+    },
+    {
+      "operation": "status",
+      "exit_code": 0,
+      "result": {
+        "initialized": true,
+        "runs": [],
+        "status": "initialized"
+      }
+    },
+    {
+      "operation": "gate",
+      "exit_code": 0,
+      "result": {
+        "invalid_prerequisites": [],
+        "missing_approvals": [],
+        "ready": true
+      }
+    }
+  ]
+}

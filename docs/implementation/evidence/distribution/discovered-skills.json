@@ -1,0 +1,129 @@
+{
+  "server_initialize": {
+    "id": 1,
+    "result": {
+      "userAgent": "Codex Desktop/0.135.0 (Mac OS 27.0.1; arm64) dumb (spec-flow-e8; 1.0.0)",
+      "codexHome": "/Users/santiago_migoni/.codex",
+      "platformFamily": "unix",
+      "platformOs": "macos"
+    }
+  },
+  "selected_skills": [
+    {
+      "name": "spec-flow-e8-01a13adc:analyze",
+      "description": "Read-only cross-check of approved release documents, acceptance coverage, and strategic constraints.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/analyze/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:architecture",
+      "description": "Define shared component responsibilities and interfaces from an approved constitution.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/architecture/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:backlog",
+      "description": "Record deferred ideas without changing release scope or approval.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/backlog/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:clarify",
+      "description": "Resolve consequential ambiguity in a release spec before planning.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/clarify/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:constitution",
+      "description": "Create or revise project purpose, users, outcomes, principles, and boundaries.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/constitution/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:converge",
+      "description": "Assess a committed release against approved acceptance and shared decisions, then route residual work to its canonical source.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/converge/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:finishing-branch",
+      "description": "Finish a reviewed Spec-Flow release branch through final checks, audit checkpoint, and an explicitly authorized integration choice.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/finishing-branch/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:implement",
+      "description": "Execute an authorized release phase through native Sol-Luna delegation, verified tasks, independent phase review, and a validated commit.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/implement/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:infrastructure",
+      "description": "Define environments, deployment, observability, and recovery decisions for approved structure.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/infrastructure/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:plan",
+      "description": "Plan the technical delivery of an approved release spec against shared decisions.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/plan/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:review-release",
+      "description": "Review a technically converged release's acceptance, observed impact, delivery state, and lessons before branch integration.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/review-release/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:roadmap",
+      "description": "Prioritize outcomes and group stories into explicit SemVer releases using approved strategy.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/roadmap/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:specify",
+      "description": "Specify one selected SemVer release as stories and measurable acceptance criteria.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/specify/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:structure",
+      "description": "Define code organization and placement conventions from approved shared architecture.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/structure/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:tasks",
+      "description": "Decompose an approved release plan into ordered tasks and verified steps.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/tasks/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-01a13adc:using-spec-flow",
+      "description": "Start or resume the release-centered Spec-Flow workflow and find the next authorized phase.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-market-01a13adc/spec-flow-e8-01a13adc/1.1.0/skills/using-spec-flow/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    }
+  ],
+  "response_error": null,
+  "cwd_errors": [
+    []
+  ]
+}
