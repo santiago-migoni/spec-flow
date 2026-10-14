@@ -9,11 +9,13 @@ import re
 import subprocess
 import tempfile
 import uuid
+import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Set, Tuple
 
 from .contracts import ContractError, document_digest, read_document, safe_path, validate_document, validate_release
+from .codex_adapter import AdapterError, NativeCodexAdapter
 from .store import Store, StoreError
 
 
@@ -32,6 +34,7 @@ PROFILES = {
 CACHE_DIRS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache", ".tox", ".venv", "venv", "node_modules"}
 EXCLUDED_TOP = {".git", ".specs", ".spec-flow"}
 ZERO_TEST_PATTERNS = ("ran 0 tests", "no tests ran", "no tests to run")
+MAX_PACKET_BYTES = 262144
 PHASE_ALIASES = {
     "constitution": "constitution", "architecture": "architecture", "structure": "structure",
     "infrastructure": "infrastructure", "roadmap": "roadmap", "spec": "spec", "specify": "spec",
@@ -42,16 +45,18 @@ PHASE_ALIASES = {
 
 
 class Engine:
-    def __init__(self, root: os.PathLike[str] | str):
+    def __init__(self, root: os.PathLike[str] | str, *, adapter: Optional[Any] = None):
         self.root = Path(root).resolve()
         if not self.root.is_dir():
             raise EngineError("invalid_root", "project root must be an existing directory")
         self.store = Store(self.root)
+        self.adapter = adapter if adapter is not None else NativeCodexAdapter(self.root)
 
     def dispatch(self, operation: str, payload: Mapping[str, Any]) -> Dict[str, Any]:
         if not isinstance(payload, dict):
             raise EngineError("invalid_input", "operation input must be a JSON object")
         methods = {
+            "capabilities": self._capabilities,
             "initialize": self._initialize,
             "digest": self._digest,
             "validate": self._validate,
@@ -60,6 +65,7 @@ class Engine:
             "start": self._start,
             "authorize": self._authorize,
             "prepare": self._prepare,
+            "bind-agent": self._bind_agent,
             "result": self._result,
             "retry": self._retry,
             "reconcile": self._reconcile,
@@ -67,6 +73,7 @@ class Engine:
             "review": self._review,
             "close": self._close,
             "resume": self._resume,
+            "takeover": self._takeover,
             "status": self._status,
             "interrupt": self._interrupt,
             "migrate-preview": self._migrate_preview,
@@ -427,6 +434,7 @@ class Engine:
         auth = self._authorization(payload["authorization"])
         if not isinstance(payload["capabilities"], dict):
             raise EngineError("invalid_input", "capabilities must be an object")
+        capability_report = self._adapter_call("capabilities", payload["capabilities"], owner)
         try:
             validated = validate_release(self.root, version)
         except ContractError as exc:
@@ -455,6 +463,7 @@ class Engine:
                 raise EngineError(exc.code, str(exc)) from exc
             if existing["status"] in {"active", "interrupted"}:
                 if existing["release"] == version and existing["owner"] == owner:
+                    self._adapter_call("acquire", run_id, version, owner)
                     imported = self._credit_migrated_evidence(run_id, version, task_items)
                     current = self._state(run_id)
                     return {"run_id": run_id, "status": current["status"], "already_running": True,
@@ -465,21 +474,35 @@ class Engine:
                 return {"run_id": run_id, "status": "completed", "already_completed": True,
                         "authorized_phases": existing["authorized_phases"], "imported_completed": [], "pending_imports": []}
         run_id = str(uuid.uuid4())
+        self.store.create_run(run_id)
         try:
-            self.store.create_run(run_id)
             self.store.append_event(run_id, "started", {
                 "run_id": run_id, "release": version, "owner": owner, "authorized_phases": list(dict.fromkeys(phases)),
-                "authorization": auth, "capabilities": payload["capabilities"],
+                "authorization": auth, "capabilities": capability_report,
                 "documents": {path.relative_to(self.root).as_posix(): document_digest(path) for path in self._document_closure(approval_roots)},
                 "task_ids": [item["id"] for item in task_items], "task_contracts": task_items,
                 "phase_contracts": validated["plan"]["contract"]["phases"],
             }, self._reduce_events)
+        except StoreError as exc:
+            shutil.rmtree(self.store.run_dir(run_id), ignore_errors=True)
+            raise EngineError(exc.code, str(exc)) from exc
+        try:
+            self._adapter_call("acquire", run_id, version, owner)
+        except EngineError:
+            shutil.rmtree(self.store.run_dir(run_id), ignore_errors=True)
+            raise
+        try:
             imported = self._credit_migrated_evidence(run_id, version, task_items)
         except StoreError as exc:
             raise EngineError(exc.code, str(exc)) from exc
         state = self._state(run_id)
         return {"run_id": run_id, "status": state["status"], "authorized_phases": list(dict.fromkeys(phases)),
                 "imported_completed": imported["completed"], "pending_imports": imported["pending"]}
+
+    def _capabilities(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        self._fields(payload, ("owner", "report"))
+        owner = self._nonempty(payload["owner"], "owner")
+        return self._adapter_call("capabilities", payload["report"], owner)
 
     def _credit_migrated_evidence(self, run_id: str, release: str,
                                   task_items: Sequence[Mapping[str, Any]]) -> Dict[str, List[Any]]:
@@ -614,13 +637,20 @@ class Engine:
         phase = next((item for item in state["phase_contracts"] if item["id"] == task["phase"]), None)
         if phase is None:
             raise EngineError("contract_invalid", "task phase is absent from the approved plan")
+        phase_dependencies: Set[str] = set()
         for prior_phase in phase["depends_on"]:
             unfinished = [item["id"] for item in state["task_contracts"] if item["phase"] == prior_phase and state["tasks"].get(item["id"], {}).get("status") != "completed"]
             if unfinished:
                 raise EngineError("phase_dependency_not_complete", "phase dependency still has open tasks: {}".format(", ".join(unfinished)))
+            phase_dependencies.update(item["id"] for item in state["task_contracts"] if item["phase"] == prior_phase)
+        completed_dependencies = set(task["depends_on"]) | phase_dependencies
         for dependency in task["depends_on"]:
             if state["tasks"].get(dependency, {}).get("status") != "completed":
                 raise EngineError("task_dependency_not_complete", "task dependency is not complete: {}".format(dependency))
+        for dependency in sorted(completed_dependencies):
+            dependency_state = state["tasks"].get(dependency, {})
+            if dependency_state.get("status") == "completed":
+                self._ensure_evidence_current(state, dependency, dependency_state, enforce_snapshot=False)
         self._ensure_approvals_current(state)
         attempt = int(task_state.get("attempt", 0)) + 1
         retry_limit = self._config()["retry_limit"]
@@ -630,26 +660,137 @@ class Engine:
         scoped_files = self._task_scope_files(state, task)
         release_docs = self._release_documents(state["release"])
         source_rows = []
-        for path in release_docs:
+        packet_sources = []
+        for relative, digest in sorted(state["documents"].items()):
+            path = self._project_path(relative)
             doc = read_document(path)
-            source_rows.append({
+            projected = self._packet_source_projection(relative, doc["contract"], doc["prose"], task, state)
+            packet_sources.append({
                 "path": path.relative_to(self.root).as_posix(),
-                "digest": document_digest(path),
-                "contract": doc["contract"],
-                "prose": doc["prose"],
+                "digest": digest,
+                "contract": projected["contract"],
+                "prose": projected["prose"],
             })
+        selected_acceptance = {criterion["id"]: criterion for criterion in read_document(self._release_path(state["release"], "spec.md"))["contract"]["acceptance"]
+                               if criterion["id"] in task["acceptance"]}
+        source_rows = packet_sources
         packet = {
             "run_id": payload["run_id"], "task_id": task_id, "attempt": attempt,
             "owner": state["owner"], "task": task, "sources": source_rows,
-            "scope_files": sorted(scoped_files), "created_at": self._now(),
+            "selected_acceptance": selected_acceptance,
+            "scope_files": sorted(scoped_files), "source_digests": state["documents"], "created_at": self._now(),
         }
+        canonical_packet = json.dumps(packet, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        if len(canonical_packet) > MAX_PACKET_BYTES:
+            raise EngineError("packet_too_large", "task context packet exceeds the configured size bound", details={"bytes": len(canonical_packet), "maximum": MAX_PACKET_BYTES})
+        packet["packet_sha256"] = hashlib.sha256(canonical_packet).hexdigest()
         packet_path = self.store.run_dir(payload["run_id"]) / "packets" / "{}-{}.json".format(task_id, attempt)
+        self._ensure_approvals_current(state)
+        if packet_path.exists():
+            try:
+                packet = json.loads(packet_path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+                raise EngineError("packet_corrupt", "existing immutable packet is unreadable") from exc
+            if packet.get("run_id") != payload["run_id"] or packet.get("task_id") != task_id or packet.get("attempt") != attempt:
+                raise EngineError("packet_exists", "orphan packet does not match the current attempt")
+            if packet.get("sources") != source_rows or packet.get("scope_files") != sorted(scoped_files) or packet.get("source_digests") != state["documents"] or packet.get("selected_acceptance") != selected_acceptance:
+                raise EngineError("approval_stale", "orphan packet sources or scope changed before adoption")
         self._write_immutable_json(packet_path, packet)
         self._append(payload["run_id"], "prepared", {
             "task_id": task_id, "attempt": attempt, "packet_path": packet_path.relative_to(self.root).as_posix(),
-            "baseline": baseline, "scope_files": sorted(scoped_files), "source_digests": state["documents"],
+            "packet_sha256": packet["packet_sha256"], "baseline": baseline, "scope_files": sorted(scoped_files), "source_digests": state["documents"],
         })
-        return {"run_id": payload["run_id"], "task_id": task_id, "attempt": attempt, "packet_path": str(packet_path), "scope_files": sorted(scoped_files)}
+        return {"run_id": payload["run_id"], "task_id": task_id, "attempt": attempt, "packet_path": str(packet_path), "packet_sha256": packet["packet_sha256"], "scope_files": sorted(scoped_files)}
+
+    def _packet_source_projection(self, relative: str, contract: Mapping[str, Any], prose: str,
+                                  task: Mapping[str, Any], state: Mapping[str, Any]) -> Dict[str, Any]:
+        projected = dict(contract)
+        if contract.get("kind") == "tasks":
+            by_id = {item["id"]: item for item in state["task_contracts"]}
+            selected: Set[str] = set()
+            def add_task(identifier: str) -> None:
+                if identifier in selected:
+                    return
+                selected.add(identifier)
+                for dependency in by_id[identifier]["depends_on"]:
+                    add_task(dependency)
+            add_task(task["id"])
+            projected["tasks"] = [item for item in contract["tasks"] if item["id"] in selected]
+            prose = ""
+        elif contract.get("kind") == "spec":
+            acceptance_ids = set(task["acceptance"])
+            criteria = [item for item in contract["acceptance"] if item["id"] in acceptance_ids]
+            story_ids = {item["story"] for item in criteria}
+            projected["acceptance"] = criteria
+            projected["stories"] = [item for item in contract["stories"] if item["id"] in story_ids]
+            prose = self._packet_sections(prose, {"Release outcome", "Release-specific nonfunctional requirements",
+                                                   "Edge cases and non-goals", "Outcome measurement", "Open questions"})
+        elif contract.get("kind") == "plan":
+            phases = {item["id"]: item for item in contract["phases"]}
+            relevant: Set[str] = set()
+            def add_phase(identifier: str) -> None:
+                if identifier in relevant:
+                    return
+                relevant.add(identifier)
+                for dependency in phases[identifier]["depends_on"]:
+                    add_phase(dependency)
+            phase = next(item for item in state["phase_contracts"] if item["id"] == task["phase"])
+            add_phase(task["phase"])
+            for dependency in phase["depends_on"]:
+                add_phase(dependency)
+            projected["phases"] = [item for item in contract["phases"] if item["id"] in relevant]
+        elif contract.get("kind") == "roadmap":
+            projected["releases"] = [item for item in contract.get("releases", []) if item.get("version") == state["release"]]
+            prose = ""
+        return {"contract": projected, "prose": prose}
+
+    @staticmethod
+    def _packet_sections(markdown: str, selected: Set[str]) -> str:
+        output = []
+        lines = markdown.splitlines()
+        index = 0
+        heading = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
+        while index < len(lines):
+            match = heading.match(lines[index])
+            if not match or match.group(2).strip() not in selected:
+                index += 1
+                continue
+            level = len(match.group(1))
+            title = match.group(2).strip()
+            body = []
+            cursor = index + 1
+            while cursor < len(lines):
+                next_heading = heading.match(lines[cursor])
+                if next_heading and len(next_heading.group(1)) <= level:
+                    break
+                body.append(lines[cursor])
+                cursor += 1
+            content = "\n".join(body).strip()
+            if content:
+                output.append(match.group(1) + " " + title + "\n\n" + content)
+            index = cursor
+        return "\n\n".join(output)
+
+    def _bind_agent(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        self._fields(payload, ("run_id", "owner", "task_id", "agent_id", "session_id", "agent_path"))
+        state = self._owned_state(payload)
+        self._require_active_task(state, payload["task_id"])
+        task_state = state.get("tasks", {}).get(payload["task_id"], {})
+        if task_state.get("status") != "running" or task_state.get("agent"):
+            raise EngineError("invalid_transition", "bind-agent requires one prepared attempt without a bound agent")
+        agent_id = self._nonempty(payload["agent_id"], "agent_id")
+        session_id = self._nonempty(payload["session_id"], "session_id")
+        agent_path = self._nonempty(payload["agent_path"], "agent_path")
+        if agent_id != agent_path:
+            raise EngineError("host_agent_mismatch", "agent_id must equal the canonical agent_path returned by the native spawn response")
+        marker = "SPEC_FLOW_PACKET_SHA256=" + task_state.get("packet_sha256", "")
+        evidence = self._adapter_call("attest_session", session_id, "implementer", parent_session=state["owner"], agent_path=agent_path,
+                                      task_marker=marker, after=task_state.get("prepared_at"))
+        self._append(payload["run_id"], "agent_bound", {"task_id": payload["task_id"], "attempt": task_state["attempt"],
+                                                          "agent_id": agent_id, "session_id": session_id,
+                                                          "agent_path": agent_path, "parent_session": state["owner"],
+                                                          "attestation": evidence})
+        return {"run_id": payload["run_id"], "task_id": payload["task_id"], "agent_id": agent_id, "session_id": session_id, "bound": True}
 
     def _result(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, ("run_id", "owner", "task_id", "result"))
@@ -660,7 +801,11 @@ class Engine:
         result = payload["result"]
         if not isinstance(result, dict) or not result:
             raise EngineError("invalid_input", "result must be a nonempty object")
-        self._append(payload["run_id"], "result_received", {"task_id": payload["task_id"], "result": result, "received_at": self._now()})
+        host_attestation = None
+        if getattr(self.adapter, "production", False):
+            host_attestation = self._validate_agent_result(payload["run_id"], payload["task_id"], state, result)
+        self._append(payload["run_id"], "result_received", {"task_id": payload["task_id"], "result": result,
+                                                               "host_attestation": host_attestation, "received_at": self._now()})
         return {"run_id": payload["run_id"], "task_id": payload["task_id"], "recorded": True, "closed": False}
 
     def _retry(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
@@ -686,11 +831,19 @@ class Engine:
             raise EngineError("reconciliation_not_required", "task has no interrupted attempt requiring reconciliation")
         evidence = self._nonempty(payload["evidence"], "evidence")
         task_state = state["tasks"][task_id]
+        if getattr(self.adapter, "production", False):
+            native = self._attest_bound_agent(state, task_id, task_state)
+            if native.get("agent_lifecycle") not in {"completed", "aborted"}:
+                raise EngineError("agent_still_active", "inspect or stop the native agent before reconciliation")
         if payload["disposition"] == "accept_result":
             result = payload.get("result")
             if not isinstance(result, dict) or not result:
                 raise EngineError("invalid_input", "accept_result requires a nonempty result object")
-            self._append(payload["run_id"], "reconciled_result", {"task_id": task_id, "result": result, "evidence": evidence, "at": self._now()})
+            if getattr(self.adapter, "production", False):
+                native = self._validate_agent_result(payload["run_id"], task_id, state, result, allowed_lifecycles={"completed", "aborted"})
+            self._append(payload["run_id"], "reconciled_result", {"task_id": task_id, "result": result,
+                                                                    "host_attestation": native if getattr(self.adapter, "production", False) else None,
+                                                                    "evidence": evidence, "at": self._now()})
             return {"run_id": payload["run_id"], "task_id": task_id, "disposition": "accept_result"}
         if payload["disposition"] == "retry":
             reason = self._nonempty(payload.get("reason"), "reason")
@@ -712,6 +865,9 @@ class Engine:
         task_state = state["tasks"].get(payload["task_id"], {})
         if task_state.get("status") != "result_received" or not task_state.get("result"):
             raise EngineError("result_required", "record a nonempty result before verification")
+        reported_blockers = task_state["result"].get("blockers", []) if isinstance(task_state.get("result"), dict) else []
+        if reported_blockers:
+            raise EngineError("agent_blocked", "agent reported unresolved blockers", details={"blockers": reported_blockers})
         attempt = task_state.get("attempt")
         baseline = task_state.get("baseline", {})
         before = self._snapshot_code()
@@ -810,6 +966,8 @@ class Engine:
         task_id = self._nonempty(payload["task_id"], "task_id")
         task_state = state["tasks"].get(task_id, {})
         if task_state.get("status") == "completed":
+            if state.get("status") == "completed":
+                self._adapter_call("release", state)
             self._update_task_progress(state)
             return {"run_id": payload["run_id"], "task_id": task_id, "status": "completed", "already_completed": True, "run_dir": str(self.store.run_dir(payload["run_id"]))}
         self._require_active_task(state, task_id)
@@ -821,6 +979,8 @@ class Engine:
         run_completed = finished
         self._append(payload["run_id"], "closed", {"task_id": task_id, "closed_at": self._now(), "run_completed": run_completed})
         updated_state = self._state(payload["run_id"])
+        if run_completed:
+            self._adapter_call("release", updated_state)
         self._update_task_progress(updated_state)
         return {
             "run_id": payload["run_id"], "task_id": task_id,
@@ -850,6 +1010,11 @@ class Engine:
         self._require_owner(state, payload["owner"])
         if state["status"] != "interrupted":
             raise EngineError("run_not_interrupted", "only an interrupted run can be resumed")
+        agent_status = None
+        if getattr(self.adapter, "production", False) and state.get("active_task"):
+            task_state = state["tasks"].get(state["active_task"], {})
+            if task_state.get("agent"):
+                agent_status = self._attest_bound_agent(state, state["active_task"], task_state)
         self._append(payload["run_id"], "resumed", {"resumed_at": self._now()})
         active_task = state.get("active_task")
         if active_task:
@@ -860,7 +1025,25 @@ class Engine:
         new_state = self._state(payload["run_id"])
         self._update_task_progress(new_state)
         return {"run_id": payload["run_id"], "status": new_state["status"], "reconciliation_required": bool(new_state.get("active_task")),
+                "native_agent": agent_status,
                 "imported_completed": imported["completed"], "pending_imports": imported["pending"]}
+
+    def _takeover(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        self._fields(payload, ("run_id", "previous_owner", "owner", "reconciliation"))
+        run_id = self._nonempty(payload["run_id"], "run_id")
+        previous_owner = self._nonempty(payload["previous_owner"], "previous_owner")
+        owner = self._nonempty(payload["owner"], "owner")
+        reconciliation = self._nonempty(payload["reconciliation"], "reconciliation")
+        state = self._state(run_id)
+        self._require_owner(state, previous_owner)
+        if state.get("status") != "interrupted":
+            raise EngineError("takeover_requires_interrupted_run", "takeover requires an interrupted run")
+        result = self._adapter_call("takeover", state, owner)
+        self._append(run_id, "ownership_transferred", {"previous_owner": previous_owner, "owner": owner,
+                                                        "reconciliation": reconciliation,
+                                                        "host_inspection": result, "transferred_at": self._now()})
+        return {"run_id": run_id, "owner": owner, "authorized_phases": state["authorized_phases"],
+                "reconciliation_required": bool(state.get("active_task")), "resume_required": True}
 
     def _status(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, (), ("run_id",))
@@ -893,6 +1076,15 @@ class Engine:
         except StoreError as exc:
             raise EngineError(exc.code, str(exc)) from exc
 
+    def _adapter_call(self, method: str, *args: Any, **kwargs: Any) -> Any:
+        callback = getattr(self.adapter, method, None)
+        if callback is None:
+            raise EngineError("adapter_unavailable", "native Codex adapter does not support {}".format(method))
+        try:
+            return callback(*args, **kwargs)
+        except AdapterError as exc:
+            raise EngineError(exc.code, str(exc), details=exc.details) from exc
+
     def _state(self, run_id: str) -> Dict[str, Any]:
         try:
             return self.store.read_state(run_id, self._reduce_events, repair=False)
@@ -904,7 +1096,47 @@ class Engine:
         owner = self._nonempty(payload.get("owner"), "owner")
         state = self._state(run_id)
         self._require_owner(state, owner)
+        if getattr(self.adapter, "production", False):
+            self._adapter_call("assert_lease", state)
+            self._adapter_call("attest_session", owner, "orchestrator")
         return state
+
+    def _attest_bound_agent(self, state: Mapping[str, Any], task_id: str, task_state: Mapping[str, Any]) -> Dict[str, Any]:
+        bound = task_state.get("agent")
+        if not isinstance(bound, dict):
+            raise EngineError("agent_binding_required", "task reconciliation requires a bound native Luna session")
+        marker = "SPEC_FLOW_PACKET_SHA256=" + task_state.get("packet_sha256", "")
+        return self._adapter_call("attest_session", bound["session_id"], "implementer", parent_session=bound.get("parent_session", state["owner"]),
+                                  agent_path=bound["agent_path"], task_marker=marker,
+                                  after=task_state.get("prepared_at"))
+
+    def _validate_agent_result(self, run_id: str, task_id: str, state: Mapping[str, Any], result: Mapping[str, Any],
+                               *, allowed_lifecycles: Set[str] = frozenset({"completed"})) -> Dict[str, Any]:
+        required = {"summary", "files_modified", "checks", "evidence", "blockers"}
+        if set(result) != required or not isinstance(result.get("files_modified"), list) or not isinstance(result.get("checks"), list) or not isinstance(result.get("evidence"), list) or not isinstance(result.get("blockers"), list):
+            raise EngineError("invalid_agent_result", "native agent result requires summary, files_modified, checks, evidence, and blockers")
+        task_state = state["tasks"].get(task_id, {})
+        evidence = self._attest_bound_agent(state, task_id, task_state)
+        if evidence.get("agent_lifecycle") not in allowed_lifecycles:
+            raise EngineError("agent_not_completed", "native agent lifecycle is not eligible to submit this task result")
+        baseline = task_state.get("baseline", {})
+        actual = self._changed_paths(baseline, self._snapshot_code())
+        reported = result["files_modified"]
+        if not all(isinstance(path, str) and path and Path(path).as_posix() == path and not Path(path).is_absolute() and ".." not in Path(path).parts for path in reported) or len(set(reported)) != len(reported) or set(reported) != actual:
+            raise EngineError("agent_file_report_mismatch", "agent-reported files must match the actual worktree changes", details={"reported": sorted(set(reported)), "actual": sorted(actual)})
+        task = self._task_contract(state, task_id)
+        checks = result["checks"]
+        if not isinstance(result.get("summary"), str) or not result["summary"].strip() or not checks or not result["evidence"]:
+            raise EngineError("invalid_agent_result", "agent result needs a summary, checks, and evidence")
+        if not all(isinstance(item, dict) and all(isinstance(item.get(key), str) and item[key].strip() for key in ("step_id", "check", "result")) for item in checks):
+            raise EngineError("invalid_agent_result", "each check requires step_id, check, and result strings")
+        if {item["step_id"] for item in checks} != {step["id"] for step in task["steps"]}:
+            raise EngineError("invalid_agent_result", "checks must cover each task step exactly once")
+        if not all(isinstance(item, dict) and all(isinstance(item.get(key), str) and item[key].strip() for key in ("kind", "reference", "description")) for item in result["evidence"]):
+            raise EngineError("invalid_agent_result", "each evidence item requires kind, reference, and description strings")
+        if not all(isinstance(item, dict) and all(isinstance(item.get(key), str) and item[key].strip() for key in ("summary", "reason")) for item in result["blockers"]):
+            raise EngineError("invalid_agent_result", "each blocker requires summary and reason strings")
+        return evidence
 
     @staticmethod
     def _require_owner(state: Mapping[str, Any], owner: str) -> None:
@@ -951,7 +1183,11 @@ class Engine:
         result: Set[str] = set()
 
         def include(item: Mapping[str, Any]) -> None:
-            result.update(item["files"])
+            for name in item["files"]:
+                path = self._project_path(name)
+                if path.is_dir():
+                    raise EngineError("directory_scope_unsupported", "task scopes must enumerate files explicitly: {}".format(name))
+                result.add(Path(name).as_posix())
             for dependency in item["depends_on"]:
                 include(by_id[dependency])
 
@@ -964,7 +1200,6 @@ class Engine:
         for name in task["files"]:
             normalized = Path(name).as_posix().rstrip("/")
             allowed.add(normalized)
-            allowed.add(normalized + "/")
         return allowed
 
     def _snapshot_code(self) -> Dict[str, str]:
@@ -1014,23 +1249,25 @@ class Engine:
             result[filename] = snapshot.get(filename)
         return dict(sorted(result.items()))
 
-    def _ensure_evidence_current(self, state: Mapping[str, Any], task_id: str, task_state: Mapping[str, Any]) -> None:
-        verified_snapshot = task_state.get("verified_snapshot")
-        if not isinstance(verified_snapshot, dict):
-            raise EngineError("verification_required", "task verification has no complete project snapshot")
-        changed = self._changed_paths(verified_snapshot, self._snapshot_code())
-        if changed:
-            scope = self._task_scope_files(state, self._task_contract(state, task_id))
-            outside = sorted(path for path in changed if not any(path == item or path.startswith(item.rstrip("/") + "/") for item in scope))
-            if outside:
-                raise EngineError("out_of_scope_changes", "project changed outside task scope after verification", details={"paths": outside})
-            raise EngineError("code_stale", "task files changed after verification", details={"paths": sorted(changed)})
+    def _ensure_evidence_current(self, state: Mapping[str, Any], task_id: str, task_state: Mapping[str, Any], *, enforce_snapshot: bool = True) -> None:
+        if enforce_snapshot:
+            verified_snapshot = task_state.get("verified_snapshot")
+            if not isinstance(verified_snapshot, dict):
+                raise EngineError("verification_required", "task verification has no complete project snapshot")
+            changed = self._changed_paths(verified_snapshot, self._snapshot_code())
+            if changed:
+                scope = self._task_scope_files(state, self._task_contract(state, task_id))
+                outside = sorted(path for path in changed if not any(self._path_allowed(path, {item, item + "/"}) for item in scope))
+                if outside:
+                    raise EngineError("out_of_scope_changes", "project changed outside task scope after verification", details={"paths": outside})
+                raise EngineError("code_stale", "task files changed after verification", details={"paths": sorted(changed)})
         expected = task_state.get("code_fingerprint")
         if not expected:
             raise EngineError("verification_required", "task has no recorded code fingerprint")
         current = self._scope_fingerprint(self._snapshot_code(), self._task_scope_files(state, self._task_contract(state, task_id)))
         if current != expected:
-            raise EngineError("code_stale", "task files changed after verification")
+            changed = sorted(path for path in set(current) | set(expected) if current.get(path) != expected.get(path))
+            raise EngineError("code_stale", "task files changed after verification", details={"paths": changed})
 
     def _update_task_progress(self, state: Mapping[str, Any], closing_task: Optional[str] = None) -> None:
         path = self._release_path(state["release"], "tasks.md")
@@ -1069,6 +1306,11 @@ class Engine:
             stable_keys = ("run_id", "task_id", "attempt", "owner", "task", "sources", "scope_files")
             if not isinstance(previous, dict) or any(previous.get(key) != value.get(key) for key in stable_keys):
                 raise EngineError("packet_exists", "existing packet does not match the approved attempt")
+            recorded_hash = previous.get("packet_sha256")
+            unhashed = {key: item for key, item in previous.items() if key != "packet_sha256"}
+            actual_hash = hashlib.sha256(json.dumps(unhashed, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+            if recorded_hash != actual_hash:
+                raise EngineError("packet_corrupt", "existing immutable packet hash does not match its content")
             return
         try:
             safe_path(self.root, path.relative_to(self.root))
@@ -1117,14 +1359,26 @@ class Engine:
             elif kind == "authorized":
                 state["authorized_phases"] = list(data["phases"])
                 state["authorization"].append(data["authorization"])
+            elif kind == "ownership_transferred":
+                state["owner"] = data["owner"]
+                state.setdefault("ownership_reconciliations", []).append({"previous_owner": data["previous_owner"],
+                                                                           "owner": data["owner"],
+                                                                           "reconciliation": data["reconciliation"],
+                                                                           "at": data["transferred_at"]})
             elif kind == "prepared":
                 task = state["tasks"].setdefault(data["task_id"], {})
                 task.update({"attempt": data["attempt"], "status": "running", "packet_path": data["packet_path"],
+                             "packet_sha256": data.get("packet_sha256"), "prepared_at": event.get("at"),
                              "baseline": data["baseline"], "scope_files": data["scope_files"],
                              "source_digests": data["source_digests"], "result": None,
                              "step_evidence": {}, "review": None, "code_fingerprint": None})
                 state["active_task"] = data["task_id"]
                 state["reconciliation_required"] = False
+            elif kind == "agent_bound":
+                task = state["tasks"].setdefault(data["task_id"], {})
+                task["agent"] = {"agent_id": data["agent_id"], "session_id": data["session_id"],
+                                 "agent_path": data["agent_path"], "parent_session": data.get("parent_session"),
+                                 "attestation": data["attestation"]}
             elif kind == "result_received":
                 task = state["tasks"].setdefault(data["task_id"], {})
                 task["result"] = data["result"]

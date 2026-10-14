@@ -453,19 +453,35 @@ class Migration:
             if self._decision_projection(source_doc) != self._decision_projection(target_doc):
                 raise MigrationError("migration_evidence_unverifiable", "historical decision changed: " + source_rel)
             seen[source_rel] = document_digest(source_path)
+            translated_dependencies = []
             for dependency in source_doc["contract"].get("depends_on", []):
                 dep_path = dependency["path"]
                 # Resolve old release-local references against the legacy folder;
                 # shared strategy/design references retain their root-relative path.
                 old_release_prefix = ".specs/release-{}/".format(origin["release"])
                 if dep_path.startswith(old_release_prefix) and Path(dep_path).name in {"spec.md", "plan.md", "tasks.md"}:
-                    visit(origin["legacy"] + "/" + Path(dep_path).name)
+                    source_dependency = origin["legacy"] + "/" + Path(dep_path).name
                 elif dep_path.startswith(origin["legacy"] + "/"):
-                    visit(dep_path)
+                    source_dependency = dep_path
                 elif dep_path.startswith(".specs/"):
-                    visit(dep_path)
+                    source_dependency = dep_path
                 else:
                     raise MigrationError("migration_evidence_unverifiable", "historical dependency escapes .specs: " + dep_path)
+                dependency_source_path = read_source(source_dependency)
+                if document_digest(dependency_source_path) != dependency["digest"]:
+                    raise MigrationError("migration_evidence_unverifiable", "historical dependency digest is stale: " + dep_path)
+                visit(source_dependency)
+                translated_dependencies.append(target_for(source_dependency))
+
+            target_dependencies = []
+            for dependency in target_doc["contract"].get("depends_on", []):
+                target_dependency = dependency["path"]
+                target_dependency_path = read_target(target_dependency)
+                if document_digest(target_dependency_path) != dependency["digest"]:
+                    raise MigrationError("migration_evidence_unverifiable", "candidate dependency digest is stale: " + target_dependency)
+                target_dependencies.append(target_dependency)
+            if sorted(translated_dependencies) != sorted(target_dependencies):
+                raise MigrationError("migration_evidence_unverifiable", "candidate decision closure adds or removes a dependency: " + target_rel)
 
         for required_path in sorted(required):
             visit(required_path)

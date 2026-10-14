@@ -12,7 +12,7 @@ Autorización: el usuario solicitó explícitamente implementar el plan E0–E8 
 | E2 | Skills y plantillas por release | Skills y plantillas verificadas; integración pendiente de E3/E4 |
 | E3 | Aprobaciones, eventos y recuperación | Verificado: 23 pruebas del motor; 44 del plugin y 5 hooks |
 | E4 | Migración obligatoria | Verificada: 12 pruebas de migración; 56 del plugin |
-| E5 | Orquestación Sol–Luna | Documentación de roles preparada; runtime pendiente |
+| E5 | Orquestación Sol–Luna | Verificada con fixtures: 70 pruebas del plugin y 5 hooks; evaluación nativa integral en E7 |
 | E6 | Hook, convergencia y cierre | Pendiente |
 | E7 | Evaluación integral | Pendiente |
 | E8 | Preparación del paquete | Pendiente |
@@ -51,3 +51,7 @@ Registro secuencial con bloqueo, snapshots atómicos reconstruibles, aprobacione
 ## E4 — Verificación
 
 Previsualización de solo lectura, mapeo explícito, candidatos canónicos, originales fijados a Git, archivo con procedencia y diario recuperable. Se corrigieron por revisión Sol la recuperación de copia/promoción, repetición de importaciones, límites de destinos y equivalencia de decisiones. Las aprobaciones históricas requieren declaración identificable y equivalencia completa; las etiquetas aisladas quedan pendientes. Evidencia histórica con fuentes, pasos y código coincidentes se acredita sin ejecutar otra vez las comprobaciones; un cambio de aceptación la deja pendiente. La adopción se recupera tras una caída entre inicio y crédito sin duplicación. Las conversiones de prosa sin equivalencia demostrable conservan su historial y requieren resolver la evidencia faltante. Verificación: 56 pruebas del plugin y 5 del hook.
+
+## E5 — Verificación
+
+Adaptador nativo sin llamadas a modelos desde Python, identidad de Sol/Luna comprobada contra registros del host, propiedad persistente entre worktrees, paquetes acotados y resultados contrastados con archivos reales. La revisión independiente Sol detectó nombres de capacidades incorrectos, identidad opaca y ventanas de caída al transferir control; se corrigieron y añadieron regresiones. La huella del paquete se exige en el mensaje de delegación y la identidad del padre se conserva entre transferencias. Pruebas: 70 del plugin y 5 hooks; suite focalizada del adaptador: 9. Las pruebas con identidad simulada están etiquetadas como fixtures y no sustituyen la evaluación nativa E7. El cierre de fases y la adaptación del hook permanecen en E6.

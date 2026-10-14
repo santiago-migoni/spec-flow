@@ -9,7 +9,7 @@ from pathlib import Path
 
 from harness.runtime.engine import Engine, EngineError
 from harness.runtime.contracts import document_digest
-from helpers import contract, write_document, task
+from helpers import FakeAdapter, contract, write_document, task
 from harness.runtime.migration import Migration
 
 
@@ -25,7 +25,8 @@ def canonical_docs(root, release="v2.0.0"):
     spec = write_document(
         release_dir / "spec.md",
         contract("spec", "SPEC-2.0.0", depends_on=[{"path": ".specs/roadmap.md", "digest": document_digest(roadmap)}],
-                 acceptance=[{"id": "AC-001", "description": "Migrated behavior works."}]),
+                 stories=[{"id": "US-001", "title": "Migrated behavior", "description": "The user needs the migrated behavior."}],
+                 acceptance=[{"id": "AC-001", "story": "US-001", "description": "Migrated behavior works."}]),
     )
     plan = write_document(
         release_dir / "plan.md",
@@ -82,7 +83,7 @@ class MigrationTests(unittest.TestCase):
         (self.candidate_specs / "roadmap.md").unlink()
         shutil.rmtree(self.candidate_root / "src")
         self.head = git_commit(self.root)
-        self.engine = Engine(self.root)
+        self.engine = Engine(self.root, adapter=FakeAdapter())
         self.mapping = [{"legacy": ".specs/001-demo", "release": "v2.0.0"}]
 
     def tearDown(self):
@@ -285,6 +286,28 @@ class MigrationTests(unittest.TestCase):
         candidate_plan = release_dir / "plan.md"
         candidate_tasks = release_dir / "tasks.md"
         originals = {path: path.read_text(encoding="utf-8") for path in (candidate_spec, candidate_plan, candidate_tasks)}
+        architecture = write_document(self.root / ".specs/architecture.md", contract("architecture", "ARCHITECTURE"))
+        added_dependency_spec = json.loads(originals[candidate_spec].split("```spec-flow\n")[1].split("\n```")[0])
+        added_dependency_spec["depends_on"].append({"path": ".specs/architecture.md", "digest": document_digest(architecture)})
+        write_document(candidate_spec, added_dependency_spec)
+        added_dependency_plan = json.loads(originals[candidate_plan].split("```spec-flow\n")[1].split("\n```")[0])
+        added_dependency_plan["depends_on"][0]["digest"] = document_digest(candidate_spec)
+        write_document(candidate_plan, added_dependency_plan)
+        added_dependency_tasks = json.loads(originals[candidate_tasks].split("```spec-flow\n")[1].split("\n```")[0])
+        added_dependency_tasks["depends_on"][0]["digest"] = document_digest(candidate_plan)
+        write_document(candidate_tasks, added_dependency_tasks)
+        git_commit(self.root)
+        dependency_preview = self.preview(imports={
+            "evidence": [{"source": ".specs/001-demo/step-evidence.json", "target": ".specs/release-v2.0.0/tasks.md", "equivalence": evidence_equivalence}],
+        })
+        self.assertEqual(dependency_preview["manifest"]["imports"]["evidence"][0]["status"], "pending")
+        self.assertIn("closure", dependency_preview["manifest"]["imports"]["evidence"][0]["reason"])
+        for path, contents in originals.items():
+            path.write_text(contents, encoding="utf-8")
+        preview = self.preview(imports={
+            "approvals": [{"source": ".specs/001-demo/approval.json", "target": ".specs/release-v2.0.0/spec.md", "equivalence": approval_equivalence}],
+            "evidence": [{"source": ".specs/001-demo/step-evidence.json", "target": ".specs/release-v2.0.0/tasks.md", "equivalence": evidence_equivalence}],
+        })
         changed_spec = json.loads(originals[candidate_spec].split("```spec-flow\n")[1].split("\n```")[0])
         changed_spec["acceptance"][0]["description"] = "New acceptance requirement not covered by the legacy check."
         write_document(candidate_spec, changed_spec)

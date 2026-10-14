@@ -6,6 +6,67 @@ from pathlib import Path
 from harness.runtime.contracts import document_digest
 
 
+class FakeAdapter:
+    """Mechanics-only adapter for deterministic controller unit tests."""
+
+    production = False
+
+    def capabilities(self, report, owner):
+        return {"mechanics_only": True, "report": report, "owner_session": owner}
+
+    def acquire(self, run_id, release, owner):
+        return {"mechanics_only": True, "run_id": run_id, "release": release, "owner": owner}
+
+    def assert_lease(self, state):
+        return None
+
+    def attest_session(self, session_id, role, **kwargs):
+        return {"session_id": session_id, "role": role, "agent_lifecycle": "completed"}
+
+    def release(self, state):
+        return None
+
+
+class FixtureProductionAdapter(FakeAdapter):
+    """Simulated attestation boundary; exercises production-only Engine checks."""
+
+    production = True
+
+    def __init__(self):
+        self.leases = set()
+        self.releases = 0
+
+    def capabilities(self, report, owner):
+        return {"fixture_attestation": True, "owner_session": {"session_id": owner, "model": "gpt-6-sol", "effort": "high"}}
+
+    def acquire(self, run_id, release, owner):
+        self.leases.add(run_id)
+        return {"fixture_attestation": True, "run_id": run_id, "release": release, "owner": owner}
+
+    def assert_lease(self, state):
+        if state["status"] == "completed" and state["run_id"] not in self.leases:
+            return None
+        if state["run_id"] not in self.leases:
+            from harness.runtime.codex_adapter import AdapterError
+            raise AdapterError("ownership_lease_missing", "fixture lease is absent")
+
+    def attest_session(self, session_id, role, **kwargs):
+        return {"session_id": session_id, "role": role, "model": "gpt-6-luna" if role == "implementer" else "gpt-6-sol",
+                "effort": "high", "agent_lifecycle": "completed", "parent_session": kwargs.get("parent_session"),
+                "agent_path": kwargs.get("agent_path"), "record_hashes": {"fixture": "sha256"}, "attestation_sha256": "fixture-hash"}
+
+    def release(self, state):
+        self.assert_lease(state)
+        if state["run_id"] in self.leases:
+            self.leases.discard(state["run_id"])
+            self.releases += 1
+
+    def takeover(self, state, new_owner):
+        return {"previous_owner": {"session_id": state["owner"], "agent_lifecycle": "completed"},
+                "new_owner": {"session_id": new_owner, "model": "gpt-6-sol", "effort": "high"},
+                "native_agent": None}
+
+
 def contract(kind, identifier, *, depends_on=None, **extra):
     return {
         "schema_version": 1,
@@ -60,7 +121,8 @@ def make_project(root, *, command=None, inspection=None, task_files=None, task_i
     spec = write_document(
         release / "spec.md",
         contract("spec", "SPEC-1.2.3", depends_on=[{"path": ".specs/roadmap.md", "digest": document_digest(roadmap)}],
-                 acceptance=[{"id": "AC-001", "description": "The user can complete the behavior."}]),
+                 stories=[{"id": "US-001", "title": "Complete behavior", "description": "The user needs to complete the behavior."}],
+                 acceptance=[{"id": "AC-001", "story": "US-001", "description": "The user can complete the behavior."}]),
     )
     plan = write_document(
         release / "plan.md",

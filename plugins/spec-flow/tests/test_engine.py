@@ -4,10 +4,11 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from harness.runtime.engine import Engine, EngineError
 from harness.runtime.contracts import ContractError, document_digest
-from helpers import approve_release, make_project, start_run
+from helpers import FakeAdapter, FixtureProductionAdapter, approve_release, make_project, start_run
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
 CLI = PLUGIN_ROOT / "scripts" / "spec-flow.py"
@@ -18,7 +19,7 @@ class EngineTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
         self.docs = make_project(self.root)
-        self.engine = Engine(self.root)
+        self.engine = Engine(self.root, adapter=FakeAdapter())
 
     def tearDown(self):
         self.temp.cleanup()
@@ -79,6 +80,93 @@ class EngineTests(unittest.TestCase):
             self.engine.dispatch("result", {"run_id": run_id, "owner": "wrong", "task_id": "T-001", "result": {"summary": "done"}})
         self.assertEqual(ctx.exception.code, "wrong_owner")
 
+    def test_packet_contains_only_selected_task_and_transitive_dependencies(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            docs = make_project(root, task_items=[
+                __import__("helpers").task("T-001"),
+                __import__("helpers").task("T-002"),
+            ])
+            engine = Engine(root, adapter=FakeAdapter())
+            engine.dispatch("initialize", {})
+            approve_release(engine, docs)
+            run_id = start_run(engine)
+            result = engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+            packet = json.loads(Path(result["packet_path"]).read_text())
+            tasks_source = next(item for item in packet["sources"] if item["path"].endswith("/tasks.md"))
+            self.assertEqual([item["id"] for item in tasks_source["contract"]["tasks"]], ["T-001"])
+            self.assertEqual(packet["source_digests"][".specs/release-v1.2.3/tasks.md"], document_digest(docs["tasks"]))
+
+    def test_packet_section_projection_preserves_nested_decision_headings(self):
+        selected = Engine._packet_sections("## Edge cases and non-goals\nIntro\n### Exclusions\nDo not modify billing\n## Other\nOmit this", {"Edge cases and non-goals"})
+        self.assertIn("Do not modify billing", selected)
+        self.assertNotIn("Omit this", selected)
+
+    def test_prepare_adopts_orphan_packet_without_changing_creation_time_or_hash(self):
+        run_id = self.initialize_approve_start()
+        with patch.object(self.engine, "_append", side_effect=RuntimeError("simulated crash after packet write")):
+            with self.assertRaises(RuntimeError):
+                self.engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        packet_path = next((self.root / ".spec-flow" / "runs" / run_id / "packets").glob("T-001-1.json"))
+        original = json.loads(packet_path.read_text())
+        adopted = self.engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        self.assertEqual(adopted["packet_sha256"], original["packet_sha256"])
+        self.assertEqual(json.loads(packet_path.read_text())["created_at"], original["created_at"])
+
+    def test_fixture_attested_native_lifecycle_binds_result_and_closes_idempotently(self):
+        adapter = FixtureProductionAdapter()
+        engine = Engine(self.root, adapter=adapter)
+        engine.dispatch("initialize", {})
+        approve_release(engine, self.docs)
+        run_id = engine.dispatch("start", {
+            "release": "1.2.3", "owner": "sol-session-1", "phases": ["PH-01"],
+            "authorization": {"actor": "user", "statement": "Execute PH-01.", "source": "conversation"},
+            "capabilities": {"inventory_reference": "fixture inventory", "operations": {}, "probe_evidence": {}},
+        })["run_id"]
+        prepared = engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        (self.root / "src/example.py").write_text("# implemented\n", encoding="utf-8")
+        engine.dispatch("bind-agent", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                        "agent_id": "/root/T-001", "session_id": "luna-session-1", "agent_path": "/root/T-001"})
+        result = {"summary": "Implemented the behavior.", "files_modified": ["src/example.py"],
+                  "checks": [{"step_id": "T-001.001", "check": "python check", "result": "passed"}],
+                  "evidence": [{"kind": "diff", "reference": "src/example.py", "description": "Changed the implementation."}],
+                  "blockers": []}
+        engine.dispatch("result", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001", "result": result})
+        engine.dispatch("verify", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        engine.dispatch("review", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001", "verdict": "pass", "evidence": "Reviewed the diff."})
+        closed = engine.dispatch("close", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        duplicate = engine.dispatch("close", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        events = engine.store.read_events(run_id)
+        result_event = next(item for item in events if item["event"] == "result_received")
+        self.assertTrue(prepared["packet_sha256"])
+        self.assertEqual(result_event["data"]["host_attestation"]["attestation_sha256"], "fixture-hash")
+        self.assertTrue(closed["run_completed"])
+        self.assertTrue(duplicate["already_completed"])
+        self.assertEqual(adapter.releases, 1)
+
+    def test_fixture_takeover_preserves_original_luna_parent_for_reconciliation(self):
+        adapter = FixtureProductionAdapter()
+        engine = Engine(self.root, adapter=adapter)
+        engine.dispatch("initialize", {})
+        approve_release(engine, self.docs)
+        run_id = engine.dispatch("start", {
+            "release": "1.2.3", "owner": "sol-session-1", "phases": ["PH-01"],
+            "authorization": {"actor": "user", "statement": "Execute PH-01.", "source": "conversation"},
+            "capabilities": {"inventory_reference": "fixture inventory", "operations": {}, "probe_evidence": {}},
+        })["run_id"]
+        engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
+        engine.dispatch("bind-agent", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001",
+                                        "agent_id": "/root/T-001", "session_id": "luna-session-1", "agent_path": "/root/T-001"})
+        (self.root / "src/example.py").write_text("# interrupted implementation\n", encoding="utf-8")
+        engine.dispatch("interrupt", {"run_id": run_id, "owner": "sol-session-1"})
+        takeover = engine.dispatch("takeover", {"run_id": run_id, "previous_owner": "sol-session-1",
+                                                  "owner": "sol-session-2", "reconciliation": "Inspected old owner and child terminal records."})
+        self.assertEqual(takeover["authorized_phases"], ["PH-01"])
+        resumed = engine.dispatch("resume", {"run_id": run_id, "owner": "sol-session-2"})
+        self.assertTrue(resumed["reconciliation_required"])
+        task_state = engine.dispatch("status", {"run_id": run_id})["tasks"]["T-001"]
+        self.assertEqual(task_state["agent"]["parent_session"], "sol-session-1")
+
     def test_prepare_rejects_parallel_active_task_and_result_does_not_close(self):
         run_id = self.initialize_approve_start()
         self.engine.dispatch("prepare", {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"})
@@ -101,7 +189,7 @@ class EngineTests(unittest.TestCase):
             with self.subTest(command=command), tempfile.TemporaryDirectory() as temp:
                 root = Path(temp)
                 docs = make_project(root, command=command)
-                engine = Engine(root)
+                engine = Engine(root, adapter=FakeAdapter())
                 engine.dispatch("initialize", {})
                 approve_release(engine, docs)
                 run_id = start_run(engine)
@@ -114,7 +202,7 @@ class EngineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             docs = make_project(root, inspection="Check the report heading.")
-            engine = Engine(root)
+            engine = Engine(root, adapter=FakeAdapter())
             engine.dispatch("initialize", {})
             approve_release(engine, docs)
             run_id = start_run(engine)
@@ -226,7 +314,7 @@ class EngineTests(unittest.TestCase):
                 __import__("helpers").task(),
                 __import__("helpers").task("T-002", phase="PH-02", dependencies=["T-001"]),
             ])
-            engine = Engine(root)
+            engine = Engine(root, adapter=FakeAdapter())
             engine.dispatch("initialize", {})
             approve_release(engine, docs)
             run_id = start_run(engine)

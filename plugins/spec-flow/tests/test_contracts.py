@@ -21,6 +21,10 @@ def write_document(path, contract, prose="Approved decision content."):
 
 
 def base_contract(kind, *, identifier="DOC-001", depends_on=None, **extra):
+    if kind == "spec":
+        extra.setdefault("stories", [{"id": "US-001", "title": "Complete behavior", "description": "The user needs the behavior."}])
+        criteria = extra.get("acceptance", [{"id": "AC-001", "description": "Works."}])
+        extra["acceptance"] = [dict(item, story=item.get("story", "US-001")) for item in criteria]
     return {"schema_version": 1, "kind": kind, "revision": "R00", "id": identifier, "depends_on": depends_on or [], **extra}
 
 
@@ -165,6 +169,19 @@ class DocumentValidationTests(unittest.TestCase):
 
 
 class ReleaseValidationTests(unittest.TestCase):
+    def test_release_rejects_unknown_story_or_acceptance_cross_links(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            release = root / ".specs" / "release-v1.2.3"
+            constitution = write_document(root / ".specs" / "constitution.md", base_contract("constitution"))
+            roadmap = write_document(root / ".specs" / "roadmap.md", base_contract("roadmap", depends_on=[{"path": ".specs/constitution.md", "digest": document_digest(constitution)}], releases=[{"version": "v1.2.3", "objective": "Deliver the behavior.", "status": "planned"}]))
+            spec_data = base_contract("spec", depends_on=[{"path": ".specs/roadmap.md", "digest": document_digest(roadmap)}], acceptance=[{"id": "AC-001", "story": "US-999", "description": "Works."}])
+            spec = write_document(release / "spec.md", spec_data)
+            plan = write_document(release / "plan.md", base_contract("plan", depends_on=[{"path": ".specs/release-v1.2.3/spec.md", "digest": document_digest(spec)}], phases=[{"id": "PH-01", "description": "Implement the release.", "depends_on": []}]))
+            write_document(release / "tasks.md", base_contract("tasks", depends_on=[{"path": ".specs/release-v1.2.3/plan.md", "digest": document_digest(plan)}], tasks=[task(acceptance=["AC-001"])]))
+            with self.assertRaisesRegex(ContractError, "unknown story"):
+                validate_release(root, "v1.2.3")
+
     def test_release_checks_document_chain_and_acceptance_coverage(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

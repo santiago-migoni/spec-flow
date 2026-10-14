@@ -4,7 +4,7 @@ Each Markdown source document contains exactly one fenced `spec-flow` block with
 
 Every contract has `schema_version: 1`, a `kind` from `constitution`, `architecture`, `structure`, `infrastructure`, `roadmap`, `spec`, `plan`, or `tasks`, a `revision` starting at `R00` and matching `R` plus at least two digits, a stable nonempty `id`, and a `depends_on` array. Dependency objects have project-root-relative `path` and lowercase 64-character hexadecimal `digest` fields. `status` is optional workflow metadata; when present, use `draft`, `approved`, or `converged`. It is excluded from the decision digest.
 
-A `spec` adds a nonempty `acceptance` array of `{ "id": "AC-001", "description": "..." }` objects. A `tasks` document adds a nonempty `tasks` array. Each task has a stable `T-...` `id`, `phase`, `story`, acceptance criterion IDs, task ID dependencies, a nonempty `files` array, a nonempty ordered `steps` array, and a nonempty `closure`. Each step has a stable ID, an `action`, and a `verification` object containing exactly one of a nonempty argv `command` array or a specific `inspection` string, plus an `expected` result. Task IDs and step IDs are unique; task dependencies must exist and form an acyclic graph. Task file paths are relative to the project root and cannot target `.specs/`, `.spec-flow/`, or `.git/` metadata.
+A `spec` adds nonempty `stories` and `acceptance` arrays. Each story is `{ "id": "US-001", "title": "...", "description": "..." }`; each criterion is `{ "id": "AC-001", "story": "US-001", "description": "..." }`. The `story` reference must exist. Acceptance prose belongs in the JSON contract once; surrounding Markdown may add context without duplicating criterion descriptions. A `tasks` document adds a nonempty `tasks` array. Each task has a stable `T-...` `id`, `phase`, a known `story`, acceptance criterion IDs belonging to that story, task ID dependencies, a nonempty `files` array, a nonempty ordered `steps` array, and a nonempty `closure`. Each step has a stable ID, an `action`, and a `verification` object containing exactly one of a nonempty argv `command` array or a specific `inspection` string, plus an `expected` result. Task IDs and step IDs are unique; task dependencies must exist and form an acyclic graph. Task file paths are relative to the project root, name individual files explicitly, and cannot target `.specs/`, `.spec-flow/`, or `.git/` metadata.
 
 ## Example: spec
 
@@ -17,8 +17,11 @@ A `spec` adds a nonempty `acceptance` array of `{ "id": "AC-001", "description":
   "depends_on": [
     {"path": ".specs/roadmap.md", "digest": "<64 lowercase hex characters>"}
   ],
+  "stories": [
+    {"id": "US-001", "title": "Complete behavior", "description": "The user needs to complete the behavior."}
+  ],
   "acceptance": [
-    {"id": "AC-001", "description": "A user can complete the intended behavior."}
+    {"id": "AC-001", "story": "US-001", "description": "A user can complete the intended behavior."}
   ]
 }
 ```

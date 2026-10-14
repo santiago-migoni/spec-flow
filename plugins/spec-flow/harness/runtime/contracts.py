@@ -169,6 +169,18 @@ def _validate_dependency_refs(root: Path, contract: Mapping[str, Any]) -> None:
 
 
 def _validate_spec(contract: Mapping[str, Any]) -> Set[str]:
+    stories = contract.get("stories")
+    _require(isinstance(stories, list) and bool(stories), "spec stories must be a nonempty list")
+    story_ids: Set[str] = set()
+    for story in stories:
+        _require(isinstance(story, dict), "each story must be an object")
+        identifier = story.get("id")
+        _require(_nonempty_string(identifier) and re.fullmatch(r"US-[0-9]{3,}", identifier) is not None,
+                 "story id must use US- followed by at least three digits")
+        _require(identifier not in story_ids, "duplicate story id: {}".format(identifier))
+        _require(_nonempty_string(story.get("title")), "story {} requires a title".format(identifier))
+        _require(_nonempty_string(story.get("description")), "story {} requires a description".format(identifier))
+        story_ids.add(identifier)
     criteria = contract.get("acceptance")
     _require(isinstance(criteria, list) and bool(criteria), "spec acceptance must be a nonempty list")
     ids: Set[str] = set()
@@ -179,6 +191,7 @@ def _validate_spec(contract: Mapping[str, Any]) -> Set[str]:
         _require(identifier not in ids, "duplicate acceptance criterion id: {}".format(identifier))
         ids.add(identifier)
         _require(_nonempty_string(criterion.get("description")), "acceptance description must be nonempty")
+        _require(criterion.get("story") in story_ids, "acceptance criterion {} references an unknown story".format(identifier))
     return ids
 
 
@@ -214,7 +227,8 @@ def _validate_tasks(contract: Mapping[str, Any], root: Path) -> None:
                      "task {} file paths must be relative and contained".format(identifier))
             _require(not file_path.parts or file_path.parts[0] not in {".specs", ".spec-flow", ".git"},
                      "task {} cannot target protected metadata paths".format(identifier))
-            safe_path(root, file_path)
+            resolved_file = safe_path(root, file_path)
+            _require(not resolved_file.is_dir(), "task {} file scope must name individual files, not directories: {}".format(identifier, filename))
         _require(isinstance(task.get("depends_on"), list), "task {} depends_on must be a list".format(identifier))
         steps = task.get("steps")
         _require(isinstance(steps, list) and bool(steps), "task {} requires nonempty steps".format(identifier))
@@ -410,8 +424,14 @@ def validate_release(root: Union[str, Path], release: str) -> Dict[str, Any]:
     _require(all(task_item.get("phase") in phase_ids for task_item in tasks_contract["tasks"]),
              "each task phase must be declared in plan.md")
     acceptance_ids = {criterion["id"] for criterion in spec_contract["acceptance"]}
+    story_acceptance: Dict[str, Set[str]] = {story["id"]: set() for story in spec_contract["stories"]}
+    for criterion in spec_contract["acceptance"]:
+        story_acceptance[criterion["story"]].add(criterion["id"])
     covered: Set[str] = set()
     for task_item in tasks_contract["tasks"]:
+        _require(task_item["story"] in story_acceptance, "task {} references unknown story {}".format(task_item["id"], task_item["story"]))
+        _require(all(ref in story_acceptance[task_item["story"]] for ref in task_item["acceptance"]),
+                 "task {} acceptance criteria must belong to its story".format(task_item["id"]))
         covered.update(task_item["acceptance"])
     missing = acceptance_ids - covered
     _require(not missing, "tasks do not cover acceptance criteria: {}".format(", ".join(sorted(missing))))

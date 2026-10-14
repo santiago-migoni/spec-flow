@@ -12,9 +12,17 @@
       "digest": "0000000000000000000000000000000000000000000000000000000000000000"
     }
   ],
+  "stories": [
+    {
+      "id": "US-001",
+      "title": "[Story title]",
+      "description": "As a [user], I need [capability] so that [benefit]."
+    }
+  ],
   "acceptance": [
     {
       "id": "AC-001",
+      "story": "US-001",
       "description": "[Observable release behavior and criterion.]"
     }
   ]
@@ -27,13 +35,7 @@
 
 ## User stories
 
-### US-001 — [Title]
-
-[Who needs what and why.]
-
-## Acceptance criteria
-
-- AC-001: [Given a concrete condition, when an action occurs, then observable result.]
+The canonical story identities and acceptance criteria are the `stories` and `acceptance` arrays in the contract above. Keep each criterion's description there once; use this section only for narrative context that is not already in those fields.
 
 ## Release-specific nonfunctional requirements
 
