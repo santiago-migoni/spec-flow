@@ -15,7 +15,7 @@ The intended path is **strategy → release → verified implementation**. The s
 | Technical implementation plan | `$plan` | `.specs/release-vX.Y.Z/plan.md`: canonical phases/table, change scope, capacity, risks, and verification coverage | Approved spec/applicable design; coherent phases and planned AC/quality coverage; blockers resolved before tasks |
 | Executable task decomposition | `$tasks` | `.specs/release-vX.Y.Z/tasks.md`: canonical tasks, synchronized task/coverage tables, explicit files, steps, and checks | Approved plan/spec; coherent references, complete AC coverage with final checks, resolved blockers; task approval and execution authorization are distinct |
 | Incremental implementation | `$implement` | Observable increments, current acceptance/regression evidence, independent phase review, and validated phase commits | Current approvals, scoped execution authorization, native host prerequisites, and sufficient retained context; partial contributions and final acceptance remain distinct |
-| Technical closure | `$converge` | Findings or derived closure in the release spec | Current task evidence and reviewed phase commits |
+| Technical convergence | `$converge` | Conversation assessment with AC coverage, integrated evidence, findings, and canonical handoff | Current approvals/evidence and reviewed phase commits; `technical_complete=true` enables assessment; all applicable obligations demonstrated and zero findings required to confirm |
 | Outcome review | `$review-release` | Derived review in the release spec | Technical convergence; impact may still be pending measurement |
 | Integration | `$finishing-branch` | Audit checkpoint and authorized integration action | Release review and evidence-based completion |
 
