@@ -977,8 +977,17 @@ class Engine:
             story_ids = {item["story"] for item in criteria}
             projected["acceptance"] = criteria
             projected["stories"] = [item for item in contract["stories"] if item["id"] in story_ids]
-            prose = self._packet_sections(prose, {"Release outcome", "Release-specific nonfunctional requirements",
-                                                   "Edge cases and non-goals", "Outcome measurement", "Open questions"})
+            # Scoped criteria can reference quality targets and examples in the prose.
+            # Retain context from both existing specs and the current template.
+            prose = self._packet_sections(prose, {
+                "Release outcome", "Release-specific nonfunctional requirements",
+                "Edge cases and non-goals", "Outcome measurement", "Open questions",
+                "Purpose and selected release", "Users, context, and expected outcome",
+                "Scope and exclusions", "Approved bases and constraints",
+                "Rules, acceptance, and examples", "Quality and conditions of done",
+                "Edge cases, errors, and compatibility", "Post-delivery measurement",
+                "Assumptions, dependencies, and open questions",
+            })
         elif contract.get("kind") == "plan":
             phases = {item["id"]: item for item in contract["phases"]}
             relevant: Set[str] = set()

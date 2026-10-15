@@ -115,6 +115,41 @@ class EngineTests(unittest.TestCase):
         self.assertIn("Do not modify billing", selected)
         self.assertNotIn("Omit this", selected)
 
+    def test_packet_preserves_current_spec_quality_and_acceptance_context(self):
+        from harness.runtime.contracts import read_document
+
+        template = PLUGIN_ROOT / "skills/specify/assets/spec-template.md"
+        document = read_document(template)
+        prose = document["prose"].replace("[Measurable target]", "p95 latency below 250 ms")
+        projected = self.engine._packet_source_projection(
+            ".specs/release-v1.2.3/spec.md", document["contract"], prose,
+            {"acceptance": ["AC-003"]}, {},
+        )
+        self.assertEqual([item["id"] for item in projected["contract"]["stories"]], ["US-001"])
+        self.assertEqual([item["id"] for item in projected["contract"]["acceptance"]], ["AC-003"])
+        self.assertIn("NFR-001", projected["prose"])
+        self.assertIn("p95 latency below 250 ms", projected["prose"])
+        self.assertIn("## Scope and exclusions", projected["prose"])
+        self.assertIn("## Rules, acceptance, and examples", projected["prose"])
+        self.assertIn("## Edge cases, errors, and compatibility", projected["prose"])
+        self.assertIn("## Assumptions, dependencies, and open questions", projected["prose"])
+        self.assertNotIn("## User stories", projected["prose"])
+        self.assertNotIn("## Readiness for planning, approval, and amendments", projected["prose"])
+
+    def test_packet_preserves_legacy_spec_context(self):
+        from harness.runtime.contracts import read_document
+
+        document = read_document(self.docs["spec"])
+        headings = ("Release outcome", "Release-specific nonfunctional requirements",
+                    "Edge cases and non-goals", "Outcome measurement", "Open questions")
+        prose = "\n\n".join("## " + heading + "\n\nLegacy decision " + str(index)
+                             for index, heading in enumerate(headings))
+        projected = self.engine._packet_source_projection(
+            ".specs/release-v1.2.3/spec.md", document["contract"], prose,
+            {"acceptance": ["AC-001"]}, {},
+        )
+        self.assertEqual(projected["prose"], prose)
+
     def test_prepare_adopts_orphan_packet_without_changing_creation_time_or_hash(self):
         run_id = self.initialize_approve_start()
         with patch.object(self.engine, "_append", side_effect=RuntimeError("simulated crash after packet write")):
