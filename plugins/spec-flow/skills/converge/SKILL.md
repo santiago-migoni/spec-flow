@@ -50,7 +50,7 @@ Classify actual gaps as missing, partial, contradictory, or unrequested. Unreque
 | Complete implementation or verification without changing approved behavior/solution | `$tasks`, then `$implement` under applicable authorization |
 | Change behavior or acceptance | `$specify` |
 | Change technical solution, phases, or delivery approach | `$plan` |
-| Change a shared design or principle | `$architecture`, `$infrastructure`, `$structure`, or `$constitution`, as applicable |
+| Change a shared design or principle | `$design` for the affected architecture/infrastructure/structure perspective, or `$constitution` for principles |
 | Change release priorities/scope or defer an optional idea | `$roadmap` or `$backlog`, as appropriate |
 
 For an implementation gap, propose a concrete canonical `tasks.md` change with stable ID, phase, story and AC references, dependencies, steps, expected verification, closure, and file scope. Do not create a second editable gap list. Do not hide an approved obligation in backlog; deferral needs an approved scope change at its owner. Show the exact proposed decision change before it is applied through the owning skill. An exact recommendation accepted verbatim can serve as the user's approval; open-ended wording needs review. Revision and approval changes affect only dependent decisions that actually adopt the new base.
