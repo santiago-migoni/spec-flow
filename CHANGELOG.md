@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Expanded the roadmap template and skill with measurable outcomes, planning horizons, prioritization rationale, capacity/risks, unversioned opportunities, and evidence-based review. Added a projected-version table explicitly checked against canonical release order/objectives/statuses, with human selection separate from planned status and execution authorization; aligned workflow guidance without changing controller contracts.
 - Expanded architecture, infrastructure, and structure templates and skills with audience/scope, evidence, quality and runtime views, decision rationale, operational readiness, repository placement, and amendment guidance. Recommended architecture → infrastructure → structure without fixed dependencies; added separate annotated current/proposed repository trees and aligned workflow guidance.
 - Expanded the constitution template and skill into an eleven-section agile project framework informed by PMI and Agile Alliance: justification, beneficiaries, measurable success, scope, principles, authority, resources and assumptions, strategic risks, delivery and learning, completion, and approval history. Preserved controller contracts and separate execution authorization; aligned bootstrap and workflow guidance.
 
