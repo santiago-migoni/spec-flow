@@ -4,7 +4,7 @@
 
 ## Release v2.0.0
 
-Prepared locally on 2026-10-14; not tagged or published.
+Release date: 2026-10-15.
 
 ### Fixed
 
@@ -28,7 +28,7 @@ Prepared locally on 2026-10-14; not tagged or published.
 
 - Final regression suites passed 114 plugin tests and 9 hook tests after correcting both final-review P1 findings. Earlier relocated-package validation passed 107 plugin tests and 9 hooks; native fresh and migrated releases completed, failed correction could not close, and interrupted work was retained. Native and installed-package evaluations predate the final P1 fixes.
 - A separate temporary installation preserved 112 resource hashes; a fresh Sol chat discovered all 16 skills. Temporary installation was removed and prior plugin/marketplace listings were unchanged.
-- No demonstrated cost or duration savings. Hook trust/interception was not enabled in the installation test. Version 2.0.0 is prepared in a separate release commit; tagging and publication remain pending.
+- No demonstrated cost or duration savings. Hook trust/interception was not enabled in the installation test. Version 2.0.0 was prepared in a separate release commit.
 
 ## Release v1.1.0
 

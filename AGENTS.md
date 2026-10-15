@@ -46,7 +46,7 @@ Optional subdirectories hold skill-local materials: `assets/` contains output te
 
 ## Releasing
 
-Keep the version identical in `plugins/spec-flow/plugin.json` and `plugins/spec-flow/.codex-plugin/plugin.json`. The prepared package version is `2.0.0` (not yet tagged or published); retain it unless a release version bump is explicitly part of the work. A release bump and its `CHANGELOG.md` `## Release vX.Y.Z` heading belong in a separate commit from the feature changes. Collect work in `## Unreleased` until a release is cut. E7 evaluation and a fresh installed-package test must pass before claiming the new workflow is ready for release; testing must use a separate marketplace identity so it does not replace the user's existing installation.
+Keep the version identical in `plugins/spec-flow/plugin.json` and `plugins/spec-flow/.codex-plugin/plugin.json`. The current release is `2.0.0`; retain it unless a release version bump is explicitly part of the work. A release bump and its `CHANGELOG.md` `## Release vX.Y.Z` heading belong in a separate commit from the feature changes. Collect work in `## Unreleased` until a release is cut. E7 evaluation and a fresh installed-package test must pass before claiming the new workflow is ready for release; testing must use a separate marketplace identity so it does not replace the user's existing installation.
 
 ## Cross-file conventions
 
