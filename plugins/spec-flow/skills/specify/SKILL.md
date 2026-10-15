@@ -49,7 +49,7 @@ Keep one active release at a time, with multiple stories/features allowed. The c
 
 This Spec-Flow adaptation draws on [PMI's functional requirements](https://www.pmi.org/disciplined-agile/product-owner/practice-capturing-functional-requirements) and [quality guidance](https://www.pmi.org/disciplined-agile/agile/qualityrequirements), [Agile Alliance's story splitting](https://agilealliance.org/glossary/story-splitting/), [IIBA/Agile Alliance's story elaboration](https://www.agilealliance.org/wp-content/uploads/2017/08/AgileExtension_V2-Member-Copy.pdf#page=104), and [Cucumber's Example Mapping](https://cucumber.io/docs/bdd/example-mapping/); it is not an official template from those sources.
 
-Run validate with {"release":"vX.Y.Z"} only after spec, plan, and tasks all exist; for this phase validate the spec path alone. Backlog items become linked or removed only after a valid spec draft is written; never claim a release from an unchecked idea.
+Run validate with {"release":"vX.Y.Z"} only after spec, plan, and tasks all exist; for this phase validate the spec path alone. Preserve backlog IDs and provenance: an approved roadmap's explicit release selection may establish a selection link before the spec draft. After a valid draft actually records an opportunity, authorized backlog maintenance records its spec/US/AC destinations and Incorporated disposition without deleting the item; partial incorporation keeps the residual need Pending/Deferred. Distinguish projections, selection, draft incorporation, and current approval; none proves implementation or delivery. Do not require creating a backlog or start backlog maintenance outside the requested scope. Never claim a release from an unchecked idea.
 
 ## Runtime discipline
 
