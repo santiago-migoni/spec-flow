@@ -8,7 +8,7 @@ The intended path is **strategy → release → verified implementation**. The s
 
 | Stage | Skill | Canonical artifact or result | Gate |
 | --- | --- | --- | --- |
-| Purpose and boundaries | `$constitution` | `.specs/constitution.md` | Human direction for unknown business decisions |
+| Product direction and agile project framework | `$constitution` | `.specs/constitution.md`: purpose, beneficiaries, measurable outcomes, scope, principles, authority, resources, risks, delivery/learning, completion, and approval | Human direction for unknown decisions; registry approval before dependent work; execution retains separate authorization |
 | Shared system design | `$architecture`, `$structure`, `$infrastructure` | Applicable `.specs/*.md` documents | Constitution and relevant prior decisions approved; roadmap records N/A with a reason when a document does not apply |
 | Release sequence | `$roadmap` | `.specs/roadmap.md` | Approved strategy; explicit `vX.Y.Z` releases |
 | Release behavior | `$specify` | `.specs/release-vX.Y.Z/spec.md` | Release selected from the approved roadmap |
