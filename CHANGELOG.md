@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Expanded architecture, infrastructure, and structure templates and skills with audience/scope, evidence, quality and runtime views, decision rationale, operational readiness, repository placement, and amendment guidance. Recommended architecture → infrastructure → structure without fixed dependencies; added separate annotated current/proposed repository trees and aligned workflow guidance.
 - Expanded the constitution template and skill into an eleven-section agile project framework informed by PMI and Agile Alliance: justification, beneficiaries, measurable success, scope, principles, authority, resources and assumptions, strategic risks, delivery and learning, completion, and approval history. Preserved controller contracts and separate execution authorization; aligned bootstrap and workflow guidance.
 
 ## Release v2.0.0

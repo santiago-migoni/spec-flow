@@ -15,27 +15,57 @@
 }
 ```
 
-## Scope and current evidence
+Replace the example constitution digest with its approved digest. Add exact-digest dependencies only for approved strategic documents whose decisions are actually used. Recommended elaboration order: architecture → infrastructure → structure; this is not a mandatory dependency chain. If a whole document is inapplicable, record N/A with a reason in the roadmap under its own gate. Omitting a dependency alone does not make its document N/A. Do not create filler or future dependent documents to complete this one; keep dependency pins acyclic and navigational links separate.
 
-[Identify the project facts verified in code and decisions proposed for upcoming releases.]
+## Purpose, audience, and scope
 
-## Components and responsibilities
+[Identify readers, the questions this document answers, and the scope of shared design. Explain N/A for sections that do not apply.]
 
-| ID | Component | Responsibility | Interface |
+## System context and boundaries
+
+[Describe users, external systems, integrations, and responsibilities outside the system. Add a context diagram when useful.]
+
+## Current evidence and intended design
+
+[Separate verified components and behavior from proposed changes. Cite code, tests, or other evidence; approval of a design does not establish implementation.]
+
+## Quality goals and constraints
+
+[Link constitution objectives and relevant restrictions without copying them. Use measurable scenarios rather than unsupported quality claims.]
+
+| Attribute | Scenario | Expected result | Verification approach |
 | --- | --- | --- | --- |
-| ARC-01 | [Name] | [Owned behavior] | [Contract] |
+| [Quality attribute] | [Conditions and stimulus] | [Observable response] | [Evidence or planned check] |
 
-## Interactions and data flow
+## Solution strategy
 
-[Describe cross-component contracts at the level needed by planned releases.]
+[Explain the overall approach and why it fits the goals and constraints. Decide enough for upcoming work; leave speculative detail pending.]
 
-## Shared decisions and tradeoffs
+## Components, responsibilities, and contracts
 
-[Record decisions by ID and rationale; cite constitution principles without copying them.]
+| ID | Component | Responsibility | Interfaces | Dependencies |
+| --- | --- | --- | --- | --- |
+| ARC-01 | [Name] | [Owned behavior] | [Contract] | [Related IDs or external systems] |
 
-## Open questions
+## Data and runtime scenarios
 
-[Questions requiring a human decision before dependent work.]
+[Describe data ownership, exchanges, and important execution paths, including relevant failures. Add interaction diagrams when useful; choose only views that answer readers' questions.]
+
+## Crosscutting concepts
+
+[Record applicable shared approaches such as authentication, error handling, consistency, or compatibility. Reference operational detail in infrastructure rather than duplicating it.]
+
+## Decisions and consequences
+
+[For each significant decision record ID, context, alternatives, choice, rationale, positive and negative consequences, and review conditions. Distinguish proposed from approved decisions. Link existing ADRs when available; separate ADR files are optional. Preserve superseded decisions through history and replacement references.]
+
+## Risks, technical debt, and open questions
+
+[Identify impact, needed validation, and pending human decisions. Record assumptions explicitly. Keep release-specific implementation tasks in release documents.]
+
+## References and amendment history
+
+[Link approved sources and evidence with their scope. Record approved revisions and why decisions changed. Revisit when boundaries, contracts, quality goals, or significant decisions change.]
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.

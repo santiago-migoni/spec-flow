@@ -2,14 +2,14 @@
 
 Spec-Flow is a Codex plugin for release-centered Spec-Driven Development. It records product strategy and release decisions in a consuming project's `.specs/` directory, then uses a local controller to validate document dependencies, approval receipts, execution evidence, and recovery.
 
-The intended path is **strategy → release → verified implementation**. The strategy documents are the constitution, applicable shared architecture/structure/infrastructure decisions, and roadmap. Each explicit SemVer release has its own spec, plan, and tasks. A release may contain several stories or features.
+The intended path is **strategy → release → verified implementation**. The strategy documents are the constitution, applicable shared architecture/infrastructure/structure decisions, and roadmap. Each explicit SemVer release has its own spec, plan, and tasks. A release may contain several stories or features.
 
 ## Workflow
 
 | Stage | Skill | Canonical artifact or result | Gate |
 | --- | --- | --- | --- |
 | Product direction and agile project framework | `$constitution` | `.specs/constitution.md`: purpose, beneficiaries, measurable outcomes, scope, principles, authority, resources, risks, delivery/learning, completion, and approval | Human direction for unknown decisions; registry approval before dependent work; execution retains separate authorization |
-| Shared system design | `$architecture`, `$structure`, `$infrastructure` | Applicable `.specs/*.md` documents | Constitution and relevant prior decisions approved; roadmap records N/A with a reason when a document does not apply |
+| Shared system design | `$architecture` → `$infrastructure` → `$structure` (recommended order) | Applicable `.specs/*.md` documents: system design, execution/operations, and repository organization with annotated trees | Constitution and actually used design sources approved; no mandatory chain; roadmap records N/A with a reason when a document does not apply |
 | Release sequence | `$roadmap` | `.specs/roadmap.md` | Approved strategy; explicit `vX.Y.Z` releases |
 | Release behavior | `$specify` | `.specs/release-vX.Y.Z/spec.md` | Release selected from the approved roadmap |
 | Solution | `$plan` | `.specs/release-vX.Y.Z/plan.md` | Approved release spec and applicable design |
@@ -19,14 +19,16 @@ The intended path is **strategy → release → verified implementation**. The s
 | Outcome review | `$review-release` | Derived review in the release spec | Technical convergence; impact may still be pending measurement |
 | Integration | `$finishing-branch` | Audit checkpoint and authorized integration action | Release review and evidence-based completion |
 
-`$clarify` and `$analyze` are recommended side channels for ambiguity and consistency; `$backlog` parks deferred ideas. `$using-spec-flow` finds the next authorized step. The technical design documents are applicable as needed, not a mandatory architecture → structure → infrastructure ladder.
+`$clarify` and `$analyze` are recommended side channels for ambiguity and consistency; `$backlog` parks deferred ideas. `$using-spec-flow` finds the next authorized step. Recommended design elaboration is **architecture → infrastructure → structure**, using only applicable documents. Inspect existing repository organization and operational constraints early; findings can require revising an earlier decision. Pin the approved constitution and only the design sources actually used, with no reciprocal dependency cycles. Structure can proceed without infrastructure when it does not rely on it; infrastructure does not require structure by default. Omitting a dependency does not mean its document is inapplicable. Document genuine N/A in the roadmap under its own gate.
+
+Architecture covers context, quality scenarios, components/contracts, data, runtime behavior, and significant decisions. Infrastructure maps components to execution resources and documents configuration/access, delivery, operations, capacity/costs, and recovery where applicable, including local host requirements. Structure maps responsibilities to paths, defines placement/dependency rules, and shows a verified annotated file/directory tree plus a separate proposed tree when changes are needed. All three distinguish proposals and approved design from verified implementation, retain decision rationale and amendment history, and link details rather than duplicating them.
 
 ```text
 .specs/
 ├── constitution.md
 ├── architecture.md         # when applicable
-├── structure.md            # when applicable
 ├── infrastructure.md       # when applicable
+├── structure.md            # when applicable
 ├── roadmap.md
 ├── backlog.md              # optional
 └── release-v2.0.0/
