@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## Release v3.1.0
+
+Release date: 2026-10-16.
+Release notes: [v3.1.0](docs/releases/v3.1.0.md).
+
 ### Added
 
 - Editable role model/effort profiles with validated atomic configure-profiles updates, host model-inventory evidence, exact native attestation and immutable per-run/packet snapshots. New project defaults: gpt-6.1-sol/low orchestrator, gpt-6-luna/high implementer and gpt-6.1-sol/medium independent reviewer. Preserve existing configs, legacy run profiles, event history, packet recovery, three-attempt limits and all other execution gates.

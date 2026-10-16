@@ -1,0 +1,15 @@
+{
+  "source": "e9fe1461727e7b508143646132e2b9bc9ba5c16c",
+  "evaluations_commit": "6ec7f1d",
+  "version": "3.1.0",
+  "package_changes_only": [
+    "plugins/spec-flow/.codex-plugin/plugin.json",
+    "plugins/spec-flow/plugin.json"
+  ],
+  "only_changed_field": "version",
+  "functional_E7_E8_checksums_verified_from_git": true,
+  "final_installed_evaluation": "docs/implementation/e8-v3.1.0.md",
+  "publication_authorized": true,
+  "user_installation_update": false,
+  "project_migration": false
+}
