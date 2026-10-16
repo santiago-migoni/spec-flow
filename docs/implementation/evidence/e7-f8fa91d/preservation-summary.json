@@ -1,0 +1,27 @@
+{
+  "preserved_at": "2026-10-16T14:36:32.745311+00:00",
+  "fixtures": {
+    "fresh": {
+      "snapshot_files": 17,
+      "snapshot_bytes": 55363,
+      "bundle_sha256": "94dbd4d6c50e1813798564414229923fd4b36fc52e5a9a92bae38482cadd9d69",
+      "bundle_verified": true,
+      "lease_retained_active": true
+    },
+    "legacy": {
+      "snapshot_files": 30,
+      "snapshot_bytes": 77639,
+      "bundle_sha256": "21e1b7e78658acdff7da4c5940b0c8a53d7c7d0c293ead65ef8b75cd5cbe5bdf",
+      "bundle_verified": true,
+      "lease_retained_active": true
+    },
+    "negative": {
+      "snapshot_files": 17,
+      "snapshot_bytes": 55243,
+      "bundle_sha256": "a6391fb27749fb419df9901ddd9e78c1200b3aa8d3b5efb0a1385c61491be9c2",
+      "bundle_verified": true,
+      "lease_retained_active": true
+    }
+  },
+  "warning": "Historical blocked state with active ownership, not an approved closure or executable restored authorization"
+}

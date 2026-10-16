@@ -1,0 +1,15 @@
+{
+  "exit": 0,
+  "output": {
+    "attempt": 1,
+    "native_task_name": "luna_895830f90bf13c78cff3bbbbe6eb6dad6b7d925494c7719cb669b431dec41df3",
+    "packet_path": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/fresh-linked/.spec-flow/runs/ea84dc87-11c2-46ef-b0d8-d2f0665fb824/packets/T-001-1.json",
+    "packet_sha256": "d313de2523dba2d34668cc07f976df978ba21c650deb64d7939964a752e7e0fd",
+    "run_id": "ea84dc87-11c2-46ef-b0d8-d2f0665fb824",
+    "scope_files": [
+      "release.py"
+    ],
+    "task_id": "T-001"
+  },
+  "stderr": ""
+}

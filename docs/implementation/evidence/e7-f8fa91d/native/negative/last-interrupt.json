@@ -1,0 +1,9 @@
+{
+  "exit": 0,
+  "output": {
+    "reconciliation_required": true,
+    "run_id": "db79a022-629d-4243-8445-dc801d1b2be6",
+    "status": "interrupted"
+  },
+  "stderr": ""
+}

@@ -1,0 +1,10 @@
+{
+  "mapping_reviewed": true,
+  "candidate_hashes_reviewed": true,
+  "source_hashes_reviewed": true,
+  "imports": {
+    "approvals": [],
+    "evidence": []
+  },
+  "note": "Synthetic legacy labels/checkmarks are prose and supply no registry authority/evidence."
+}

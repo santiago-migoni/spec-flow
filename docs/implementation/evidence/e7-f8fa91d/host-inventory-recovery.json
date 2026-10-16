@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-10-16T14:32:23.211045+00:00",
+  "category": "actual native host inventory cleanup, no product code or historical fixture modification",
+  "initial_state": "Two old child agents from 55eb811 were pending_init in native list_agents despite their historical sessions having terminal records; fresh spawn failed agent thread limit reached.",
+  "actions": [
+    {
+      "operation": "interrupt_agent",
+      "targets": [
+        "/root/e7_owner_55eb811/luna_9e2db830e6cd6fa87ab1005eedb7b12304c53c19bc95f48688c68eee1876c070",
+        "/root/e7_owner_55eb811/review_7be3a861fc0a1762b6ae9da861d7a37137f7669ec2b01144943c60f2ba98425c"
+      ],
+      "returned_previous_status": "pending_init",
+      "result": "did not alone release slots"
+    },
+    {
+      "operation": "followup_task",
+      "scope": "Only finalize old agents; do not run tools, edit files or resume historical work",
+      "result": "Both returned completed: No realicé trabajo nuevo."
+    },
+    {
+      "operation": "list_agents",
+      "result": "Both old children completed; new E7 owner running; root running"
+    }
+  ],
+  "controls": "No session logs, controller state, leases or profiles edited to bypass checks. Fresh failed-spawn and reconciliation remain in operation logs."
+}

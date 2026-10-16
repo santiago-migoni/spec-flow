@@ -1,0 +1,14 @@
+{
+  "exit": 0,
+  "output": {
+    "authorized_phases": [
+      "PH-01"
+    ],
+    "imported_completed": [],
+    "pending_imports": [],
+    "reused_completed": [],
+    "run_id": "ea84dc87-11c2-46ef-b0d8-d2f0665fb824",
+    "status": "active"
+  },
+  "stderr": ""
+}

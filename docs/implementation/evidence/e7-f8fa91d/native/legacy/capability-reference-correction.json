@@ -1,0 +1,3 @@
+{
+  "correction": "The legacy capabilities/start probe_evidence text for interrupt_agent says the fresh interruption was performed. At that timestamp it was only planned, not yet performed. This is an inaccurate host-supplied reference; Python validates only nonempty references. The actual interruption evidence, if achieved, must be recorded separately. The schemas were exposed at start."
+}

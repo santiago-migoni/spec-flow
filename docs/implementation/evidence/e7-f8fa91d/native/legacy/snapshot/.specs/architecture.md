@@ -1,0 +1,43 @@
+# Architecture — E7-only disposable fixture
+
+```spec-flow
+{
+  "schema_version": 1,
+  "kind": "architecture",
+  "revision": "R00",
+  "id": "ARCH-E7",
+  "depends_on": [
+    {
+      "path": ".specs/constitution.md",
+      "digest": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3"
+    }
+  ]
+}
+```
+
+## Purpose, audience, and scope
+E7 evaluators use this local module design for a disposable strict-normalization fixture.
+## System context and boundaries
+The caller passes a Python value to release.normalize_release; no process, network, persistent data, or external service participates.
+## Current evidence and intended design
+The verified starting release.py stub raises NotImplementedError. The fixed four-method test file specifies valid and invalid behavior. Intended design places exact normalization in release.py.
+## Quality goals and constraints
+Use Python stdlib only. Full-string ASCII matching and unchanged fixed tests are mandatory; four methods must pass.
+## Solution strategy
+Implement one pure function with a compiled strict pattern or equivalent checks, preserving input component digits.
+## Components, responsibilities, and contracts
+release.py exports normalize_release(value). It returns a v-prefixed triple for accepted strings, raises TypeError for nonstrings and ValueError for malformed strings. test_release.py is the immutable verification client.
+## Data and runtime scenarios
+No stored data. Valid inputs include 1.2.3, v1.2.3, zero, huge components; invalid inputs include leading zero, Unicode digits, suffix and whitespace.
+## Crosscutting concepts
+N/A for auth, logging, transactions and distributed concerns because this is one local pure function. Error classes are part of the public contract.
+## Decisions and consequences
+Single-module stdlib implementation keeps verification deterministic and inspection bounded. This fixture decision does not extend plugin runtime design.
+## Risks, technical debt, and open questions
+The main risk is a permissive regex accepting Unicode digits, leading zeros, or trailing newline. Fixed tests expose these cases. No blocking open question.
+## References and amendment history
+Synthetic E7-only decision, sourced to the fixed test file and approved fixture constitution. R00 initial version.
+
+<!-- spec-flow:generated:start -->
+Progress is maintained by the Spec-Flow harness.
+<!-- spec-flow:generated:end -->

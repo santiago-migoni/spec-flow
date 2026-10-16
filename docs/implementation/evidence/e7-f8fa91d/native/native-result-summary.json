@@ -1,0 +1,102 @@
+{
+  "evaluated_commit": "f8fa91d2c98927eeaba3af0643e9973e9a1e506f",
+  "owner_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "owner_profile": "gpt-6-sol/high",
+  "status": "blocked_before_native_child",
+  "blocker": {
+    "code": "uncaught_host_metadata_shape",
+    "location": "exported harness/runtime/codex_adapter.py:249",
+    "detail": "attest_no_spawn scans all host session metadata and calls .get() on one source.subagent string; AttributeError exits 1 in all three runs. No candidate or host log modification was made.",
+    "host_session_metadata_sha256": "d7dcb1e1b823f564ffc931deb59a610cfd15020a57d89c674066e4f5ea3d7f49"
+  },
+  "legacy_migration": {
+    "migration_id": "87f92dbb7045575e98080d00f6578817",
+    "source_git_head": "249e47ff5ba48fb3dc0967b40182450c46e896f0",
+    "preview_digest": "852a016879aa3c5c6163290e6dc02b3f1069b284ba17e5d1c5d552bc50a35f41",
+    "imported_approvals": 0,
+    "imported_evidence": 0
+  },
+  "fixtures": {
+    "fresh": {
+      "main": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/fresh-main",
+      "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/fresh-linked",
+      "run_id": "ea84dc87-11c2-46ef-b0d8-d2f0665fb824",
+      "status": "active",
+      "active_task": "T-001",
+      "attempt": 1,
+      "task_status": "reconciliation_required",
+      "git_head": "b52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c",
+      "git_status": [
+        "M .specs/release-v1.2.3/tasks.md",
+        "?? .spec-flow/approvals.jsonl",
+        "?? .spec-flow/runs/"
+      ],
+      "lease": {
+        "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+        "release": "v1.2.3",
+        "run_id": "ea84dc87-11c2-46ef-b0d8-d2f0665fb824",
+        "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/fresh-linked"
+      },
+      "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "release_sha256": "a804abcd14f65126a7ada66bb6a9bb4554595ddd31cdc485df545beb28e42aa9",
+      "baseline_exit": 1,
+      "cli_operations": 26,
+      "last_reconcile_exit": 1,
+      "operations_log": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-f8fa91d/native/fresh/operations.jsonl"
+    },
+    "legacy": {
+      "main": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/legacy-main",
+      "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/legacy-linked",
+      "run_id": "8d1d0189-840d-4749-b4d8-f54718fe8c0c",
+      "status": "active",
+      "active_task": "T-001",
+      "attempt": 1,
+      "task_status": "reconciliation_required",
+      "git_head": "802d83eea902e15a5ed97c8c63d1054b197af844",
+      "git_status": [
+        "M .specs/release-v1.2.3/tasks.md",
+        "?? .spec-flow/approvals.jsonl",
+        "?? .spec-flow/runs/"
+      ],
+      "lease": {
+        "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+        "release": "v1.2.3",
+        "run_id": "8d1d0189-840d-4749-b4d8-f54718fe8c0c",
+        "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/legacy-linked"
+      },
+      "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "release_sha256": "08d838d6fd27b91eca3929c96833ba09596c3fd66de9bad027085c9eb746fdf0",
+      "baseline_exit": 1,
+      "cli_operations": 27,
+      "last_reconcile_exit": 1,
+      "operations_log": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-f8fa91d/native/legacy/operations.jsonl"
+    },
+    "negative": {
+      "main": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/negative-main",
+      "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/negative-linked",
+      "run_id": "db79a022-629d-4243-8445-dc801d1b2be6",
+      "status": "active",
+      "active_task": "T-001",
+      "attempt": 1,
+      "task_status": "reconciliation_required",
+      "git_head": "b52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c",
+      "git_status": [
+        "M .specs/release-v1.2.3/tasks.md",
+        "?? .spec-flow/approvals.jsonl",
+        "?? .spec-flow/runs/"
+      ],
+      "lease": {
+        "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+        "release": "v1.2.3",
+        "run_id": "db79a022-629d-4243-8445-dc801d1b2be6",
+        "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/negative-linked"
+      },
+      "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "release_sha256": "a804abcd14f65126a7ada66bb6a9bb4554595ddd31cdc485df545beb28e42aa9",
+      "baseline_exit": 1,
+      "cli_operations": 25,
+      "last_reconcile_exit": 1,
+      "operations_log": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-f8fa91d/native/negative/operations.jsonl"
+    }
+  }
+}

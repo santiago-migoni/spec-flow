@@ -1,0 +1,65 @@
+{
+  "digest": "852a016879aa3c5c6163290e6dc02b3f1069b284ba17e5d1c5d552bc50a35f41",
+  "manifest": {
+    "candidate_dir": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/legacy-candidates",
+    "candidates": [
+      {
+        "path": ".specs/architecture.md",
+        "sha256": "f36345196b6588b8bb658993137395edf4156a2dc0e9aba7924cea889aae93b8"
+      },
+      {
+        "path": ".specs/constitution.md",
+        "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209"
+      },
+      {
+        "path": ".specs/release-v1.2.3/plan.md",
+        "sha256": "d085bae054b1299433b2045b6a769d9b975d9b4ace05688e45d4a8d90de829ae"
+      },
+      {
+        "path": ".specs/release-v1.2.3/spec.md",
+        "sha256": "51d345fac174cd4982e42426269ace135bb3d026350a1036113319d91253dbeb"
+      },
+      {
+        "path": ".specs/release-v1.2.3/tasks.md",
+        "sha256": "7a69b51424af70922f2121d609a1a5a68aafc38aff747b3eab0960ee5b38d421"
+      },
+      {
+        "path": ".specs/roadmap.md",
+        "sha256": "ccc3c1c40fb13be3d1bb877368d7bfdfe069ff34be88d4204814e224e6538283"
+      },
+      {
+        "path": ".specs/structure.md",
+        "sha256": "84bbe5e14fdaba84818d8370bac176e5262191aec19097375a596fab3cc163d0"
+      }
+    ],
+    "git_head": "249e47ff5ba48fb3dc0967b40182450c46e896f0",
+    "imports": {
+      "approvals": [],
+      "evidence": []
+    },
+    "mapping": [
+      {
+        "legacy": ".specs/001-normalize-release",
+        "release": "v1.2.3"
+      }
+    ],
+    "migration_id": "87f92dbb7045575e98080d00f6578817",
+    "project_root": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/legacy-main",
+    "replacements": [],
+    "schema_version": 1,
+    "sources": [
+      {
+        "path": ".specs/001-normalize-release/plan.md",
+        "sha256": "7ba0ced9eaef89e1ce8f3f659c2416d636721228cc57c2d2050bc608952de569"
+      },
+      {
+        "path": ".specs/001-normalize-release/spec.md",
+        "sha256": "6dc2ae30d026f213a7fe01880852b6cfc2f18b34257bc300aa79aa16bcb237d2"
+      },
+      {
+        "path": ".specs/001-normalize-release/tasks.md",
+        "sha256": "a225bbeca05842786cd2769ff4c13d0b724cc8b480cbbaa017d198ee9825818b"
+      }
+    ]
+  }
+}

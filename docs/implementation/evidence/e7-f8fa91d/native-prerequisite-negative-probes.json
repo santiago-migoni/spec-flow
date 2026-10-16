@@ -1,0 +1,34 @@
+{
+  "checked_at": "2026-10-16T14:28:04.323164+00:00",
+  "category": "production adapter independent negative probes, no run or ownership mutation",
+  "probes": [
+    {
+      "case": "wrong_implementer_profile",
+      "code": "host_profile_mismatch",
+      "message": "one or more session turns do not match the required role profile",
+      "details": {
+        "expected": {
+          "model": "gpt-6-luna",
+          "effort": "high"
+        },
+        "mismatches": [
+          {
+            "turn": 0,
+            "model": "gpt-6-sol",
+            "effort": "high"
+          }
+        ]
+      }
+    },
+    {
+      "case": "missing_interrupt_capability",
+      "code": "native_capability_unavailable",
+      "message": "native Codex capabilities are missing or unprobed",
+      "details": {
+        "operations": [
+          "interrupt_agent"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "checked_at": "2026-10-16T14:35:57.476809+00:00",
+  "evaluated_commit": "f8fa91d2c98927eeaba3af0643e9973e9a1e506f",
+  "category": "Read-only inspection and production adapter reproduction on actual host; no forged metadata or registry changes",
+  "owner_attestation": {
+    "session_id": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+    "role": "orchestrator",
+    "model": "gpt-6-sol",
+    "effort": "high",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T11-27-09-01a1451c-0ecd-7c93-9d51-8650fdaf887f.jsonl",
+    "agent_lifecycle": "completed",
+    "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+    "agent_path": "/root/e7_owner_f8fa91d",
+    "packet_marker_source": null,
+    "record_hashes": {
+      "session_meta": "45ca6f4389b225b47adbdfd6e1343ce53eafb8d7dfe1b4aaed182215557ccb6a",
+      "turn_contexts": [
+        "f4fb30b106c0340c8ef4a228bb94a748ab65366d7d4f5a577a10097389e0eefc",
+        "be016a0d93c64440dfbc3d9d41c153851052736c0b5044118ba9f7e40bed8af7",
+        "0880686ba8bb9fd63e54c613ddfce8284aac730d53f4292c132189464bf79632"
+      ],
+      "lifecycle": "17d1f0d7a0a16a2ecff0da3144d1395b36e02c31dc112544e3373d47a1ba5a9d",
+      "task_marker": null,
+      "delegation": null
+    },
+    "attestation_sha256": "92cd81ab46f34bda5f6d6691ed7247b4f540ed32dd861a89737e54fa995ae2a1"
+  },
+  "owner_children_found": [],
+  "foreign_metadata_shapes": [
+    {
+      "session_id": "01a127a1-0b25-7420-819d-e1d9118fb287",
+      "subagent_type": "str",
+      "metadata_record_utf8_canonical_sha256": "e5dcb28e59645366a2d91781d3b67166ac84101608628ea289fb30d53c2b57bd",
+      "metadata_record_ascii_escaped_sha256": "d7dcb1e1b823f564ffc931deb59a610cfd15020a57d89c674066e4f5ea3d7f49"
+    }
+  ],
+  "fixtures": {
+    "fresh": {
+      "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/fresh-linked",
+      "run_id": "ea84dc87-11c2-46ef-b0d8-d2f0665fb824",
+      "head": "b52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c",
+      "status": "active",
+      "active_task": "T-001",
+      "task_status": "reconciliation_required",
+      "attempt": 1,
+      "native_child_bound": false,
+      "phase_commit": null,
+      "release_review": null,
+      "code_and_tests_equal_baseline": true,
+      "ownership_registry": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/fresh-main/.git/spec-flow-active-controller.json",
+      "lease_present": true,
+      "lease": {
+        "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+        "release": "v1.2.3",
+        "run_id": "ea84dc87-11c2-46ef-b0d8-d2f0665fb824",
+        "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/fresh-linked"
+      },
+      "read_only_reproduction": {
+        "exception": "AttributeError",
+        "message": "'str' object has no attribute 'get'"
+      },
+      "operation_count": 26,
+      "files_and_registry_unchanged": true,
+      "worktree_status": "M .specs/release-v1.2.3/tasks.md\n?? .spec-flow/approvals.jsonl\n?? .spec-flow/runs/"
+    },
+    "legacy": {
+      "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/legacy-linked",
+      "run_id": "8d1d0189-840d-4749-b4d8-f54718fe8c0c",
+      "head": "802d83eea902e15a5ed97c8c63d1054b197af844",
+      "status": "active",
+      "active_task": "T-001",
+      "task_status": "reconciliation_required",
+      "attempt": 1,
+      "native_child_bound": false,
+      "phase_commit": null,
+      "release_review": null,
+      "code_and_tests_equal_baseline": true,
+      "ownership_registry": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/legacy-main/.git/spec-flow-active-controller.json",
+      "lease_present": true,
+      "lease": {
+        "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+        "release": "v1.2.3",
+        "run_id": "8d1d0189-840d-4749-b4d8-f54718fe8c0c",
+        "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/legacy-linked"
+      },
+      "read_only_reproduction": {
+        "exception": "AttributeError",
+        "message": "'str' object has no attribute 'get'"
+      },
+      "operation_count": 27,
+      "files_and_registry_unchanged": true,
+      "worktree_status": "M .specs/release-v1.2.3/tasks.md\n?? .spec-flow/approvals.jsonl\n?? .spec-flow/runs/"
+    },
+    "negative": {
+      "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/negative-linked",
+      "run_id": "db79a022-629d-4243-8445-dc801d1b2be6",
+      "head": "b52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c",
+      "status": "active",
+      "active_task": "T-001",
+      "task_status": "reconciliation_required",
+      "attempt": 1,
+      "native_child_bound": false,
+      "phase_commit": null,
+      "release_review": null,
+      "code_and_tests_equal_baseline": true,
+      "ownership_registry": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/negative-main/.git/spec-flow-active-controller.json",
+      "lease_present": true,
+      "lease": {
+        "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+        "release": "v1.2.3",
+        "run_id": "db79a022-629d-4243-8445-dc801d1b2be6",
+        "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/negative-linked"
+      },
+      "read_only_reproduction": {
+        "exception": "AttributeError",
+        "message": "'str' object has no attribute 'get'"
+      },
+      "operation_count": 25,
+      "files_and_registry_unchanged": true,
+      "worktree_status": "M .specs/release-v1.2.3/tasks.md\n?? .spec-flow/approvals.jsonl\n?? .spec-flow/runs/"
+    }
+  },
+  "result": "F-02 reproduced independently in all three fixtures; no native child implementation or closure credited"
+}

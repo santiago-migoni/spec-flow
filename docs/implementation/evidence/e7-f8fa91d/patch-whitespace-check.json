@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "git",
+    "show",
+    "--format=",
+    "--check",
+    "f8fa91d"
+  ],
+  "exit_code": 2,
+  "stdout": "docs/implementation/evidence/f01-fix/red-confirmed.txt:2: trailing whitespace.\n+test_closure_reader_rejects_malformed_generated_tails (test_phases.PhaseLifecycleTests.test_closure_reader_rejects_malformed_generated_tails) ... \ndocs/implementation/evidence/f01-fix/red.txt:2: trailing whitespace.\n+test_closure_reader_rejects_malformed_generated_tails (test_phases.PhaseLifecycleTests.test_closure_reader_rejects_malformed_generated_tails) ... \n",
+  "stderr": "",
+  "interpretation": "Two trailing spaces occur only in verbatim captured unittest failure output red.txt/red-confirmed.txt; retained as raw evidence. Scoped code/test/changelog diff check passed without warnings. No output was trimmed to hide the original test run."
+}

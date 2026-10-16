@@ -1,0 +1,7 @@
+{
+  "owner_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "checked_at": "2026-10-16T14:31:24Z",
+  "inventory_reference": "collaboration.list_agents 2026-10-16 14:30 UTC: owner /root/e7_owner_f8fa91d has zero children; failed spawn returned agent thread limit reached; local child session metadata scan also empty",
+  "agents": [],
+  "local_child_sessions": []
+}

@@ -1,6 +1,6 @@
 # Implementación del harness de Spec-Flow
 
-Este documento conserva el registro histórico E0–E8. La [reevaluación E7 de 55eb811 del 2026-10-16](e7-55eb811.md) quedó **no aprobada por HIGH F-01**; los resultados anteriores no acreditan el cierre del candidato actual.
+Este documento conserva el registro histórico E0–E8. La [reevaluación E7 de f8fa91d del 2026-10-16](e7-f8fa91d.md) quedó **no aprobada por HIGH F-02**. F-01 tiene corrección y regresiones aprobadas; los resultados anteriores no acreditan el cierre nativo del candidato actual.
 
 Base: `935de5d:docs/designs/2026-10-14-harness-orchestration.md`.
 Autorización: el usuario solicitó explícitamente implementar el plan E0–E8 en esta conversación el 2026-10-14. Migración obligatoria, una feature activa por release, conservación de evidencia vigente; sin bump, push ni publicación.
@@ -89,3 +89,11 @@ Se ejecutó E7 sobre `55eb811bd05043966b9763e7270ed678444896c5`, versión 2.0.0,
 **E7 no aprobada:** HIGH F-01 impide el primer `release-review` desde el bloque generado inicial válido de spec/roadmap. Los tres runs positivos terminaron técnicamente completos, pero sin registro de revisión ni audit commit. El defecto se reprodujo también con ambos templates literales. No se modificó el candidato ni se forzó el cierre. Los cuatro runs finalizaron por abandono soportado, con propiedad liberada e historia preservada en bundles y snapshots verificables.
 
 El [informe E7](e7-55eb811.md) contiene escenarios, límites, hallazgo y evidencia. Falta corregir F-01 en otro commit y repetir la evaluación sobre ese candidato; E8, instalación, integración y publicación no se ejecutaron en esta reevaluación.
+
+## Corrección F-01 y reevaluación E7 de f8fa91d — 2026-10-16
+
+F-01 se corrigió en `f8fa91d2c98927eeaba3af0643e9973e9a1e506f` usando el validador compartido estricto para progreso inicial, sin cambiar los controles de registros/aprobaciones/evidencia/árbol/HEAD ni los perfiles, hook, templates o versión 2.0.0. Se observó red antes de producción y green después; 22 tests de fase/cierre y suites completas 120 + 9 aprobados, repetidos por revisión independiente sin bloqueantes y luego desde la exportación exacta. Evidencia en [f01-fix](evidence/f01-fix/README.md).
+
+La nueva E7 preparó tres proyectos desechables y runs Sol/high atestados, comprobó gates/recibos y migración sin importar autoridad. No llegó a crear hijos Luna ni revisar/comprometer fases. Un límite inicial de agentes del host se resolvió finalizando dos hijos históricos sin trabajo nuevo. La conciliación posterior reveló **HIGH F-02**: el barrido de sesiones en `attest_no_spawn` llama `.get()` sobre `source.subagent` string de un registro ajeno legítimo y cae con AttributeError. Se reprodujo en los tres runs y de forma independiente sin mutar sus archivos/leases.
+
+**E7 no aprobada.** Los runs conservan reservas en reconciliation_required y propiedad activa; el controlador impide abandonarlos sin conciliación y no se borró nada manualmente. Se preservan bundles, snapshots, pruebas, entradas/salidas y hashes. Dos tablas de architecture faltantes en los fixtures y su revisión R01 quedaron pendientes, sin alterar fuentes aprobadas. El [informe actual](e7-f8fa91d.md) distingue corrección validada, preparación real, controles ejercitados y ejecución nativa no alcanzada. Falta corregir F-02, recuperar por rutas soportadas y repetir E7; E8 e integración/publicación permanecen sin ejecutar.

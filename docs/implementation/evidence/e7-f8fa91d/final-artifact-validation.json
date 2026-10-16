@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-10-16T14:39:06.342465+00:00",
+  "evaluated_commit": "f8fa91d2c98927eeaba3af0643e9973e9a1e506f",
+  "source_files_exact": 115,
+  "export_extra_files": 0,
+  "working_plugin_matches_candidate": true,
+  "reviewed_fix_bytes_match_commit": true,
+  "json_files_parsed": 58,
+  "jsonl_files_parsed": 9,
+  "python_sources_parse": true,
+  "report_links_verified": 30,
+  "three_git_bundles_verified": true,
+  "snapshot_bytes_match_original_fixtures": true,
+  "three_active_leases_preserved_without_manual_edits": true,
+  "result": "PASS for evidence integrity; E7 remains BLOCKED by F-02"
+}

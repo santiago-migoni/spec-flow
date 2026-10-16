@@ -1,0 +1,41 @@
+{
+  "exit": 0,
+  "output": {
+    "basis": "host-supplied capability references; Python does not enumerate native tools",
+    "inventory_reference": "collaboration.list_agents owner tree snapshot in E7 Sol turn 2026-10-16",
+    "operations": [
+      "interrupt_agent",
+      "list_agents",
+      "spawn_agent",
+      "wait_agent"
+    ],
+    "owner_session": {
+      "agent_lifecycle": "active",
+      "agent_path": "/root/e7_owner_f8fa91d",
+      "attestation_sha256": "cf1839f6a8132fa639887b535c5b0af31bdf13646483b2e85792c0ddd8e45e36",
+      "effort": "high",
+      "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T11-27-09-01a1451c-0ecd-7c93-9d51-8650fdaf887f.jsonl",
+      "model": "gpt-6-sol",
+      "packet_marker_source": null,
+      "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+      "record_hashes": {
+        "delegation": null,
+        "lifecycle": "11c2eecf74ec25d5acb95a77cd5971e28880312ec4970fd2451abc383edd6722",
+        "session_meta": "45ca6f4389b225b47adbdfd6e1343ce53eafb8d7dfe1b4aaed182215557ccb6a",
+        "task_marker": null,
+        "turn_contexts": [
+          "f4fb30b106c0340c8ef4a228bb94a748ab65366d7d4f5a577a10097389e0eefc"
+        ]
+      },
+      "role": "orchestrator",
+      "session_id": "01a1451c-0ecd-7c93-9d51-8650fdaf887f"
+    },
+    "probe_evidence_references": {
+      "interrupt_agent": "native collaboration.interrupt_agent schema exposed in this Sol turn; actual injected interruption follows child write",
+      "list_agents": "live collaboration.list_agents result showed /root/e7_owner_f8fa91d running",
+      "spawn_agent": "native collaboration.spawn_agent schema exposed in this Sol turn; actual delegated spawn follows prepare",
+      "wait_agent": "native collaboration.wait_agent schema exposed in this Sol turn; actual wait follows spawn"
+    }
+  },
+  "stderr": ""
+}

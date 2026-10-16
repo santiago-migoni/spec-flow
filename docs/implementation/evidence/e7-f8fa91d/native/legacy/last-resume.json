@@ -1,0 +1,12 @@
+{
+  "exit": 0,
+  "output": {
+    "imported_completed": [],
+    "native_agent": null,
+    "pending_imports": [],
+    "reconciliation_required": true,
+    "run_id": "8d1d0189-840d-4749-b4d8-f54718fe8c0c",
+    "status": "active"
+  },
+  "stderr": ""
+}
