@@ -1,0 +1,8 @@
+{"timestamp":"2026-10-16T15:45:15.929708Z","level":"WARN","fields":{"message":"ignoring hooks: expected a string, string array, object, or object array; found object"},"target":"codex_core_plugins::manifest"}
+{"timestamp":"2026-10-16T15:45:15.930346Z","level":"WARN","fields":{"message":"ignoring hooks: expected a string, string array, object, or object array; found object"},"target":"codex_core_plugins::manifest"}
+{"timestamp":"2026-10-16T15:45:15.986648Z","level":"WARN","fields":{"message":"ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/"},"target":"codex_core_skills::loader"}
+{"timestamp":"2026-10-16T15:45:15.986685Z","level":"WARN","fields":{"message":"ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/"},"target":"codex_core_skills::loader"}
+{"timestamp":"2026-10-16T15:45:16.004700Z","level":"WARN","fields":{"message":"ignoring hooks: expected a string, string array, object, or object array; found object"},"target":"codex_core_plugins::manifest"}
+{"timestamp":"2026-10-16T15:45:16.004977Z","level":"WARN","fields":{"message":"ignoring hooks: expected a string, string array, object, or object array; found object"},"target":"codex_core_plugins::manifest"}
+{"timestamp":"2026-10-16T15:45:16.034625Z","level":"WARN","fields":{"message":"ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/"},"target":"codex_core_skills::loader"}
+{"timestamp":"2026-10-16T15:45:16.034650Z","level":"WARN","fields":{"message":"ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/"},"target":"codex_core_skills::loader"}

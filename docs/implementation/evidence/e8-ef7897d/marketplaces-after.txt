@@ -1,0 +1,7 @@
+MARKETPLACE             ROOT
+openai-primary-runtime  /Users/santiago_migoni/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime
+openai-bundled          /Users/santiago_migoni/.codex/.tmp/bundled-marketplaces/openai-bundled
+llm-wiki                /Users/santiago_migoni/.codex/.tmp/marketplaces/llm-wiki
+spec-flow               /Users/santiago_migoni/.codex/.tmp/marketplaces/spec-flow
+superpowered            /Users/santiago_migoni/.codex/.tmp/marketplaces/superpowered
+openai-curated          /Users/santiago_migoni/.codex/.tmp/plugins

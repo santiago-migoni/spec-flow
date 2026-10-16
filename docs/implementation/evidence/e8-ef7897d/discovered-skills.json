@@ -1,0 +1,128 @@
+{
+  "server_initialize": {
+    "id": 1,
+    "result": {
+      "userAgent": "Codex Desktop/0.135.0 (Mac OS 27.0.1; arm64) dumb (spec-flow-e8-ef7897d; 1.0.0)",
+      "codexHome": "/Users/santiago_migoni/.codex",
+      "platformFamily": "unix",
+      "platformOs": "macos"
+    }
+  },
+  "request": {
+    "method": "skills/list",
+    "params": {
+      "cwds": [
+        "/private/tmp/spec-flow-e8-ef7897d-bfr59tk0/fresh-client-project"
+      ],
+      "forceReload": true
+    }
+  },
+  "selected_skills": [
+    {
+      "name": "spec-flow-e8-ef7897d:analyze",
+      "description": "Read-only cross-check of approved release documents, acceptance coverage, and strategic constraints.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/analyze/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:backlog",
+      "description": "Manage deferred project opportunities when capturing, consulting, refining, reviewing, or recording backlog decisions.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/backlog/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:clarify",
+      "description": "Resolve consequential ambiguity in a release spec before planning.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/clarify/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:constitution",
+      "description": "Create or revise an agile project constitution covering purpose, beneficiaries, outcomes, boundaries, principles, authority, resources, risks, and completion criteria.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/constitution/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:converge",
+      "description": "Assess a committed release against approved acceptance and shared decisions, then route residual work to its canonical source.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/converge/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:design",
+      "description": "Use when defining, reviewing, or updating shared architecture, infrastructure, or repository structure.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/design/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:finishing-branch",
+      "description": "Finish a reviewed Spec-Flow release branch through final checks, audit checkpoint, and an explicitly authorized integration choice.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/finishing-branch/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:implement",
+      "description": "Execute an authorized release phase through native Sol-Luna delegation, verified tasks, independent phase review, and a validated commit.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/implement/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:plan",
+      "description": "Plan an approved release as verifiable technical increments with canonical phases, acceptance coverage, realistic resources, risks, and readiness for tasks.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/plan/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:review-release",
+      "description": "Review a technically converged release's acceptance, observed impact, delivery state, and lessons before branch integration.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/review-release/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:roadmap",
+      "description": "Prioritize measurable outcomes and project explicit SemVer releases, horizons, and human selection from approved strategy.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/roadmap/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:specify",
+      "description": "Specify a selected SemVer release with bounded user value, canonical stories and acceptance, quality requirements, and traceability ready for planning.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/specify/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:tasks",
+      "description": "Decompose an approved release plan when preparing or revising executable tasks for that release.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/tasks/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    },
+    {
+      "name": "spec-flow-e8-ef7897d:using-spec-flow",
+      "description": "Use when entering or resuming Spec-Flow, asking for project status, or choosing the next authorized document or delivery step.",
+      "path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0/skills/using-spec-flow/SKILL.md",
+      "scope": "user",
+      "enabled": true
+    }
+  ],
+  "response_error": null,
+  "cwd_errors": [
+    []
+  ],
+  "expected_count": 14,
+  "enabled_count": 14,
+  "result": "PASS",
+  "boundary": "Fresh app-server client discovery, not a claim that an already-open Desktop chat refreshed its injected catalog."
+}

@@ -1,0 +1,13 @@
+{
+  "initial_bootstrap_probe": {
+    "root": "/private/tmp/spec-flow-e8-ef7897d-bfr59tk0/fresh-client-project",
+    "result": "Evaluator assertion used wrong expected error code: actual rejected unsupported gate with invalid_input, not unsupported_kind. Initialization succeeded; no product decisions or approvals were made.",
+    "correction": "Use actual controller error code and run the complete logged smoke in a different new disposable repository; retain the initial probe as-is.",
+    "candidate_source_changed": false
+  },
+  "empty_runs_directory_check": {
+    "result": "Evaluator initially asserted runs directory absent, but initialize deliberately creates it empty. No run/evidence was created.",
+    "correction": "Assert directory empty; verify the eight already recorded operations without reinitializing or deleting the scratch repository.",
+    "candidate_source_changed": false
+  }
+}

@@ -1,5 +1,7 @@
 # E8 — Preparación de distribución
 
+Resultado actual: [E8 de ef7897d, 2026-10-16](e8-ef7897d.md), **aprobada** para instalación aislada, cliente nuevo y arranque del paquete instalado. Suites 127 + 9; 14 skills; instalación estable y configuración intactas; sin publicación. El registro siguiente conserva la evaluación histórica del 2026-10-14.
+
 Fecha: 2026-10-14. Candidato de desarrollo en `codex/spec-flow-harness`; versión conservada: 1.1.0. Propuesta incompatible: **2.0.0**, pendiente de autorización y commit separado.
 
 ## Evidencia

@@ -1,0 +1,2 @@
+Added plugin `spec-flow-e8-ef7897d` from marketplace `spec-flow-e8-ef7897d-01a13f8c`.
+Installed plugin root: /Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-ef7897d-01a13f8c/spec-flow-e8-ef7897d/2.0.0

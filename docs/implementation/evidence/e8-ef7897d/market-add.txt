@@ -1,0 +1,2 @@
+Added marketplace `spec-flow-e8-ef7897d-01a13f8c` from /private/tmp/spec-flow-e8-ef7897d-bfr59tk0/marketplace with spaces.
+Installed marketplace root: /private/tmp/spec-flow-e8-ef7897d-bfr59tk0/marketplace with spaces
