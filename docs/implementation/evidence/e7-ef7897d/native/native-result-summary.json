@@ -1,0 +1,229 @@
+{
+  "assessment": "Two positive native runs closed with clean retained branches and released leases. Three injected negative attempts failed real verification; the F-03 supported authorized abandon preserved unresolved failure/attempt3 and released the lease. E7 awaits independent parent verification; no global approval claimed.",
+  "capability_probe": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/capability-probe.json",
+  "evaluated_commit": "ef7897d83dedf9fe20c8bf82fb9e311f4cff8107",
+  "exported_package": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/source/plugins/spec-flow",
+  "fixed_test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+  "fixtures": {
+    "fresh": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "packet_sha256": "4bc2ee3b2c069d8b2dd33afb9b4206d58356189ce672fa6bf371b6116b380485"
+        }
+      ],
+      "audit_commit": "f727bf6438d16d50bc57b2be8a724f02fccfa878",
+      "audit_directly_after_phase": true,
+      "audit_parent": "8aad07dac4e8004aa639e6c3e4917f19844e6004",
+      "audit_pending": false,
+      "branch": "codex/e7-ef7897d-fresh",
+      "branch_retained": true,
+      "code_sha256": "2da42918031d17d0bcf2a1d0e40851634bd601b122f94a59ea4a900e7dda9887",
+      "event_count": 14,
+      "event_sha256": "19c929a95d05e551e4b50c94c6f5b62a82dc191687b4e3bbb399cc5d6714f7f4",
+      "evidence_directory": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/fresh",
+      "final_code_nonmutating": true,
+      "final_fixed_suite_exit": 0,
+      "final_lease_released": true,
+      "final_worktree_clean": true,
+      "finishing_check": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/fresh/finishing-check.json",
+      "git_status_porcelain": "",
+      "head": "f727bf6438d16d50bc57b2be8a724f02fccfa878",
+      "head_tree": "b2c75c7ded3db6785e08bf3f23366d4f15856aa8",
+      "initial_generated_blocks_exact": true,
+      "interruption_recovered_without_retry": true,
+      "last_event": "release_reviewed",
+      "lease": null,
+      "lease_path": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/fresh-main/.git/spec-flow-active-controller.json",
+      "main": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/fresh-main",
+      "operations_count": 38,
+      "operations_path": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/fresh/operations.jsonl",
+      "operations_sha256": "ed1b7f46329d0952fbfc7a0c23e8627078ca1c67142bc40836956c0e3079228d",
+      "packet_restored_exact": true,
+      "phase_commit": "8aad07dac4e8004aa639e6c3e4917f19844e6004",
+      "phase_reviewers": [
+        {
+          "agent_path": "/root/e7_owner_f8fa91d/review_c5daaa76b35216d762173711dfa7f75700c2126c5258119155730ff1704b515c",
+          "session_id": "01a14552-93b4-72f0-9f24-e559298ffe30"
+        }
+      ],
+      "release_review_pending": false,
+      "run_id": "299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc",
+      "run_status": "completed",
+      "semantic_convergence_report": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/fresh/convergence.json",
+      "task_agents": [
+        {
+          "agent_path": "/root/e7_owner_f8fa91d/luna_87d1554597f566283d2915ee663c46e3beb924b3a903cbb83b70b5e9329cdc6d",
+          "session_id": "01a14551-62ab-7043-b5d4-d2212e27a843"
+        }
+      ],
+      "technical_complete": true,
+      "test_method_count": 4,
+      "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "worktree": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/fresh-linked"
+    },
+    "legacy": {
+      "approval_imports": 0,
+      "attempts": [
+        {
+          "attempt": 1,
+          "packet_sha256": "0c093a769bc5db185be5285e1f695d9a19d26509a4c1b99cbd7f5e0ffa893a52"
+        }
+      ],
+      "audit_commit": "171c6714fad4f226754228ecfd25cf0150089099",
+      "audit_directly_after_phase": true,
+      "audit_parent": "4199c6ae3a7633ece6a7a246a4b234c9e7ba5792",
+      "audit_pending": false,
+      "branch": "codex/e7-ef7897d-legacy",
+      "branch_retained": true,
+      "code_sha256": "037e0992a054e39a2e59754d5292a24a9e34479d7f1f268a15bf6a9d3d60465b",
+      "event_count": 11,
+      "event_sha256": "60646169410f77c8059e5f93a302725ad0a446c68532bec1710e535e715b726d",
+      "evidence_directory": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/legacy",
+      "evidence_imports": 0,
+      "final_code_nonmutating": true,
+      "final_fixed_suite_exit": 0,
+      "final_lease_released": true,
+      "final_worktree_clean": true,
+      "finishing_check": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/legacy/finishing-check.json",
+      "git_status_porcelain": "",
+      "head": "171c6714fad4f226754228ecfd25cf0150089099",
+      "head_tree": "c03121c0c07f01d77f1e4fdb769e752a83cf6a26",
+      "initial_generated_blocks_exact": true,
+      "last_event": "release_reviewed",
+      "lease": null,
+      "lease_path": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/legacy-main/.git/spec-flow-active-controller.json",
+      "main": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/legacy-main",
+      "migration_preview_digest": "fc0b8a3dd5420b1a61c46bc1c44edc4e05a63e0cfbfb17c0f74e5b839371acf3",
+      "operations_count": 38,
+      "operations_path": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/legacy/operations.jsonl",
+      "operations_sha256": "a971eabc0ec50bcefc3cdb05ee0e4eb8087c553d3f1f69b8ab8f3625ea205b21",
+      "originals_preserved": true,
+      "phase_commit": "4199c6ae3a7633ece6a7a246a4b234c9e7ba5792",
+      "phase_reviewers": [
+        {
+          "agent_path": "/root/e7_owner_f8fa91d/review_abe316beefe7214d775e223c226776c53c69783afe01976cbbf352ea11668e0f",
+          "session_id": "01a14555-da39-7313-9ccb-63588b9eb0f8"
+        }
+      ],
+      "release_review_pending": false,
+      "run_id": "31148995-9da4-443b-b053-e380b0334469",
+      "run_status": "completed",
+      "semantic_convergence_report": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/legacy/convergence.json",
+      "task_agents": [
+        {
+          "agent_path": "/root/e7_owner_f8fa91d/luna_557410954b4f19e395e1f186cfe7d555256d93997f1631fa0c759e9389f1385e",
+          "session_id": "01a14555-039f-7350-94c9-076797bd30a1"
+        }
+      ],
+      "technical_complete": true,
+      "test_method_count": 4,
+      "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "worktree": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/legacy-linked"
+    },
+    "negative": {
+      "abandon_results": [
+        {
+          "already_abandoned": false,
+          "history_preserved": true,
+          "run_id": "54b159ea-1fbf-47a9-8abd-4abecc9a4782",
+          "status": "abandoned"
+        },
+        {
+          "already_abandoned": true,
+          "history_preserved": true,
+          "run_id": "54b159ea-1fbf-47a9-8abd-4abecc9a4782",
+          "status": "abandoned"
+        }
+      ],
+      "active_task": null,
+      "after_abandon": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/negative/after-abandon.json",
+      "attempt_budget_used": 3,
+      "attempts": [
+        {
+          "attempt": 1,
+          "packet_sha256": "639a5ed87402e913771b7a40c10aa0b069c0b9beb5b6712d1ce200b3ac220130"
+        },
+        {
+          "attempt": 2,
+          "packet_sha256": "a4d91cf3d043c98f415355da2cc1808454283f35837f69260d0a350d58458b88"
+        },
+        {
+          "attempt": 3,
+          "packet_sha256": "d0b8ca8ec965856ab0e3c8c864755617222feaeb5712e5cf0bc77010234b6135"
+        }
+      ],
+      "audit_commit": null,
+      "audit_directly_after_phase": null,
+      "audit_parent": null,
+      "audit_pending": true,
+      "before_abandon": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/negative/before-abandon.json",
+      "branch": "codex/e7-ef7897d-negative",
+      "close_rejections": 3,
+      "code_sha256": "b7a27bebf368fa793d11bc6575b20203e0c1c09148bc68a12124d3eae17244a9",
+      "code_tests_decisions_receipts_packets_preserved": true,
+      "event_count": 16,
+      "event_prefix_preserved": true,
+      "event_sha256": "785de28b9f8d018c5bbaab50c20ac9777c42a815d3b96f3748a14d7e48dcb178",
+      "evidence_directory": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/negative",
+      "failure_injected": true,
+      "fourth_prepare_error": "task_already_active",
+      "git_status_porcelain": "M release.py\n?? .spec-flow/",
+      "head": "e817b8f171e652d309350fec3ee23014aca1fa82",
+      "head_tree": "53a9f5c1d2122dc7bba12d34e24a952b6a5ee13b",
+      "initial_generated_blocks_exact": true,
+      "last_event": "abandoned",
+      "lease": null,
+      "lease_path": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/negative-main/.git/spec-flow-active-controller.json",
+      "main": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/negative-main",
+      "no_fourth_child": true,
+      "operations_count": 48,
+      "operations_path": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/negative/operations.jsonl",
+      "operations_sha256": "a0e6bb40ab45b7ace607902de90703c9a8cf3eaba7bb245922a8754143b74dc0",
+      "phase_commit": null,
+      "phase_reviewers": [],
+      "release_review_pending": true,
+      "retry_error": "retry_limit",
+      "review_pass_rejections": 3,
+      "run_id": "54b159ea-1fbf-47a9-8abd-4abecc9a4782",
+      "run_status": "abandoned",
+      "task_agents": [
+        {
+          "agent_path": "/root/e7_owner_f8fa91d/luna_b14889de1a578aeadb0167680f559f144fbf56f4e5d50d04d4f8b94b61290dd1",
+          "session_id": "01a14558-2776-7af1-88e7-808b4cc38885"
+        },
+        {
+          "agent_path": "/root/e7_owner_f8fa91d/luna_b73a1b6510b6299eb30c15a3be618f737afc09bcb5dbdf2692dbfe13eba352f5",
+          "session_id": "01a14558-e9b6-7ce3-8752-b51d5fb23b0d"
+        },
+        {
+          "agent_path": "/root/e7_owner_f8fa91d/luna_d817ecfe00cb28a6db02e8ccf637b35dc2eaa86873fdce21968f978014404e07",
+          "session_id": "01a14559-ad5e-7cf1-b36d-52b063247b14"
+        }
+      ],
+      "task_status": "verification_failed",
+      "technical_complete": false,
+      "test_method_count": 4,
+      "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "unresolved_agent_lifecycle": "completed",
+      "verification_failures": 3,
+      "worktree": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/negative-linked"
+    }
+  },
+  "orchestrator_mutations_finished": true,
+  "owner_profile": {
+    "model": "gpt-6-sol",
+    "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+    "reasoning_effort": "high"
+  },
+  "owner_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "prior_run_recovery": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/recovery/result-summary.json",
+  "recorded_at": "2026-10-16T15:36:32.444041+00:00",
+  "schema": "spec-flow.e7-native-result-summary.v1",
+  "scope_limits": [
+    "No installation, E8, version bump, merge, push, tag, deployment or publication.",
+    "No source export, controller state, lease, or host logs edited outside supported controller operations.",
+    "No fourth negative child or new run in final negative fixture."
+  ],
+  "source_archive_sha256": "2761738902f2a8e823b2aeef86e4f80cec7f45c49d8f3611455d08cd653ae5e6"
+}

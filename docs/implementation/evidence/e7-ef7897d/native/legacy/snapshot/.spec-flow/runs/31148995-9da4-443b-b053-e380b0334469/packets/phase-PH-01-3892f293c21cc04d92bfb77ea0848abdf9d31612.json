@@ -1,0 +1,31 @@
+{
+  "created_at": "2026-10-16T15:30:11Z",
+  "diff_sha256": "ed1dbb6c06595044bb084a07cc45af16007dfe831bc12ff0fc764647c9852d0c",
+  "marker": "SPEC_FLOW_PHASE_REVIEW=31148995-9da4-443b-b053-e380b0334469/PH-01/3892f293c21cc04d92bfb77ea0848abdf9d31612",
+  "packet_sha256": "2c914bd3feffb82f1e61f908aefc693e273e73c0060f6be2e6567495b2be3789",
+  "parent": "3a726745005cadfc53c4494f78971ee4c3ede8d4",
+  "phase_id": "PH-01",
+  "release": "v1.2.3",
+  "run_id": "31148995-9da4-443b-b053-e380b0334469",
+  "schema": "spec-flow-phase-review.v1",
+  "source_digests": {
+    ".specs/architecture.md": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+    ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+    ".specs/release-v1.2.3/plan.md": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+    ".specs/release-v1.2.3/spec.md": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+    ".specs/release-v1.2.3/tasks.md": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+    ".specs/roadmap.md": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+    ".specs/structure.md": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07"
+  },
+  "staged_paths": [
+    ".spec-flow/approvals.jsonl",
+    ".spec-flow/runs/31148995-9da4-443b-b053-e380b0334469/events.jsonl",
+    ".spec-flow/runs/31148995-9da4-443b-b053-e380b0334469/evidence/T-001-1-verify.json",
+    ".specs/release-v1.2.3/tasks.md",
+    "release.py"
+  ],
+  "task_ids": [
+    "T-001"
+  ],
+  "tree": "3892f293c21cc04d92bfb77ea0848abdf9d31612"
+}

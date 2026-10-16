@@ -1,0 +1,39 @@
+{
+  "evaluated_commit": "ef7897d83dedf9fe20c8bf82fb9e311f4cff8107",
+  "files_exact": 115,
+  "source_export_matches": true,
+  "manifest_mirror_matches": true,
+  "version": "2.0.0",
+  "skills": [
+    "analyze",
+    "backlog",
+    "clarify",
+    "constitution",
+    "converge",
+    "design",
+    "finishing-branch",
+    "implement",
+    "plan",
+    "review-release",
+    "roadmap",
+    "specify",
+    "tasks",
+    "using-spec-flow"
+  ],
+  "templates": [
+    "skills/analyze/assets/report-template.md",
+    "skills/backlog/assets/backlog-template.md",
+    "skills/clarify/assets/clarifications-template.md",
+    "skills/constitution/assets/constitution-template.md",
+    "skills/converge/assets/convergence-report-template.md",
+    "skills/design/assets/architecture-template.md",
+    "skills/design/assets/infrastructure-template.md",
+    "skills/design/assets/structure-template.md",
+    "skills/finishing-branch/assets/finishing-report-template.md",
+    "skills/plan/assets/plan-template.md",
+    "skills/review-release/assets/release-review-report-template.md",
+    "skills/roadmap/assets/roadmap-template.md",
+    "skills/specify/assets/spec-template.md",
+    "skills/tasks/assets/tasks-template.md"
+  ]
+}

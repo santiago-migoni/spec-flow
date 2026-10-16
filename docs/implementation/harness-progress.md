@@ -1,6 +1,6 @@
 # Implementación del harness de Spec-Flow
 
-Este documento conserva el registro histórico E0–E8. La [reevaluación E7 de 34d8909 del 2026-10-16](e7-34d8909.md) quedó **no aprobada por HIGH F-03**: dos escenarios positivos cerraron, pero el escenario negativo no puede abandonarse tras agotar intentos. F-02 está corregido y los tres runs anteriores se recuperaron mediante el controlador; F-01 quedó comprobado nativamente. Los resultados históricos no aprueban este candidato.
+Este documento conserva el registro histórico E0–E8. La [reevaluación E7 de ef7897d del 2026-10-16](e7-ef7897d.md) quedó **aprobada para los escenarios ejercitados en este host**: dos positivos cerraron y el negativo agotó tres intentos y pudo abandonarse conservando sus fallos. F-03 está corregido y el run anterior se recuperó mediante el controlador; F-01 y F-02 conservan sus correcciones. E8 no se repitió sobre este candidato y no se declara una nueva versión lista para publicación.
 
 Base: `935de5d:docs/designs/2026-10-14-harness-orchestration.md`.
 Autorización: el usuario solicitó explícitamente implementar el plan E0–E8 en esta conversación el 2026-10-14. Migración obligatoria, una feature activa por release, conservación de evidencia vigente; sin bump, push ni publicación.
@@ -105,3 +105,13 @@ Corrección acotada de metadatos nativos no estructurados, con regresiones RED�
 E7 nueva: proyectos nuevo y migrado completaron implementación Luna/high, revisión Sol/high distinta, convergencia, review-release, checkpoint de auditoría y cierre con ramas limpias retenidas y propiedad liberada. Nueve sesiones nativas atestadas independientemente. El escenario negativo ejecutó tres fallos inyectados y verificaciones reales: bloqueó correctamente aceptación/cierre y un cuarto intento, pero expuso **F-03 HIGH** al impedir reconciliar/abandonar la tarea fallida con hijo terminal y presupuesto agotado. Se conserva su propiedad y evidencia, sin editar registros. **E7 no aprobada**; no se repitió E8 ni se publicó/instaló una nueva versión.
 
 [Informe y evidencias del candidato](e7-34d8909.md). Los seis proyectos tienen snapshots y bundles verificados; la recuperación pendiente afecta solamente al nuevo negativo.
+
+## Reevaluación 2026-10-16 — F-03 corregido y E7 sobre ef7897d
+
+Corrección acotada de abandono de una tarea verification_failed al límite de tres intentos: requiere autorización, propiedad y dueño válidos y atestación del hijo exacto como terminal; persiste el fallo sin resolver antes de liberar propiedad y preserva presupuesto/historia. Cuatro regresiones RED→GREEN; 127 pruebas del plugin + 9 del hook aprobadas, también desde la exportación inmutable. Revisión independiente sin bloqueos. Los 14 HARD-GATE permanecen idénticos; límites, verificación, aprobaciones, perfiles, fases y hook conservados.
+
+El propietario Sol/high original recuperó el negativo de 34d8909 mediante el controlador nuevo: estado abandoned, sin reserva activa, tarea verification_failed intento3 intacta, prefijo17eventos conservado y evento18 de abandono; propiedad liberada.
+
+Nueva E7: nueve sesiones nativas atestadas independientemente; proyecto nuevo con interrupción/restauración sin repetición y proyecto migrado con originales conservados/0 imports de autoridad completaron fase revisada, convergencia, review-release, auditoría y finishing con ramas limpias retenidas. El negativo ejecutó tres fallos inyectados y verificaciones reales; aceptación/cierre y cuarto intento bloqueados, abandono explícito exitoso e idempotente con failedtask3 e historia intactos. Las cuatro propiedades (recuperación + tres fixtures) están liberadas; cuatro snapshots/bundles verificados. Doce consultas estrictas sin escrituras y dos clones de cierre rechazaron cambios posteriores de código/especificación. **E7 aprobada en el alcance ejercitado**. Sin E8/install ni integración/publicación/bump; versión2.0.0 conservada.
+
+[Informe y evidencias del candidato ef7897d](e7-ef7897d.md). Los informes anteriores permanecen históricos y no se reescriben como aprobaciones retroactivas.

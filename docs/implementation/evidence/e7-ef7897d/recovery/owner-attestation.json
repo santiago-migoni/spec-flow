@@ -1,0 +1,27 @@
+{
+  "agent_lifecycle": "active",
+  "agent_path": "/root/e7_owner_f8fa91d",
+  "attestation_sha256": "9e071ccd2daca2d0cdc50be8ea575fbf28eee2290170611a38c59151c86ad0d8",
+  "checked_at": "2026-10-16T15:22:48.298682+00:00",
+  "effort": "high",
+  "model": "gpt-6-sol",
+  "packet_marker_source": null,
+  "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+  "record_hashes": {
+    "delegation": null,
+    "lifecycle": "cba3ae6a7a27c4aa7a6e90bfaf303bd4de37c40eb0907dfa14bd591b4c8b8e43",
+    "session_meta": "45ca6f4389b225b47adbdfd6e1343ce53eafb8d7dfe1b4aaed182215557ccb6a",
+    "task_marker": null,
+    "turn_contexts": [
+      "f4fb30b106c0340c8ef4a228bb94a748ab65366d7d4f5a577a10097389e0eefc",
+      "be016a0d93c64440dfbc3d9d41c153851052736c0b5044118ba9f7e40bed8af7",
+      "0880686ba8bb9fd63e54c613ddfce8284aac730d53f4292c132189464bf79632",
+      "4a56800b6e21b46daa84968eefd4d1bf19578c8c5edb375e5e9a19195865f369",
+      "1882979eea9e58739fd8c5c8786e83a09a317a764831a0f7d8df9b0b190c4870",
+      "fc0821a7982a323f815c7dcc546a9d94b24e839f011ae0fba9b986b15171dd4a",
+      "1b07972ab8c1166bbf3a34d82a66d71eafadd33c1b442c9e18452e598993d255"
+    ]
+  },
+  "role": "orchestrator",
+  "session_id": "01a1451c-0ecd-7c93-9d51-8650fdaf887f"
+}

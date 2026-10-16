@@ -1,0 +1,7 @@
+{
+  "initial_generated_blocks_exact": true,
+  "paths": [
+    ".specs/roadmap.md",
+    ".specs/release-v1.2.3/spec.md"
+  ]
+}

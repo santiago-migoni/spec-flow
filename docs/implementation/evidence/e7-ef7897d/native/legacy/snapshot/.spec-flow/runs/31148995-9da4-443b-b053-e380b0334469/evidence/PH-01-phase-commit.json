@@ -1,0 +1,14 @@
+{
+  "adopted_after_crash": false,
+  "committed_at": "2026-10-16T15:31:44Z",
+  "evidence": "Independent Sol/high reviewer verified exact staged tree 3892f293c21cc04d92bfb77ea0848abdf9d31612, parent 3a726745 and diff ed1dbb6c. Four fixed tests PASS on release.py SHA 037e0992, test SHA 7bb24f05 unchanged; AC-001/AC-002/NFR-001 and constitution MUSTs satisfied. Archived three originals byte-equal committed legacy hashes, imports 0 approvals/0 evidence, seven new E7 receipts. No blocker.",
+  "parent": "3a726745005cadfc53c4494f78971ee4c3ede8d4",
+  "phase_id": "PH-01",
+  "release": "v1.2.3",
+  "review_packet_sha256": "2c914bd3feffb82f1e61f908aefc693e273e73c0060f6be2e6567495b2be3789",
+  "run_id": "31148995-9da4-443b-b053-e380b0334469",
+  "schema": "spec-flow-phase-receipt.v1",
+  "sha": "4199c6ae3a7633ece6a7a246a4b234c9e7ba5792",
+  "subject": "feat(e7): implement migrated strict normalization",
+  "tree": "3892f293c21cc04d92bfb77ea0848abdf9d31612"
+}

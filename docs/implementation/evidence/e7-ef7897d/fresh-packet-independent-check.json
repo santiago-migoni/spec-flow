@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-10-16T15:26:01.847790+00:00",
+  "category": "Independent actual native task packet check; no mutations",
+  "run_id": "299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc",
+  "packet_sha256": "4bc2ee3b2c069d8b2dd33afb9b4206d58356189ce672fa6bf371b6116b380485",
+  "packet_file_sha256": "e62eac8897cfa4e590ab832136daf88e96bf432129ed76a8582a2397ece10dc3",
+  "scope_only_release_py": true,
+  "task_prose_omitted": true,
+  "NFR_edge_cases_and_ACs_retained": true,
+  "source_count": 7,
+  "result": "PASS"
+}

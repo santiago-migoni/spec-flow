@@ -1,0 +1,27 @@
+{
+  "agent_attestation": {
+    "agent_lifecycle": "aborted",
+    "agent_path": "/root/e7_owner_f8fa91d/luna_87d1554597f566283d2915ee663c46e3beb924b3a903cbb83b70b5e9329cdc6d",
+    "attestation_sha256": "a6804b9adc2e2b4623774bbf161a39e640bef10d6a255da869eeacf15e50032f",
+    "effort": "high",
+    "model": "gpt-6-luna",
+    "packet_marker_source": "native_spawn_task_name",
+    "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+    "record_hashes": {
+      "delegation": "9c2eddad205bfb9f5f9d11f0b16ac0541bead6cd0f2a32e3a724e3c5e383fa5e",
+      "lifecycle": "f8fa8fac015ae8e440fcc79b9e260acfd3276787f9d4cba600bf484533d8aede",
+      "session_meta": "47289488218bfcee59339b50a8c8883424c7b49ec8067754737ae0487a7db409",
+      "task_marker": null,
+      "turn_contexts": [
+        "0d4553bb4b4099bb5127841e3e0a39ea578ae48f6b9ef8b1eb10f8a1d44c5c50"
+      ]
+    },
+    "role": "implementer",
+    "session_id": "01a14551-62ab-7043-b5d4-d2212e27a843"
+  },
+  "checked_at": "2026-10-16T15:25:49.390731+00:00",
+  "code_sha256": "2da42918031d17d0bcf2a1d0e40851634bd601b122f94a59ea4a900e7dda9887",
+  "test_exit": 0,
+  "test_output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+  "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+}

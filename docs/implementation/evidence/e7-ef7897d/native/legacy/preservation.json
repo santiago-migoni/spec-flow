@@ -1,0 +1,148 @@
+{
+  "original_worktree": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/legacy-linked",
+  "head": "171c6714fad4f226754228ecfd25cf0150089099",
+  "run_id": "31148995-9da4-443b-b053-e380b0334469",
+  "status": "completed",
+  "task_status": "completed",
+  "lease_present": false,
+  "snapshot_files": {
+    ".gitignore": {
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+      "bytes": 13
+    },
+    ".spec-flow/.gitignore": {
+      "sha256": "51e22acc425d767901cd51941b9d53a16951a5fe6bd220549f3ef8ed94861af3",
+      "bytes": 98
+    },
+    ".spec-flow/approvals.jsonl": {
+      "sha256": "9eceede665545c42c19926e204e59bebb00565a42319811d473845a84f9d7f4f",
+      "bytes": 3227
+    },
+    ".spec-flow/config.json": {
+      "sha256": "16170f48163df123b40a2e52aa1b53c988a2e608656df3881152690b4dcd940c",
+      "bytes": 293
+    },
+    ".spec-flow/legacy/4c4f7dea92dd5d18adfaa0af69cf40af/sources/001-normalize-release/plan.md": {
+      "sha256": "7ba0ced9eaef89e1ce8f3f659c2416d636721228cc57c2d2050bc608952de569",
+      "bytes": 145
+    },
+    ".spec-flow/legacy/4c4f7dea92dd5d18adfaa0af69cf40af/sources/001-normalize-release/spec.md": {
+      "sha256": "6dc2ae30d026f213a7fe01880852b6cfc2f18b34257bc300aa79aa16bcb237d2",
+      "bytes": 194
+    },
+    ".spec-flow/legacy/4c4f7dea92dd5d18adfaa0af69cf40af/sources/001-normalize-release/tasks.md": {
+      "sha256": "a225bbeca05842786cd2769ff4c13d0b724cc8b480cbbaa017d198ee9825818b",
+      "bytes": 157
+    },
+    ".spec-flow/lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    ".spec-flow/migrations/4c4f7dea92dd5d18adfaa0af69cf40af/candidate/.specs/architecture.md": {
+      "sha256": "691001bf2c3df927701b0e15d7dd9606c29a8d16c127688750e942b49a44fcb7",
+      "bytes": 3175
+    },
+    ".spec-flow/migrations/4c4f7dea92dd5d18adfaa0af69cf40af/candidate/.specs/constitution.md": {
+      "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209",
+      "bytes": 2248
+    },
+    ".spec-flow/migrations/4c4f7dea92dd5d18adfaa0af69cf40af/candidate/.specs/release-v1.2.3/plan.md": {
+      "sha256": "bb4a7fba8988cc1c2d5950b128d39f9d8c3cdec89735c3f61b84c92343b47f1c",
+      "bytes": 2769
+    },
+    ".spec-flow/migrations/4c4f7dea92dd5d18adfaa0af69cf40af/candidate/.specs/release-v1.2.3/spec.md": {
+      "sha256": "5f79585a58847bb3253ec804f09d909d4267a656ce6d78ac2a6a58786e1f6049",
+      "bytes": 3324
+    },
+    ".spec-flow/migrations/4c4f7dea92dd5d18adfaa0af69cf40af/candidate/.specs/release-v1.2.3/tasks.md": {
+      "sha256": "2467d30fb59b4eca028c0ef52c3cbadb476bd2d97f2d845fd3f293bea7dd5256",
+      "bytes": 2718
+    },
+    ".spec-flow/migrations/4c4f7dea92dd5d18adfaa0af69cf40af/candidate/.specs/roadmap.md": {
+      "sha256": "a674415efb82babb914dcf282ad3bc99dc2c07d98b716c06f1bed7ff1f463ad5",
+      "bytes": 2517
+    },
+    ".spec-flow/migrations/4c4f7dea92dd5d18adfaa0af69cf40af/candidate/.specs/structure.md": {
+      "sha256": "d5c4822c416a891edc92bc3c97fbe33702f2bffba13b322c534f960c7fad08aa",
+      "bytes": 3049
+    },
+    ".spec-flow/migrations/4c4f7dea92dd5d18adfaa0af69cf40af/complete.json": {
+      "sha256": "32e95e21e9008cc1856514237417b6b2363954705a6c3426f4698bfcff8afd24",
+      "bytes": 191
+    },
+    ".spec-flow/migrations/4c4f7dea92dd5d18adfaa0af69cf40af/imports.json": {
+      "sha256": "1602e130c376b73445365b0f4bee07b1c30ab5b1bc1ba55f215b562a9b7db63f",
+      "bytes": 40
+    },
+    ".spec-flow/migrations/4c4f7dea92dd5d18adfaa0af69cf40af/journal.json": {
+      "sha256": "36dbfcd10cdbd030aa666a41e90487258ab6e00bca3a33c37c889fab9a0b607c",
+      "bytes": 2822
+    },
+    ".spec-flow/runs/31148995-9da4-443b-b053-e380b0334469/events.jsonl": {
+      "sha256": "60646169410f77c8059e5f93a302725ad0a446c68532bec1710e535e715b726d",
+      "bytes": 17911
+    },
+    ".spec-flow/runs/31148995-9da4-443b-b053-e380b0334469/evidence/PH-01-phase-commit.json": {
+      "sha256": "23c5e27d164272d0a16ed3736908c7100f54341d8b93a9a9b1d20c8eb91d3547",
+      "bytes": 954
+    },
+    ".spec-flow/runs/31148995-9da4-443b-b053-e380b0334469/evidence/T-001-1-verify.json": {
+      "sha256": "30523ef2d72411b98e331f39cf8a8673217400f021a0b4f2594bfe08459bce72",
+      "bytes": 2619
+    },
+    ".spec-flow/runs/31148995-9da4-443b-b053-e380b0334469/packets/T-001-1.json": {
+      "sha256": "cbd6ae0eaab4ac5c77d113b9ef829f315b6c6babeb881c47a015548c4995002b",
+      "bytes": 20212
+    },
+    ".spec-flow/runs/31148995-9da4-443b-b053-e380b0334469/packets/phase-PH-01-3892f293c21cc04d92bfb77ea0848abdf9d31612.json": {
+      "sha256": "9a96f8a7b94f5b67fd3a59929a094ffa22dc56cbfc468e1e3ceca3787d45947d",
+      "bytes": 1621
+    },
+    ".spec-flow/runs/31148995-9da4-443b-b053-e380b0334469/state.json": {
+      "sha256": "6218ef0ea69e4794dfd58fae23874be5a67f6b55e060be2f6df2dce3fbbead12",
+      "bytes": 19167
+    },
+    ".specs/architecture.md": {
+      "sha256": "691001bf2c3df927701b0e15d7dd9606c29a8d16c127688750e942b49a44fcb7",
+      "bytes": 3175
+    },
+    ".specs/constitution.md": {
+      "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209",
+      "bytes": 2248
+    },
+    ".specs/release-v1.2.3/plan.md": {
+      "sha256": "bb4a7fba8988cc1c2d5950b128d39f9d8c3cdec89735c3f61b84c92343b47f1c",
+      "bytes": 2769
+    },
+    ".specs/release-v1.2.3/spec.md": {
+      "sha256": "464edd8a2364cd6006c6b30d2a589530297d295ff4257ae12505c839f79f001d",
+      "bytes": 3710
+    },
+    ".specs/release-v1.2.3/tasks.md": {
+      "sha256": "67ee158805bca23f612f2720b48cebc872c943dff54077470cc6323909ea70df",
+      "bytes": 2681
+    },
+    ".specs/roadmap.md": {
+      "sha256": "f3818753fa57431a734eace6b55fda2943994ff1692a5a224a368c2d5e220ebd",
+      "bytes": 2702
+    },
+    ".specs/structure.md": {
+      "sha256": "d5c4822c416a891edc92bc3c97fbe33702f2bffba13b322c534f960c7fad08aa",
+      "bytes": 3049
+    },
+    "release.py": {
+      "sha256": "037e0992a054e39a2e59754d5292a24a9e34479d7f1f268a15bf6a9d3d60465b",
+      "bytes": 403
+    },
+    "test_release.py": {
+      "sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "bytes": 1577
+    }
+  },
+  "snapshot_bytes": 111778,
+  "bundle_sha256": "ed2f447631cb92c5ca5c5be89ae3c0feeee042d2a34586d4fffd22aef6fe724e",
+  "bundle_verified": true,
+  "bundle_verify_stdout": "The bundle contains these 4 refs:\n171c6714fad4f226754228ecfd25cf0150089099 refs/heads/codex/e7-ef7897d-legacy\n3a726745005cadfc53c4494f78971ee4c3ede8d4 refs/heads/main\n171c6714fad4f226754228ecfd25cf0150089099 HEAD\n3a726745005cadfc53c4494f78971ee4c3ede8d4 main-worktree/HEAD\nThe bundle records a complete history.\nThe bundle uses this hash algorithm: sha1\n",
+  "bundle_verify_stderr": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/legacy/repository.bundle is okay\n",
+  "restoration_limit": "Historical inspection only. Bundles/snapshots do not restore live worktree/session/approval authority. Do not restore or manually clear ownership registrations."
+}

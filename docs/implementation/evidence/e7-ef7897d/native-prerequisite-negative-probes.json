@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-10-16T15:23:24.104418+00:00",
+  "category": "Production adapter probes; no controller mutations or task credit",
+  "probes": [
+    {
+      "probe": "owner-as-implementer",
+      "expected": "host_profile_mismatch",
+      "observed": "host_profile_mismatch",
+      "message": "one or more session turns do not match the required role profile"
+    },
+    {
+      "probe": "missing-interrupt-capability",
+      "expected": "native_capability_unavailable",
+      "observed": "native_capability_unavailable",
+      "message": "native Codex capabilities are missing or unprobed"
+    }
+  ],
+  "result": "PASS"
+}

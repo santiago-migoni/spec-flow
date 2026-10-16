@@ -1,0 +1,96 @@
+{
+  "original_worktree": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/fresh-linked",
+  "head": "f727bf6438d16d50bc57b2be8a724f02fccfa878",
+  "run_id": "299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc",
+  "status": "completed",
+  "task_status": "completed",
+  "lease_present": false,
+  "snapshot_files": {
+    ".gitignore": {
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+      "bytes": 13
+    },
+    ".spec-flow/.gitignore": {
+      "sha256": "51e22acc425d767901cd51941b9d53a16951a5fe6bd220549f3ef8ed94861af3",
+      "bytes": 98
+    },
+    ".spec-flow/approvals.jsonl": {
+      "sha256": "e763a33a5878b5d0dcb608e51d7914b6b8057e0d43024c273cf46a28531f91d4",
+      "bytes": 3227
+    },
+    ".spec-flow/config.json": {
+      "sha256": "16170f48163df123b40a2e52aa1b53c988a2e608656df3881152690b4dcd940c",
+      "bytes": 293
+    },
+    ".spec-flow/lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    ".spec-flow/runs/299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc/events.jsonl": {
+      "sha256": "19c929a95d05e551e4b50c94c6f5b62a82dc191687b4e3bbb399cc5d6714f7f4",
+      "bytes": 18535
+    },
+    ".spec-flow/runs/299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc/evidence/PH-01-phase-commit.json": {
+      "sha256": "1d3c86134192205b11a23700dae675f254b39d9b8f39ae72749396adff1385ff",
+      "bytes": 915
+    },
+    ".spec-flow/runs/299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc/evidence/T-001-1-verify.json": {
+      "sha256": "a58d96c11d4c7e1986c5eebaa70c90a2d774ca21c242087419346a35b9707bb6",
+      "bytes": 2619
+    },
+    ".spec-flow/runs/299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc/packets/T-001-1.json": {
+      "sha256": "e62eac8897cfa4e590ab832136daf88e96bf432129ed76a8582a2397ece10dc3",
+      "bytes": 20212
+    },
+    ".spec-flow/runs/299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc/packets/phase-PH-01-4b94cb40d7f540a6a8fafbe88ae4917957646de6.json": {
+      "sha256": "67f8ceb1165ef81b5aba6a30f33eecb19562d7c3b7c97faaca44f8432d0c8b58",
+      "bytes": 1680
+    },
+    ".spec-flow/runs/299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc/state.json": {
+      "sha256": "357700d01ae62356441b61a7ede599c3b735388d56afdbed16ceba7ddc316e73",
+      "bytes": 19451
+    },
+    ".specs/architecture.md": {
+      "sha256": "691001bf2c3df927701b0e15d7dd9606c29a8d16c127688750e942b49a44fcb7",
+      "bytes": 3175
+    },
+    ".specs/constitution.md": {
+      "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209",
+      "bytes": 2248
+    },
+    ".specs/release-v1.2.3/plan.md": {
+      "sha256": "bb4a7fba8988cc1c2d5950b128d39f9d8c3cdec89735c3f61b84c92343b47f1c",
+      "bytes": 2769
+    },
+    ".specs/release-v1.2.3/spec.md": {
+      "sha256": "2d1a2ed16ff60bc1c4731157929e108ca826156bfeec0b20d677f1cb1ed5e42d",
+      "bytes": 3710
+    },
+    ".specs/release-v1.2.3/tasks.md": {
+      "sha256": "67ee158805bca23f612f2720b48cebc872c943dff54077470cc6323909ea70df",
+      "bytes": 2681
+    },
+    ".specs/roadmap.md": {
+      "sha256": "a565528c653054f49256ccafb15d6fd62916f71dd862010fd47114d68325c1dd",
+      "bytes": 2702
+    },
+    ".specs/structure.md": {
+      "sha256": "d5c4822c416a891edc92bc3c97fbe33702f2bffba13b322c534f960c7fad08aa",
+      "bytes": 3049
+    },
+    "release.py": {
+      "sha256": "2da42918031d17d0bcf2a1d0e40851634bd601b122f94a59ea4a900e7dda9887",
+      "bytes": 407
+    },
+    "test_release.py": {
+      "sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "bytes": 1577
+    }
+  },
+  "snapshot_bytes": 89361,
+  "bundle_sha256": "49950daf0d6840342e0087111983965c3c2c478e676b3e1144265dd499ab3745",
+  "bundle_verified": true,
+  "bundle_verify_stdout": "The bundle contains these 4 refs:\nf727bf6438d16d50bc57b2be8a724f02fccfa878 refs/heads/codex/e7-ef7897d-fresh\na3bd9c3b461add5f3684d408b2b981ea359d0083 refs/heads/main\nf727bf6438d16d50bc57b2be8a724f02fccfa878 HEAD\na3bd9c3b461add5f3684d408b2b981ea359d0083 main-worktree/HEAD\nThe bundle records a complete history.\nThe bundle uses this hash algorithm: sha1\n",
+  "bundle_verify_stderr": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/native/fresh/repository.bundle is okay\n",
+  "restoration_limit": "Historical inspection only. Bundles/snapshots do not restore live worktree/session/approval authority. Do not restore or manually clear ownership registrations."
+}

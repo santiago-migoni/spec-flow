@@ -1,0 +1,21 @@
+{
+  "phase_commit": "8aad07dac4e8004aa639e6c3e4917f19844e6004",
+  "phase_parent": "a3bd9c3b461add5f3684d408b2b981ea359d0083",
+  "phase_tree": "4b94cb40d7f540a6a8fafbe88ae4917957646de6",
+  "audit_commit": "f727bf6438d16d50bc57b2be8a724f02fccfa878",
+  "audit_parent": "8aad07dac4e8004aa639e6c3e4917f19844e6004",
+  "audit_directly_after_phase": true,
+  "head": "f727bf6438d16d50bc57b2be8a724f02fccfa878",
+  "worktree_clean": true,
+  "lease_released": true,
+  "branch": "codex/e7-ef7897d-fresh",
+  "branch_retained": true,
+  "test_exit": 0,
+  "test_output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+  "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+  "code_sha256": "2da42918031d17d0bcf2a1d0e40851634bd601b122f94a59ea4a900e7dda9887",
+  "code_nonmutating": true,
+  "spec_derived_record_present": true,
+  "roadmap_derived_record_present": true,
+  "verified_at": "2026-10-16T15:28:11.932970+00:00"
+}

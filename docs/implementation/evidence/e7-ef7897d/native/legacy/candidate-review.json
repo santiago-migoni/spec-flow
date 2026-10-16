@@ -1,0 +1,55 @@
+{
+  "reviewed_at": "2026-10-16T15:28:31.416523+00:00",
+  "candidate_directory": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/legacy-candidates",
+  "candidate_documents": {
+    "architecture.md": {
+      "sha256": "691001bf2c3df927701b0e15d7dd9606c29a8d16c127688750e942b49a44fcb7",
+      "heading_count": 11,
+      "table_rows": 8
+    },
+    "constitution.md": {
+      "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209",
+      "heading_count": 11,
+      "table_rows": 6
+    },
+    "release-v1.2.3/plan.md": {
+      "sha256": "bb4a7fba8988cc1c2d5950b128d39f9d8c3cdec89735c3f61b84c92343b47f1c",
+      "heading_count": 11,
+      "table_rows": 15
+    },
+    "release-v1.2.3/spec.md": {
+      "sha256": "5f79585a58847bb3253ec804f09d909d4267a656ce6d78ac2a6a58786e1f6049",
+      "heading_count": 11,
+      "table_rows": 10
+    },
+    "release-v1.2.3/tasks.md": {
+      "sha256": "2467d30fb59b4eca028c0ef52c3cbadb476bd2d97f2d845fd3f293bea7dd5256",
+      "heading_count": 10,
+      "table_rows": 7
+    },
+    "roadmap.md": {
+      "sha256": "a674415efb82babb914dcf282ad3bc99dc2c07d98b716c06f1bed7ff1f463ad5",
+      "heading_count": 11,
+      "table_rows": 6
+    },
+    "structure.md": {
+      "sha256": "d5c4822c416a891edc92bc3c97fbe33702f2bffba13b322c534f960c7fad08aa",
+      "heading_count": 10,
+      "table_rows": 9
+    }
+  },
+  "all_seven_present": true,
+  "generated_blocks_initial": true,
+  "originals_committed": true,
+  "old_approved_labels_have_no_authority": true,
+  "mapping": [
+    {
+      "legacy": ".specs/001-normalize-release",
+      "release": "v1.2.3"
+    }
+  ],
+  "imports_requested": {
+    "approvals": 0,
+    "evidence": 0
+  }
+}

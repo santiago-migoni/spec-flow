@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-16T15:22:29.237598+00:00",
+  "category": "independent read-only literal-template check, not native closure",
+  "observed": [
+    {
+      "source": "skills/specify/assets/spec-template.md",
+      "sha256": "7b828b4604f9d0753705dd050ed110ade12a300c3078404ac0ca7a2611457f9e",
+      "document_reader_accepts": true,
+      "closure_reader": null,
+      "meaning": "Valid initial progress; no persisted closure authority"
+    },
+    {
+      "source": "skills/roadmap/assets/roadmap-template.md",
+      "sha256": "527488160b932f4ab5523145e8ed345cbb5fb0cb516eb01f51c07edae134b860",
+      "document_reader_accepts": true,
+      "closure_reader": null,
+      "meaning": "Valid initial progress; no persisted closure authority"
+    }
+  ]
+}

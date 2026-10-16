@@ -1,0 +1,38 @@
+{
+  "release": "v1.2.3",
+  "run_id": "299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc",
+  "phase_commit": "8aad07dac4e8004aa639e6c3e4917f19844e6004",
+  "assessment": "Clean semantic convergence for synthetic E7 fixture",
+  "technical_complete": true,
+  "coverage": [
+    {
+      "criterion": "AC-001",
+      "status": "satisfied",
+      "evidence": "Controller and independent reviewer: bare/v ASCII triples, zero and huge components yield exact v-prefixed digits."
+    },
+    {
+      "criterion": "AC-002",
+      "status": "satisfied",
+      "evidence": "Controller and reviewer: malformed/leading-zero/Unicode/whitespace/suffix/count cases raise ValueError; nonstrings including True raise TypeError."
+    },
+    {
+      "criterion": "NFR-001",
+      "status": "satisfied",
+      "evidence": "Four fixed unittest methods pass; test file SHA256 unchanged."
+    }
+  ],
+  "governing_decisions": [
+    "constitution MUST fixed test and exact errors",
+    "constitution MUST verification leaves code unchanged",
+    "architecture ARC-01 pure stdlib normalization",
+    "structure release.py sole implementation path"
+  ],
+  "code_sha256": "2da42918031d17d0bcf2a1d0e40851634bd601b122f94a59ea4a900e7dda9887",
+  "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+  "findings": [],
+  "limits": [
+    "Synthetic fixture; real-world impact not measured or claimed.",
+    "Infrastructure N/A: local pure function with no deployment/runtime services."
+  ],
+  "reported_at": "2026-10-16T15:27:51.238542+00:00"
+}

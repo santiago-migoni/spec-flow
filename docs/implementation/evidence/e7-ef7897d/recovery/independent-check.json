@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-16T15:23:59.220699+00:00",
+  "candidate": "ef7897d83dedf9fe20c8bf82fb9e311f4cff8107",
+  "run_id": "ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e",
+  "status": "abandoned",
+  "active_task": null,
+  "attempt": 3,
+  "task_status": "verification_failed",
+  "original_17_events_byte_prefix_preserved": true,
+  "all_task_state_unchanged": true,
+  "code_tests_decisions_receipts_and_packets_unchanged": true,
+  "lease_absent": true,
+  "terminal_child_independent_attestation": {
+    "session_id": "01a1453b-dc1c-7312-8551-0cfc106940ce",
+    "role": "implementer",
+    "model": "gpt-6-luna",
+    "effort": "high",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-01-53-01a1453b-dc1c-7312-8551-0cfc106940ce.jsonl",
+    "agent_lifecycle": "completed",
+    "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+    "agent_path": "/root/e7_owner_f8fa91d/luna_1498d05e7c7dba97b329c2befcd0ddea743202afce865dba3764ab354020df30",
+    "packet_marker_source": "native_spawn_task_name",
+    "record_hashes": {
+      "session_meta": "e4e8f5355e52581dff34a73ccf17bf6a1d62f18ac647c7b89474fe8853515684",
+      "turn_contexts": [
+        "56fe67594f72a090e7b94341ae165236224982c6be68b3cd06b5cde60bc90620"
+      ],
+      "lifecycle": "8f411e7dc4e41af36b775f65f0be935399686dfbbf3a0df7234d2e8b3b351e07",
+      "task_marker": null,
+      "delegation": "0fc6652ff24b4f6f92bff466dec399d0431d0a4751d46e252894ba823a7d725c"
+    },
+    "attestation_sha256": "826c1b75cf5efe10c59a326e8a64fbaa81b92700b8d8310d66ca20c53bdb65f2"
+  },
+  "operations": [
+    "status",
+    "abandon",
+    "status"
+  ],
+  "result": "PASS"
+}

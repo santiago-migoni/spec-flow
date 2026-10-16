@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-10-16T15:36:06.831297+00:00",
+  "owner_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "probe_agents": [
+    {
+      "task_name": "e7_capability_probe_ef7897d",
+      "model": "gpt-6-luna",
+      "effort": "high",
+      "purpose": "capability only, no fixture relation",
+      "result": "spawned; ready message; wait_agent returned; completed"
+    },
+    {
+      "task_name": "e7_capability_interrupt_ef7897d",
+      "model": "gpt-6-luna",
+      "effort": "high",
+      "purpose": "capability only, no fixture relation",
+      "result": "spawned; list_agents running; interrupt_agent previous_status running; list_agents interrupted"
+    }
+  ],
+  "capabilities_observed": [
+    "spawn_agent",
+    "wait_agent",
+    "list_agents",
+    "interrupt_agent"
+  ],
+  "not_implementation_attempts": true,
+  "python_limitation": "Controller stores host-supplied references but does not itself enumerate native agent tools."
+}

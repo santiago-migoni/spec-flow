@@ -1,0 +1,15 @@
+{
+  "root": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/fresh-main",
+  "head": "a3bd9c3b461add5f3684d408b2b981ea359d0083",
+  "docs": [
+    ".specs/architecture.md",
+    ".specs/constitution.md",
+    ".specs/release-v1.2.3/plan.md",
+    ".specs/release-v1.2.3/spec.md",
+    ".specs/release-v1.2.3/tasks.md",
+    ".specs/roadmap.md",
+    ".specs/structure.md"
+  ],
+  "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+  "preparation_note": "Fixture successfully created; parent record reconstructed from files after missing output directory prevented saving stdout. No approvals/run existed."
+}

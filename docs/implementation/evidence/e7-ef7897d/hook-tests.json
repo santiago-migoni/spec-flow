@@ -1,0 +1,23 @@
+{
+  "evaluated_commit": "ef7897d83dedf9fe20c8bf82fb9e311f4cff8107",
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/source/plugins/spec-flow/hooks",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "tests": 9,
+  "output_sha256": "0a6b042e7d31e5ec97481988f894152eabbb4fc60e3d31a340eb547a043c19ed",
+  "result": "PASS",
+  "scope": "Exported candidate deterministic suite; not native implementation evidence"
+}

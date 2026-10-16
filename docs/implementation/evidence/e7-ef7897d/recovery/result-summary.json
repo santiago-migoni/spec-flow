@@ -1,0 +1,45 @@
+{
+  "abandoned_event_sequence": 18,
+  "active_task_after": null,
+  "after": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/recovery/after.json",
+  "attempt_after": 3,
+  "before": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/recovery/before-independent.json",
+  "evaluated_commit": "ef7897d83dedf9fe20c8bf82fb9e311f4cff8107",
+  "history_preserved": true,
+  "lease_released": true,
+  "new_controller": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/source/plugins/spec-flow/scripts/spec-flow.py",
+  "no_manual_state_or_lease_edits": true,
+  "old_fixture": "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/negative-linked",
+  "old_run_id": "ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e",
+  "operation_results": [
+    {
+      "exit": 0,
+      "op": "status",
+      "status": "initialized"
+    },
+    {
+      "exit": 0,
+      "op": "abandon",
+      "status": "abandoned"
+    },
+    {
+      "exit": 0,
+      "op": "status",
+      "status": "initialized"
+    }
+  ],
+  "operations": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/recovery/operations.jsonl",
+  "operations_count": 3,
+  "owner_attestation": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/recovery/owner-attestation.json",
+  "owner_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "preserved_code_tests_decisions_receipts": true,
+  "preserved_original_17_events": true,
+  "task_status_after": "verification_failed",
+  "terminal_agent_attestation": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-ef7897d/recovery/terminal-agent-attestation.json",
+  "unresolved_task": {
+    "attempt": 3,
+    "status": "verification_failed",
+    "task_id": "T-001",
+    "terminal_lifecycle": "completed"
+  }
+}

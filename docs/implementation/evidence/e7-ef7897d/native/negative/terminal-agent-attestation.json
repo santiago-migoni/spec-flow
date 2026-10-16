@@ -1,0 +1,21 @@
+{
+  "agent_lifecycle": "completed",
+  "agent_path": "/root/e7_owner_f8fa91d/luna_d817ecfe00cb28a6db02e8ccf637b35dc2eaa86873fdce21968f978014404e07",
+  "attestation_sha256": "4b6b61db277a54712175b32f3f14bf987b55ae23b13bb094522ca82744756201",
+  "checked_at": "2026-10-16T15:35:32.325959+00:00",
+  "effort": "high",
+  "model": "gpt-6-luna",
+  "packet_marker_source": "native_spawn_task_name",
+  "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "record_hashes": {
+    "delegation": "b5f2edc29b8da2c7609439eaf5e200affeed143c8285330778b082effcd8ef12",
+    "lifecycle": "6dac43bea9f42c952ddc3ad83186350d7da8cd4b6ac5dc57746804291037ba37",
+    "session_meta": "515d673c743b088bf78c90580ed1a5be42508213a6d4cc261520b29366da44af",
+    "task_marker": null,
+    "turn_contexts": [
+      "f5ad5a7657e5027d09712882cc346b30914cc01cc478a89c07b955f7ba43dc34"
+    ]
+  },
+  "role": "implementer",
+  "session_id": "01a14559-ad5e-7cf1-b36d-52b063247b14"
+}

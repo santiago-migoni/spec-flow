@@ -1,0 +1,431 @@
+{
+  "checked_at": "2026-10-16T15:36:55.403504+00:00",
+  "evaluated_commit": "ef7897d83dedf9fe20c8bf82fb9e311f4cff8107",
+  "category": "Independent actual host attestation and production state checks; independent test reruns confer no controller task credit",
+  "owner_attestation": {
+    "session_id": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+    "role": "orchestrator",
+    "model": "gpt-6-sol",
+    "effort": "high",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T11-27-09-01a1451c-0ecd-7c93-9d51-8650fdaf887f.jsonl",
+    "agent_lifecycle": "completed",
+    "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+    "agent_path": "/root/e7_owner_f8fa91d",
+    "packet_marker_source": null,
+    "record_hashes": {
+      "session_meta": "45ca6f4389b225b47adbdfd6e1343ce53eafb8d7dfe1b4aaed182215557ccb6a",
+      "turn_contexts": [
+        "f4fb30b106c0340c8ef4a228bb94a748ab65366d7d4f5a577a10097389e0eefc",
+        "be016a0d93c64440dfbc3d9d41c153851052736c0b5044118ba9f7e40bed8af7",
+        "0880686ba8bb9fd63e54c613ddfce8284aac730d53f4292c132189464bf79632",
+        "4a56800b6e21b46daa84968eefd4d1bf19578c8c5edb375e5e9a19195865f369",
+        "1882979eea9e58739fd8c5c8786e83a09a317a764831a0f7d8df9b0b190c4870",
+        "fc0821a7982a323f815c7dcc546a9d94b24e839f011ae0fba9b986b15171dd4a",
+        "1b07972ab8c1166bbf3a34d82a66d71eafadd33c1b442c9e18452e598993d255"
+      ],
+      "lifecycle": "64a39dcc0df5bea91c90fd89546ccc90c391ddde67c7fc709056c5e437ff9d59",
+      "task_marker": null,
+      "delegation": null
+    },
+    "attestation_sha256": "9b1cf75addd0959a3d7eb36b7242965a698aa890552cf6fea45943913da2a498"
+  },
+  "fixtures": {
+    "fresh": {
+      "root": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/fresh-linked",
+      "run_id": "299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc",
+      "status": "completed",
+      "active_task": null,
+      "attempt": 1,
+      "task_status": "completed",
+      "head": "f727bf6438d16d50bc57b2be8a724f02fccfa878",
+      "attempt_attestations": [
+        {
+          "task_id": "T-001",
+          "attempt": 1,
+          "attestation": {
+            "session_id": "01a14551-62ab-7043-b5d4-d2212e27a843",
+            "role": "implementer",
+            "model": "gpt-6-luna",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-25-24-01a14551-62ab-7043-b5d4-d2212e27a843.jsonl",
+            "agent_lifecycle": "aborted",
+            "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+            "agent_path": "/root/e7_owner_f8fa91d/luna_87d1554597f566283d2915ee663c46e3beb924b3a903cbb83b70b5e9329cdc6d",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "47289488218bfcee59339b50a8c8883424c7b49ec8067754737ae0487a7db409",
+              "turn_contexts": [
+                "0d4553bb4b4099bb5127841e3e0a39ea578ae48f6b9ef8b1eb10f8a1d44c5c50"
+              ],
+              "lifecycle": "f8fa8fac015ae8e440fcc79b9e260acfd3276787f9d4cba600bf484533d8aede",
+              "task_marker": null,
+              "delegation": "9c2eddad205bfb9f5f9d11f0b16ac0541bead6cd0f2a32e3a724e3c5e383fa5e"
+            },
+            "attestation_sha256": "a6804b9adc2e2b4623774bbf161a39e640bef10d6a255da869eeacf15e50032f"
+          }
+        }
+      ],
+      "phases": {
+        "PH-01": {
+          "commit": {
+            "adopted_after_crash": false,
+            "committed_at": "2026-10-16T15:27:36Z",
+            "evidence": "Independent Sol/high reviewer inspected exact staged tree 4b94cb40d7f540a6a8fafbe88ae4917957646de6, parent a3bd9c3 and diff 2b0f6c06; controller evidence and reviewer read-only rerun show four fixed methods PASS on code SHA 2da42918 and unchanged test SHA 7bb24f05. AC-001, AC-002, NFR-001, constitution MUSTs satisfied; no unstaged code changes or blockers.",
+            "parent": "a3bd9c3b461add5f3684d408b2b981ea359d0083",
+            "phase_id": "PH-01",
+            "release": "v1.2.3",
+            "review_packet_sha256": "032de038d362880e9c77543ea20dba48340c54099a9f5fa6e3b9f1ac730a0e5a",
+            "run_id": "299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc",
+            "schema": "spec-flow-phase-receipt.v1",
+            "sha": "8aad07dac4e8004aa639e6c3e4917f19844e6004",
+            "subject": "feat(e7): implement strict release normalization",
+            "tree": "4b94cb40d7f540a6a8fafbe88ae4917957646de6"
+          },
+          "exact_tree_parent": true,
+          "review_attestation": {
+            "session_id": "01a14552-93b4-72f0-9f24-e559298ffe30",
+            "role": "reviewer",
+            "model": "gpt-6-sol",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-26-42-01a14552-93b4-72f0-9f24-e559298ffe30.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+            "agent_path": "/root/e7_owner_f8fa91d/review_c5daaa76b35216d762173711dfa7f75700c2126c5258119155730ff1704b515c",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "96dc1a3834761870c915f5112a65911aba13baaa89232697d4742704a7838173",
+              "turn_contexts": [
+                "b028ac0d4425ba422eb77cf671dcdb8d5883eb9a6f4b4723555513789780f1e5"
+              ],
+              "lifecycle": "530b743d112b0c75bb47f9e99be3eb7b31e05053c5525501231e4355749e8863",
+              "task_marker": null,
+              "delegation": "65f0de30a89c12182042b7b3a3e330d987099e2247198652a8447146af8bc0c4"
+            },
+            "attestation_sha256": "955584808672d7d66a0f9de4d7231f9e154810e31fe76a0c4f38c145c593a6a9"
+          }
+        }
+      },
+      "audit": {
+        "sha": "f727bf6438d16d50bc57b2be8a724f02fccfa878",
+        "parent": "8aad07dac4e8004aa639e6c3e4917f19844e6004",
+        "tree": "b2c75c7ded3db6785e08bf3f23366d4f15856aa8",
+        "subject": "docs(spec-flow): record release review",
+        "body": "docs(spec-flow): record release review\n\nSpec-Flow-Audit: 299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc"
+      },
+      "completion": {
+        "release": "v1.2.3",
+        "run_id": "299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc",
+        "technical_complete": true,
+        "complete": true,
+        "reasons": [],
+        "release_review_pending": false,
+        "audit_pending": false,
+        "release_closure_reasons": [],
+        "phase_commits": {
+          "PH-01": "8aad07dac4e8004aa639e6c3e4917f19844e6004"
+        }
+      },
+      "ownership_registry": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/fresh-main/.git/spec-flow-active-controller.json",
+      "lease_present": false,
+      "lease": null,
+      "event_count": 14,
+      "events_sha256": "19c929a95d05e551e4b50c94c6f5b62a82dc191687b4e3bbb399cc5d6714f7f4",
+      "worktree_status": "",
+      "independent_test": {
+        "argv": [
+          "python3",
+          "-B",
+          "-m",
+          "unittest",
+          "-v",
+          "test_release.py"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+        "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+        "code_sha256": "2da42918031d17d0bcf2a1d0e40851634bd601b122f94a59ea4a900e7dda9887",
+        "code_unchanged": true
+      }
+    },
+    "legacy": {
+      "root": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/legacy-linked",
+      "run_id": "31148995-9da4-443b-b053-e380b0334469",
+      "status": "completed",
+      "active_task": null,
+      "attempt": 1,
+      "task_status": "completed",
+      "head": "171c6714fad4f226754228ecfd25cf0150089099",
+      "attempt_attestations": [
+        {
+          "task_id": "T-001",
+          "attempt": 1,
+          "attestation": {
+            "session_id": "01a14555-039f-7350-94c9-076797bd30a1",
+            "role": "implementer",
+            "model": "gpt-6-luna",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-29-21-01a14555-039f-7350-94c9-076797bd30a1.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+            "agent_path": "/root/e7_owner_f8fa91d/luna_557410954b4f19e395e1f186cfe7d555256d93997f1631fa0c759e9389f1385e",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "193dd0b772b74d0bf4273be2257414e4673effa6c46a77a51646be4b242603bb",
+              "turn_contexts": [
+                "afe6ff4f0436a92c9d441c96dc77ca3938bd0b82d60f0a382caae0b2eea3e5e2"
+              ],
+              "lifecycle": "593e64fc03ac87b684c182c8d87c1f0fbe3eb6aa1bc9e49b52e3a23486131da3",
+              "task_marker": null,
+              "delegation": "e3c6e689228d35b98306f707349384817727fd1634647dedbd6730593b9a0d73"
+            },
+            "attestation_sha256": "024520b2fd16a553a5c024b67353b3e0af44e0375f3866c2de9345a6a0bbd548"
+          }
+        }
+      ],
+      "phases": {
+        "PH-01": {
+          "commit": {
+            "adopted_after_crash": false,
+            "committed_at": "2026-10-16T15:31:44Z",
+            "evidence": "Independent Sol/high reviewer verified exact staged tree 3892f293c21cc04d92bfb77ea0848abdf9d31612, parent 3a726745 and diff ed1dbb6c. Four fixed tests PASS on release.py SHA 037e0992, test SHA 7bb24f05 unchanged; AC-001/AC-002/NFR-001 and constitution MUSTs satisfied. Archived three originals byte-equal committed legacy hashes, imports 0 approvals/0 evidence, seven new E7 receipts. No blocker.",
+            "parent": "3a726745005cadfc53c4494f78971ee4c3ede8d4",
+            "phase_id": "PH-01",
+            "release": "v1.2.3",
+            "review_packet_sha256": "2c914bd3feffb82f1e61f908aefc693e273e73c0060f6be2e6567495b2be3789",
+            "run_id": "31148995-9da4-443b-b053-e380b0334469",
+            "schema": "spec-flow-phase-receipt.v1",
+            "sha": "4199c6ae3a7633ece6a7a246a4b234c9e7ba5792",
+            "subject": "feat(e7): implement migrated strict normalization",
+            "tree": "3892f293c21cc04d92bfb77ea0848abdf9d31612"
+          },
+          "exact_tree_parent": true,
+          "review_attestation": {
+            "session_id": "01a14555-da39-7313-9ccb-63588b9eb0f8",
+            "role": "reviewer",
+            "model": "gpt-6-sol",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-30-16-01a14555-da39-7313-9ccb-63588b9eb0f8.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+            "agent_path": "/root/e7_owner_f8fa91d/review_abe316beefe7214d775e223c226776c53c69783afe01976cbbf352ea11668e0f",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "0eef9aac61c18122af71597947fb5cc6552d03cc01835240962204ac16cfe14d",
+              "turn_contexts": [
+                "0d87a642d36af194ffb172d2f860e0124a4bfa5072827146b0e8537fae256ec7"
+              ],
+              "lifecycle": "ac7a402e9183c55fa7513dab3b1205b4af3ecd64cb790cb04c6e0f2381322d4c",
+              "task_marker": null,
+              "delegation": "0c6db84ba9ec6cdcfe2e833f859970045b9a3d0da908b936ac21f2273254843f"
+            },
+            "attestation_sha256": "75ee692dfb77802dacbd6e7ef3e75fc0de8f22a25debd01ac02c5d77e6d23639"
+          }
+        }
+      },
+      "audit": {
+        "sha": "171c6714fad4f226754228ecfd25cf0150089099",
+        "parent": "4199c6ae3a7633ece6a7a246a4b234c9e7ba5792",
+        "tree": "c03121c0c07f01d77f1e4fdb769e752a83cf6a26",
+        "subject": "docs(spec-flow): record release review",
+        "body": "docs(spec-flow): record release review\n\nSpec-Flow-Audit: 31148995-9da4-443b-b053-e380b0334469"
+      },
+      "completion": {
+        "release": "v1.2.3",
+        "run_id": "31148995-9da4-443b-b053-e380b0334469",
+        "technical_complete": true,
+        "complete": true,
+        "reasons": [],
+        "release_review_pending": false,
+        "audit_pending": false,
+        "release_closure_reasons": [],
+        "phase_commits": {
+          "PH-01": "4199c6ae3a7633ece6a7a246a4b234c9e7ba5792"
+        }
+      },
+      "ownership_registry": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/legacy-main/.git/spec-flow-active-controller.json",
+      "lease_present": false,
+      "lease": null,
+      "event_count": 11,
+      "events_sha256": "60646169410f77c8059e5f93a302725ad0a446c68532bec1710e535e715b726d",
+      "worktree_status": "",
+      "independent_test": {
+        "argv": [
+          "python3",
+          "-B",
+          "-m",
+          "unittest",
+          "-v",
+          "test_release.py"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+        "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+        "code_sha256": "037e0992a054e39a2e59754d5292a24a9e34479d7f1f268a15bf6a9d3d60465b",
+        "code_unchanged": true
+      }
+    },
+    "negative": {
+      "root": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/negative-linked",
+      "run_id": "54b159ea-1fbf-47a9-8abd-4abecc9a4782",
+      "status": "abandoned",
+      "active_task": null,
+      "attempt": 3,
+      "task_status": "verification_failed",
+      "head": "e817b8f171e652d309350fec3ee23014aca1fa82",
+      "attempt_attestations": [
+        {
+          "task_id": "T-001",
+          "attempt": 1,
+          "attestation": {
+            "session_id": "01a14558-2776-7af1-88e7-808b4cc38885",
+            "role": "implementer",
+            "model": "gpt-6-luna",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-32-47-01a14558-2776-7af1-88e7-808b4cc38885.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+            "agent_path": "/root/e7_owner_f8fa91d/luna_b14889de1a578aeadb0167680f559f144fbf56f4e5d50d04d4f8b94b61290dd1",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "ac647ac5120bf1a44656398f70d20f9878e8c20c3637af01d75ba5588b0a6f27",
+              "turn_contexts": [
+                "11b6e7253730ac03d28cf698ce2dde19809d464e937a35e4452328de0d4ccf51"
+              ],
+              "lifecycle": "90627f0a0b528c52c80aaf62b3925cc499e579d65090b74c715af1350c5bc52f",
+              "task_marker": null,
+              "delegation": "e952ce96a3c459af9d0ef0b1b528331049cad5eab2591fed487b3889fce90364"
+            },
+            "attestation_sha256": "cd8b0a50a0e6222838db81bf352a170d6cf23a093c3b0dd037d03533240a9a45"
+          }
+        },
+        {
+          "task_id": "T-001",
+          "attempt": 2,
+          "attestation": {
+            "session_id": "01a14558-e9b6-7ce3-8752-b51d5fb23b0d",
+            "role": "implementer",
+            "model": "gpt-6-luna",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-33-37-01a14558-e9b6-7ce3-8752-b51d5fb23b0d.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+            "agent_path": "/root/e7_owner_f8fa91d/luna_b73a1b6510b6299eb30c15a3be618f737afc09bcb5dbdf2692dbfe13eba352f5",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "6a0cbe070f4607abadb3ac51fd301d8a3b847af0c1ac797f3d7c1a62652847a3",
+              "turn_contexts": [
+                "a207bec705e840fc22c551574b25838f65d7641874e4af33f847c219770a2f90"
+              ],
+              "lifecycle": "f7e3b2a8641864ee5f0d82635f4ee7144341aacf9a5182419c2dd1c96399d58a",
+              "task_marker": null,
+              "delegation": "ceaa405e955a352a6303d0779502dfd603d743d06156a31174c70da29dcd4e3b"
+            },
+            "attestation_sha256": "02693a2555f43923efeefd517a69e69e225ee4e1321a2adf4b9ae8a8fa31718b"
+          }
+        },
+        {
+          "task_id": "T-001",
+          "attempt": 3,
+          "attestation": {
+            "session_id": "01a14559-ad5e-7cf1-b36d-52b063247b14",
+            "role": "implementer",
+            "model": "gpt-6-luna",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-34-27-01a14559-ad5e-7cf1-b36d-52b063247b14.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+            "agent_path": "/root/e7_owner_f8fa91d/luna_d817ecfe00cb28a6db02e8ccf637b35dc2eaa86873fdce21968f978014404e07",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "515d673c743b088bf78c90580ed1a5be42508213a6d4cc261520b29366da44af",
+              "turn_contexts": [
+                "f5ad5a7657e5027d09712882cc346b30914cc01cc478a89c07b955f7ba43dc34"
+              ],
+              "lifecycle": "6dac43bea9f42c952ddc3ad83186350d7da8cd4b6ac5dc57746804291037ba37",
+              "task_marker": null,
+              "delegation": "b5f2edc29b8da2c7609439eaf5e200affeed143c8285330778b082effcd8ef12"
+            },
+            "attestation_sha256": "4b6b61db277a54712175b32f3f14bf987b55ae23b13bb094522ca82744756201"
+          }
+        }
+      ],
+      "phases": {},
+      "audit": null,
+      "completion": {
+        "release": "v1.2.3",
+        "run_id": "54b159ea-1fbf-47a9-8abd-4abecc9a4782",
+        "technical_complete": false,
+        "complete": false,
+        "reasons": [
+          "task T-001 is not completed",
+          "phase PH-01 is not committed",
+          "worktree changed after the reviewed phase commit: release.py"
+        ],
+        "release_review_pending": true,
+        "audit_pending": true,
+        "release_closure_reasons": [
+          "release-review has not been recorded"
+        ],
+        "phase_commits": {}
+      },
+      "ownership_registry": "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/negative-main/.git/spec-flow-active-controller.json",
+      "lease_present": false,
+      "lease": null,
+      "event_count": 16,
+      "events_sha256": "785de28b9f8d018c5bbaab50c20ac9777c42a815d3b96f3748a14d7e48dcb178",
+      "worktree_status": "M release.py\n?? .spec-flow/",
+      "independent_test": {
+        "argv": [
+          "python3",
+          "-B",
+          "-m",
+          "unittest",
+          "-v",
+          "test_release.py"
+        ],
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... \n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003') ... FAIL\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/negative-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (failures=1)\n",
+        "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+        "code_sha256": "b7a27bebf368fa793d11bc6575b20203e0c1c09148bc68a12124d3eae17244a9",
+        "code_unchanged": true
+      }
+    }
+  },
+  "negative_preservation": {
+    "all_task_state_unchanged": true,
+    "file_hashes_preserved": 13,
+    "event_prefix_preserved": 15,
+    "unique_abandon_event": true,
+    "idempotent_second_abandon": true,
+    "failure_and_limit_guards_observed": true
+  },
+  "capability_probe_attestation": {
+    "session_id": "01a14550-1a7c-7942-aebc-f6387c81ec15",
+    "role": "implementer",
+    "model": "gpt-6-luna",
+    "effort": "high",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-24-00-01a14550-1a7c-7942-aebc-f6387c81ec15.jsonl",
+    "agent_lifecycle": "completed",
+    "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+    "agent_path": "/root/e7_owner_f8fa91d/e7_capability_probe_ef7897d",
+    "packet_marker_source": null,
+    "record_hashes": {
+      "session_meta": "53b7b46c74267ed27e2aaa0f8e44800acac5fd539f00cd38b9094528ae534ce0",
+      "turn_contexts": [
+        "e21012e4447293318cb1a5cecb7aaab5d070c32205a0f9a7fd13a057f27a7a52"
+      ],
+      "lifecycle": "2845b0b795678665610bd844e481d0d8684ea29ebd21a9d935642ce671fad3c7",
+      "task_marker": null,
+      "delegation": null
+    },
+    "attestation_sha256": "04da069fcb269e4f22d900c21ebff98d6e8ce848d14c84f87667e8c114c89d15"
+  },
+  "capability_probe_limit": "Tool capability exercise only; not a prepared/bound implementation task",
+  "distinct_attested_sessions": 9,
+  "positive_native_closures_verified": 2,
+  "negative_lease_released": true,
+  "result": "Evidence/identity checks passed; inspect negative state and evaluation report for overall E7 verdict"
+}

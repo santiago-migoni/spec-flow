@@ -1,0 +1,14 @@
+{
+  "adopted_after_crash": false,
+  "committed_at": "2026-10-16T15:27:36Z",
+  "evidence": "Independent Sol/high reviewer inspected exact staged tree 4b94cb40d7f540a6a8fafbe88ae4917957646de6, parent a3bd9c3 and diff 2b0f6c06; controller evidence and reviewer read-only rerun show four fixed methods PASS on code SHA 2da42918 and unchanged test SHA 7bb24f05. AC-001, AC-002, NFR-001, constitution MUSTs satisfied; no unstaged code changes or blockers.",
+  "parent": "a3bd9c3b461add5f3684d408b2b981ea359d0083",
+  "phase_id": "PH-01",
+  "release": "v1.2.3",
+  "review_packet_sha256": "032de038d362880e9c77543ea20dba48340c54099a9f5fa6e3b9f1ac730a0e5a",
+  "run_id": "299d9b51-1a9d-4f5a-92e3-4ff20e9c58bc",
+  "schema": "spec-flow-phase-receipt.v1",
+  "sha": "8aad07dac4e8004aa639e6c3e4917f19844e6004",
+  "subject": "feat(e7): implement strict release normalization",
+  "tree": "4b94cb40d7f540a6a8fafbe88ae4917957646de6"
+}

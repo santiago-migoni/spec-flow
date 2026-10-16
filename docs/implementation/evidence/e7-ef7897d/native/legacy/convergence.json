@@ -1,0 +1,47 @@
+{
+  "release": "v1.2.3",
+  "run_id": "31148995-9da4-443b-b053-e380b0334469",
+  "phase_commit": "4199c6ae3a7633ece6a7a246a4b234c9e7ba5792",
+  "assessment": "Clean semantic convergence for migrated synthetic E7 fixture",
+  "technical_complete": true,
+  "coverage": [
+    {
+      "criterion": "AC-001",
+      "status": "satisfied",
+      "evidence": "Four fixed controller checks: bare/v ASCII triples, zero and huge values return exact v-prefixed digits."
+    },
+    {
+      "criterion": "AC-002",
+      "status": "satisfied",
+      "evidence": "Malformed/leading-zero/Unicode/whitespace/suffix/count strings raise ValueError; nonstrings including True raise TypeError."
+    },
+    {
+      "criterion": "NFR-001",
+      "status": "satisfied",
+      "evidence": "Four fixed unittest methods pass; test SHA remains pinned."
+    }
+  ],
+  "governing_decisions": [
+    "constitution MUST fixed tests and exact errors",
+    "constitution MUST nonmutating verification",
+    "architecture ARC-01 pure stdlib function",
+    "structure release.py sole implementation path"
+  ],
+  "migration_provenance": {
+    "source_git_head": "5c57a6a5377efef3d11468238cb12ec875a23197",
+    "checkpoint_commit": "3a726745005cadfc53c4494f78971ee4c3ede8d4",
+    "migration_id": "4c4f7dea92dd5d18adfaa0af69cf40af",
+    "originals_byte_preserved": true,
+    "approval_imports": 0,
+    "evidence_imports": 0,
+    "new_synthetic_receipts": 7
+  },
+  "code_sha256": "037e0992a054e39a2e59754d5292a24a9e34479d7f1f268a15bf6a9d3d60465b",
+  "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+  "findings": [],
+  "limits": [
+    "Synthetic fixture only; impact pending.",
+    "Infrastructure N/A: local pure function without external service."
+  ],
+  "reported_at": "2026-10-16T15:31:57.405638+00:00"
+}

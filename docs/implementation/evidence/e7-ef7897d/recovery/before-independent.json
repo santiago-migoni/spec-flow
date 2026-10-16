@@ -1,0 +1,33 @@
+{
+  "root": "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/negative-linked",
+  "run_id": "ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e",
+  "file_hashes": {
+    ".specs/constitution.md": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209",
+    ".specs/architecture.md": "691001bf2c3df927701b0e15d7dd9606c29a8d16c127688750e942b49a44fcb7",
+    ".specs/structure.md": "d5c4822c416a891edc92bc3c97fbe33702f2bffba13b322c534f960c7fad08aa",
+    ".specs/roadmap.md": "a674415efb82babb914dcf282ad3bc99dc2c07d98b716c06f1bed7ff1f463ad5",
+    ".specs/release-v1.2.3/tasks.md": "d7ac75e1882bdb06b697bfe5351471c4ef45bf84e8fe4fc35485733f9f524849",
+    ".specs/release-v1.2.3/plan.md": "bb4a7fba8988cc1c2d5950b128d39f9d8c3cdec89735c3f61b84c92343b47f1c",
+    ".specs/release-v1.2.3/spec.md": "5f79585a58847bb3253ec804f09d909d4267a656ce6d78ac2a6a58786e1f6049",
+    ".spec-flow/approvals.jsonl": "95bcaeb15d9ca8a690fd40644d2b8985561ff433269453e2ad3cfc5b0ce98113",
+    ".spec-flow/config.json": "16170f48163df123b40a2e52aa1b53c988a2e608656df3881152690b4dcd940c",
+    ".spec-flow/lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".spec-flow/.gitignore": "51e22acc425d767901cd51941b9d53a16951a5fe6bd220549f3ef8ed94861af3",
+    ".spec-flow/runs/ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e/state.json": "bf8357b576e95ed12b772de17218a120b4cef8cf536081b29e5e0e72e6d849d6",
+    ".spec-flow/runs/ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e/events.jsonl": "f57f7a171a69cc794df8ba25f21144de014bab4bec4a85f81d7891a2224d6ada",
+    ".spec-flow/runs/ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e/packets/T-001-3.json": "64bd6d57d837cf305d2e5b580d5d15178051c34e31913a77570ca71b4ee06765",
+    ".spec-flow/runs/ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e/packets/T-001-2.json": "88e3a59154a518d20b9fcdd06ce800811bc5ca6c4692b912f9cce5bc8f5573c4",
+    ".spec-flow/runs/ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e/packets/T-001-1.json": "6e535cb98fcebfc8fb45ca0bab1fa2301411b5d2f0541bcd498875262ca8cb45",
+    "release.py": "283d6ea7c4aff4a8e3aff28a9ea6cf9425c4f2ed12bcd400c76a744407189d18",
+    "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+  },
+  "head": "ecc770844e35a1cef25511a0570d9f4aca94cef9",
+  "registry": "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/negative-main/.git/spec-flow-active-controller.json",
+  "lease": {
+    "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+    "release": "v1.2.3",
+    "run_id": "ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e",
+    "worktree": "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/negative-linked"
+  },
+  "events_bytes": 24891
+}

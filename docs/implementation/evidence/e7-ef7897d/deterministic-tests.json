@@ -1,0 +1,21 @@
+{
+  "evaluated_commit": "ef7897d83dedf9fe20c8bf82fb9e311f4cff8107",
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/source/plugins/spec-flow/tests",
+    "-v"
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "tests": 127,
+  "output_sha256": "01dc228352c504eb9cca305a0815e2d06723e38cd242f99f44b04197389214f1",
+  "result": "PASS",
+  "scope": "Exported candidate deterministic suite; not native implementation evidence"
+}

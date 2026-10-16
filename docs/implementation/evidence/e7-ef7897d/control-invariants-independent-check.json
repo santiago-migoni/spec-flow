@@ -1,0 +1,45 @@
+{
+  "base": "6650a194f7ea1c448ffc75d4d21e273fb7d2021e",
+  "candidate": "ef7897d83dedf9fe20c8bf82fb9e311f4cff8107",
+  "changed_engine_methods_only": [
+    "_abandon",
+    "_reduce_event_rows"
+  ],
+  "unchanged_runtime_and_hook_files": [
+    "harness/runtime/codex_adapter.py",
+    "harness/runtime/contracts.py",
+    "harness/runtime/phases.py",
+    "harness/runtime/store.py",
+    "hooks/check-phase-approval.py"
+  ],
+  "hard_gate_blocks_unchanged": [
+    "skills/analyze/SKILL.md",
+    "skills/backlog/SKILL.md",
+    "skills/clarify/SKILL.md",
+    "skills/constitution/SKILL.md",
+    "skills/converge/SKILL.md",
+    "skills/design/SKILL.md",
+    "skills/finishing-branch/SKILL.md",
+    "skills/implement/SKILL.md",
+    "skills/plan/SKILL.md",
+    "skills/review-release/SKILL.md",
+    "skills/roadmap/SKILL.md",
+    "skills/specify/SKILL.md",
+    "skills/tasks/SKILL.md",
+    "skills/using-spec-flow/SKILL.md"
+  ],
+  "version": "2.0.0",
+  "manifest_mirror_equal": true,
+  "preserved_by_unchanged_methods": [
+    "retry limit configuration",
+    "prepare budget across runs",
+    "verification and mutation rejection",
+    "task review and close",
+    "approval receipts and dependency freshness",
+    "native profiles and parent/marker attestation",
+    "phase review/audit closure"
+  ],
+  "result": "PASS",
+  "independent_fix_review_bytes_match_candidate": true,
+  "reviewed_files_checked": 11
+}

@@ -1,0 +1,21 @@
+{
+  "agent_lifecycle": "completed",
+  "agent_path": "/root/e7_owner_f8fa91d/luna_1498d05e7c7dba97b329c2befcd0ddea743202afce865dba3764ab354020df30",
+  "attestation_sha256": "5895fdede97e8340c1f16df6408ab0600eb742206a14387660a48b861d3e1499",
+  "checked_at": "2026-10-16T15:22:57.149540+00:00",
+  "effort": "high",
+  "model": "gpt-6-luna",
+  "packet_marker_source": null,
+  "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "record_hashes": {
+    "delegation": null,
+    "lifecycle": "8f411e7dc4e41af36b775f65f0be935399686dfbbf3a0df7234d2e8b3b351e07",
+    "session_meta": "e4e8f5355e52581dff34a73ccf17bf6a1d62f18ac647c7b89474fe8853515684",
+    "task_marker": null,
+    "turn_contexts": [
+      "56fe67594f72a090e7b94341ae165236224982c6be68b3cd06b5cde60bc90620"
+    ]
+  },
+  "role": "implementer",
+  "session_id": "01a1453b-dc1c-7312-8551-0cfc106940ce"
+}

@@ -1,0 +1,250 @@
+{
+  "abandonment": {
+    "abandoned_at": "2026-10-16T15:35:36Z",
+    "authorization": {
+      "actor": "User",
+      "source": "evaluation-context.json human_authorization and E7 negative scenario",
+      "statement": "Me parece bien. Corrige F-03 conservando los controles actuales, recupera el run bloqueado mediante el controlador y repite E7 sobre el nuevo commit, usando proyectos desechables y registrando las pruebas, los resultados y las evidencias. The E7 negative scenario authorizes abandonment after three injected failed attempts."
+    },
+    "reason": "Three native deliberately failing attempts exhausted the correction limit; fixed-suite AC-002 still fails for 1.2.003. Preserve the unresolved negative fixture and release ownership through the F-03 supported transition without granting completion credit.",
+    "unresolved_task": {
+      "attempt": 3,
+      "host_attestation": {
+        "agent_lifecycle": "completed",
+        "agent_path": "/root/e7_owner_f8fa91d/luna_d817ecfe00cb28a6db02e8ccf637b35dc2eaa86873fdce21968f978014404e07",
+        "attestation_sha256": "4b6b61db277a54712175b32f3f14bf987b55ae23b13bb094522ca82744756201",
+        "effort": "high",
+        "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-34-27-01a14559-ad5e-7cf1-b36d-52b063247b14.jsonl",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+        "record_hashes": {
+          "delegation": "b5f2edc29b8da2c7609439eaf5e200affeed143c8285330778b082effcd8ef12",
+          "lifecycle": "6dac43bea9f42c952ddc3ad83186350d7da8cd4b6ac5dc57746804291037ba37",
+          "session_meta": "515d673c743b088bf78c90580ed1a5be42508213a6d4cc261520b29366da44af",
+          "task_marker": null,
+          "turn_contexts": [
+            "f5ad5a7657e5027d09712882cc346b30914cc01cc478a89c07b955f7ba43dc34"
+          ]
+        },
+        "role": "implementer",
+        "session_id": "01a14559-ad5e-7cf1-b36d-52b063247b14"
+      },
+      "status": "verification_failed",
+      "task_id": "T-001"
+    }
+  },
+  "active_task": null,
+  "authorization": [
+    {
+      "actor": "User",
+      "source": "evaluation-context.json human_authorization",
+      "statement": "Me parece bien. Corrige F-03 conservando los controles actuales, recupera el run bloqueado mediante el controlador y repite E7 sobre el nuevo commit, usando proyectos desechables y registrando las pruebas, los resultados y las evidencias. Synthetic E7 execution of PH-01 only."
+    }
+  ],
+  "authorized_phases": [
+    "PH-01"
+  ],
+  "capabilities": {
+    "basis": "host-supplied capability references; Python does not enumerate native tools",
+    "inventory_reference": "collaboration.list_agents: ef7897d capability probe completed; interrupt probe observed running then interrupted; no active fixture child at start",
+    "operations": [
+      "interrupt_agent",
+      "list_agents",
+      "spawn_agent",
+      "wait_agent"
+    ],
+    "owner_session": {
+      "agent_lifecycle": "active",
+      "agent_path": "/root/e7_owner_f8fa91d",
+      "attestation_sha256": "9e071ccd2daca2d0cdc50be8ea575fbf28eee2290170611a38c59151c86ad0d8",
+      "effort": "high",
+      "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T11-27-09-01a1451c-0ecd-7c93-9d51-8650fdaf887f.jsonl",
+      "model": "gpt-6-sol",
+      "packet_marker_source": null,
+      "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+      "record_hashes": {
+        "delegation": null,
+        "lifecycle": "cba3ae6a7a27c4aa7a6e90bfaf303bd4de37c40eb0907dfa14bd591b4c8b8e43",
+        "session_meta": "45ca6f4389b225b47adbdfd6e1343ce53eafb8d7dfe1b4aaed182215557ccb6a",
+        "task_marker": null,
+        "turn_contexts": [
+          "f4fb30b106c0340c8ef4a228bb94a748ab65366d7d4f5a577a10097389e0eefc",
+          "be016a0d93c64440dfbc3d9d41c153851052736c0b5044118ba9f7e40bed8af7",
+          "0880686ba8bb9fd63e54c613ddfce8284aac730d53f4292c132189464bf79632",
+          "4a56800b6e21b46daa84968eefd4d1bf19578c8c5edb375e5e9a19195865f369",
+          "1882979eea9e58739fd8c5c8786e83a09a317a764831a0f7d8df9b0b190c4870",
+          "fc0821a7982a323f815c7dcc546a9d94b24e839f011ae0fba9b986b15171dd4a",
+          "1b07972ab8c1166bbf3a34d82a66d71eafadd33c1b442c9e18452e598993d255"
+        ]
+      },
+      "role": "orchestrator",
+      "session_id": "01a1451c-0ecd-7c93-9d51-8650fdaf887f"
+    },
+    "probe_evidence_references": {
+      "interrupt_agent": "native interrupt_agent returned previous_status running for e7_capability_interrupt_ef7897d; later list_agents showed interrupted",
+      "list_agents": "native list_agents showed capability probe running, then interrupted, while no implementation child was active",
+      "spawn_agent": "native spawn_agent created isolated Luna/high e7_capability_probe_ef7897d and e7_capability_interrupt_ef7897d, unrelated to implementation",
+      "wait_agent": "native wait_agent returned after capability probe ready and terminal message"
+    }
+  },
+  "documents": {
+    ".specs/architecture.md": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+    ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+    ".specs/release-v1.2.3/plan.md": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+    ".specs/release-v1.2.3/spec.md": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+    ".specs/release-v1.2.3/tasks.md": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+    ".specs/roadmap.md": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+    ".specs/structure.md": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07"
+  },
+  "migration_evidence_pending": [],
+  "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "phase_contracts": [
+    {
+      "depends_on": [],
+      "description": "Implement and verify strict normalization in release.py.",
+      "id": "PH-01"
+    }
+  ],
+  "phases": {},
+  "prior_attempts": {},
+  "reconciliation_required": false,
+  "release": "v1.2.3",
+  "run_id": "54b159ea-1fbf-47a9-8abd-4abecc9a4782",
+  "status": "abandoned",
+  "task_contracts": [
+    {
+      "acceptance": [
+        "AC-001",
+        "AC-002"
+      ],
+      "closure": "Final AC-001 and AC-002 behavior passes all four fixed tests; test_release.py remains unchanged.",
+      "depends_on": [],
+      "files": [
+        "release.py"
+      ],
+      "id": "T-001",
+      "phase": "PH-01",
+      "steps": [
+        {
+          "action": "Implement normalize_release to satisfy valid ASCII triples and exact error classes; run the fixed four-method suite without editing tests.",
+          "id": "T-001.001",
+          "verification": {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "-v",
+              "test_release.py"
+            ],
+            "expected": "All four fixed tests execute and pass with exact outputs and exception types."
+          }
+        }
+      ],
+      "story": "US-001"
+    }
+  ],
+  "task_ids": [
+    "T-001"
+  ],
+  "tasks": {
+    "T-001": {
+      "agent": {
+        "agent_id": "/root/e7_owner_f8fa91d/luna_d817ecfe00cb28a6db02e8ccf637b35dc2eaa86873fdce21968f978014404e07",
+        "agent_path": "/root/e7_owner_f8fa91d/luna_d817ecfe00cb28a6db02e8ccf637b35dc2eaa86873fdce21968f978014404e07",
+        "attestation": {
+          "agent_lifecycle": "active",
+          "agent_path": "/root/e7_owner_f8fa91d/luna_d817ecfe00cb28a6db02e8ccf637b35dc2eaa86873fdce21968f978014404e07",
+          "attestation_sha256": "b4eab89d9b8454bbe2cfb5deb20059cc86679a4b936ade34b731f20b9f3b0b19",
+          "effort": "high",
+          "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-34-27-01a14559-ad5e-7cf1-b36d-52b063247b14.jsonl",
+          "model": "gpt-6-luna",
+          "packet_marker_source": "native_spawn_task_name",
+          "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+          "record_hashes": {
+            "delegation": "b5f2edc29b8da2c7609439eaf5e200affeed143c8285330778b082effcd8ef12",
+            "lifecycle": "25b86d2c505a4fb92d16842afb0a236edbdfa0493a93d3bca3d8c546224f7e76",
+            "session_meta": "515d673c743b088bf78c90580ed1a5be42508213a6d4cc261520b29366da44af",
+            "task_marker": null,
+            "turn_contexts": [
+              "f5ad5a7657e5027d09712882cc346b30914cc01cc478a89c07b955f7ba43dc34"
+            ]
+          },
+          "role": "implementer",
+          "session_id": "01a14559-ad5e-7cf1-b36d-52b063247b14"
+        },
+        "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+        "session_id": "01a14559-ad5e-7cf1-b36d-52b063247b14"
+      },
+      "attempt": 3,
+      "attempt_baseline": {
+        ".gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+        "release.py": "a0bb17daca7ea0806eb65adafad6ddf00ca069f1165e5d844b8139dacc30c289",
+        "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+      },
+      "attempt_owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+      "baseline": {
+        ".gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+        "release.py": "a804abcd14f65126a7ada66bb6a9bb4554595ddd31cdc485df545beb28e42aa9",
+        "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+      },
+      "closed_at": null,
+      "code_fingerprint": null,
+      "evidence_path": null,
+      "failure": {
+        "code": "verification_failed",
+        "details": {
+          "exit_code": 1,
+          "output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... \n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003') ... FAIL\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-ef7897d-jn0glhbr/negative-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (failures=1)\n"
+        },
+        "message": "verification command failed: T-001.001"
+      },
+      "no_spawn_attestation": null,
+      "packet_created_at": "2026-10-16T15:34:22Z",
+      "packet_path": ".spec-flow/runs/54b159ea-1fbf-47a9-8abd-4abecc9a4782/packets/T-001-3.json",
+      "packet_sha256": "d0b8ca8ec965856ab0e3c8c864755617222feaeb5712e5cf0bc77010234b6135",
+      "prepared_at": "2026-10-16T15:34:22Z",
+      "reconciliation_evidence": null,
+      "result": {
+        "blockers": [],
+        "checks": [
+          {
+            "check": "python3 -B -m unittest -v test_release.py",
+            "result": "FAILED: four methods ran, three passed, malformed-string method failed only 1.2.003 because ValueError was not raised.",
+            "step_id": "T-001.001"
+          }
+        ],
+        "evidence": [
+          {
+            "description": "Native Luna observed one failing 1.2.003 subtest; fixed test SHA 7bb24f05 unchanged; code SHA b7a27bebf368fa793d11bc6575b20203e0c1c09148bc68a12124d3eae17244a9.",
+            "kind": "test_output",
+            "reference": "negative-linked/test_release.py"
+          }
+        ],
+        "files_modified": [
+          "release.py"
+        ],
+        "summary": "INJECTED FAILURE attempt3: native Luna refactored release.py but deliberately still accepts 1.2.003, violating AC-002. Four-method suite ran with one failing subtest; this tests retry-limit and abandon controls, not model quality."
+      },
+      "retry_hypothesis": null,
+      "retry_reason": null,
+      "review": null,
+      "scope_files": [
+        "release.py"
+      ],
+      "source_digests": {
+        ".specs/architecture.md": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+        ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+        ".specs/release-v1.2.3/plan.md": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+        ".specs/release-v1.2.3/spec.md": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+        ".specs/release-v1.2.3/tasks.md": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+        ".specs/roadmap.md": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+        ".specs/structure.md": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07"
+      },
+      "status": "verification_failed",
+      "step_evidence": {},
+      "verified_snapshot": null
+    }
+  }
+}

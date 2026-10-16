@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-16T15:37:32.854550+00:00",
+  "candidate": "ef7897d83dedf9fe20c8bf82fb9e311f4cff8107",
+  "package_files_unchanged": 115,
+  "json": 74,
+  "jsonl_records": 214,
+  "python": 27,
+  "snapshot_files": 91,
+  "bundles": 4,
+  "all_snapshot_originals_equal": true,
+  "all_four_ownership_leases_absent": true,
+  "report_links_valid": true,
+  "result": "PASS"
+}
