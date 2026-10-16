@@ -6,7 +6,7 @@ description: "Specify a selected SemVer release with bounded user value, canonic
 # Spec-Flow: specify
 
 <HARD-GATE>
-Require an approved roadmap selecting the explicit vX.Y.Z release and current registry approval of its exact digest. Run gate for specify and the release. If a legacy feature directory or unadopted configuration exists, migrate first. Do not write on the repository default branch.
+Require an approved roadmap selecting the explicit vX.Y.Z release and current registry approval of its exact digest. Run gate for specify and the release. Before authorized writing, initialize a new nonlegacy unadopted project with {}; migrate legacy feature directories through the reviewed migration flow first. Do not write on the repository default branch.
 </HARD-GATE>
 
 Read constitution, the selected roadmap entry and OUT IDs, applicable approved shared design, existing backlog, and relevant current evidence. Ask one high-impact question at a time, collaborating with the product decision-maker, relevant users, and development/test perspectives. Resolve the exact release version from the user and roadmap; do not infer selection from a projected/planned status, array position, or directory number. Write `.specs/release-vX.Y.Z/spec.md` using [the spec template](assets/spec-template.md). Create or switch to a release branch before writing; preserve unrelated work.
@@ -53,6 +53,4 @@ Run validate with {"release":"vX.Y.Z"} only after spec, plan, and tasks all exis
 
 ## Runtime discipline
 
-Resolve <plugin-root> from this installed SKILL.md. Run python3 <plugin-root>/scripts/spec-flow.py --root <project> OP --input <json-file>. Use validate with {"path":"..."} or {"release":"vX.Y.Z"}, digest with {"path":"..."}, gate with {"kind":"<phase>","release":"vX.Y.Z"}, and status with {}. Registry approval of the exact decision digest controls gates; a Markdown status is only a view. If legacy `.specs/NNN-name/` folders exist, stop before writing and follow the `migrate-preview` → review → `migrate-apply` flow in `$using-spec-flow`; use `migrate-resume` after an interrupted apply. For a new unadopted project, run initialize with empty JSON input {} first. Do not silently convert historical approvals or checked boxes.
-
-Validate the resulting document. Present its concrete draft for human approval. On explicit approval call approve with {"path":"<project-relative path>","actor":"<human>","statement":"<their approval>","source":"<conversation reference>"}. A substantive edit after approval increments RNN and requires new approval; inspect affected downstream pins and adopt a new base only with explicit approval. Do not approve on behalf of the user.
+Before invoking `spec-flow.py`, read [shared controller operations](../../harness/contracts/operations.md). Follow its adoption, query/input, validation/digest, and approval/revision mechanics under this skill's own gate and authorized scope.

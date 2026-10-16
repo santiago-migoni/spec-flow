@@ -21,14 +21,7 @@ Run `validate` with {"release":"vX.Y.Z"} and `gate` with {"kind":"analyze","rele
 
 Do not write any file or alter approvals. Do not save reports/patches, initialize, migrate (including preview), repair state, refresh evidence, generate progress, or invoke execution operations. Inspect proposed task checks without running them. Do not create input JSON files, scratch files, or Python caches to perform this review. Read-only findings and exact proposed edits stay in conversation.
 
-Resolve <plugin-root> from this installed SKILL.md. Only use the controller's read-only `status` with {}, `validate`, `digest` with {"path":"<project-relative path>"}, and the analyze `gate` above. Invoke Python with `-B`; use existing input files or stream JSON through `/dev/stdin` on the supported POSIX host, for example:
-
-```sh
-printf '%s' '{"kind":"analyze","release":"vX.Y.Z"}' |
-  python3 -B "<plugin-root>/scripts/spec-flow.py" --root "<project>" gate --input /dev/stdin
-```
-
-Use Git reads without refreshing the index, such as `git --no-optional-locks status --short`; do not checkout, stage, or commit. If safe query input is unavailable, report the limitation rather than writing a helper file. For unadopted or legacy projects, report the prerequisite and route initialization/migration to a separate authorized `$using-spec-flow` workflow. Analyze itself performs none of those writes and never converts historical approvals or checked boxes into authority.
+Before invoking `spec-flow.py`, read [strict consultation](../../harness/contracts/operations.md#strict-consultation) for the no-file CLI/input and Git-read mechanics. Only use `status` with {}, `validate` with the release or a supported path, `digest` with a supported path, and the analyze phase `gate` above. Use `GIT_OPTIONAL_LOCKS=0 python3 -B` and existing inputs or `/dev/stdin`; preserve query errors without repair. Unadopted/legacy projects remain diagnostic-only; setup and migration belong to a separate authorized owner workflow. Never convert historical approvals or checked boxes into authority.
 
 ## Semantic review
 

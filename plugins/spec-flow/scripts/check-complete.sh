@@ -1,5 +1,7 @@
 #!/bin/sh
-# Read-only evidence and phase-commit completion check for a release tasks.md.
+# Evidence and phase-commit completion check for a release tasks.md.
+# Preserves decisions/evidence; uses a temporary input and Git may refresh its index.
+# Not a strict no-file consultation query; see harness/contracts/operations.md.
 # Exit 0 means complete, 1 means valid but incomplete, 2 means invalid input/runtime error.
 
 if [ "$#" -ne 1 ] || [ -z "$1" ] || [ ! -f "$1" ]; then

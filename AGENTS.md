@@ -53,4 +53,5 @@ Keep the version identical in `plugins/spec-flow/plugin.json` and `plugins/spec-
 - Release directories use `release-vX.Y.Z` with strict numeric SemVer. `NNN-short-description` is a legacy source format for migration, not a new release path.
 - Document revision starts at `R00`; increment only for an edit requested after approval. Revision loops before approval remain `R00`.
 - Keep `plugins/spec-flow/skills/using-spec-flow/SKILL.md`, each phase skill, and `README.md`'s workflow table aligned.
+- Maintain common controller invocation, strict consultation, adoption, validation, approval/revision, and completion-query mechanics in `plugins/spec-flow/harness/contracts/operations.md`; skills link it before controller use and retain their own HARD-GATE, mode restrictions, semantic checks, and execution controls. Completion queries preserve decisions/evidence but may refresh Git metadata and are excluded from strict no-file consultation; authorized closure workflows retain mandatory live checks.
 - If the phase chain changes, update the manifest description, marketplace entry, README, bootstrap skill, and affected skill guidance together.

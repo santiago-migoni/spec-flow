@@ -6,7 +6,7 @@ description: "Review a technically converged release's acceptance, observed impa
 # Spec-Flow: Review Release
 
 <HARD-GATE>
-Require a release spec whose technical convergence is backed by current controller evidence and reviewed phase commits. Run the release-review gate. If tasks, verification, or convergence are incomplete, stop and direct the remaining work to the owning phase. Do not treat publication or deployment as implied by technical completion.
+Require a release spec whose technical convergence is backed by current controller evidence and reviewed phase commits. Run the review-release gate. If tasks, verification, or convergence are incomplete, stop and direct the remaining work to the owning phase. Do not treat publication or deployment as implied by technical completion.
 </HARD-GATE>
 
 ## Purpose and boundaries
@@ -23,7 +23,7 @@ Do not create a separate editable release-review file or copy the report into th
 
 ## Entry and context
 
-Identify release/run, approved roadmap/spec/plan/tasks and applicable decisions, current evidence, and reviewed phase commits. Read the roadmap outcomes and the spec's post-delivery measurement plan. Run the controller gate for review-release and the read-only `complete` query following [the execution contract](../../harness/contracts/execution.md).
+Identify release/run, approved roadmap/spec/plan/tasks and applicable decisions, current evidence, and reviewed phase commits. Read the roadmap outcomes and the spec's post-delivery measurement plan. Run the controller gate for review-release and its required live `complete` query following [shared controller operations](../../harness/contracts/operations.md) and [the execution contract](../../harness/contracts/execution.md). Completion preserves decision/execution evidence but can refresh Git metadata; strict no-file consultation cannot revalidate closure or perform the write workflow.
 
 Require current approvals, `gate.ready=true`, `complete.technical_complete=true`, and `$converge`'s Technical convergence confirmed conclusion for the corresponding release/run, approved bases, and reviewed implementation. The controller query alone does not establish that semantic conclusion. Any outstanding convergence finding, including LOW, stops closure and returns to `$converge` and its canonical owner. Missing gate/results/evidence are not a pass. Pending release review/audit flags identify work owned here, not an acceptance defect.
 

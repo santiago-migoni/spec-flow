@@ -17,7 +17,7 @@ Use the [native adapter](../../harness/adapters/codex/README.md), [execution con
 
 ## Execution readiness
 
-Resolve <plugin-root> from this installed SKILL.md. Run `python3 <plugin-root>/scripts/spec-flow.py --root <project> OP --input <json-file>` following the adapter's concrete payloads. Inspect status, approved source digests, authorized scope, phase dependencies, host capabilities, actual Git/worktree state, and relevant current checks before start/resume. Reconcile possible prior attempts or commits first. Preserve unrelated edits; stop if they cannot be separated.
+Before invoking `spec-flow.py`, read [shared controller operations](../../harness/contracts/operations.md) for CLI/query and completion-check boundaries; follow the adapter's concrete execution payloads. Inspect status, approved source digests, authorized scope, phase dependencies, host capabilities, actual Git/worktree state, and relevant current checks before start/resume. Reconcile possible prior attempts or commits first. Preserve unrelated edits; stop if they cannot be separated.
 
 Review the plan/task maps and coverage against their canonical records, including partial/final intent and NFR targets. A mismatch returns to `$plan` or `$tasks`; do not patch missing requirements into a delegation prompt. These semantic/coherence checks are agent review, not automatic Markdown validation by the controller. Reuse current baseline evidence; run additional baseline checks when needed to establish the actual starting state.
 
