@@ -22,6 +22,7 @@
       "interface": {
         "displayName": "Spec Flow",
         "composerIcon": "./assets/spec-flow-icon.png",
+        "logo": "./assets/spec-flow-icon.png",
         "shortDescription": "Strategy, versioned releases, and verified execution",
         "longDescription": "Guide a project from constitution and unified design of applicable architecture, infrastructure, and repository structure through an approved roadmap, explicit release specs, plans, tasks, verified phase execution, technical convergence, outcome review, and authorized branch integration. Legacy feature folders require migration.",
         "developerName": "Santiago Migoni",

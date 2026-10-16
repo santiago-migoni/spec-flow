@@ -22,6 +22,19 @@ DOCUMENT_TEMPLATES = {
 
 
 class SkillPackageTests(unittest.TestCase):
+    def test_listing_and_composer_branding_are_packaged_in_both_manifests(self):
+        manifests = [json.loads((ROOT / name).read_text())
+                     for name in ("plugin.json", ".codex-plugin/plugin.json")]
+        self.assertEqual(manifests[0], manifests[1])
+        interface = manifests[0]["extensions"]["com.openai"]["interface"]
+        for field in ("logo", "composerIcon"):
+            relative = interface[field]
+            self.assertTrue(relative.startswith("./assets/"))
+            asset = (ROOT / relative).resolve()
+            self.assertTrue(asset.is_relative_to(ROOT.resolve()))
+            self.assertTrue(asset.is_file())
+            self.assertLessEqual(asset.stat().st_size, 5 * 1024 * 1024)
+
     def test_skill_metadata_and_gates(self):
         discovered = {path.parent.name for path in SKILLS.glob("*/SKILL.md")}
         self.assertEqual(discovered, set(NAMES))
