@@ -1,0 +1,38 @@
+{
+  "attempt": 1,
+  "code_fingerprint": {
+    "release.py": "bb3f141567ee88451fe6a75b54d39c1025d7cf333b2b49836900c019618164a1"
+  },
+  "steps": [
+    {
+      "code_fingerprint": {
+        "release.py": "bb3f141567ee88451fe6a75b54d39c1025d7cf333b2b49836900c019618164a1"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_release.py"
+      ],
+      "exit_code": 0,
+      "expected": "All four fixed tests execute and pass with exact outputs and exception types.",
+      "inspection": null,
+      "observed": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+      "output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+      "output_sha256": "4bc37de48396900fa809512e7dd0dab3bd004e90fde5e293b7612630ff5084fb",
+      "source_digests": {
+        ".specs/architecture.md": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+        ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+        ".specs/release-v1.2.3/plan.md": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+        ".specs/release-v1.2.3/spec.md": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+        ".specs/release-v1.2.3/tasks.md": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+        ".specs/roadmap.md": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+        ".specs/structure.md": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07"
+      },
+      "step_id": "T-001.001"
+    }
+  ],
+  "task_id": "T-001"
+}

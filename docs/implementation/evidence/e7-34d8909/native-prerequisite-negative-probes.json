@@ -1,0 +1,55 @@
+{
+  "checked_at": "2026-10-16T14:55:06.728365+00:00",
+  "category": "independent production adapter negative probes; no run or lease mutation",
+  "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "checks": [
+    {
+      "case": "wrong_implementer_profile",
+      "error": "host_profile_mismatch",
+      "message": "one or more session turns do not match the required role profile",
+      "details": {
+        "expected": {
+          "model": "gpt-6-luna",
+          "effort": "high"
+        },
+        "mismatches": [
+          {
+            "turn": 0,
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          {
+            "turn": 1,
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          {
+            "turn": 2,
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          {
+            "turn": 3,
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          {
+            "turn": 4,
+            "model": "gpt-6-sol",
+            "effort": "high"
+          }
+        ]
+      }
+    },
+    {
+      "case": "missing_interrupt_capability",
+      "error": "native_capability_unavailable",
+      "message": "native Codex capabilities are missing or unprobed",
+      "details": {
+        "operations": [
+          "interrupt_agent"
+        ]
+      }
+    }
+  ]
+}

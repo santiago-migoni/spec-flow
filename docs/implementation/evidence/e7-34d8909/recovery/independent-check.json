@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-16T14:50:41.013025+00:00",
+  "candidate": "34d89095ba75d6ae2707c3ed331ab4bda56573b6",
+  "fixtures": {
+    "fresh": {
+      "run_id": "ea84dc87-11c2-46ef-b0d8-d2f0665fb824",
+      "status": "abandoned",
+      "active_task": null,
+      "attempt": 1,
+      "lease_absent": true,
+      "decisions_code_tests_receipts_unchanged": true,
+      "original_event_prefix_preserved": true,
+      "operations": 5,
+      "head": "b52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c"
+    },
+    "legacy": {
+      "run_id": "8d1d0189-840d-4749-b4d8-f54718fe8c0c",
+      "status": "abandoned",
+      "active_task": null,
+      "attempt": 1,
+      "lease_absent": true,
+      "decisions_code_tests_receipts_unchanged": true,
+      "original_event_prefix_preserved": true,
+      "operations": 5,
+      "head": "802d83eea902e15a5ed97c8c63d1054b197af844"
+    },
+    "negative": {
+      "run_id": "db79a022-629d-4243-8445-dc801d1b2be6",
+      "status": "abandoned",
+      "active_task": null,
+      "attempt": 1,
+      "lease_absent": true,
+      "decisions_code_tests_receipts_unchanged": true,
+      "original_event_prefix_preserved": true,
+      "operations": 5,
+      "head": "b52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c"
+    }
+  },
+  "result": "PASS: three runs reconciled/abandoned by controller without lost history or manual lease clearing"
+}

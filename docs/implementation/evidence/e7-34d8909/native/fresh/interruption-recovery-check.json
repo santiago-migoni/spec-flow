@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_release.py"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+  "code_sha256_before": "57c7c75e8e55a050d844c4846ca58cc85af8d26faa62a3a0e4a0bd8958280e37",
+  "code_sha256_after": "57c7c75e8e55a050d844c4846ca58cc85af8d26faa62a3a0e4a0bd8958280e37",
+  "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+  "source": "Sol owner after native Luna aborted; same code bytes as Luna message"
+}

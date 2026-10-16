@@ -1,0 +1,92 @@
+{
+  "original_worktree": "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/negative-linked",
+  "head": "ecc770844e35a1cef25511a0570d9f4aca94cef9",
+  "run_id": "ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e",
+  "status": "active",
+  "task_status": "verification_failed",
+  "lease_present": true,
+  "snapshot_files": {
+    ".gitignore": {
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+      "bytes": 13
+    },
+    ".spec-flow/.gitignore": {
+      "sha256": "51e22acc425d767901cd51941b9d53a16951a5fe6bd220549f3ef8ed94861af3",
+      "bytes": 98
+    },
+    ".spec-flow/approvals.jsonl": {
+      "sha256": "95bcaeb15d9ca8a690fd40644d2b8985561ff433269453e2ad3cfc5b0ce98113",
+      "bytes": 3206
+    },
+    ".spec-flow/config.json": {
+      "sha256": "16170f48163df123b40a2e52aa1b53c988a2e608656df3881152690b4dcd940c",
+      "bytes": 293
+    },
+    ".spec-flow/lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    ".spec-flow/runs/ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e/events.jsonl": {
+      "sha256": "f57f7a171a69cc794df8ba25f21144de014bab4bec4a85f81d7891a2224d6ada",
+      "bytes": 24891
+    },
+    ".spec-flow/runs/ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e/packets/T-001-1.json": {
+      "sha256": "6e535cb98fcebfc8fb45ca0bab1fa2301411b5d2f0541bcd498875262ca8cb45",
+      "bytes": 20212
+    },
+    ".spec-flow/runs/ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e/packets/T-001-2.json": {
+      "sha256": "88e3a59154a518d20b9fcdd06ce800811bc5ca6c4692b912f9cce5bc8f5573c4",
+      "bytes": 20212
+    },
+    ".spec-flow/runs/ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e/packets/T-001-3.json": {
+      "sha256": "64bd6d57d837cf305d2e5b580d5d15178051c34e31913a77570ca71b4ee06765",
+      "bytes": 20212
+    },
+    ".spec-flow/runs/ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e/state.json": {
+      "sha256": "bf8357b576e95ed12b772de17218a120b4cef8cf536081b29e5e0e72e6d849d6",
+      "bytes": 11000
+    },
+    ".specs/architecture.md": {
+      "sha256": "691001bf2c3df927701b0e15d7dd9606c29a8d16c127688750e942b49a44fcb7",
+      "bytes": 3175
+    },
+    ".specs/constitution.md": {
+      "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209",
+      "bytes": 2248
+    },
+    ".specs/release-v1.2.3/plan.md": {
+      "sha256": "bb4a7fba8988cc1c2d5950b128d39f9d8c3cdec89735c3f61b84c92343b47f1c",
+      "bytes": 2769
+    },
+    ".specs/release-v1.2.3/spec.md": {
+      "sha256": "5f79585a58847bb3253ec804f09d909d4267a656ce6d78ac2a6a58786e1f6049",
+      "bytes": 3324
+    },
+    ".specs/release-v1.2.3/tasks.md": {
+      "sha256": "d7ac75e1882bdb06b697bfe5351471c4ef45bf84e8fe4fc35485733f9f524849",
+      "bytes": 2681
+    },
+    ".specs/roadmap.md": {
+      "sha256": "a674415efb82babb914dcf282ad3bc99dc2c07d98b716c06f1bed7ff1f463ad5",
+      "bytes": 2517
+    },
+    ".specs/structure.md": {
+      "sha256": "d5c4822c416a891edc92bc3c97fbe33702f2bffba13b322c534f960c7fad08aa",
+      "bytes": 3049
+    },
+    "release.py": {
+      "sha256": "283d6ea7c4aff4a8e3aff28a9ea6cf9425c4f2ed12bcd400c76a744407189d18",
+      "bytes": 592
+    },
+    "test_release.py": {
+      "sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "bytes": 1577
+    }
+  },
+  "snapshot_bytes": 122069,
+  "bundle_sha256": "d6a27d8f4d597a29970c793a6f2f594fd836986d9a8c07f3ec53260119411aa4",
+  "bundle_verified": true,
+  "bundle_verify_stdout": "The bundle contains these 4 refs:\necc770844e35a1cef25511a0570d9f4aca94cef9 refs/heads/codex/e7-34d8909-negative\necc770844e35a1cef25511a0570d9f4aca94cef9 refs/heads/main\necc770844e35a1cef25511a0570d9f4aca94cef9 HEAD\necc770844e35a1cef25511a0570d9f4aca94cef9 main-worktree/HEAD\nThe bundle records a complete history.\nThe bundle uses this hash algorithm: sha1\n",
+  "bundle_verify_stderr": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-34d8909/native/negative/repository.bundle is okay\n",
+  "restoration_limit": "Historical inspection only. Bundles/snapshots do not restore live worktree/session/approval authority. Do not restore or manually clear ownership registrations."
+}

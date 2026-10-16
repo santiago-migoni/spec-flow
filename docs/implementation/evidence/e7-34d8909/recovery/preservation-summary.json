@@ -1,0 +1,17 @@
+{
+  "preserved_at": "2026-10-16T14:52:49.167920+00:00",
+  "fixtures": {
+    "fresh": {
+      "files": 17,
+      "bundle_verified": true
+    },
+    "legacy": {
+      "files": 30,
+      "bundle_verified": true
+    },
+    "negative": {
+      "files": 17,
+      "bundle_verified": true
+    }
+  }
+}

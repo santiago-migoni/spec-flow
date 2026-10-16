@@ -1,0 +1,174 @@
+{
+  "abandonment": {
+    "abandoned_at": "2026-10-16T14:49:09Z",
+    "authorization": {
+      "actor": "User",
+      "source": "Parent task relay of explicit user authorization for F-02 and E7 recovery, 2026-10-16",
+      "statement": "Me parece bien. Corrige F-02 conservando los controles actuales, recupera los runs bloqueados mediante el controlador y repite E7 sobre el nuevo commit, usando proyectos desechables y registrando las pruebas, los resultados y las evidencias."
+    },
+    "reason": "Recover the f8fa91d E7 synthetic fixture after failed native spawn and F-02 no_spawn attestation crash. No implementation was delegated; preserve original attempt and history before evaluating corrected 34d8909 in new projects."
+  },
+  "active_task": null,
+  "authorization": [
+    {
+      "actor": "User",
+      "source": "evaluation-context.json human_authorization",
+      "statement": "Me parece bien. Corrige F-01 conservando los controles actuales y repite E7 sobre el nuevo commit, usando proyectos desechables y registrando las pruebas, los resultados y las evidencias. Synthetic E7 fixture execution of PH-01 only."
+    }
+  ],
+  "authorized_phases": [
+    "PH-01"
+  ],
+  "capabilities": {
+    "basis": "host-supplied capability references; Python does not enumerate native tools",
+    "inventory_reference": "collaboration.list_agents owner tree snapshot in E7 Sol turn 2026-10-16",
+    "operations": [
+      "interrupt_agent",
+      "list_agents",
+      "spawn_agent",
+      "wait_agent"
+    ],
+    "owner_session": {
+      "agent_lifecycle": "active",
+      "agent_path": "/root/e7_owner_f8fa91d",
+      "attestation_sha256": "cf1839f6a8132fa639887b535c5b0af31bdf13646483b2e85792c0ddd8e45e36",
+      "effort": "high",
+      "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T11-27-09-01a1451c-0ecd-7c93-9d51-8650fdaf887f.jsonl",
+      "model": "gpt-6-sol",
+      "packet_marker_source": null,
+      "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+      "record_hashes": {
+        "delegation": null,
+        "lifecycle": "11c2eecf74ec25d5acb95a77cd5971e28880312ec4970fd2451abc383edd6722",
+        "session_meta": "45ca6f4389b225b47adbdfd6e1343ce53eafb8d7dfe1b4aaed182215557ccb6a",
+        "task_marker": null,
+        "turn_contexts": [
+          "f4fb30b106c0340c8ef4a228bb94a748ab65366d7d4f5a577a10097389e0eefc"
+        ]
+      },
+      "role": "orchestrator",
+      "session_id": "01a1451c-0ecd-7c93-9d51-8650fdaf887f"
+    },
+    "probe_evidence_references": {
+      "interrupt_agent": "native collaboration.interrupt_agent schema exposed in this Sol turn; actual injected interruption follows child write",
+      "list_agents": "live collaboration.list_agents result showed /root/e7_owner_f8fa91d running",
+      "spawn_agent": "native collaboration.spawn_agent schema exposed in this Sol turn; actual delegated spawn follows prepare",
+      "wait_agent": "native collaboration.wait_agent schema exposed in this Sol turn; actual wait follows spawn"
+    }
+  },
+  "documents": {
+    ".specs/architecture.md": "68fadf86f5eac936fabbb35dbd05b51e9ab969693cd970736bd598848d8174c8",
+    ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+    ".specs/release-v1.2.3/plan.md": "04fb64b1902f1e8ba8df9ceb3e5d81027ebbcfe71c555dd011af9f41f69ee730",
+    ".specs/release-v1.2.3/spec.md": "57df76f5361a5de4f43873a05b09d256be92502b144343f00860970200fb1bb4",
+    ".specs/release-v1.2.3/tasks.md": "568d3b488f94cd57a4743800e25fb0d96190eb6120c7caa478f45751adca306b",
+    ".specs/roadmap.md": "e264a3948e4a008a28326408c32191cd102a4779cdb00b24ec27ecd8f6d4d2d1",
+    ".specs/structure.md": "51b5ca4fe1355d23787fc5326d6343c32f2eaf92df71850889115b959abaa903"
+  },
+  "migration_evidence_pending": [],
+  "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "phase_contracts": [
+    {
+      "depends_on": [],
+      "description": "Implement and verify strict normalization in release.py.",
+      "id": "PH-01"
+    }
+  ],
+  "phases": {},
+  "prior_attempts": {},
+  "reconciliation_required": false,
+  "release": "v1.2.3",
+  "run_id": "ea84dc87-11c2-46ef-b0d8-d2f0665fb824",
+  "status": "abandoned",
+  "task_contracts": [
+    {
+      "acceptance": [
+        "AC-001",
+        "AC-002"
+      ],
+      "closure": "Final AC-001 and AC-002 behavior passes all four fixed tests; test_release.py remains unchanged.",
+      "depends_on": [],
+      "files": [
+        "release.py"
+      ],
+      "id": "T-001",
+      "phase": "PH-01",
+      "steps": [
+        {
+          "action": "Implement normalize_release to satisfy valid ASCII triples and exact error classes; run the fixed four-method suite without editing tests.",
+          "id": "T-001.001",
+          "verification": {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "-v",
+              "test_release.py"
+            ],
+            "expected": "All four fixed tests execute and pass with exact outputs and exception types."
+          }
+        }
+      ],
+      "story": "US-001"
+    }
+  ],
+  "task_ids": [
+    "T-001"
+  ],
+  "tasks": {
+    "T-001": {
+      "agent": null,
+      "attempt": 1,
+      "attempt_baseline": {
+        ".gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+        "release.py": "a804abcd14f65126a7ada66bb6a9bb4554595ddd31cdc485df545beb28e42aa9",
+        "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+      },
+      "attempt_owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+      "baseline": {
+        ".gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+        "release.py": "a804abcd14f65126a7ada66bb6a9bb4554595ddd31cdc485df545beb28e42aa9",
+        "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+      },
+      "closed_at": null,
+      "code_fingerprint": null,
+      "evidence_path": null,
+      "failure": null,
+      "no_spawn_attestation": {
+        "attestation_sha256": "af8e7203912a5e06573444675c9ff14c24aacbd0fede6e0c0736f62a1ef9c100",
+        "child_record_hashes": [],
+        "inventory_reference": "collaboration.list_agents current followup: owner running with zero descendants; previous 55eb811 children terminal. Local session_meta lineage scan zero owner descendants.",
+        "inventory_sha256": "444ed600e63f994eab09659a4f39d5359cd6495b64d971d644666be6f6fbc042",
+        "owner_attestation_sha256": "f47d947145af36eaf96a889e6b10db48f670197da9a07aa3320fb5af931755f6",
+        "packet_marker": "SPEC_FLOW_PACKET_SHA256=d313de2523dba2d34668cc07f976df978ba21c650deb64d7939964a752e7e0fd",
+        "role": "orchestrator",
+        "session_id": "01a1451c-0ecd-7c93-9d51-8650fdaf887f"
+      },
+      "packet_created_at": "2026-10-16T14:29:21Z",
+      "packet_path": ".spec-flow/runs/ea84dc87-11c2-46ef-b0d8-d2f0665fb824/packets/T-001-1.json",
+      "packet_sha256": "d313de2523dba2d34668cc07f976df978ba21c650deb64d7939964a752e7e0fd",
+      "prepared_at": "2026-10-16T14:29:21Z",
+      "reconciliation_evidence": "Native inventory and host parent lineage contain no owner child; first spawn was rejected at host thread limit; fixture release.py and fixed test bytes are unchanged since attempt preparation.",
+      "result": null,
+      "retry_hypothesis": null,
+      "retry_reason": null,
+      "review": null,
+      "scope_files": [
+        "release.py"
+      ],
+      "source_digests": {
+        ".specs/architecture.md": "68fadf86f5eac936fabbb35dbd05b51e9ab969693cd970736bd598848d8174c8",
+        ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+        ".specs/release-v1.2.3/plan.md": "04fb64b1902f1e8ba8df9ceb3e5d81027ebbcfe71c555dd011af9f41f69ee730",
+        ".specs/release-v1.2.3/spec.md": "57df76f5361a5de4f43873a05b09d256be92502b144343f00860970200fb1bb4",
+        ".specs/release-v1.2.3/tasks.md": "568d3b488f94cd57a4743800e25fb0d96190eb6120c7caa478f45751adca306b",
+        ".specs/roadmap.md": "e264a3948e4a008a28326408c32191cd102a4779cdb00b24ec27ecd8f6d4d2d1",
+        ".specs/structure.md": "51b5ca4fe1355d23787fc5326d6343c32f2eaf92df71850889115b959abaa903"
+      },
+      "status": "needs_changes",
+      "step_evidence": {},
+      "verified_snapshot": null
+    }
+  }
+}

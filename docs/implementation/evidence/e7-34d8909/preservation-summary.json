@@ -1,0 +1,23 @@
+{
+  "preserved_at": "2026-10-16T15:06:45.011050+00:00",
+  "fixtures": {
+    "fresh": {
+      "files": 20,
+      "bytes": 88229,
+      "bundle_verified": true,
+      "lease_present": false
+    },
+    "legacy": {
+      "files": 33,
+      "bytes": 110313,
+      "bundle_verified": true,
+      "lease_present": false
+    },
+    "negative": {
+      "files": 19,
+      "bytes": 122069,
+      "bundle_verified": true,
+      "lease_present": true
+    }
+  }
+}

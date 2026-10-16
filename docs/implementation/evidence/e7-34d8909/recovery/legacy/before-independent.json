@@ -1,0 +1,43 @@
+{
+  "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/legacy-linked",
+  "run_id": "8d1d0189-840d-4749-b4d8-f54718fe8c0c",
+  "head": "802d83eea902e15a5ed97c8c63d1054b197af844",
+  "file_sha256": {
+    ".specs/constitution.md": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209",
+    ".specs/architecture.md": "f36345196b6588b8bb658993137395edf4156a2dc0e9aba7924cea889aae93b8",
+    ".specs/structure.md": "84bbe5e14fdaba84818d8370bac176e5262191aec19097375a596fab3cc163d0",
+    ".specs/roadmap.md": "ccc3c1c40fb13be3d1bb877368d7bfdfe069ff34be88d4204814e224e6538283",
+    ".specs/release-v1.2.3/tasks.md": "40e1ef44e5f436a52093a67ebcf0ba74c71a340a924ef98a09ef093f4adb76aa",
+    ".specs/release-v1.2.3/plan.md": "d085bae054b1299433b2045b6a769d9b975d9b4ace05688e45d4a8d90de829ae",
+    ".specs/release-v1.2.3/spec.md": "51d345fac174cd4982e42426269ace135bb3d026350a1036113319d91253dbeb",
+    ".spec-flow/approvals.jsonl": "4482a0dd9890bdda80a7abec44aa13873d103c6e82c0980b3f3f2a861a34f32d",
+    ".spec-flow/config.json": "16170f48163df123b40a2e52aa1b53c988a2e608656df3881152690b4dcd940c",
+    ".spec-flow/lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".spec-flow/.gitignore": "51e22acc425d767901cd51941b9d53a16951a5fe6bd220549f3ef8ed94861af3",
+    ".spec-flow/runs/8d1d0189-840d-4749-b4d8-f54718fe8c0c/state.json": "15a01a684267a0b93841ad502cc00910d5d9b56b071c18042bb0e7d41b8cd560",
+    ".spec-flow/runs/8d1d0189-840d-4749-b4d8-f54718fe8c0c/events.jsonl": "12a90dd7dd2156725a15a4ba10b9e2533494e049f68526f4118ed4060a9034a5",
+    ".spec-flow/runs/8d1d0189-840d-4749-b4d8-f54718fe8c0c/packets/T-001-1.json": "af67aa5d6812775f7b6f31c52edf760b6b558cf78289cb9c347dd8049f9119d3",
+    ".spec-flow/legacy/87f92dbb7045575e98080d00f6578817/sources/001-normalize-release/tasks.md": "a225bbeca05842786cd2769ff4c13d0b724cc8b480cbbaa017d198ee9825818b",
+    ".spec-flow/legacy/87f92dbb7045575e98080d00f6578817/sources/001-normalize-release/plan.md": "7ba0ced9eaef89e1ce8f3f659c2416d636721228cc57c2d2050bc608952de569",
+    ".spec-flow/legacy/87f92dbb7045575e98080d00f6578817/sources/001-normalize-release/spec.md": "6dc2ae30d026f213a7fe01880852b6cfc2f18b34257bc300aa79aa16bcb237d2",
+    ".spec-flow/migrations/87f92dbb7045575e98080d00f6578817/journal.json": "103a3c1df46e9bbcd22749668c5217a8714ee9e633a9a803cb67adca9366c6fb",
+    ".spec-flow/migrations/87f92dbb7045575e98080d00f6578817/complete.json": "8417a3d9420ff51cb0211b38467099ce19d4adabce7552d9760c9682c64aaa42",
+    ".spec-flow/migrations/87f92dbb7045575e98080d00f6578817/imports.json": "1602e130c376b73445365b0f4bee07b1c30ab5b1bc1ba55f215b562a9b7db63f",
+    ".spec-flow/migrations/87f92dbb7045575e98080d00f6578817/candidate/.specs/constitution.md": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209",
+    ".spec-flow/migrations/87f92dbb7045575e98080d00f6578817/candidate/.specs/architecture.md": "f36345196b6588b8bb658993137395edf4156a2dc0e9aba7924cea889aae93b8",
+    ".spec-flow/migrations/87f92dbb7045575e98080d00f6578817/candidate/.specs/structure.md": "84bbe5e14fdaba84818d8370bac176e5262191aec19097375a596fab3cc163d0",
+    ".spec-flow/migrations/87f92dbb7045575e98080d00f6578817/candidate/.specs/roadmap.md": "ccc3c1c40fb13be3d1bb877368d7bfdfe069ff34be88d4204814e224e6538283",
+    ".spec-flow/migrations/87f92dbb7045575e98080d00f6578817/candidate/.specs/release-v1.2.3/tasks.md": "7a69b51424af70922f2121d609a1a5a68aafc38aff747b3eab0960ee5b38d421",
+    ".spec-flow/migrations/87f92dbb7045575e98080d00f6578817/candidate/.specs/release-v1.2.3/plan.md": "d085bae054b1299433b2045b6a769d9b975d9b4ace05688e45d4a8d90de829ae",
+    ".spec-flow/migrations/87f92dbb7045575e98080d00f6578817/candidate/.specs/release-v1.2.3/spec.md": "51d345fac174cd4982e42426269ace135bb3d026350a1036113319d91253dbeb"
+  },
+  "registry": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/legacy-main/.git/spec-flow-active-controller.json",
+  "registration": {
+    "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+    "release": "v1.2.3",
+    "run_id": "8d1d0189-840d-4749-b4d8-f54718fe8c0c",
+    "worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/legacy-linked"
+  },
+  "code_sha256": "08d838d6fd27b91eca3929c96833ba09596c3fd66de9bad027085c9eb746fdf0",
+  "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+}

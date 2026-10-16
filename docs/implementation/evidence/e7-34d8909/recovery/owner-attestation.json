@@ -1,0 +1,23 @@
+{
+  "session_id": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "role": "orchestrator",
+  "model": "gpt-6-sol",
+  "effort": "high",
+  "agent_lifecycle": "active",
+  "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+  "agent_path": "/root/e7_owner_f8fa91d",
+  "packet_marker_source": null,
+  "record_hashes": {
+    "session_meta": "45ca6f4389b225b47adbdfd6e1343ce53eafb8d7dfe1b4aaed182215557ccb6a",
+    "turn_contexts": [
+      "f4fb30b106c0340c8ef4a228bb94a748ab65366d7d4f5a577a10097389e0eefc",
+      "be016a0d93c64440dfbc3d9d41c153851052736c0b5044118ba9f7e40bed8af7",
+      "0880686ba8bb9fd63e54c613ddfce8284aac730d53f4292c132189464bf79632",
+      "4a56800b6e21b46daa84968eefd4d1bf19578c8c5edb375e5e9a19195865f369"
+    ],
+    "lifecycle": "be4e25b5a0dae80b88211ce82ff9c0b90890d18b8aeb0f427834bf80aa7ce79d",
+    "task_marker": null,
+    "delegation": null
+  },
+  "attestation_sha256": "f47d947145af36eaf96a889e6b10db48f670197da9a07aa3320fb5af931755f6"
+}

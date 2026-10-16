@@ -1,0 +1,160 @@
+{
+  "at": "2026-10-16T14:56:54.128646+00:00",
+  "category": "Production complete queries on independent clones of closed native history; not fresh native implementations or approval authority",
+  "source_original_unchanged": true,
+  "probes": [
+    {
+      "case": "reviewed-code-change",
+      "root": "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/reviewed-code-change",
+      "source_native_audit_head": "add4ca89894b0406664f5213586f0936d11f2513",
+      "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609",
+      "baseline": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/source/plugins/spec-flow/scripts/spec-flow.py",
+          "--root",
+          "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/reviewed-code-change",
+          "complete",
+          "--input",
+          "/dev/stdin"
+        ],
+        "input": {
+          "release": "v1.2.3",
+          "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609"
+        },
+        "exit_code": 0,
+        "stdout": {
+          "audit_pending": false,
+          "complete": true,
+          "phase_commits": {
+            "PH-01": "efb411fe52fa3334e7548a392ff20ad868040e4d"
+          },
+          "reasons": [],
+          "release": "v1.2.3",
+          "release_closure_reasons": [],
+          "release_review_pending": false,
+          "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609",
+          "technical_complete": true
+        },
+        "stderr": ""
+      },
+      "injected_path": "release.py",
+      "before_sha256": "57c7c75e8e55a050d844c4846ca58cc85af8d26faa62a3a0e4a0bd8958280e37",
+      "after_sha256": "0717a7b96851945b9f45b11c677a44b66057baab2f3c1d059dee84be9e1e1e54",
+      "rejection": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/source/plugins/spec-flow/scripts/spec-flow.py",
+          "--root",
+          "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/reviewed-code-change",
+          "complete",
+          "--input",
+          "/dev/stdin"
+        ],
+        "input": {
+          "release": "v1.2.3",
+          "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609"
+        },
+        "exit_code": 0,
+        "stdout": {
+          "audit_pending": true,
+          "complete": false,
+          "phase_commits": {
+            "PH-01": "efb411fe52fa3334e7548a392ff20ad868040e4d"
+          },
+          "reasons": [
+            "task T-001 evidence is stale: code_stale",
+            "task files differ from the reviewed phase tree",
+            "worktree changed after the reviewed phase commit: release.py"
+          ],
+          "release": "v1.2.3",
+          "release_closure_reasons": [
+            "worktree changed after the final audit commit"
+          ],
+          "release_review_pending": false,
+          "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609",
+          "technical_complete": false
+        },
+        "stderr": ""
+      }
+    },
+    {
+      "case": "approved-source-change",
+      "root": "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/approved-source-change",
+      "source_native_audit_head": "add4ca89894b0406664f5213586f0936d11f2513",
+      "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609",
+      "baseline": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/source/plugins/spec-flow/scripts/spec-flow.py",
+          "--root",
+          "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/approved-source-change",
+          "complete",
+          "--input",
+          "/dev/stdin"
+        ],
+        "input": {
+          "release": "v1.2.3",
+          "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609"
+        },
+        "exit_code": 0,
+        "stdout": {
+          "audit_pending": false,
+          "complete": true,
+          "phase_commits": {
+            "PH-01": "efb411fe52fa3334e7548a392ff20ad868040e4d"
+          },
+          "reasons": [],
+          "release": "v1.2.3",
+          "release_closure_reasons": [],
+          "release_review_pending": false,
+          "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609",
+          "technical_complete": true
+        },
+        "stderr": ""
+      },
+      "injected_path": ".specs/release-v1.2.3/spec.md",
+      "before_sha256": "5ee4041c6a9df485bac616739edc8abe32d8c56719fa6138faa2301d66b4cd6c",
+      "after_sha256": "4e8e0e9a64ad5a49981b6ade2e0cdfd3ff91333a533b9be295f2257a1ab5b08f",
+      "rejection": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/source/plugins/spec-flow/scripts/spec-flow.py",
+          "--root",
+          "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/approved-source-change",
+          "complete",
+          "--input",
+          "/dev/stdin"
+        ],
+        "input": {
+          "release": "v1.2.3",
+          "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609"
+        },
+        "exit_code": 0,
+        "stdout": {
+          "audit_pending": true,
+          "complete": false,
+          "phase_commits": {
+            "PH-01": "efb411fe52fa3334e7548a392ff20ad868040e4d"
+          },
+          "reasons": [
+            "approved sources are not current: an approved document dependency is no longer valid",
+            "worktree changed after the reviewed phase commit: .specs/release-v1.2.3/spec.md"
+          ],
+          "release": "v1.2.3",
+          "release_closure_reasons": [
+            "worktree changed after the final audit commit"
+          ],
+          "release_review_pending": false,
+          "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609",
+          "technical_complete": false
+        },
+        "stderr": ""
+      }
+    }
+  ]
+}

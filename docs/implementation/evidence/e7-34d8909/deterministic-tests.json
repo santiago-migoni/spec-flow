@@ -1,0 +1,17 @@
+{
+  "started_at": "2026-10-16T14:49:22.829049+00:00",
+  "finished_at": "2026-10-16T14:49:39.497296+00:00",
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "cwd": "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/source/plugins/spec-flow",
+  "exit_code": 0,
+  "category": "exported candidate deterministic suite, not native implementation"
+}

@@ -1,0 +1,79 @@
+{
+  "original_worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/negative-linked",
+  "head": "b52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c",
+  "snapshot_files": {
+    ".gitignore": {
+      "bytes": 13,
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b"
+    },
+    ".spec-flow/.gitignore": {
+      "bytes": 98,
+      "sha256": "51e22acc425d767901cd51941b9d53a16951a5fe6bd220549f3ef8ed94861af3"
+    },
+    ".spec-flow/approvals.jsonl": {
+      "bytes": 3192,
+      "sha256": "da900cca949b608262037f21f2a613c36ad192cbccaa6decf9e07d709e199436"
+    },
+    ".spec-flow/config.json": {
+      "bytes": 293,
+      "sha256": "16170f48163df123b40a2e52aa1b53c988a2e608656df3881152690b4dcd940c"
+    },
+    ".spec-flow/lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".spec-flow/runs/db79a022-629d-4243-8445-dc801d1b2be6/events.jsonl": {
+      "bytes": 6894,
+      "sha256": "747cb5e2b5245ebd2daa222870a6519d5a88df747bea2a6b44245374b644c21e"
+    },
+    ".spec-flow/runs/db79a022-629d-4243-8445-dc801d1b2be6/packets/T-001-1.json": {
+      "bytes": 19350,
+      "sha256": "4ac25334d1c7259e8cbf144fc193354766d0a05f30717539a3a27dd255aa3420"
+    },
+    ".spec-flow/runs/db79a022-629d-4243-8445-dc801d1b2be6/state.json": {
+      "bytes": 8248,
+      "sha256": "84d17941c72a4478307e904c0310df10987917d66fec5df7a16717ab95dabb08"
+    },
+    ".specs/architecture.md": {
+      "bytes": 2404,
+      "sha256": "f36345196b6588b8bb658993137395edf4156a2dc0e9aba7924cea889aae93b8"
+    },
+    ".specs/constitution.md": {
+      "bytes": 2248,
+      "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209"
+    },
+    ".specs/release-v1.2.3/plan.md": {
+      "bytes": 2769,
+      "sha256": "d085bae054b1299433b2045b6a769d9b975d9b4ace05688e45d4a8d90de829ae"
+    },
+    ".specs/release-v1.2.3/spec.md": {
+      "bytes": 3324,
+      "sha256": "51d345fac174cd4982e42426269ace135bb3d026350a1036113319d91253dbeb"
+    },
+    ".specs/release-v1.2.3/tasks.md": {
+      "bytes": 2681,
+      "sha256": "40e1ef44e5f436a52093a67ebcf0ba74c71a340a924ef98a09ef093f4adb76aa"
+    },
+    ".specs/roadmap.md": {
+      "bytes": 2517,
+      "sha256": "ccc3c1c40fb13be3d1bb877368d7bfdfe069ff34be88d4204814e224e6538283"
+    },
+    ".specs/structure.md": {
+      "bytes": 2966,
+      "sha256": "84bbe5e14fdaba84818d8370bac176e5262191aec19097375a596fab3cc163d0"
+    },
+    "release.py": {
+      "bytes": 75,
+      "sha256": "a804abcd14f65126a7ada66bb6a9bb4554595ddd31cdc485df545beb28e42aa9"
+    },
+    "test_release.py": {
+      "bytes": 1577,
+      "sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+    }
+  },
+  "bundle_sha256": "a6391fb27749fb419df9901ddd9e78c1200b3aa8d3b5efb0a1385c61491be9c2",
+  "bundle_verify_stdout": "The bundle contains these 4 refs:\nb52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c refs/heads/codex/e7-negative\nb52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c refs/heads/main\nb52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c HEAD\nb52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c main-worktree/HEAD\nThe bundle records a complete history.\nThe bundle uses this hash algorithm: sha1\n",
+  "bundle_verify_stderr": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-34d8909/recovery/negative/repository.bundle is okay\n",
+  "lease_released_by_controller": true,
+  "snapshot_scope": "after supported recovery; old run abandoned with consumed attempt; historical evidence, not executable approval"
+}

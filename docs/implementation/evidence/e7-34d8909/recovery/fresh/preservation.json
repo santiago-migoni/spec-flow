@@ -1,0 +1,79 @@
+{
+  "original_worktree": "/private/tmp/spec-flow-e7-f8fa91d-1fyed3ur/fresh-linked",
+  "head": "b52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c",
+  "snapshot_files": {
+    ".gitignore": {
+      "bytes": 13,
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b"
+    },
+    ".spec-flow/.gitignore": {
+      "bytes": 98,
+      "sha256": "51e22acc425d767901cd51941b9d53a16951a5fe6bd220549f3ef8ed94861af3"
+    },
+    ".spec-flow/approvals.jsonl": {
+      "bytes": 3192,
+      "sha256": "6e2a8aeb4a9f358137ab87243c3e6b1bda8d0f8c048fe824ae9a93135fd96bc6"
+    },
+    ".spec-flow/config.json": {
+      "bytes": 293,
+      "sha256": "16170f48163df123b40a2e52aa1b53c988a2e608656df3881152690b4dcd940c"
+    },
+    ".spec-flow/lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".spec-flow/runs/ea84dc87-11c2-46ef-b0d8-d2f0665fb824/events.jsonl": {
+      "bytes": 6954,
+      "sha256": "65be44ab9f8852ad2f3e4b3828b808e57721b7240d6f0054c31f8747b7af0cc5"
+    },
+    ".spec-flow/runs/ea84dc87-11c2-46ef-b0d8-d2f0665fb824/packets/T-001-1.json": {
+      "bytes": 19350,
+      "sha256": "d30eed805f4a61b17f2f14bd29aa46bb729b404c8da56efdf47291b5787681b6"
+    },
+    ".spec-flow/runs/ea84dc87-11c2-46ef-b0d8-d2f0665fb824/state.json": {
+      "bytes": 8308,
+      "sha256": "a7310b9e52163962af1e5747a8d908d1624c80d31700d6ea9b4be66026921012"
+    },
+    ".specs/architecture.md": {
+      "bytes": 2404,
+      "sha256": "f36345196b6588b8bb658993137395edf4156a2dc0e9aba7924cea889aae93b8"
+    },
+    ".specs/constitution.md": {
+      "bytes": 2248,
+      "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209"
+    },
+    ".specs/release-v1.2.3/plan.md": {
+      "bytes": 2769,
+      "sha256": "d085bae054b1299433b2045b6a769d9b975d9b4ace05688e45d4a8d90de829ae"
+    },
+    ".specs/release-v1.2.3/spec.md": {
+      "bytes": 3324,
+      "sha256": "51d345fac174cd4982e42426269ace135bb3d026350a1036113319d91253dbeb"
+    },
+    ".specs/release-v1.2.3/tasks.md": {
+      "bytes": 2681,
+      "sha256": "40e1ef44e5f436a52093a67ebcf0ba74c71a340a924ef98a09ef093f4adb76aa"
+    },
+    ".specs/roadmap.md": {
+      "bytes": 2517,
+      "sha256": "ccc3c1c40fb13be3d1bb877368d7bfdfe069ff34be88d4204814e224e6538283"
+    },
+    ".specs/structure.md": {
+      "bytes": 2966,
+      "sha256": "84bbe5e14fdaba84818d8370bac176e5262191aec19097375a596fab3cc163d0"
+    },
+    "release.py": {
+      "bytes": 75,
+      "sha256": "a804abcd14f65126a7ada66bb6a9bb4554595ddd31cdc485df545beb28e42aa9"
+    },
+    "test_release.py": {
+      "bytes": 1577,
+      "sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+    }
+  },
+  "bundle_sha256": "94dbd4d6c50e1813798564414229923fd4b36fc52e5a9a92bae38482cadd9d69",
+  "bundle_verify_stdout": "The bundle contains these 4 refs:\nb52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c refs/heads/codex/e7-fresh\nb52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c refs/heads/main\nb52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c HEAD\nb52fea7b3425a5fa9f5c0d34cfd0ce56ebef054c main-worktree/HEAD\nThe bundle records a complete history.\nThe bundle uses this hash algorithm: sha1\n",
+  "bundle_verify_stderr": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-34d8909/recovery/fresh/repository.bundle is okay\n",
+  "lease_released_by_controller": true,
+  "snapshot_scope": "after supported recovery; old run abandoned with consumed attempt; historical evidence, not executable approval"
+}

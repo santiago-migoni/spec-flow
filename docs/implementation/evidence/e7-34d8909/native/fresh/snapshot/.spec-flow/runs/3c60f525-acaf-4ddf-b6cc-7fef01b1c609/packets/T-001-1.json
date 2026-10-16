@@ -1,0 +1,269 @@
+{
+  "attempt": 1,
+  "created_at": "2026-10-16T14:53:15Z",
+  "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "packet_sha256": "d125682445f3b9ae885d1bab4146673dd3655d295b33565d787a6d7370f66ddc",
+  "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609",
+  "scope_files": [
+    "release.py"
+  ],
+  "selected_acceptance": {
+    "AC-001": {
+      "description": "A bare or v-prefixed ASCII numeric triple normalizes to one v-prefixed triple, preserving component digits including zero and arbitrarily large components.",
+      "id": "AC-001",
+      "story": "US-001"
+    },
+    "AC-002": {
+      "description": "Malformed strings, leading zeros, Unicode digits, whitespace, suffixes and incorrect segment counts raise ValueError; non-string inputs raise TypeError.",
+      "id": "AC-002",
+      "story": "US-001"
+    }
+  },
+  "source_digests": {
+    ".specs/architecture.md": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+    ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+    ".specs/release-v1.2.3/plan.md": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+    ".specs/release-v1.2.3/spec.md": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+    ".specs/release-v1.2.3/tasks.md": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+    ".specs/roadmap.md": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+    ".specs/structure.md": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07"
+  },
+  "sources": [
+    {
+      "contract": {
+        "depends_on": [
+          {
+            "digest": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+            "path": ".specs/constitution.md"
+          }
+        ],
+        "id": "ARCH-E7",
+        "kind": "architecture",
+        "revision": "R00",
+        "schema_version": 1
+      },
+      "digest": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+      "path": ".specs/architecture.md",
+      "prose": "# Architecture — E7-only disposable fixture\n\n\n\n## Purpose, audience, and scope\nE7 evaluators use this local module design for a disposable strict-normalization fixture.\n## System context and boundaries\nThe caller passes a Python value to release.normalize_release; no process, network, persistent data, or external service participates.\n## Current evidence and intended design\nThe verified starting release.py stub raises NotImplementedError. The fixed four-method test file specifies valid and invalid behavior. Intended design places exact normalization in release.py.\n## Quality goals and constraints\nUse Python stdlib only. Full-string ASCII matching and unchanged fixed tests are mandatory; four methods must pass.\n| Attribute | Scenario | Expected result | Verification approach |\n| --- | --- | --- | --- |\n| Functional correctness | Exact ASCII triples or malformed/nonstring input | Normalize accepted digits; exact ValueError/TypeError for rejected values | Fixed four-method unittest suite |\n| Integrity | Verification after implementation | release.py bytes remain unchanged during checks; test file is immutable | Hashes before/after and Git diff |\n## Solution strategy\nImplement one pure function with a compiled strict pattern or equivalent checks, preserving input component digits.\n## Components, responsibilities, and contracts\nrelease.py exports normalize_release(value). It returns a v-prefixed triple for accepted strings, raises TypeError for nonstrings and ValueError for malformed strings. test_release.py is the immutable verification client.\n| ID | Component | Responsibility | Interfaces | Dependencies |\n| --- | --- | --- | --- | --- |\n| ARC-01 | release.py | Pure strict normalization | normalize_release(value) with exact return/error contract | Python stdlib only |\n| ARC-02 | test_release.py | Fixed verification client, read-only | Four unittest methods | ARC-01 |\n## Data and runtime scenarios\nNo stored data. Valid inputs include 1.2.3, v1.2.3, zero, huge components; invalid inputs include leading zero, Unicode digits, suffix and whitespace.\n## Crosscutting concepts\nN/A for auth, logging, transactions and distributed concerns because this is one local pure function. Error classes are part of the public contract.\n## Decisions and consequences\nSingle-module stdlib implementation keeps verification deterministic and inspection bounded. This fixture decision does not extend plugin runtime design.\n## Risks, technical debt, and open questions\nThe main risk is a permissive regex accepting Unicode digits, leading zeros, or trailing newline. Fixed tests expose these cases. No blocking open question.\n## References and amendment history\nSynthetic E7-only decision, sourced to the fixed test file and approved fixture constitution. R00 initial version."
+    },
+    {
+      "contract": {
+        "depends_on": [],
+        "id": "CONST-E7",
+        "kind": "constitution",
+        "revision": "R00",
+        "schema_version": 1
+      },
+      "digest": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+      "path": ".specs/constitution.md",
+      "prose": "# Constitution — E7-only disposable fixture\n\n\n\n## Purpose and justification\nEvaluate the pinned Spec-Flow package on a bounded local Python library. The baseline intentionally lacks the desired implementation; evidence is the fixed four-method suite.\n## Vision and beneficiaries\nThe evaluator needs an exact normalization function and attributable controller evidence. This fixture has no external users.\n## Objectives and success criteria\n| Objective | Indicator | Baseline | Target | Evaluation point |\n| --- | --- | --- | --- | --- |\n| OUT-001 strict normalization | Four fixed unittest methods | Failing baseline | All pass | Before release review |\n## Scope and boundaries\nOnly release.py may be implemented. test_release.py is fixed. Installation, delivery, and real-product approval are excluded.\n## Principles\n- MUST: Preserve the fixed test file and exact errors.\n- MUST: Verification must leave implementation bytes unchanged.\n## Responsibilities and authority\nThe E7 evaluator owns synthetic fixture decisions and bounded execution under the user's E7 authorization. These approvals apply solely to disposable fixtures.\n## Resources, constraints, and assumptions\nUse the pinned package, stdlib Python, native agents, and local linked worktrees. No external capacity or date commitments.\n## Principal risks and uncertainties\n| Risk or uncertainty | Possible consequence | Initial validation or response | Owner |\n| --- | --- | --- | --- |\n| Host attestation unavailable | Native run blocked | Validate session log before start | Evaluator |\n## Delivery and learning approach\nOne small reviewed phase with explicit evidence and a retained branch.\n## Completion and continuation criteria\nTechnical completion requires all tests, task closure, independent phase review, and phase commit. Impact measurement remains pending; no publication follows.\n## Approval, references, and amendments\nThis is a synthetic E7-only decision. Controller receipts, not this prose, establish fixture authority."
+    },
+    {
+      "contract": {
+        "depends_on": [
+          {
+            "digest": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+            "path": ".specs/release-v1.2.3/spec.md"
+          },
+          {
+            "digest": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07",
+            "path": ".specs/structure.md"
+          }
+        ],
+        "id": "PLAN-1.2.3",
+        "kind": "plan",
+        "phases": [
+          {
+            "depends_on": [],
+            "description": "Implement and verify strict normalization in release.py.",
+            "id": "PH-01"
+          }
+        ],
+        "revision": "R00",
+        "schema_version": 1
+      },
+      "digest": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+      "path": ".specs/release-v1.2.3/plan.md",
+      "prose": "# Plan — E7-only disposable fixture\n\n\n\n## Purpose, scope, and approved bases\nOne phase delivers US-001 under the approved E7 fixture spec and structure.\n## Technical approach and implementation decisions\nUse whole-string ASCII numeric matching or equivalent logic. Keep the fixed test file unchanged.\n## Phases, deliverables, and dependencies\n| Phase | Goal and deliverable | Dependencies | Related stories | Related criteria |\n| --- | --- | --- | --- | --- |\n| PH-01 | Implement and verify strict normalization in release.py. | None | US-001 | AC-001, AC-002 |\n## Components, files, and change scope\n| Component or path | Intended change | Phase | Restrictions or dependencies |\n| --- | --- | --- | --- |\n| release.py | Implement function | PH-01 | Only implementation file |\n## Capacity, resources, and forecasts\nOne bounded native task and one independent phase review; no schedule commitment.\n## Risks, assumptions, and validation\n| Risk or assumption | Consequence | Response or validation | Point or phase | Expected evidence |\n| --- | --- | --- | --- | --- |\n| Test suite is fixed | False positives if modified | Hash comparison | PH-01 | Identical test bytes |\n## Compliance and verification strategy\n| Reference | Delivery or verification phase | Verification approach | Expected evidence |\n| --- | --- | --- | --- |\n| AC-001 | PH-01 final | Four-method suite, valid cases | Exact normalized strings |\n| AC-002 | PH-01 final | Four-method suite, invalid cases | Exact exception types |\n| NFR-001 → AC-001, AC-002 | PH-01 final | All four tests | Four executed tests pass |\n| Constitution MUST | PH-01 | Git diff and hashes | Tests unchanged; verification nonmutating |\n## Operational delivery preparation\nLocal Python only; no deployment.\n## Review, learning, and adaptation\nSol task review and distinct Sol phase review assess actual cases, diff, and evidence.\n## Open questions and readiness for tasks\nNo blocking question. Task scope is one file and one fixed command.\n## References, approval, and amendments\nFixture-only approval; implementation remains separately authorized."
+    },
+    {
+      "contract": {
+        "acceptance": [
+          {
+            "description": "A bare or v-prefixed ASCII numeric triple normalizes to one v-prefixed triple, preserving component digits including zero and arbitrarily large components.",
+            "id": "AC-001",
+            "story": "US-001"
+          },
+          {
+            "description": "Malformed strings, leading zeros, Unicode digits, whitespace, suffixes and incorrect segment counts raise ValueError; non-string inputs raise TypeError.",
+            "id": "AC-002",
+            "story": "US-001"
+          }
+        ],
+        "depends_on": [
+          {
+            "digest": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+            "path": ".specs/roadmap.md"
+          },
+          {
+            "digest": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+            "path": ".specs/architecture.md"
+          },
+          {
+            "digest": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07",
+            "path": ".specs/structure.md"
+          }
+        ],
+        "id": "SPEC-1.2.3",
+        "kind": "spec",
+        "revision": "R00",
+        "schema_version": 1,
+        "stories": [
+          {
+            "description": "As an E7 evaluator, I need a deterministic strict normalizer so that release identifiers have one canonical form.",
+            "id": "US-001",
+            "title": "Strict release normalization"
+          }
+        ]
+      },
+      "digest": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+      "path": ".specs/release-v1.2.3/spec.md",
+      "prose": "## Purpose and selected release\n\nThe approved roadmap explicitly selects v1.2.3 for the E7 fixture.\n\n## Users, context, and expected outcome\n\nThe evaluator calls normalize_release from local Python; OUT-001 is demonstrated by four fixed tests.\n\n## Scope and exclusions\n\nImplement release.py only. No CLI, packaging, deployment, or test editing.\n\n## Approved bases and constraints\n\nConstitution MUST rules, architecture interface, and structure paths apply. Infrastructure is N/A for this local function.\n\n## Rules, acceptance, and examples\n\n| Criterion | Situation or input | Action or event | Expected result |\n| --- | --- | --- | --- |\n| AC-001 | `1.2.3`, `v1.2.3`, `0.0.0`, huge ASCII integers | normalize_release | Exact v-prefixed triple |\n| AC-002 | `01.2.3`, `1.2.٣`, whitespace, suffix, None | normalize_release | ValueError for strings; TypeError for nonstrings |\n\n## Quality and conditions of done\n\n| ID | Attribute | Conditions | Result or threshold | Verification approach | Related criteria |\n| --- | --- | --- | --- | --- | --- |\n| NFR-001 | Deterministic strictness | All fixed samples | Four unittest methods pass; test file unchanged | `python3 -B -m unittest -v test_release.py` | AC-001, AC-002 |\n\n## Edge cases, errors, and compatibility\n\nAC-002 includes Python bool as nonstring despite its int subclass. No permissive whitespace stripping.\n\n## Post-delivery measurement\n\nRun evidence shows technical behavior. Real-world impact is pending and out of scope.\n\n## Assumptions, dependencies, and open questions\n\nNo blocking question; stdlib Python and fixed test file are present."
+    },
+    {
+      "contract": {
+        "depends_on": [
+          {
+            "digest": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+            "path": ".specs/release-v1.2.3/plan.md"
+          }
+        ],
+        "id": "TASKS-1.2.3",
+        "kind": "tasks",
+        "revision": "R00",
+        "schema_version": 1,
+        "tasks": [
+          {
+            "acceptance": [
+              "AC-001",
+              "AC-002"
+            ],
+            "closure": "Final AC-001 and AC-002 behavior passes all four fixed tests; test_release.py remains unchanged.",
+            "depends_on": [],
+            "files": [
+              "release.py"
+            ],
+            "id": "T-001",
+            "phase": "PH-01",
+            "steps": [
+              {
+                "action": "Implement normalize_release to satisfy valid ASCII triples and exact error classes; run the fixed four-method suite without editing tests.",
+                "id": "T-001.001",
+                "verification": {
+                  "command": [
+                    "python3",
+                    "-B",
+                    "-m",
+                    "unittest",
+                    "-v",
+                    "test_release.py"
+                  ],
+                  "expected": "All four fixed tests execute and pass with exact outputs and exception types."
+                }
+              }
+            ],
+            "story": "US-001"
+          }
+        ]
+      },
+      "digest": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+      "path": ".specs/release-v1.2.3/tasks.md",
+      "prose": ""
+    },
+    {
+      "contract": {
+        "depends_on": [
+          {
+            "digest": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+            "path": ".specs/constitution.md"
+          },
+          {
+            "digest": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+            "path": ".specs/architecture.md"
+          },
+          {
+            "digest": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07",
+            "path": ".specs/structure.md"
+          }
+        ],
+        "id": "ROADMAP-E7",
+        "kind": "roadmap",
+        "releases": [
+          {
+            "objective": "Evaluate strict release normalization in disposable code.",
+            "status": "planned",
+            "version": "v1.2.3"
+          }
+        ],
+        "revision": "R00",
+        "schema_version": 1
+      },
+      "digest": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+      "path": ".specs/roadmap.md",
+      "prose": ""
+    },
+    {
+      "contract": {
+        "depends_on": [
+          {
+            "digest": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+            "path": ".specs/constitution.md"
+          },
+          {
+            "digest": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+            "path": ".specs/architecture.md"
+          }
+        ],
+        "id": "STRUCT-E7",
+        "kind": "structure",
+        "revision": "R00",
+        "schema_version": 1
+      },
+      "digest": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07",
+      "path": ".specs/structure.md",
+      "prose": "# Structure — E7-only disposable fixture\n\n\n\n## Purpose, audience, and scope\nThis E7-only file placement governs the local module fixture.\n## Verified current organization\nThe committed pre-implementation fixture tree is shown below; setup verifies these paths and stub/test hashes before registry approval. Generated controller records are omitted from this compact view.\n```text\nproject/\n├── release.py               # verified stub; sole implementation path\n├── test_release.py          # verified fixed four-method suite\n├── .gitignore               # verified bytecode exclusion\n└── .specs/                 # verified synthetic E7 decisions\n    ├── constitution.md\n    ├── architecture.md\n    ├── structure.md\n    ├── roadmap.md\n    └── release-v1.2.3/      # spec.md, plan.md, tasks.md\n```\n## Architecture-to-repository mapping\n| Component or responsibility | Path | Current or proposed state | Entry point |\n| --- | --- | --- | --- |\n| Strict normalization | release.py | Verified stub; implementation planned in place | normalize_release |\n| Fixed verification client | test_release.py | Verified and unchanged | unittest |\n## Intended organization and placement rules\nKeep the same tree; no proposed tree is needed because paths do not change.\n| Path or category | Contents | Placement rule | Restrictions |\n| --- | --- | --- | --- |\n| release.py | Normalizer | Implement in place | Sole writable code file |\n| test_release.py | Fixed checks | Retain at project root | Read-only |\n| .spec-flow/ | Controller records | Managed by harness | No manual editing |\n## Naming conventions and public interfaces\nExport normalize_release exactly from release.py; no package rename or added entry point.\n## Dependencies and module boundaries\nOnly Python stdlib may be imported. The test imports release; release must not import test_release.\n## Tests, configuration, documentation, and resources\nThe fixed test_release.py is read-only. There is no runtime config or resource required for this pure function.\n## Generated files, third parties, and distribution\nThe controller manages generated .spec-flow records; Python bytecode is ignored. No third-party package or distribution target.\n## Decisions, risks, and pending structural changes\nThe permitted implementation scope is release.py. A changed path requires an approved tasks/structure revision; none is pending.\n## References and amendment history\nSynthetic E7-only R00 decision; initial tree inspected before approval."
+    }
+  ],
+  "task": {
+    "acceptance": [
+      "AC-001",
+      "AC-002"
+    ],
+    "closure": "Final AC-001 and AC-002 behavior passes all four fixed tests; test_release.py remains unchanged.",
+    "depends_on": [],
+    "files": [
+      "release.py"
+    ],
+    "id": "T-001",
+    "phase": "PH-01",
+    "steps": [
+      {
+        "action": "Implement normalize_release to satisfy valid ASCII triples and exact error classes; run the fixed four-method suite without editing tests.",
+        "id": "T-001.001",
+        "verification": {
+          "command": [
+            "python3",
+            "-B",
+            "-m",
+            "unittest",
+            "-v",
+            "test_release.py"
+          ],
+          "expected": "All four fixed tests execute and pass with exact outputs and exception types."
+        }
+      }
+    ],
+    "story": "US-001"
+  },
+  "task_id": "T-001"
+}

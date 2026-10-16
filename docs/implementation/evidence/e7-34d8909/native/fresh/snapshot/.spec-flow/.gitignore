@@ -1,0 +1,4 @@
+# Spec-Flow generated state and bounded context packets
+/lock
+/runs/*/state.json
+/runs/*/packets/

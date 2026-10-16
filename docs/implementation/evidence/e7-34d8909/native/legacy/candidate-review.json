@@ -1,0 +1,16 @@
+{
+  "mapping_reviewed": [
+    {
+      "legacy": ".specs/001-normalize-release",
+      "release": "v1.2.3"
+    }
+  ],
+  "candidate_hashes_match": true,
+  "source_hashes_match": true,
+  "candidate_count": 7,
+  "original_count": 3,
+  "original_labels_present": true,
+  "imported_approvals": 0,
+  "imported_evidence": 0,
+  "note": "Historical labels/checkmarks remain provenance only; seven new synthetic E7 approvals are required after migration."
+}

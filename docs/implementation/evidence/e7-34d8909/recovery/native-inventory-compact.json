@@ -1,0 +1,9 @@
+{
+  "source": "collaboration.list_agents response in this Sol owner turn, observed before and after recovery",
+  "owner_path": "/root/e7_owner_f8fa91d",
+  "owner_status": "running",
+  "owner_children": [],
+  "historical_55eb811_reviewer_status": "completed",
+  "parent_status": "running",
+  "local_owner_child_session_count": 0
+}

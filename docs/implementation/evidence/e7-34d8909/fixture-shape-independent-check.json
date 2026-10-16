@@ -1,0 +1,177 @@
+{
+  "checked_at": "2026-10-16T14:50:41.136609+00:00",
+  "fixtures": {
+    "fresh": {
+      "documents": [
+        {
+          "path": ".specs/constitution.md",
+          "kind": "constitution",
+          "sections": 11,
+          "tables": 2,
+          "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209"
+        },
+        {
+          "path": ".specs/architecture.md",
+          "kind": "architecture",
+          "sections": 11,
+          "tables": 2,
+          "sha256": "691001bf2c3df927701b0e15d7dd9606c29a8d16c127688750e942b49a44fcb7"
+        },
+        {
+          "path": ".specs/structure.md",
+          "kind": "structure",
+          "sections": 10,
+          "tables": 2,
+          "sha256": "d5c4822c416a891edc92bc3c97fbe33702f2bffba13b322c534f960c7fad08aa"
+        },
+        {
+          "path": ".specs/roadmap.md",
+          "kind": "roadmap",
+          "sections": 11,
+          "tables": 2,
+          "sha256": "a674415efb82babb914dcf282ad3bc99dc2c07d98b716c06f1bed7ff1f463ad5"
+        },
+        {
+          "path": ".specs/release-v1.2.3/spec.md",
+          "kind": "spec",
+          "sections": 11,
+          "tables": 3,
+          "sha256": "5f79585a58847bb3253ec804f09d909d4267a656ce6d78ac2a6a58786e1f6049"
+        },
+        {
+          "path": ".specs/release-v1.2.3/plan.md",
+          "kind": "plan",
+          "sections": 11,
+          "tables": 4,
+          "sha256": "bb4a7fba8988cc1c2d5950b128d39f9d8c3cdec89735c3f61b84c92343b47f1c"
+        },
+        {
+          "path": ".specs/release-v1.2.3/tasks.md",
+          "kind": "tasks",
+          "sections": 10,
+          "tables": 2,
+          "sha256": "2467d30fb59b4eca028c0ef52c3cbadb476bd2d97f2d845fd3f293bea7dd5256"
+        }
+      ],
+      "all_required_sections_tables_match": true,
+      "structure_tree_present": true,
+      "release_contract_valid": true,
+      "no_registry_approval_or_run_created": true
+    },
+    "negative": {
+      "documents": [
+        {
+          "path": ".specs/constitution.md",
+          "kind": "constitution",
+          "sections": 11,
+          "tables": 2,
+          "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209"
+        },
+        {
+          "path": ".specs/architecture.md",
+          "kind": "architecture",
+          "sections": 11,
+          "tables": 2,
+          "sha256": "691001bf2c3df927701b0e15d7dd9606c29a8d16c127688750e942b49a44fcb7"
+        },
+        {
+          "path": ".specs/structure.md",
+          "kind": "structure",
+          "sections": 10,
+          "tables": 2,
+          "sha256": "d5c4822c416a891edc92bc3c97fbe33702f2bffba13b322c534f960c7fad08aa"
+        },
+        {
+          "path": ".specs/roadmap.md",
+          "kind": "roadmap",
+          "sections": 11,
+          "tables": 2,
+          "sha256": "a674415efb82babb914dcf282ad3bc99dc2c07d98b716c06f1bed7ff1f463ad5"
+        },
+        {
+          "path": ".specs/release-v1.2.3/spec.md",
+          "kind": "spec",
+          "sections": 11,
+          "tables": 3,
+          "sha256": "5f79585a58847bb3253ec804f09d909d4267a656ce6d78ac2a6a58786e1f6049"
+        },
+        {
+          "path": ".specs/release-v1.2.3/plan.md",
+          "kind": "plan",
+          "sections": 11,
+          "tables": 4,
+          "sha256": "bb4a7fba8988cc1c2d5950b128d39f9d8c3cdec89735c3f61b84c92343b47f1c"
+        },
+        {
+          "path": ".specs/release-v1.2.3/tasks.md",
+          "kind": "tasks",
+          "sections": 10,
+          "tables": 2,
+          "sha256": "2467d30fb59b4eca028c0ef52c3cbadb476bd2d97f2d845fd3f293bea7dd5256"
+        }
+      ],
+      "all_required_sections_tables_match": true,
+      "structure_tree_present": true,
+      "release_contract_valid": true,
+      "no_registry_approval_or_run_created": true
+    },
+    "legacy-candidates": {
+      "documents": [
+        {
+          "path": ".specs/constitution.md",
+          "kind": "constitution",
+          "sections": 11,
+          "tables": 2,
+          "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209"
+        },
+        {
+          "path": ".specs/architecture.md",
+          "kind": "architecture",
+          "sections": 11,
+          "tables": 2,
+          "sha256": "691001bf2c3df927701b0e15d7dd9606c29a8d16c127688750e942b49a44fcb7"
+        },
+        {
+          "path": ".specs/structure.md",
+          "kind": "structure",
+          "sections": 10,
+          "tables": 2,
+          "sha256": "d5c4822c416a891edc92bc3c97fbe33702f2bffba13b322c534f960c7fad08aa"
+        },
+        {
+          "path": ".specs/roadmap.md",
+          "kind": "roadmap",
+          "sections": 11,
+          "tables": 2,
+          "sha256": "a674415efb82babb914dcf282ad3bc99dc2c07d98b716c06f1bed7ff1f463ad5"
+        },
+        {
+          "path": ".specs/release-v1.2.3/spec.md",
+          "kind": "spec",
+          "sections": 11,
+          "tables": 3,
+          "sha256": "5f79585a58847bb3253ec804f09d909d4267a656ce6d78ac2a6a58786e1f6049"
+        },
+        {
+          "path": ".specs/release-v1.2.3/plan.md",
+          "kind": "plan",
+          "sections": 11,
+          "tables": 4,
+          "sha256": "bb4a7fba8988cc1c2d5950b128d39f9d8c3cdec89735c3f61b84c92343b47f1c"
+        },
+        {
+          "path": ".specs/release-v1.2.3/tasks.md",
+          "kind": "tasks",
+          "sections": 10,
+          "tables": 2,
+          "sha256": "2467d30fb59b4eca028c0ef52c3cbadb476bd2d97f2d845fd3f293bea7dd5256"
+        }
+      ],
+      "all_required_sections_tables_match": true,
+      "structure_tree_present": true,
+      "release_contract_valid": true,
+      "no_registry_approval_or_run_created": true
+    }
+  },
+  "limit": "Counts/contract validation plus bounded tree inspection; not universal semantic proof"
+}

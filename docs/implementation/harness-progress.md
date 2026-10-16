@@ -1,6 +1,6 @@
 # Implementación del harness de Spec-Flow
 
-Este documento conserva el registro histórico E0–E8. La [reevaluación E7 de f8fa91d del 2026-10-16](e7-f8fa91d.md) quedó **no aprobada por HIGH F-02**. F-01 tiene corrección y regresiones aprobadas; los resultados anteriores no acreditan el cierre nativo del candidato actual.
+Este documento conserva el registro histórico E0–E8. La [reevaluación E7 de 34d8909 del 2026-10-16](e7-34d8909.md) quedó **no aprobada por HIGH F-03**: dos escenarios positivos cerraron, pero el escenario negativo no puede abandonarse tras agotar intentos. F-02 está corregido y los tres runs anteriores se recuperaron mediante el controlador; F-01 quedó comprobado nativamente. Los resultados históricos no aprueban este candidato.
 
 Base: `935de5d:docs/designs/2026-10-14-harness-orchestration.md`.
 Autorización: el usuario solicitó explícitamente implementar el plan E0–E8 en esta conversación el 2026-10-14. Migración obligatoria, una feature activa por release, conservación de evidencia vigente; sin bump, push ni publicación.
@@ -97,3 +97,11 @@ F-01 se corrigió en `f8fa91d2c98927eeaba3af0643e9973e9a1e506f` usando el valida
 La nueva E7 preparó tres proyectos desechables y runs Sol/high atestados, comprobó gates/recibos y migración sin importar autoridad. No llegó a crear hijos Luna ni revisar/comprometer fases. Un límite inicial de agentes del host se resolvió finalizando dos hijos históricos sin trabajo nuevo. La conciliación posterior reveló **HIGH F-02**: el barrido de sesiones en `attest_no_spawn` llama `.get()` sobre `source.subagent` string de un registro ajeno legítimo y cae con AttributeError. Se reprodujo en los tres runs y de forma independiente sin mutar sus archivos/leases.
 
 **E7 no aprobada.** Los runs conservan reservas en reconciliation_required y propiedad activa; el controlador impide abandonarlos sin conciliación y no se borró nada manualmente. Se preservan bundles, snapshots, pruebas, entradas/salidas y hashes. Dos tablas de architecture faltantes en los fixtures y su revisión R01 quedaron pendientes, sin alterar fuentes aprobadas. El [informe actual](e7-f8fa91d.md) distingue corrección validada, preparación real, controles ejercitados y ejecución nativa no alcanzada. Falta corregir F-02, recuperar por rutas soportadas y repetir E7; E8 e integración/publicación permanecen sin ejecutar.
+
+## Reevaluación 2026-10-16 — F-02 corregido, recuperación y E7 sobre 34d8909
+
+Corrección acotada de metadatos nativos no estructurados, con regresiones RED→GREEN y revisión independiente; 123 pruebas del plugin + 9 del hook aprobadas también desde la exportación inmutable. El propietario Sol/high original recuperó y abandonó los tres runs de f8fa91d mediante el controlador, conservando intentos, decisiones, recibos e historia y liberando sus propiedades.
+
+E7 nueva: proyectos nuevo y migrado completaron implementación Luna/high, revisión Sol/high distinta, convergencia, review-release, checkpoint de auditoría y cierre con ramas limpias retenidas y propiedad liberada. Nueve sesiones nativas atestadas independientemente. El escenario negativo ejecutó tres fallos inyectados y verificaciones reales: bloqueó correctamente aceptación/cierre y un cuarto intento, pero expuso **F-03 HIGH** al impedir reconciliar/abandonar la tarea fallida con hijo terminal y presupuesto agotado. Se conserva su propiedad y evidencia, sin editar registros. **E7 no aprobada**; no se repitió E8 ni se publicó/instaló una nueva versión.
+
+[Informe y evidencias del candidato](e7-34d8909.md). Los seis proyectos tienen snapshots y bundles verificados; la recuperación pendiente afecta solamente al nuevo negativo.

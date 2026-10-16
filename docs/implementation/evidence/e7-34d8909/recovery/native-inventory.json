@@ -1,0 +1,9 @@
+{
+  "inventory": {
+    "owner_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+    "inventory_reference": "collaboration.list_agents current followup: owner running with zero descendants; previous 55eb811 children terminal. Local session_meta lineage scan zero owner descendants.",
+    "checked_at": "2026-10-16T14:49:09Z",
+    "agents": []
+  },
+  "local_child_sessions": []
+}

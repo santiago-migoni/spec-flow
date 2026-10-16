@@ -1,0 +1,347 @@
+{
+  "active_task": null,
+  "authorization": [
+    {
+      "actor": "User",
+      "source": "evaluation-context.json human_authorization",
+      "statement": "Me parece bien. Corrige F-02 conservando los controles actuales, recupera los runs bloqueados mediante el controlador y repite E7 sobre el nuevo commit, usando proyectos desechables y registrando las pruebas, los resultados y las evidencias. Synthetic E7 fixture execution of PH-01 only."
+    }
+  ],
+  "authorized_phases": [
+    "PH-01"
+  ],
+  "capabilities": {
+    "basis": "host-supplied capability references; Python does not enumerate native tools",
+    "inventory_reference": "collaboration.list_agents after capability probe: /root/e7_owner_f8fa91d/e7_capability_probe_34d8909 interrupted and no implementer active",
+    "operations": [
+      "interrupt_agent",
+      "list_agents",
+      "spawn_agent",
+      "wait_agent"
+    ],
+    "owner_session": {
+      "agent_lifecycle": "active",
+      "agent_path": "/root/e7_owner_f8fa91d",
+      "attestation_sha256": "b4daeda738b9fc807791e82dc342212b9b3bf22432fc243534bee29bad6f6b2a",
+      "effort": "high",
+      "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T11-27-09-01a1451c-0ecd-7c93-9d51-8650fdaf887f.jsonl",
+      "model": "gpt-6-sol",
+      "packet_marker_source": null,
+      "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+      "record_hashes": {
+        "delegation": null,
+        "lifecycle": "c33011edecbc85c165cb421ff3e1176aa3370556a45b59a0fe08bacd9873352f",
+        "session_meta": "45ca6f4389b225b47adbdfd6e1343ce53eafb8d7dfe1b4aaed182215557ccb6a",
+        "task_marker": null,
+        "turn_contexts": [
+          "f4fb30b106c0340c8ef4a228bb94a748ab65366d7d4f5a577a10097389e0eefc",
+          "be016a0d93c64440dfbc3d9d41c153851052736c0b5044118ba9f7e40bed8af7",
+          "0880686ba8bb9fd63e54c613ddfce8284aac730d53f4292c132189464bf79632",
+          "4a56800b6e21b46daa84968eefd4d1bf19578c8c5edb375e5e9a19195865f369",
+          "1882979eea9e58739fd8c5c8786e83a09a317a764831a0f7d8df9b0b190c4870"
+        ]
+      },
+      "role": "orchestrator",
+      "session_id": "01a1451c-0ecd-7c93-9d51-8650fdaf887f"
+    },
+    "probe_evidence_references": {
+      "interrupt_agent": "native interrupt_agent returned previous_status running and list_agents then showed interrupted",
+      "list_agents": "native list_agents showed probe running then interrupted; owner path /root/e7_owner_f8fa91d running",
+      "spawn_agent": "native spawn_agent created isolated Luna/high capability probe e7_capability_probe_34d8909; its ready message received",
+      "wait_agent": "native wait_agent returned after probe ready message"
+    }
+  },
+  "documents": {
+    ".specs/architecture.md": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+    ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+    ".specs/release-v1.2.3/plan.md": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+    ".specs/release-v1.2.3/spec.md": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+    ".specs/release-v1.2.3/tasks.md": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+    ".specs/roadmap.md": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+    ".specs/structure.md": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07"
+  },
+  "migration_evidence_pending": [],
+  "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "phase_contracts": [
+    {
+      "depends_on": [],
+      "description": "Implement and verify strict normalization in release.py.",
+      "id": "PH-01"
+    }
+  ],
+  "phases": {
+    "PH-01": {
+      "commit": {
+        "adopted_after_crash": false,
+        "committed_at": "2026-10-16T14:55:49Z",
+        "evidence": "Independent Sol/high reviewer inspected exact staged tree adae2dd10484a95ceca33c187b38e42f8f0a52b3, parent 400189f, diff 77e5bbb; 4 fixed tests passed on code hash 57c7c75e, test hash 7bb24f05 unchanged; AC-001, AC-002, NFR-001 and fixture constitution MUSTs satisfied. No blockers.",
+        "parent": "400189f34ce657f717ab9780a7c83cce4cef18ef",
+        "phase_id": "PH-01",
+        "release": "v1.2.3",
+        "review_packet_sha256": "6670cb850760aa809643a998975072ab817d0470305fc18df2190ff02decbfe5",
+        "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609",
+        "schema": "spec-flow-phase-receipt.v1",
+        "sha": "efb411fe52fa3334e7548a392ff20ad868040e4d",
+        "subject": "feat(e7): implement strict release normalization",
+        "tree": "adae2dd10484a95ceca33c187b38e42f8f0a52b3"
+      },
+      "diff_sha256": "77e5bbbde179f08429ea5b6db97a432708476b51f05d7085af09c29f98f53b6c",
+      "marker": "SPEC_FLOW_PHASE_REVIEW=3c60f525-acaf-4ddf-b6cc-7fef01b1c609/PH-01/adae2dd10484a95ceca33c187b38e42f8f0a52b3",
+      "packet_created_at": "2026-10-16T14:54:40Z",
+      "packet_path": ".spec-flow/runs/3c60f525-acaf-4ddf-b6cc-7fef01b1c609/packets/phase-PH-01-adae2dd10484a95ceca33c187b38e42f8f0a52b3.json",
+      "packet_sha256": "6670cb850760aa809643a998975072ab817d0470305fc18df2190ff02decbfe5",
+      "parent": "400189f34ce657f717ab9780a7c83cce4cef18ef",
+      "ready_at": "2026-10-16T14:54:40Z",
+      "receipt_path": ".spec-flow/runs/3c60f525-acaf-4ddf-b6cc-7fef01b1c609/evidence/PH-01-phase-commit.json",
+      "review": {
+        "evidence": "Independent Sol/high reviewer inspected exact staged tree adae2dd10484a95ceca33c187b38e42f8f0a52b3, parent 400189f, diff 77e5bbb; 4 fixed tests passed on code hash 57c7c75e, test hash 7bb24f05 unchanged; AC-001, AC-002, NFR-001 and fixture constitution MUSTs satisfied. No blockers.",
+        "host_attestation": {
+          "agent_lifecycle": "completed",
+          "agent_path": "/root/e7_owner_f8fa91d/review_a57a1a9d375ca6218b536a6844ca27577e60a291c16308be07ed792e110b6822",
+          "attestation_sha256": "428e1d1a6af7cf23db5a211c21a81f5a925a4e3663ad25725417f7d25e8e88c5",
+          "effort": "high",
+          "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T11-54-50-01a14535-694d-7422-958c-411e9a6c14aa.jsonl",
+          "model": "gpt-6-sol",
+          "packet_marker_source": "native_spawn_task_name",
+          "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+          "record_hashes": {
+            "delegation": "f4ad9a24bbbba79d26e8d1a59445fc35df8d774f9055a7e3c8d840693104eb8b",
+            "lifecycle": "830120d605f903b7bdb57630fc7c123f9777addf7eb86d89878fe11a0d5f7787",
+            "session_meta": "91f6c4ff15c73e12d628f8e80d530466b105b11b914670318228cd6d9b9be243",
+            "task_marker": null,
+            "turn_contexts": [
+              "f534105c446c4c54b43fc6d166cd530e81329d2d0dd3a85e0314baa421d30950"
+            ]
+          },
+          "role": "reviewer",
+          "session_id": "01a14535-694d-7422-958c-411e9a6c14aa"
+        },
+        "review_packet_sha256": "6670cb850760aa809643a998975072ab817d0470305fc18df2190ff02decbfe5",
+        "reviewed_at": "2026-10-16T14:55:49Z",
+        "reviewer_agent_id": "/root/e7_owner_f8fa91d/review_a57a1a9d375ca6218b536a6844ca27577e60a291c16308be07ed792e110b6822",
+        "reviewer_session": "01a14535-694d-7422-958c-411e9a6c14aa",
+        "verdict": "pass"
+      },
+      "source_digests": {
+        ".specs/architecture.md": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+        ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+        ".specs/release-v1.2.3/plan.md": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+        ".specs/release-v1.2.3/spec.md": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+        ".specs/release-v1.2.3/tasks.md": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+        ".specs/roadmap.md": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+        ".specs/structure.md": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07"
+      },
+      "staged_paths": [
+        ".spec-flow/approvals.jsonl",
+        ".spec-flow/runs/3c60f525-acaf-4ddf-b6cc-7fef01b1c609/events.jsonl",
+        ".spec-flow/runs/3c60f525-acaf-4ddf-b6cc-7fef01b1c609/evidence/T-001-1-verify.json",
+        ".specs/release-v1.2.3/tasks.md",
+        "release.py"
+      ],
+      "status": "committed",
+      "tree": "adae2dd10484a95ceca33c187b38e42f8f0a52b3"
+    }
+  },
+  "prior_attempts": {},
+  "reconciliation_required": false,
+  "release": "v1.2.3",
+  "release_review": {
+    "record": {
+      "delivery_status": "branch_retained",
+      "external_side_effects": false,
+      "impact_evidence": [],
+      "impact_status": "pending",
+      "kind": "release-review",
+      "phase_commits": [
+        {
+          "phase_id": "PH-01",
+          "sha": "efb411fe52fa3334e7548a392ff20ad868040e4d"
+        }
+      ],
+      "publication": false,
+      "release": "v1.2.3",
+      "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609",
+      "schema": "spec-flow.derived-release.v1",
+      "technical_status": "complete"
+    },
+    "reviewed_at": "2026-10-16T14:56:11Z",
+    "roadmap_reference": {
+      "impact_status": "pending",
+      "kind": "roadmap-reference",
+      "release": "v1.2.3",
+      "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609",
+      "schema": "spec-flow.derived-reference.v1",
+      "spec_path": ".specs/release-v1.2.3/spec.md"
+    }
+  },
+  "run_id": "3c60f525-acaf-4ddf-b6cc-7fef01b1c609",
+  "status": "completed",
+  "task_contracts": [
+    {
+      "acceptance": [
+        "AC-001",
+        "AC-002"
+      ],
+      "closure": "Final AC-001 and AC-002 behavior passes all four fixed tests; test_release.py remains unchanged.",
+      "depends_on": [],
+      "files": [
+        "release.py"
+      ],
+      "id": "T-001",
+      "phase": "PH-01",
+      "steps": [
+        {
+          "action": "Implement normalize_release to satisfy valid ASCII triples and exact error classes; run the fixed four-method suite without editing tests.",
+          "id": "T-001.001",
+          "verification": {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "-v",
+              "test_release.py"
+            ],
+            "expected": "All four fixed tests execute and pass with exact outputs and exception types."
+          }
+        }
+      ],
+      "story": "US-001"
+    }
+  ],
+  "task_ids": [
+    "T-001"
+  ],
+  "tasks": {
+    "T-001": {
+      "agent": {
+        "agent_id": "/root/e7_owner_f8fa91d/luna_3b1458f98464b9838f1a7ec0a93be5ecf5bd89144eae0c9fcc37aaf232959167",
+        "agent_path": "/root/e7_owner_f8fa91d/luna_3b1458f98464b9838f1a7ec0a93be5ecf5bd89144eae0c9fcc37aaf232959167",
+        "attestation": {
+          "agent_lifecycle": "active",
+          "agent_path": "/root/e7_owner_f8fa91d/luna_3b1458f98464b9838f1a7ec0a93be5ecf5bd89144eae0c9fcc37aaf232959167",
+          "attestation_sha256": "6453110b08825116aed0b7b0d36001538d857459e571282924f46d22b79ca939",
+          "effort": "high",
+          "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T11-53-27-01a14534-260f-7503-a4a1-33f34c722333.jsonl",
+          "model": "gpt-6-luna",
+          "packet_marker_source": "native_spawn_task_name",
+          "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+          "record_hashes": {
+            "delegation": "783adbe82ec9930bf32b9ed8be86d6c96baa21ac3617b04c8d65d6d94e7e7815",
+            "lifecycle": "c4b05e174cfe8cb38050abf9d8f42c8953a4d4ec28e4482de75477d0ae52ca65",
+            "session_meta": "e87dfdc0993fc1d99e6bdd50a36a5cc44741b50b94ac5d6ab0f6680299f32b19",
+            "task_marker": null,
+            "turn_contexts": [
+              "640f88822060e4002597d48a327ef6c1c8d9fa739840ee0b9afc2393b241eff1"
+            ]
+          },
+          "role": "implementer",
+          "session_id": "01a14534-260f-7503-a4a1-33f34c722333"
+        },
+        "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+        "session_id": "01a14534-260f-7503-a4a1-33f34c722333"
+      },
+      "attempt": 1,
+      "attempt_baseline": {
+        ".gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+        "release.py": "a804abcd14f65126a7ada66bb6a9bb4554595ddd31cdc485df545beb28e42aa9",
+        "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+      },
+      "attempt_owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+      "baseline": {
+        ".gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+        "release.py": "a804abcd14f65126a7ada66bb6a9bb4554595ddd31cdc485df545beb28e42aa9",
+        "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+      },
+      "closed_at": "2026-10-16T14:54:31Z",
+      "code_fingerprint": {
+        "release.py": "57c7c75e8e55a050d844c4846ca58cc85af8d26faa62a3a0e4a0bd8958280e37"
+      },
+      "evidence_path": ".spec-flow/runs/3c60f525-acaf-4ddf-b6cc-7fef01b1c609/evidence/T-001-1-verify.json",
+      "failure": null,
+      "no_spawn_attestation": null,
+      "packet_created_at": "2026-10-16T14:53:15Z",
+      "packet_path": ".spec-flow/runs/3c60f525-acaf-4ddf-b6cc-7fef01b1c609/packets/T-001-1.json",
+      "packet_sha256": "d125682445f3b9ae885d1bab4146673dd3655d295b33565d787a6d7370f66ddc",
+      "prepared_at": "2026-10-16T14:53:15Z",
+      "reconciliation_evidence": "Controlled interruption after Luna wrote release.py hash 57c7c75e... and reported four tests PASS; host lifecycle aborted; Sol owner reran same four methods on unchanged code, test SHA fixed, packet restored exact bytes and attempt remains 1.",
+      "result": {
+        "blockers": [],
+        "checks": [
+          {
+            "check": "python3 -B -m unittest -v test_release.py",
+            "result": "PASS: four methods ran and passed on code hash 57c7c75e8e55a050d844c4846ca58cc85af8d26faa62a3a0e4a0bd8958280e37; owner reran after aborted child.",
+            "step_id": "T-001.001"
+          }
+        ],
+        "evidence": [
+          {
+            "description": "Four methods pass, release.py hash stable, fixed test hash unchanged after controlled interruption.",
+            "kind": "test_output",
+            "reference": "native/fresh/interruption-recovery-check.json"
+          }
+        ],
+        "files_modified": [
+          "release.py"
+        ],
+        "summary": "Luna implemented strict normalization in release.py for T-001 attempt 1. After controlled interruption, Sol owner confirmed all four fixed tests pass on Luna-written unchanged code; AC-001 valid triples, AC-002 malformed/nonstring errors and NFR-001 fixed suite demonstrated."
+      },
+      "retry_hypothesis": null,
+      "retry_reason": null,
+      "review": {
+        "at": "2026-10-16T14:54:31Z",
+        "evidence": "Sol owner inspected release.py only diff and fixed test hash 7bb24f05; controller executed all four methods PASS on hash 57c7c75e. AC-001/AC-002 exact valid/error cases and NFR-001 met, constitution MUST unchanged tests and nonmutating verify met. Recovered aborted Luna result without replay.",
+        "verdict": "pass"
+      },
+      "scope_files": [
+        "release.py"
+      ],
+      "source_digests": {
+        ".specs/architecture.md": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+        ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+        ".specs/release-v1.2.3/plan.md": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+        ".specs/release-v1.2.3/spec.md": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+        ".specs/release-v1.2.3/tasks.md": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+        ".specs/roadmap.md": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+        ".specs/structure.md": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07"
+      },
+      "status": "completed",
+      "step_evidence": {
+        "T-001.001": {
+          "code_fingerprint": {
+            "release.py": "57c7c75e8e55a050d844c4846ca58cc85af8d26faa62a3a0e4a0bd8958280e37"
+          },
+          "command": [
+            "python3",
+            "-B",
+            "-m",
+            "unittest",
+            "-v",
+            "test_release.py"
+          ],
+          "exit_code": 0,
+          "expected": "All four fixed tests execute and pass with exact outputs and exception types.",
+          "inspection": null,
+          "observed": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+          "output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+          "output_sha256": "4bc37de48396900fa809512e7dd0dab3bd004e90fde5e293b7612630ff5084fb",
+          "source_digests": {
+            ".specs/architecture.md": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+            ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+            ".specs/release-v1.2.3/plan.md": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+            ".specs/release-v1.2.3/spec.md": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+            ".specs/release-v1.2.3/tasks.md": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+            ".specs/roadmap.md": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+            ".specs/structure.md": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07"
+          },
+          "step_id": "T-001.001"
+        }
+      },
+      "verified_snapshot": {
+        ".gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+        "release.py": "57c7c75e8e55a050d844c4846ca58cc85af8d26faa62a3a0e4a0bd8958280e37",
+        "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+      }
+    }
+  }
+}

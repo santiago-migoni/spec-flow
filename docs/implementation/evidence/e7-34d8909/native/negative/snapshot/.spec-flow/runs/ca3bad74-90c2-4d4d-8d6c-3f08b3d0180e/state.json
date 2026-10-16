@@ -1,0 +1,213 @@
+{
+  "active_task": "T-001",
+  "authorization": [
+    {
+      "actor": "User",
+      "source": "evaluation-context.json human_authorization",
+      "statement": "Me parece bien. Corrige F-02 conservando los controles actuales, recupera los runs bloqueados mediante el controlador y repite E7 sobre el nuevo commit, usando proyectos desechables y registrando las pruebas, los resultados y las evidencias. Synthetic E7 fixture execution of PH-01 only."
+    }
+  ],
+  "authorized_phases": [
+    "PH-01"
+  ],
+  "capabilities": {
+    "basis": "host-supplied capability references; Python does not enumerate native tools",
+    "inventory_reference": "collaboration.list_agents: capability probe interrupted; fresh Luna aborted; fresh Sol reviewer completed; no active child at new fixture start",
+    "operations": [
+      "interrupt_agent",
+      "list_agents",
+      "spawn_agent",
+      "wait_agent"
+    ],
+    "owner_session": {
+      "agent_lifecycle": "active",
+      "agent_path": "/root/e7_owner_f8fa91d",
+      "attestation_sha256": "b4daeda738b9fc807791e82dc342212b9b3bf22432fc243534bee29bad6f6b2a",
+      "effort": "high",
+      "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T11-27-09-01a1451c-0ecd-7c93-9d51-8650fdaf887f.jsonl",
+      "model": "gpt-6-sol",
+      "packet_marker_source": null,
+      "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+      "record_hashes": {
+        "delegation": null,
+        "lifecycle": "c33011edecbc85c165cb421ff3e1176aa3370556a45b59a0fe08bacd9873352f",
+        "session_meta": "45ca6f4389b225b47adbdfd6e1343ce53eafb8d7dfe1b4aaed182215557ccb6a",
+        "task_marker": null,
+        "turn_contexts": [
+          "f4fb30b106c0340c8ef4a228bb94a748ab65366d7d4f5a577a10097389e0eefc",
+          "be016a0d93c64440dfbc3d9d41c153851052736c0b5044118ba9f7e40bed8af7",
+          "0880686ba8bb9fd63e54c613ddfce8284aac730d53f4292c132189464bf79632",
+          "4a56800b6e21b46daa84968eefd4d1bf19578c8c5edb375e5e9a19195865f369",
+          "1882979eea9e58739fd8c5c8786e83a09a317a764831a0f7d8df9b0b190c4870"
+        ]
+      },
+      "role": "orchestrator",
+      "session_id": "01a1451c-0ecd-7c93-9d51-8650fdaf887f"
+    },
+    "probe_evidence_references": {
+      "interrupt_agent": "native interrupt_agent stopped running probe and running fresh Luna after its code write",
+      "list_agents": "native list_agents confirmed active/terminal child states in this owner session",
+      "spawn_agent": "native spawn_agent created Luna/high capability probe and fresh implementation and distinct Sol/high reviewer",
+      "wait_agent": "native wait_agent returned probe ready message and reviewer completion"
+    }
+  },
+  "documents": {
+    ".specs/architecture.md": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+    ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+    ".specs/release-v1.2.3/plan.md": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+    ".specs/release-v1.2.3/spec.md": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+    ".specs/release-v1.2.3/tasks.md": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+    ".specs/roadmap.md": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+    ".specs/structure.md": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07"
+  },
+  "migration_evidence_pending": [],
+  "owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+  "phase_contracts": [
+    {
+      "depends_on": [],
+      "description": "Implement and verify strict normalization in release.py.",
+      "id": "PH-01"
+    }
+  ],
+  "phases": {},
+  "prior_attempts": {},
+  "reconciliation_required": true,
+  "release": "v1.2.3",
+  "run_id": "ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e",
+  "status": "active",
+  "task_contracts": [
+    {
+      "acceptance": [
+        "AC-001",
+        "AC-002"
+      ],
+      "closure": "Final AC-001 and AC-002 behavior passes all four fixed tests; test_release.py remains unchanged.",
+      "depends_on": [],
+      "files": [
+        "release.py"
+      ],
+      "id": "T-001",
+      "phase": "PH-01",
+      "steps": [
+        {
+          "action": "Implement normalize_release to satisfy valid ASCII triples and exact error classes; run the fixed four-method suite without editing tests.",
+          "id": "T-001.001",
+          "verification": {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "-v",
+              "test_release.py"
+            ],
+            "expected": "All four fixed tests execute and pass with exact outputs and exception types."
+          }
+        }
+      ],
+      "story": "US-001"
+    }
+  ],
+  "task_ids": [
+    "T-001"
+  ],
+  "tasks": {
+    "T-001": {
+      "agent": {
+        "agent_id": "/root/e7_owner_f8fa91d/luna_1498d05e7c7dba97b329c2befcd0ddea743202afce865dba3764ab354020df30",
+        "agent_path": "/root/e7_owner_f8fa91d/luna_1498d05e7c7dba97b329c2befcd0ddea743202afce865dba3764ab354020df30",
+        "attestation": {
+          "agent_lifecycle": "completed",
+          "agent_path": "/root/e7_owner_f8fa91d/luna_1498d05e7c7dba97b329c2befcd0ddea743202afce865dba3764ab354020df30",
+          "attestation_sha256": "826c1b75cf5efe10c59a326e8a64fbaa81b92700b8d8310d66ca20c53bdb65f2",
+          "effort": "high",
+          "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T12-01-53-01a1453b-dc1c-7312-8551-0cfc106940ce.jsonl",
+          "model": "gpt-6-luna",
+          "packet_marker_source": "native_spawn_task_name",
+          "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+          "record_hashes": {
+            "delegation": "0fc6652ff24b4f6f92bff466dec399d0431d0a4751d46e252894ba823a7d725c",
+            "lifecycle": "8f411e7dc4e41af36b775f65f0be935399686dfbbf3a0df7234d2e8b3b351e07",
+            "session_meta": "e4e8f5355e52581dff34a73ccf17bf6a1d62f18ac647c7b89474fe8853515684",
+            "task_marker": null,
+            "turn_contexts": [
+              "56fe67594f72a090e7b94341ae165236224982c6be68b3cd06b5cde60bc90620"
+            ]
+          },
+          "role": "implementer",
+          "session_id": "01a1453b-dc1c-7312-8551-0cfc106940ce"
+        },
+        "parent_session": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+        "session_id": "01a1453b-dc1c-7312-8551-0cfc106940ce"
+      },
+      "attempt": 3,
+      "attempt_baseline": {
+        ".gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+        "release.py": "da12810d7943d7b357919560a8b256108155f042b6e9937e60620dd234205f11",
+        "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+      },
+      "attempt_owner": "01a1451c-0ecd-7c93-9d51-8650fdaf887f",
+      "baseline": {
+        ".gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+        "release.py": "a804abcd14f65126a7ada66bb6a9bb4554595ddd31cdc485df545beb28e42aa9",
+        "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+      },
+      "closed_at": null,
+      "code_fingerprint": null,
+      "evidence_path": null,
+      "failure": {
+        "code": "verification_failed",
+        "details": {
+          "exit_code": 1,
+          "output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... \n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003') ... FAIL\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-34d8909-od5uaw4f/negative-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (failures=1)\n"
+        },
+        "message": "verification command failed: T-001.001"
+      },
+      "no_spawn_attestation": null,
+      "packet_created_at": "2026-10-16T15:01:45Z",
+      "packet_path": ".spec-flow/runs/ca3bad74-90c2-4d4d-8d6c-3f08b3d0180e/packets/T-001-3.json",
+      "packet_sha256": "2ca78241fa6f32da8d69e8b24c519d260c64a76c5b68775845c6bc27ca40c3c1",
+      "prepared_at": "2026-10-16T15:01:45Z",
+      "reconciliation_evidence": null,
+      "result": {
+        "blockers": [],
+        "checks": [
+          {
+            "check": "python3 -B -m unittest -v test_release.py",
+            "result": "FAILED: 4 methods ran; only malformed-string subtest 1.2.003 failed because ValueError was not raised.",
+            "step_id": "T-001.001"
+          }
+        ],
+        "evidence": [
+          {
+            "description": "Native Luna observed one failing 1.2.003 subtest; fixed test SHA256 7bb24f05 unchanged; code SHA256 283d6ea7c4aff4a8e3aff28a9ea6cf9425c4f2ed12bcd400c76a744407189d18.",
+            "kind": "test_output",
+            "reference": "negative-linked/test_release.py"
+          }
+        ],
+        "files_modified": [
+          "release.py"
+        ],
+        "summary": "INJECTED FAILURE attempt 3: native Luna refactored release.py but deliberately still accepts 1.2.003, violating AC-002. Fixed suite ran with one failing subtest; this tests the retry limit, not model quality."
+      },
+      "retry_hypothesis": null,
+      "retry_reason": null,
+      "review": null,
+      "scope_files": [
+        "release.py"
+      ],
+      "source_digests": {
+        ".specs/architecture.md": "41b1e09a052bfc9417437d418154934c75983343f7f9693faf318ab62b53b8f5",
+        ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+        ".specs/release-v1.2.3/plan.md": "03e6343d952ec60ff469b5908dfa9ad7ead059b5d13488f501713a2e476b0d57",
+        ".specs/release-v1.2.3/spec.md": "e2b0c1528b0e3b8647f12d013a16ddb85adc99517f27f6a26ac57b9da61992d0",
+        ".specs/release-v1.2.3/tasks.md": "9d1b59e2fa2aefa50607017ad52a4f52c0274e11408ebfc7dc765385978d24da",
+        ".specs/roadmap.md": "365ff1a6541f2310a587973bfff7714e355a4c29cf162d63749d2b561b3c6b91",
+        ".specs/structure.md": "c71b1a1a748d1132cecc2cdb1ef826a1abe65e01a2cb931df68538cde6fb2d07"
+      },
+      "status": "verification_failed",
+      "step_evidence": {},
+      "verified_snapshot": null
+    }
+  }
+}

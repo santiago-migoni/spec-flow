@@ -1,0 +1,8 @@
+{
+  "packet_path": "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/fresh-linked/.spec-flow/runs/3c60f525-acaf-4ddf-b6cc-7fef01b1c609/packets/T-001-1.json",
+  "pre_loss_sha256": "373f93c2701e167d32195087526398de294633ea1fbf94dbce065ef3f037bd14",
+  "ignored_rule": ".spec-flow/.gitignore:4:/runs/*/packets/\t/private/tmp/spec-flow-e7-34d8909-od5uaw4f/fresh-linked/.spec-flow/runs/3c60f525-acaf-4ddf-b6cc-7fef01b1c609/packets/T-001-1.json",
+  "deleted_for_controlled_probe": true,
+  "restored_file_sha256": "373f93c2701e167d32195087526398de294633ea1fbf94dbce065ef3f037bd14",
+  "exact_bytes_restored": true
+}

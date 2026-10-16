@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-34d8909/reproduction/prepare_legacy.py"
+  ],
+  "exit_code": 0,
+  "result": {
+    "root": "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/legacy-main",
+    "candidate_dir": "/private/tmp/spec-flow-e7-34d8909-od5uaw4f/legacy-candidates",
+    "head": "5b9c9085bbdf31e1eceba480786f3d4590e3f76a",
+    "source_hashes": {
+      "tasks.md": "a225bbeca05842786cd2769ff4c13d0b724cc8b480cbbaa017d198ee9825818b",
+      "plan.md": "7ba0ced9eaef89e1ce8f3f659c2416d636721228cc57c2d2050bc608952de569",
+      "spec.md": "6dc2ae30d026f213a7fe01880852b6cfc2f18b34257bc300aa79aa16bcb237d2"
+    }
+  },
+  "scope": "originals committed, current candidates copied; migration not applied, no receipts or run"
+}

@@ -1,0 +1,18 @@
+{
+  "phase_commit": "efb411fe52fa3334e7548a392ff20ad868040e4d",
+  "audit_commit": "add4ca89894b0406664f5213586f0936d11f2513",
+  "audit_parent": "efb411fe52fa3334e7548a392ff20ad868040e4d",
+  "audit_directly_after_phase": true,
+  "worktree_clean": true,
+  "lease_released": true,
+  "branch": "codex/e7-34d8909-fresh",
+  "branch_retained": true,
+  "test_exit": 0,
+  "test_output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+  "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+  "code_sha256": "57c7c75e8e55a050d844c4846ca58cc85af8d26faa62a3a0e4a0bd8958280e37",
+  "code_nonmutating": true,
+  "spec_derived_record_present": true,
+  "roadmap_derived_record_present": true,
+  "phase_receipt_sha256": "0a3ca79fd0cecfe5990b9ac59a897d5db58fd61dc64ca4bc82fa84262d1787cf"
+}

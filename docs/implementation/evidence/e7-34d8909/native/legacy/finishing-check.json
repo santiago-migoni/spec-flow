@@ -1,0 +1,23 @@
+{
+  "phase_commit": "aa33251575230539086fc0a5a99c01a7118b72cb",
+  "audit_commit": "e2b2733dc17adcc024379de00f416c563e116e49",
+  "audit_parent": "aa33251575230539086fc0a5a99c01a7118b72cb",
+  "audit_directly_after_phase": true,
+  "worktree_clean": true,
+  "lease_released": true,
+  "branch": "codex/e7-34d8909-legacy",
+  "branch_retained": true,
+  "test_exit": 0,
+  "test_output": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+  "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+  "code_sha256": "bb3f141567ee88451fe6a75b54d39c1025d7cf333b2b49836900c019618164a1",
+  "code_nonmutating": true,
+  "archived_original_hashes": {
+    "plan.md": "7ba0ced9eaef89e1ce8f3f659c2416d636721228cc57c2d2050bc608952de569",
+    "spec.md": "6dc2ae30d026f213a7fe01880852b6cfc2f18b34257bc300aa79aa16bcb237d2",
+    "tasks.md": "a225bbeca05842786cd2769ff4c13d0b724cc8b480cbbaa017d198ee9825818b"
+  },
+  "archived_originals_preserved": true,
+  "spec_derived_record_present": true,
+  "roadmap_derived_record_present": true
+}
