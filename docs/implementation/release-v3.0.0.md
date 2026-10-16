@@ -1,5 +1,8 @@
 # Preparación local — Spec-Flow v3.0.0
 
+Actualización posterior, 2026-10-16: la [instalación aislada final de v3.0.0 sobre d19d6e0](e8-d19d6e0.md) quedó aprobada, con identidad separada y conservación exacta de la instalación estable/configuración. Este pendiente está resuelto; push, tag y publicación siguen pendientes. El registro siguiente conserva el alcance histórico del corte de metadatos previo a esa comprobación.
+
+
 Fecha de preparación: 2026-10-16. Estado: **corte local preparado y verificado; publicación pendiente**. Autorización: actualizar ambos manifiestos, changelog y notas de release conservando E7/E8, sin push, tag ni publicación.
 
 ## Alcance del corte

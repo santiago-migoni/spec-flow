@@ -38,6 +38,8 @@ Release notes: [v3.0.0](docs/releases/v3.0.0.md).
 
 ### Validation
 
+- Final v3.0.0 isolated installation passed on d19d6e0: 14 enabled skills, 127 plugin tests + 9 hook tests from the installed cache, bootstrap checks, and stable installation/configuration unchanged after removal of the test identities. See [final installation evidence](docs/implementation/e8-d19d6e0.md).
+
 - E7 native evaluation passed on candidate ef7897d: fresh and migrated release closure, interruption recovery, three failed attempts with rejection of a fourth attempt, and authorized abandonment preserving failure history and releasing ownership.
 - E8 isolated installation passed on ef7897d: 14 enabled skills discovered in a fresh app-server client, 113 resources unchanged, 127 plugin tests and 9 hook tests from the installed cache, and stable installation/configuration preserved after cleanup.
 - The v3.0.0 cut changes only the version field of both package manifests relative to ef7897d. The release-preparation record links the original E7/E8 evidence and records current package checks; it does not relabel those evaluations as runs against v3.0.0.

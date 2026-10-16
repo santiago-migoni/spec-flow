@@ -1,0 +1,17 @@
+{
+  "name": "spec-flow-e8-d19d6e0-01a13f8c",
+  "plugins": [
+    {
+      "name": "spec-flow-e8-d19d6e0",
+      "source": {
+        "source": "local",
+        "path": "./plugins/spec-flow-e8-d19d6e0"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

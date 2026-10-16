@@ -1,0 +1,27 @@
+{
+  "candidate_archive_sha256": "3b1d75e32071fc57ca5a4f3b70742fb4d8f76cdca5ff33ab7e82dc9f3e899565",
+  "tested_archive_sha256": "aba0a66f3f9609aa6c77aee0f063bfd54c7124431c745efc7a2839d6580fed20",
+  "tested_archive_provenance": "Archived temporary marketplace source after proving all 115 bytes/file hashes equal the installed cache before cleanup; not a copied snapshot of the subsequently removed cache.",
+  "exact_installed_test_files": 115,
+  "scratch_snapshots": {
+    "fresh-client-project": {
+      "original": "/private/tmp/spec-flow-e8-d19d6e0-mc54_762/fresh-client-project",
+      "files": {},
+      "no_decisions_or_approvals": true,
+      "runs_directory_exists": false,
+      "no_run_entries": true
+    },
+    "bootstrap-smoke-project": {
+      "original": "/private/tmp/spec-flow-e8-d19d6e0-mc54_762/bootstrap-smoke-project",
+      "files": {
+        ".spec-flow/config.json": "16170f48163df123b40a2e52aa1b53c988a2e608656df3881152690b4dcd940c",
+        ".spec-flow/lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        ".spec-flow/.gitignore": "51e22acc425d767901cd51941b9d53a16951a5fe6bd220549f3ef8ed94861af3"
+      },
+      "no_decisions_or_approvals": true,
+      "runs_directory_exists": true,
+      "no_run_entries": true
+    }
+  },
+  "restoration_limit": "Archives and snapshots are historical evidence; extracting them does not install a plugin or grant hook trust, approvals or execution authority."
+}

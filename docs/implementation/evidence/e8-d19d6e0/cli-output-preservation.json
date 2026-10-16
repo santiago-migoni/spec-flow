@@ -1,0 +1,29 @@
+{
+  "reason": "Raw CLI tables include trailing alignment padding. Lossless gzip preserves original bytes without editing the output.",
+  "records": [
+    {
+      "file": "installed-list.txt.gz",
+      "uncompressed_original_name": "installed-list.txt",
+      "uncompressed_bytes": 499,
+      "uncompressed_sha256": "eea2d8d82c841b085c6b13c318a9ac863700a2715124cdc7931de414080f2527",
+      "compressed_sha256": "8112b6337b037149ba7190eea7ed62c40115caf7244ea1b586f9d9b722a553a9",
+      "exact_roundtrip": true
+    },
+    {
+      "file": "plugins-before.txt.gz",
+      "uncompressed_original_name": "plugins-before.txt",
+      "uncompressed_bytes": 14649,
+      "uncompressed_sha256": "ad6b5d3d27eac42856d4d40c550113eac55613c619d25368972d0637e15bd631",
+      "compressed_sha256": "2bc1abea248d4f85709c6950daa8abb3c3d4122d06a5d786352c3b2076ae4c4d",
+      "exact_roundtrip": true
+    },
+    {
+      "file": "plugins-after.txt.gz",
+      "uncompressed_original_name": "plugins-after.txt",
+      "uncompressed_bytes": 14649,
+      "uncompressed_sha256": "ad6b5d3d27eac42856d4d40c550113eac55613c619d25368972d0637e15bd631",
+      "compressed_sha256": "2bc1abea248d4f85709c6950daa8abb3c3d4122d06a5d786352c3b2076ae4c4d",
+      "exact_roundtrip": true
+    }
+  ]
+}

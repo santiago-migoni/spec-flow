@@ -1,0 +1,25 @@
+{
+  "candidate": "d19d6e0be75702907442412f9227688cbc835fba",
+  "actual_installed_version": "3.0.0",
+  "tag_and_remote_refs_unchanged": true,
+  "earlier_E7_E8_and_cut_evidence_preserved": true,
+  "candidate_files_verified_against_git": 115,
+  "unchanged_resources": 113,
+  "identity_only_manifest_changes": [
+    ".codex-plugin/plugin.json",
+    "plugin.json"
+  ],
+  "installed_package_exact": true,
+  "runtime_tests": 127,
+  "hook_tests": 9,
+  "fresh_client_skills": 14,
+  "references_resolved": 54,
+  "supported_install_cleanup_operations": 7,
+  "archives_verified": 2,
+  "scratch_snapshot_files": 3,
+  "json": 16,
+  "jsonl_records": 15,
+  "python": 11,
+  "stable_installation_and_config_unchanged": true,
+  "result": "PASS"
+}

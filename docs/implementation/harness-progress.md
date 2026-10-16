@@ -1,5 +1,8 @@
 # Implementación del harness de Spec-Flow
 
+Comprobación final de distribución: [v3.0.0 instalada aisladamente desde d19d6e0](e8-d19d6e0.md), **aprobada** el 2026-10-16. 14 skills, 127 + 9 tests, smoke instalado y configuración/instalación estable conservadas. Corte local y comprobación final completos; push, tag y publicación pendientes. El historial E7/E8 conserva sus commits y alcances originales.
+
+
 Este documento conserva el registro histórico E0–E8. La [reevaluación E7 de ef7897d del 2026-10-16](e7-ef7897d.md) quedó **aprobada para los escenarios ejercitados en este host**: dos positivos cerraron y el negativo agotó tres intentos y pudo abandonarse conservando sus fallos. F-03 está corregido y el run anterior se recuperó mediante el controlador; F-01 y F-02 conservan sus correcciones. La [E8 de ef7897d](e8-ef7897d.md) también quedó aprobada en instalación aislada, descubrimiento fresco y arranque instalado: 14 skills, 113 recursos conservados y suites 127 + 9. La instalación estable y la configuración permanecen intactas; no hubo publicación ni cambio de versión.
 
 Base: `935de5d:docs/designs/2026-10-14-harness-orchestration.md`.

@@ -77,7 +77,7 @@ The bundled `PreToolUse` hook is a limited reinforcement for supported `apply_pa
 
 Development candidate `ef7897d` passed [E7 native evaluation](docs/implementation/e7-ef7897d.md) and [E8 isolated installation](docs/implementation/e8-ef7897d.md) on the evaluated host. E8 used a separate marketplace/plugin identity, preserved 113 package resources, discovered 14 enabled skills in a fresh app-server client, and passed 127 plugin tests plus 9 hook tests from the installed cache. The existing stable installation and configuration were unchanged after cleanup. These results apply to the tested candidate and stated scenarios; they do not publish a new release, prove automatic catalog refresh in existing chats or live hook activation, or establish time or cost savings. See the [evaluation history](docs/implementation/harness-progress.md) for earlier candidates.
 
-Local release cut **v3.0.0** is prepared; see [release notes and upgrade guidance](docs/releases/v3.0.0.md). The package version changed after the candidate evaluations; their original commit references and the [release-preparation checks](docs/implementation/release-v3.0.0.md) remain explicit. Publication is pending.
+Local release cut **v3.0.0** is prepared; see [release notes and upgrade guidance](docs/releases/v3.0.0.md). The package version changed after the candidate evaluations; their original commit references and the [release-preparation checks](docs/implementation/release-v3.0.0.md) remain explicit. The [final isolated v3.0.0 installation check](docs/implementation/e8-d19d6e0.md) passed on `d19d6e0`, preserving the stable installation and configuration. Publication is pending.
 
 ## Install from GitHub marketplace
 

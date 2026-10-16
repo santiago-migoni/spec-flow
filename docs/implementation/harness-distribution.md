@@ -1,5 +1,8 @@
 # E8 — Preparación de distribución
 
+Comprobación final actual: [v3.0.0 sobre d19d6e0, 2026-10-16](e8-d19d6e0.md), **aprobada** para instalación aislada, descubrimiento fresco y arranque instalado. 14 skills, 127 + 9 tests; instalación estable y configuración intactas; temporales retirados, sin push/tag/publicación. Las evaluaciones siguientes se conservan como historia de sus respectivos candidatos.
+
+
 Resultado actual: [E8 de ef7897d, 2026-10-16](e8-ef7897d.md), **aprobada** para instalación aislada, cliente nuevo y arranque del paquete instalado. Suites 127 + 9; 14 skills; instalación estable y configuración intactas; sin publicación. El registro siguiente conserva la evaluación histórica del 2026-10-14.
 
 Fecha: 2026-10-14. Candidato de desarrollo en `codex/spec-flow-harness`; versión conservada: 1.1.0. Propuesta incompatible: **2.0.0**, pendiente de autorización y commit separado.

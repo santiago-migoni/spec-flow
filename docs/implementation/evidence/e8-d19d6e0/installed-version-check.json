@@ -1,0 +1,10 @@
+{
+  "candidate": "d19d6e0be75702907442412f9227688cbc835fba",
+  "installed_path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-d19d6e0-01a13f8c/spec-flow-e8-d19d6e0/3.0.0",
+  "actual_manifest_version": "3.0.0",
+  "fallback_manifest_version": "3.0.0",
+  "temporary_name": "spec-flow-e8-d19d6e0",
+  "original_name": "spec-flow",
+  "manifest_mirror_equal": true,
+  "result": "PASS"
+}

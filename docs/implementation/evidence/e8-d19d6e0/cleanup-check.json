@@ -1,0 +1,14 @@
+{
+  "original_installation": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow/spec-flow",
+  "original_files_unchanged": 114,
+  "original_file_modes_and_mtimes_unchanged": true,
+  "original_plugin_setting_unchanged": true,
+  "configuration_semantically_identical": true,
+  "configuration_bytes_identical": true,
+  "hook_trust_unchanged": true,
+  "plugins_list_identical_normalized": true,
+  "marketplaces_list_identical_normalized": true,
+  "temporary_plugin_and_marketplace_removed": true,
+  "temporary_installed_cache_removed": true,
+  "result": "PASS"
+}
