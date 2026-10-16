@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "verified_at": "2026-10-16T16:59:24.989032+00:00",
+  "url": "https://github.com/santiago-migoni/spec-flow/releases/tag/v3.0.1",
+  "release_commit": "c8aee5704ef15433f6d404d50949a8e4cf77ac8f",
+  "tag_object": "088b0f830ee5f2cb63093e7e6e861be60e8a248e",
+  "stable_latest": true,
+  "published_at": "2026-10-16T16:59:21Z",
+  "release_id": 415186384,
+  "downloaded_files_verified": 115,
+  "archive_sha256": "a8690de60e579c841a507ea90a5887815cdefd7442973d9899384ddff6697e17",
+  "assets": [
+    {
+      "name": "SHA256SUMS",
+      "size": 90,
+      "digest": "sha256:76ca706af50367eb1933bc13f187db2d1a7eee10dffd176955a5c663a47cdb27",
+      "browser_download_url": "https://github.com/santiago-migoni/spec-flow/releases/download/v3.0.1/SHA256SUMS"
+    },
+    {
+      "name": "spec-flow-v3.0.1.tar.gz",
+      "size": 1232494,
+      "digest": "sha256:a8690de60e579c841a507ea90a5887815cdefd7442973d9899384ddff6697e17",
+      "browser_download_url": "https://github.com/santiago-migoni/spec-flow/releases/download/v3.0.1/spec-flow-v3.0.1.tar.gz"
+    }
+  ],
+  "user_installation_and_config_unchanged": true,
+  "visual_catalog_refresh_verified": false
+}
