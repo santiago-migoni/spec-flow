@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "spec-flow",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Release-centered Spec-Driven Development for Codex: constitution, unified design, approved roadmaps, versioned release artifacts, and evidence-gated execution and review.",
   "author": {
     "name": "Santiago Migoni",

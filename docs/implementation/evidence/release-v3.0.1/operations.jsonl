@@ -1,0 +1,6 @@
+{"step": "market-add", "argv": ["codex", "plugin", "marketplace", "add", "/private/tmp/spec-flow-v301-_o4lme59/marketplace"], "exit": 0}
+{"step": "plugin-add", "argv": ["codex", "plugin", "add", "spec-flow-v301-check@spec-flow-v301-isolated"], "exit": 0}
+{"step": "installed-tests", "argv": ["python3", "-B", "-m", "unittest", "discover", "-s", "tests", "-q"], "exit": 0}
+{"step": "installed-hooks", "argv": ["python3", "-B", "-m", "unittest", "discover", "-s", "hooks", "-p", "test_*.py", "-q"], "exit": 0}
+{"step": "plugin-remove", "argv": ["codex", "plugin", "remove", "spec-flow-v301-check@spec-flow-v301-isolated"], "exit": 0}
+{"step": "market-remove", "argv": ["codex", "plugin", "marketplace", "remove", "spec-flow-v301-isolated"], "exit": 0}

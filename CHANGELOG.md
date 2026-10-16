@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## Release v3.0.1
+
+Release date: 2026-10-16.
+Release notes: [v3.0.1](docs/releases/v3.0.1.md).
+
 ### Fixed
 
 - Declare the packaged Spec Flow icon as both listing `logo` and `composerIcon` in both manifests; add branding package checks.

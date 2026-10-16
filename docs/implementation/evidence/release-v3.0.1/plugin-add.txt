@@ -1,0 +1,2 @@
+Added plugin `spec-flow-v301-check` from marketplace `spec-flow-v301-isolated`.
+Installed plugin root: /private/tmp/spec-flow-v301-_o4lme59/codex-home/plugins/cache/spec-flow-v301-isolated/spec-flow-v301-check/3.0.1

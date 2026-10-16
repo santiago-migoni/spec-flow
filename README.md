@@ -79,6 +79,8 @@ Development candidate `ef7897d` passed [E7 native evaluation](docs/implementatio
 
 **[v3.0.0](https://github.com/santiago-migoni/spec-flow/releases/tag/v3.0.0) is published**; see [release notes and upgrade guidance](docs/releases/v3.0.0.md). The package version changed after the candidate evaluations; their original commit references and the [release-preparation checks](docs/implementation/release-v3.0.0.md) remain explicit. The [final isolated v3.0.0 installation check](docs/implementation/e8-d19d6e0.md) passed on `d19d6e0`, preserving the stable installation and configuration. The [publication receipt](docs/implementation/publication-v3.0.0.md) verifies the tag and downloaded package. Installation/update and project migration remain separate actions.
 
+**v3.0.1** fixes the missing listing logo declaration; see [patch release notes](docs/releases/v3.0.1.md) and [isolated package verification](docs/implementation/release-v3.0.1.md). Existing v3.0.0 evaluation records remain unchanged.
+
 ## Install from GitHub marketplace
 
 The stable marketplace points to GitHub `main`:

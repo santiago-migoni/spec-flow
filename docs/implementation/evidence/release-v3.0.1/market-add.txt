@@ -1,0 +1,2 @@
+Added marketplace `spec-flow-v301-isolated` from /private/tmp/spec-flow-v301-_o4lme59/marketplace.
+Installed marketplace root: /private/tmp/spec-flow-v301-_o4lme59/marketplace

@@ -1,0 +1,1 @@
+Removed plugin `spec-flow-v301-check` from marketplace `spec-flow-v301-isolated`.
