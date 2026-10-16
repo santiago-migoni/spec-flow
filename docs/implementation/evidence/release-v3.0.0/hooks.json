@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/private/tmp/spec-flow-release-v3.0.0-mkzssdus/package with spaces/spec-flow/hooks",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "version": "3.0.0",
+  "tests": 9,
+  "exit": 0,
+  "output_sha256": "ef45b99c252c2d87de6e8c8d211083a4254747a1d960d4a3a6256c06bd9d702b",
+  "frozen_package_unchanged": true,
+  "result": "PASS"
+}

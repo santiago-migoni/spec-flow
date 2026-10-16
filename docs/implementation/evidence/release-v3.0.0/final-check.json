@@ -1,0 +1,22 @@
+{
+  "release_version": "3.0.0",
+  "preparation_parent": "238de52c923a271d584213bf122569b7ecdaf505",
+  "evaluated_functional_base": "ef7897d83dedf9fe20c8bf82fb9e311f4cff8107",
+  "package_files": 115,
+  "unchanged_non_manifest_files": 113,
+  "only_manifest_version_changes": true,
+  "manifests_equal": true,
+  "original_E7_E8_reports_and_evidence_preserved": true,
+  "current_frozen_suites": {
+    "plugin": 127,
+    "hook": 9
+  },
+  "archive_verified": true,
+  "local_doc_links_valid": true,
+  "prior_changelog_history_preserved": true,
+  "tag_and_remote_refs_unchanged": true,
+  "v3_tag_absent": true,
+  "publication": "Not performed; requires separate authorization",
+  "fresh_v3_installation": "Not performed in local metadata cut; remains a prepublication check",
+  "result": "PASS"
+}

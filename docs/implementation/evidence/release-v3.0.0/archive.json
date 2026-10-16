@@ -1,0 +1,9 @@
+{
+  "file": "spec-flow-v3.0.0.tar.gz",
+  "sha256": "e91768238461a8159fb0588364636c7925771da666d487c5d0e54f6857d01ecc",
+  "files": 115,
+  "single_plugin_root": "spec-flow/",
+  "exact_frozen_package_match": true,
+  "version": "3.0.0",
+  "status": "Local verified artifact; not published or installed"
+}
