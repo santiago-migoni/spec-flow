@@ -1,0 +1,25 @@
+[
+  {
+    "reviewer": "review_yaml_coherence",
+    "scope": "YAML parser/digest/generated tails, templates, bundled provenance and profile interaction",
+    "findings": [
+      "COH-01"
+    ],
+    "focused_yaml_tests": 7,
+    "no_additional_runtime_findings": true,
+    "no_edits": true,
+    "limits": "No independent upstream wheel retrieval, native models, installation or publication."
+  },
+  {
+    "reviewer": "review_configurable_profiles",
+    "scope": "Active profile/YAML instructions, snapshots, role routing, compatibility and native attestation",
+    "findings": [
+      "COH-01",
+      "COH-02",
+      "COH-03"
+    ],
+    "no_additional_runtime_findings": true,
+    "no_edits": true,
+    "limits": "No repeated unchanged full suites or actual native model execution."
+  }
+]

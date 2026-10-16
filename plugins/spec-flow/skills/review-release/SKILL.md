@@ -27,7 +27,7 @@ Identify release/run, approved roadmap/spec/plan/tasks and applicable decisions,
 
 Require current approvals, `gate.ready=true`, `complete.technical_complete=true`, and `$converge`'s Technical convergence confirmed conclusion for the corresponding release/run, approved bases, and reviewed implementation. The controller query alone does not establish that semantic conclusion. Any outstanding convergence finding, including LOW, stops closure and returns to `$converge` and its canonical owner. Missing gate/results/evidence are not a pass. Pending release review/audit flags identify work owned here, not an acceptance defect.
 
-Preserve the persistent attested Sol high owner, linked worktree, current sources/evidence, reviewed commits, and native lease requirements. Do not write report, feedback, or follow-up files into the closing worktree; unrelated changes or extra commits can invalidate closure. Resolve required decision changes through their owner and execution recovery before closing against revised bases.
+Preserve the persistent owner attested against the run's pinned orchestrator profile, linked worktree, current sources/evidence, reviewed commits, and native lease requirements. Do not write report, feedback, or follow-up files into the closing worktree; unrelated changes or extra commits can invalidate closure. Resolve required decision changes through their owner and execution recovery before closing against revised bases.
 
 ## Acceptance and feedback
 

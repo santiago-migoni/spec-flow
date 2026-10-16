@@ -32,7 +32,7 @@ During a valid clarify session, gather responses against the unchanged approved 
 
 ## Canonical amendment and session record
 
-Use [the clarifications template](assets/clarifications-template.md) for a dated section inside `.specs/release-vX.Y.Z/spec.md`, outside generated progress. It records context, questions/confirmed answers and sources, affected references/application, pending questions and routing, and closure/approval state at preparation. Present current registry approval separately; adding its receipt to the approved decision prose changes the digest. Q references are session-local conversation references, not requirement IDs. Keep prior sessions as history; identify later superseding decisions without rewriting their original answers. Do not create a second editable requirements file, JSON contract, or approval registry.
+Use [the clarifications template](assets/clarifications-template.md) for a dated section inside `.specs/release-vX.Y.Z/spec.md`, outside generated progress. It records context, questions/confirmed answers and sources, affected references/application, pending questions and routing, and closure/approval state at preparation. Present current registry approval separately; adding its receipt to the approved decision prose changes the digest. Q references are session-local conversation references, not requirement IDs. Keep prior sessions as history; identify later superseding decisions without rewriting their original answers. Do not create a second editable requirements file, canonical contract, or approval registry.
 
 Update canonical `stories` and `acceptance` first, preserving existing US/AC identifiers and each AC's actual story owner. Synchronize affected prose, story traceability, examples, NFR conditions/targets, and error/compatibility sections in the same revision. A new verifiable obligation needs canonical acceptance, directly or by explicit NFR reference; a Q/A row or example alone cannot define it. Reference each target in its defining section instead of copying another editable value into the session record. Apply `$specify`'s table/ownership/coherence review; controller validation does not check semantic completeness or Markdown tables.
 
@@ -51,3 +51,5 @@ This adaptation draws on [PMI's progressive requirements elaboration](https://ww
 ## Runtime discipline
 
 Before invoking `spec-flow.py`, read [shared controller operations](../../harness/contracts/operations.md). Follow its adoption, query/input, validation/digest, and approval/revision mechanics under this skill's own gate and authorized scope.
+
+Clarification does not authorize format conversion. Preserve an existing JSON document's encoding unless separately authorized; apply [shared conversion controls](../../harness/contracts/operations.md#document-encoding-and-explicit-conversion) when converting approved sources.

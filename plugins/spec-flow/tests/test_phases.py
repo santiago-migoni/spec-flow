@@ -16,6 +16,25 @@ def git(root, *args):
 
 
 class PhaseLifecycleTests(unittest.TestCase):
+    def test_generated_writer_preserves_format_and_decision_digest(self):
+        from harness.runtime.phases import PhaseController
+        from harness.runtime.contracts import read_document, document_digest, read_document_text
+        from test_yaml_documents import HEADER
+        # Writer is exercised without constructing an execution authority.
+        writer = object.__new__(PhaseController)
+        data = read_document_text(HEADER)['contract']
+        for text in (HEADER, '# Decision\n\n```spec-flow\n' + json.dumps(data) + '\n```\n\nApproved purpose.\n'):
+            self.path = self.root / "writer-test.md"
+            self.path.write_text(text)
+            before = document_digest(self.path)
+            writer._write_generated(self.path, {'schema': 'spec-flow.derived-reference.v1',
+                'kind': 'roadmap-reference', 'release': 'v1.2.3', 'run_id': 'run-1',
+                'spec_path': '.specs/release-v1.2.3/spec.md', 'impact_status': 'pending'}, status='converged')
+            after = self.path.read_text()
+            self.assertEqual(after.startswith('---\n'), text.startswith('---\n'))
+            self.assertEqual(read_document(self.path)['contract']['status'], 'converged')
+            self.assertEqual(document_digest(self.path), before)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)

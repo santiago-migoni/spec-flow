@@ -1,19 +1,14 @@
-# Code Structure
+---
+schema_version: 1
+kind: structure
+revision: R00
+id: STRUCT-PROJECT
+depends_on:
+- path: .specs/constitution.md
+  digest: '0000000000000000000000000000000000000000000000000000000000000000'
+---
 
-```spec-flow
-{
-  "schema_version": 1,
-  "kind": "structure",
-  "revision": "R00",
-  "id": "STRUCT-PROJECT",
-  "depends_on": [
-    {
-      "path": ".specs/constitution.md",
-      "digest": "0000000000000000000000000000000000000000000000000000000000000000"
-    }
-  ]
-}
-```
+# Code Structure
 
 Replace the example constitution digest with its approved digest. Add exact-digest dependencies only for approved strategic documents whose decisions are actually used. Recommended elaboration order: architecture → infrastructure → structure; this is not a mandatory dependency chain. If a whole document is inapplicable, record N/A with a reason in the roadmap under its own gate. Omitting a dependency alone does not make its document N/A. Do not create filler or future dependent documents to complete this one; keep dependency pins acyclic and navigational links separate.
 

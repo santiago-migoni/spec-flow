@@ -163,6 +163,8 @@ class PhaseController:
                   "phase_id": phase_id, **pin, "staged_paths": staged_paths,
                   "task_ids": sorted(task["id"] for task in state["task_contracts"] if task["phase"] == phase_id),
                   "source_digests": digests, "marker": marker, "created_at": self.e._now()}
+        if state["profile_snapshot"]:
+            packet["profiles"] = state["profiles"]
         packet["packet_sha256"] = self._sha(json.dumps(packet, sort_keys=True, separators=(",", ":")).encode("utf-8"))
         packet_path = self.e.store.run_dir(state["run_id"]) / "packets" / "phase-{}-{}.json".format(phase_id, pin["tree"])
         packet = self._write_packet(packet_path, packet)
@@ -193,6 +195,8 @@ class PhaseController:
                   "diff_sha256": phase_state["diff_sha256"], "staged_paths": phase_state["staged_paths"],
                   "task_ids": sorted(task["id"] for task in state["task_contracts"] if task["phase"] == phase_id),
                   "source_digests": digests, "marker": marker, "created_at": created_at}
+        if state["profile_snapshot"]:
+            packet["profiles"] = state["profiles"]
         packet["packet_sha256"] = self._sha(json.dumps(packet, sort_keys=True, separators=(",", ":")).encode("utf-8"))
         expected_hash = phase_state["packet_sha256"]
         if packet["packet_sha256"] != expected_hash:
@@ -219,7 +223,7 @@ class PhaseController:
                 old = json.loads(path.read_text(encoding="utf-8"))
             except (OSError, UnicodeError, json.JSONDecodeError) as exc:
                 raise EngineError("phase_packet_corrupt", "existing phase review packet is unreadable") from exc
-            stable = ("schema", "run_id", "release", "phase_id", "parent", "tree", "diff_sha256", "staged_paths", "task_ids", "source_digests", "marker")
+            stable = ("schema", "run_id", "release", "phase_id", "parent", "tree", "diff_sha256", "staged_paths", "task_ids", "source_digests", "marker", "profiles")
             unhashed = {key: value for key, value in old.items() if key != "packet_sha256"} if isinstance(old, dict) else {}
             digest = self._sha(json.dumps(unhashed, sort_keys=True, separators=(",", ":")).encode("utf-8"))
             if not isinstance(old, dict) or any(old.get(key) != packet.get(key) for key in stable) or old.get("packet_sha256") != digest:
@@ -256,7 +260,7 @@ class PhaseController:
             raise EngineError("invalid_input", "phase review verdict must be pass or changes")
         evidence = self.e._nonempty(payload["evidence"], "evidence")
         packet = json.loads(self.e._project_path(ready["packet_path"]).read_text(encoding="utf-8"))
-        native = self.e._adapter_call("attest_session", reviewer_session, "reviewer", parent_session=state["owner"],
+        native = self.e._run_adapter_call(state, "attest_session", reviewer_session, "reviewer", parent_session=state["owner"],
                                       agent_path=reviewer_agent_id, task_marker=ready["marker"], require_finished=True)
         if native.get("agent_lifecycle") != "completed":
             raise EngineError("reviewer_not_completed", "independent phase reviewer must have a completed native session")
@@ -321,7 +325,7 @@ class PhaseController:
             self._validate_recorded_commit(state, phase_id, phase_state)
             return {"run_id": state["run_id"], "phase_id": phase_id, "phase_status": "committed", "commit_sha": phase_state["commit"]["sha"], "already_committed": True}
         if phase_state.get("status") != "reviewed" or phase_state.get("review", {}).get("verdict") != "pass":
-            raise EngineError("phase_review_required", "a passing independent Sol phase review is required before commit")
+            raise EngineError("phase_review_required", "a passing independent phase review is required before commit")
         # Recover a commit that Git created before the receipt event was durable.
         candidates = self._commit_candidates(state["run_id"], phase_id)
         exact = [row for row in candidates if row["parent"] == phase_state["parent"] and row["tree"] == phase_state["tree"] and row["subject"] == subject]
@@ -595,8 +599,8 @@ class PhaseController:
         self.e._require_owner(state, owner)
         if state.get("status") != "completed" or any(state.get("phases", {}).get(p["id"], {}).get("status") != "committed" for p in state["phase_contracts"]):
             raise EngineError("phase_commits_required", "release review requires all declared phase commits")
-        self.e._adapter_call("attest_session", owner, "orchestrator")
-        self.e._adapter_call("assert_lease", state)
+        self.e._run_adapter_call(state, "attest_session", owner, "orchestrator")
+        self.e._run_adapter_call(state, "assert_lease", state)
         impact_status = payload["impact_status"]
         if impact_status not in {"observed", "pending", "unavailable"}:
             raise EngineError("invalid_input", "impact_status must be observed, pending, or unavailable")
@@ -680,7 +684,7 @@ class PhaseController:
                     raise EngineError("audit_commit_mismatch", "final audit commit does not match expected parent and subject")
                 commit_sha, adopted = audits[0]["sha"], False
         current = self.e._state(state["run_id"])
-        self.e._adapter_call("release", current)
+        self.e._run_adapter_call(current, "release", current)
         return {"run_id": state["run_id"], "release_review": record, "roadmap_reference": reference,
                 "audit_commit_sha": commit_sha, "adopted_after_crash": adopted}
 
@@ -688,18 +692,15 @@ class PhaseController:
         document = read_document(path)
         text = path.read_text(encoding="utf-8")
         # Remove any prior strictly-shaped generated tail; malformed blocks fail closed in read_document.
-        from .contracts import _strip_generated_tail, CONTRACT_BLOCK_RE
-        match = CONTRACT_BLOCK_RE.search(text)
-        if not match:
-            raise EngineError("contract_invalid", "derived release record requires a canonical contract block")
+        from .contracts import _strip_generated_tail, contract_region, replace_contract
+        match, _, _ = contract_region(text)
         suffix = text[match.end():]
         base_suffix = _strip_generated_tail(suffix).rstrip("\r\n")
         prefix = text[:match.end()]
         contract = document["contract"]
         if status is not None:
             contract["status"] = status
-            encoded = json.dumps(contract, ensure_ascii=False, indent=2)
-            prefix = text[:match.start()] + "```spec-flow\n" + encoded + "\n```"
+            prefix = replace_contract(prefix, contract)
         canonical_record = json.dumps(dict(record), ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         generated = "\n\n<!-- spec-flow:generated:start -->\nSpec-Flow derived record:\n" + canonical_record + "\n<!-- spec-flow:generated:end -->\n"
         path.write_text(prefix + base_suffix + generated, encoding="utf-8")

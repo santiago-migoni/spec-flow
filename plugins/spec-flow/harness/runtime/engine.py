@@ -17,6 +17,7 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Set, 
 from .contracts import ContractError, document_digest, read_document, safe_path, validate_document, validate_release
 from .codex_adapter import AdapterError, NativeCodexAdapter
 from .store import Store, StoreError
+from .profiles import DEFAULT_PROFILES, LEGACY_PROFILES, validate_profiles
 
 
 class EngineError(RuntimeError):
@@ -26,11 +27,9 @@ class EngineError(RuntimeError):
         self.details = dict(details or {})
 
 
-PROFILES = {
-    "orchestrator": {"id": "gpt-6-sol", "effort": "high"},
-    "implementer": {"id": "gpt-6-luna", "effort": "high"},
-    "reviewer": {"id": "gpt-6-sol", "effort": "high"},
-}
+# Public initialization default, also used by legacy-folder migration.
+PROFILES = DEFAULT_PROFILES
+
 CACHE_DIRS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache", ".tox", ".venv", "venv", "node_modules"}
 EXCLUDED_TOP = {".git", ".specs", ".spec-flow"}
 ZERO_TEST_PATTERNS = ("ran 0 tests", "no tests ran", "no tests to run")
@@ -58,6 +57,7 @@ class Engine:
         methods = {
             "capabilities": self._capabilities,
             "initialize": self._initialize,
+            "configure-profiles": self._configure_profiles,
             "digest": self._digest,
             "validate": self._validate,
             "approve": self._approve,
@@ -192,9 +192,13 @@ class Engine:
             value = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError, UnicodeError) as exc:
             raise EngineError("invalid_config", "harness config is unreadable or invalid JSON") from exc
-        if (not isinstance(value, dict) or value.get("schema_version") != 1 or value.get("profiles") != PROFILES
+        if (not isinstance(value, dict) or value.get("schema_version") != 1
                 or type(value.get("retry_limit")) is not int or value.get("retry_limit") != 3):
-            raise EngineError("invalid_config", "harness config has an unsupported schema or model profile")
+            raise EngineError("invalid_config", "harness config has an unsupported schema or retry limit")
+        try:
+            value["profiles"] = validate_profiles(value.get("profiles"))
+        except ValueError as exc:
+            raise EngineError("invalid_config", str(exc)) from exc
         return value
 
     def _initialize(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
@@ -209,6 +213,19 @@ class Engine:
         (self.root / ".spec-flow" / "runs").mkdir(parents=True, exist_ok=True)
         self._ensure_registry_gitignore()
         return {"status": "initialized", "config_path": str(config_path), "already_initialized": False}
+
+    def _configure_profiles(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
+        self._fields(payload, ("profiles",))
+        config = self._config()
+        try:
+            profiles = validate_profiles(payload["profiles"])
+        except ValueError as exc:
+            raise EngineError("invalid_profiles", str(exc)) from exc
+        changed = profiles != config["profiles"]
+        if changed:
+            config["profiles"] = profiles
+            self.store.write_json_atomic(self._config_path(), config)
+        return {"profiles": profiles, "changed": changed, "applies_to": "new_runs_only"}
 
     def _ensure_registry_gitignore(self) -> None:
         path = self.root / ".spec-flow" / ".gitignore"
@@ -560,7 +577,7 @@ class Engine:
 
     def _start(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, ("release", "owner", "authorization", "capabilities"), ("phases",))
-        self._config()
+        config = self._config()
         # Migration may create the runtime config directly, without going
         # through initialize. Install cache ignores on the first mutating run
         # entry while preserving tracked event/audit evidence.
@@ -570,7 +587,19 @@ class Engine:
         auth = self._authorization(payload["authorization"])
         if not isinstance(payload["capabilities"], dict):
             raise EngineError("invalid_input", "capabilities must be an object")
-        capability_report = self._adapter_call("capabilities", payload["capabilities"], owner)
+        # A repeated start must attest against the existing run, never today's defaults.
+        try:
+            prior_states = [self.store.read_state(run_id, self._reduce_events) for run_id in self.store.run_ids()]
+        except StoreError as exc:
+            raise EngineError(exc.code, str(exc)) from exc
+        candidates = [row for row in prior_states if row["release"] == version and row["owner"] == owner
+                      and row["status"] in {"active", "interrupted", "completed"}]
+        profile_state = next((row for row in candidates if row["status"] != "completed"), candidates[0] if candidates else None)
+        if profile_state is not None:
+            capability_report = self._run_adapter_call(profile_state, "capabilities", payload["capabilities"], owner)
+        else:
+            capability_report = self._adapter_call("capabilities", payload["capabilities"], owner,
+                                                   profiles=config["profiles"], require_catalog=True)
         try:
             validated = validate_release(self.root, version)
         except ContractError as exc:
@@ -603,7 +632,7 @@ class Engine:
                     prior_attempts[task_id] = max(prior_attempts.get(task_id, 0), int(task_state.get("attempt", 0)))
             if existing["status"] in {"active", "interrupted"}:
                 if existing["release"] == version and existing["owner"] == owner:
-                    self._adapter_call("acquire", run_id, version, owner)
+                    self._run_adapter_call(existing, "acquire", run_id, version, owner)
                     imported = self._credit_migrated_evidence(run_id, version, task_items)
                     current = self._state(run_id)
                     return {"run_id": run_id, "status": current["status"], "already_running": True,
@@ -621,7 +650,7 @@ class Engine:
         try:
             self.store.append_event(run_id, "started", {
                 "run_id": run_id, "release": version, "owner": owner, "authorized_phases": list(dict.fromkeys(phases)),
-                "authorization": auth, "capabilities": capability_report,
+                "authorization": auth, "capabilities": capability_report, "profiles": config["profiles"],
                 "documents": {path.relative_to(self.root).as_posix(): document_digest(path) for path in self._document_closure(approval_roots)},
                 "task_ids": [item["id"] for item in task_items], "task_contracts": task_items,
                 "phase_contracts": validated["plan"]["contract"]["phases"],
@@ -631,7 +660,7 @@ class Engine:
             shutil.rmtree(self.store.run_dir(run_id), ignore_errors=True)
             raise EngineError(exc.code, str(exc)) from exc
         try:
-            self._adapter_call("acquire", run_id, version, owner)
+            self._adapter_call("acquire", run_id, version, owner, profiles=config["profiles"], require_catalog=True)
         except EngineError:
             shutil.rmtree(self.store.run_dir(run_id), ignore_errors=True)
             raise
@@ -645,9 +674,14 @@ class Engine:
                 "reused_completed": reused, "imported_completed": imported["completed"], "pending_imports": imported["pending"]}
 
     def _capabilities(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
-        self._fields(payload, ("owner", "report"))
+        self._fields(payload, ("owner", "report"), ("run_id",))
         owner = self._nonempty(payload["owner"], "owner")
-        return self._adapter_call("capabilities", payload["report"], owner)
+        if "run_id" in payload:
+            state = self._state(self._nonempty(payload["run_id"], "run_id"))
+            self._require_owner(state, owner)
+            return self._run_adapter_call(state, "capabilities", payload["report"], owner)
+        return self._adapter_call("capabilities", payload["report"], owner,
+                                  profiles=self._config()["profiles"], require_catalog=True)
 
     def _credit_prior_run_evidence(self, run_id: str) -> List[str]:
         """Reuse only exact, still-current completed evidence from an earlier same-release run."""
@@ -861,6 +895,9 @@ class Engine:
                 raise EngineError("packet_corrupt", "existing immutable packet is unreadable") from exc
             if packet.get("run_id") != payload["run_id"] or packet.get("task_id") != task_id or packet.get("attempt") != attempt:
                 raise EngineError("packet_exists", "orphan packet does not match the current attempt")
+            if ((state["profile_snapshot"] and packet.get("profiles") != state["profiles"])
+                    or (not state["profile_snapshot"] and "profiles" in packet)):
+                raise EngineError("packet_profile_mismatch", "orphan packet profiles differ from the pinned run")
             if packet.get("sources") != source_rows or packet.get("scope_files") != sorted(scoped_files) or packet.get("source_digests") != state["documents"] or packet.get("selected_acceptance") != selected_acceptance:
                 raise EngineError("approval_stale", "orphan packet sources or scope changed before adoption")
         self._write_immutable_json(packet_path, packet)
@@ -892,6 +929,8 @@ class Engine:
                   "owner": owner, "task": task, "sources": packet_sources,
                   "selected_acceptance": selected_acceptance, "scope_files": sorted(scoped_files),
                   "source_digests": state["documents"], "created_at": created_at}
+        if state["profile_snapshot"]:
+            packet["profiles"] = state["profiles"]
         canonical = json.dumps(packet, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
         if len(canonical) > MAX_PACKET_BYTES:
             raise EngineError("packet_too_large", "task context packet exceeds the configured size bound", details={"bytes": len(canonical), "maximum": MAX_PACKET_BYTES})
@@ -913,8 +952,8 @@ class Engine:
             raise EngineError(exc.code, str(exc)) from exc
         self._require_owner(state, owner)
         if getattr(self.adapter, "production", False):
-            self._adapter_call("assert_lease", state)
-            self._adapter_call("attest_session", owner, "orchestrator")
+            self._run_adapter_call(state, "assert_lease", state)
+            self._run_adapter_call(state, "attest_session", owner, "orchestrator")
         self._ensure_approvals_current(state)
         if kind == "task":
             task_id = self._nonempty(payload["task_id"], "task_id")
@@ -1048,7 +1087,7 @@ class Engine:
             raise EngineError("host_agent_mismatch", "agent_id must equal the canonical agent_path returned by the native spawn response")
         marker = "SPEC_FLOW_PACKET_SHA256=" + task_state.get("packet_sha256", "")
         parent_session = task_state.get("attempt_owner", state["owner"])
-        evidence = self._adapter_call("attest_session", session_id, "implementer", parent_session=parent_session, agent_path=agent_path,
+        evidence = self._run_adapter_call(state, "attest_session", session_id, "implementer", parent_session=parent_session, agent_path=agent_path,
                                       task_marker=marker, after=task_state.get("prepared_at"))
         self._append(payload["run_id"], "agent_bound", {"task_id": payload["task_id"], "attempt": task_state["attempt"],
                                                           "agent_id": agent_id, "session_id": session_id,
@@ -1098,7 +1137,7 @@ class Engine:
         if payload["disposition"] == "no_spawn":
             native = None
             if getattr(self.adapter, "production", False):
-                native = self._adapter_call("attest_no_spawn", state["owner"], task_state, payload.get("native_inspection"))
+                native = self._run_adapter_call(state, "attest_no_spawn", state["owner"], task_state, payload.get("native_inspection"))
                 baseline = task_state.get("attempt_baseline", task_state.get("baseline", {}))
                 changed = self._changed_paths(baseline, self._snapshot_code())
                 if changed:
@@ -1278,7 +1317,7 @@ class Engine:
         self._require_owner(state, owner)
         if state.get("status") == "abandoned":
             if getattr(self.adapter, "production", False):
-                self._adapter_call("release", state)
+                self._run_adapter_call(state, "release", state)
             return {"run_id": run_id, "status": "abandoned", "already_abandoned": True, "history_preserved": True}
         if state.get("status") not in {"active", "interrupted", "completed"}:
             raise EngineError("run_not_abandonable", "only an active, interrupted, or closure-pending run can be abandoned")
@@ -1294,8 +1333,8 @@ class Engine:
             unresolved_task = {"task_id": task_id, "status": task_state["status"], "attempt": task_state["attempt"],
                                "host_attestation": None}
         if getattr(self.adapter, "production", False):
-            self._adapter_call("assert_lease", state)
-            self._adapter_call("attest_session", owner, "orchestrator")
+            self._run_adapter_call(state, "assert_lease", state)
+            self._run_adapter_call(state, "attest_session", owner, "orchestrator")
             if unresolved_task:
                 native = self._attest_bound_agent(state, task_id, task_state)
                 if native.get("agent_lifecycle") not in {"completed", "aborted"}:
@@ -1306,7 +1345,7 @@ class Engine:
             abandonment["unresolved_task"] = unresolved_task
         self._append(run_id, "abandoned", abandonment)
         updated = self._state(run_id)
-        self._adapter_call("release", updated)
+        self._run_adapter_call(updated, "release", updated)
         return {"run_id": run_id, "status": "abandoned", "already_abandoned": False, "history_preserved": True}
 
     def _interrupt(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
@@ -1358,7 +1397,7 @@ class Engine:
         self._require_owner(state, previous_owner)
         if state.get("status") != "interrupted":
             raise EngineError("takeover_requires_interrupted_run", "takeover requires an interrupted run")
-        result = self._adapter_call("takeover", state, owner)
+        result = self._run_adapter_call(state, "takeover", state, owner)
         self._append(run_id, "ownership_transferred", {"previous_owner": previous_owner, "owner": owner,
                                                         "reconciliation": reconciliation,
                                                         "host_inspection": result, "transferred_at": self._now()})
@@ -1396,7 +1435,19 @@ class Engine:
         except StoreError as exc:
             raise EngineError(exc.code, str(exc)) from exc
 
-    def _adapter_call(self, method: str, *args: Any, **kwargs: Any) -> Any:
+    def _run_adapter_call(self, state: Mapping[str, Any], method: str, *args: Any, **kwargs: Any) -> Any:
+        return self._adapter_call(method, *args, profiles=state["profiles"],
+                                  require_catalog=state["profile_snapshot"], **kwargs)
+
+    def _adapter_call(self, method: str, *args: Any, profiles=None, require_catalog=False, **kwargs: Any) -> Any:
+        configure = getattr(self.adapter, "configure_profiles", None)
+        if configure is None and getattr(self.adapter, "production", False):
+            raise EngineError("adapter_unavailable", "production adapter must support explicit role profile binding")
+        if configure is not None:
+            try:
+                configure(validate_profiles(profiles), require_catalog=require_catalog)
+            except (ValueError, AdapterError) as exc:
+                raise EngineError("invalid_profiles", str(exc)) from exc
         callback = getattr(self.adapter, method, None)
         if callback is None:
             raise EngineError("adapter_unavailable", "native Codex adapter does not support {}".format(method))
@@ -1426,6 +1477,9 @@ class Engine:
                     or packet.get("task_id") != active_task or packet.get("attempt") != task_state.get("attempt")
                     or not isinstance(packet.get("created_at"), str) or not packet["created_at"]):
                 raise EngineError("packet_corrupt", "active attempt packet does not match its immutable event pin")
+            if ((state["profile_snapshot"] and packet.get("profiles") != state["profiles"])
+                    or (not state["profile_snapshot"] and "profiles" in packet)):
+                raise EngineError("packet_profile_mismatch", "active packet profiles differ from the pinned run")
             # Older prepared events did not persist a separate prepared_at field.
             # Recover the exact immutable packet timestamp without changing the
             # event log or allowing a child predating this attempt to bind.
@@ -1438,16 +1492,16 @@ class Engine:
         state = self._state(run_id)
         self._require_owner(state, owner)
         if getattr(self.adapter, "production", False):
-            self._adapter_call("assert_lease", state)
-            self._adapter_call("attest_session", owner, "orchestrator")
+            self._run_adapter_call(state, "assert_lease", state)
+            self._run_adapter_call(state, "attest_session", owner, "orchestrator")
         return state
 
     def _attest_bound_agent(self, state: Mapping[str, Any], task_id: str, task_state: Mapping[str, Any]) -> Dict[str, Any]:
         bound = task_state.get("agent")
         if not isinstance(bound, dict):
-            raise EngineError("agent_binding_required", "task reconciliation requires a bound native Luna session")
+            raise EngineError("agent_binding_required", "task reconciliation requires a bound native implementer session")
         marker = "SPEC_FLOW_PACKET_SHA256=" + task_state.get("packet_sha256", "")
-        return self._adapter_call("attest_session", bound["session_id"], "implementer", parent_session=bound.get("parent_session", state["owner"]),
+        return self._run_adapter_call(state, "attest_session", bound["session_id"], "implementer", parent_session=bound.get("parent_session", state["owner"]),
                                   agent_path=bound["agent_path"], task_marker=marker,
                                   after=task_state.get("prepared_at"))
 
@@ -1687,7 +1741,12 @@ class Engine:
             if kind == "started":
                 if state:
                     raise StoreError("corrupt_log", "run contains more than one start event")
+                try:
+                    pinned_profiles = validate_profiles(data["profiles"] if "profiles" in data else LEGACY_PROFILES)
+                except ValueError as exc:
+                    raise StoreError("corrupt_log", "invalid run profile snapshot: {}".format(exc)) from exc
                 state = {
+                    "profiles": pinned_profiles, "profile_snapshot": "profiles" in data,
                     "run_id": data["run_id"], "release": data["release"], "owner": data["owner"],
                     "status": "active", "authorized_phases": list(data["authorized_phases"]),
                     "authorization": [data["authorization"]], "capabilities": data["capabilities"],

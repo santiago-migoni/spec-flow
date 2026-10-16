@@ -50,3 +50,7 @@ This is a Spec-Flow adaptation informed by [PMI's iteration planning](https://ww
 ## Runtime discipline
 
 Before invoking `spec-flow.py`, read [shared controller operations](../../harness/contracts/operations.md). Follow its adoption, query/input, validation/digest, and approval/revision mechanics under this skill's own gate and authorized scope.
+
+## Document encoding
+
+Create new documents from the YAML-frontmatter templates. Preserve existing fenced JSON documents unless conversion is explicitly authorized. Apply [shared encoding and conversion rules](../../harness/contracts/operations.md#document-encoding-and-explicit-conversion); retain this skill's gates and canonical records, with no duplicate metadata source.

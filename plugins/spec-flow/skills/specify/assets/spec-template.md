@@ -1,53 +1,34 @@
-# Release Spec: vX.Y.Z
+---
+schema_version: 1
+kind: spec
+revision: R00
+id: SPEC-X.Y.Z
+depends_on:
+- path: .specs/roadmap.md
+  digest: '0000000000000000000000000000000000000000000000000000000000000000'
+stories:
+- id: US-001
+  title: '[Story title]'
+  description: As a [user], I need [capability] so that [benefit].
+- id: US-002
+  title: '[Related story title]'
+  description: As a [user], I need [related capability] so that [benefit].
+acceptance:
+- id: AC-001
+  story: US-001
+  description: '[Observable successful behavior under stated conditions.]'
+- id: AC-002
+  story: US-001
+  description: '[Observable response to a relevant invalid input or failure.]'
+- id: AC-003
+  story: US-001
+  description: '[Observable quality behavior satisfying NFR-001 under its documented conditions and target.]'
+- id: AC-004
+  story: US-002
+  description: '[Observable behavior contributing the related story''s value.]'
+---
 
-```spec-flow
-{
-  "schema_version": 1,
-  "kind": "spec",
-  "revision": "R00",
-  "id": "SPEC-X.Y.Z",
-  "depends_on": [
-    {
-      "path": ".specs/roadmap.md",
-      "digest": "0000000000000000000000000000000000000000000000000000000000000000"
-    }
-  ],
-  "stories": [
-    {
-      "id": "US-001",
-      "title": "[Story title]",
-      "description": "As a [user], I need [capability] so that [benefit]."
-    },
-    {
-      "id": "US-002",
-      "title": "[Related story title]",
-      "description": "As a [user], I need [related capability] so that [benefit]."
-    }
-  ],
-  "acceptance": [
-    {
-      "id": "AC-001",
-      "story": "US-001",
-      "description": "[Observable successful behavior under stated conditions.]"
-    },
-    {
-      "id": "AC-002",
-      "story": "US-001",
-      "description": "[Observable response to a relevant invalid input or failure.]"
-    },
-    {
-      "id": "AC-003",
-      "story": "US-001",
-      "description": "[Observable quality behavior satisfying NFR-001 under its documented conditions and target.]"
-    },
-    {
-      "id": "AC-004",
-      "story": "US-002",
-      "description": "[Observable behavior contributing the related story's value.]"
-    }
-  ]
-}
-```
+# Release Spec: vX.Y.Z
 
 Replace the illustrative stories, criteria, table rows, outcome references, and NFR with the selected release's actual decisions. They prescribe neither story count nor scope. Keep one canonical stories array and one acceptance array. All decision tables below stay outside generated progress and participate in the document digest.
 

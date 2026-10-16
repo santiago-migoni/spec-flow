@@ -1,36 +1,24 @@
-# Product Roadmap
+---
+schema_version: 1
+kind: roadmap
+revision: R00
+id: ROADMAP-PROJECT
+depends_on:
+- path: .specs/constitution.md
+  digest: '0000000000000000000000000000000000000000000000000000000000000000'
+releases:
+- version: v2.0.0
+  objective: '[Measurable contribution to OUT-001.]'
+  status: planned
+- version: v2.1.0
+  objective: '[Further contribution to OUT-001.]'
+  status: planned
+- version: v3.0.0
+  objective: '[Contribution to OUT-002, subject to validation.]'
+  status: planned
+---
 
-```spec-flow
-{
-  "schema_version": 1,
-  "kind": "roadmap",
-  "revision": "R00",
-  "id": "ROADMAP-PROJECT",
-  "depends_on": [
-    {
-      "path": ".specs/constitution.md",
-      "digest": "0000000000000000000000000000000000000000000000000000000000000000"
-    }
-  ],
-  "releases": [
-    {
-      "version": "v2.0.0",
-      "objective": "[Measurable contribution to OUT-001.]",
-      "status": "planned"
-    },
-    {
-      "version": "v2.1.0",
-      "objective": "[Further contribution to OUT-001.]",
-      "status": "planned"
-    },
-    {
-      "version": "v3.0.0",
-      "objective": "[Contribution to OUT-002, subject to validation.]",
-      "status": "planned"
-    }
-  ]
-}
-```
+# Product Roadmap
 
 The example versions and row count are illustrative, unrelated to this plugin's version, and must be replaced with projections explicitly agreed with the user (for example v0.1.0 onward for a new product). Keep one canonical releases array and synchronize its reading table below. Example entries do not select a release or authorize creating release directories.
 

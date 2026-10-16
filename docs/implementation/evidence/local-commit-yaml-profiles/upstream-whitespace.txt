@@ -1,0 +1,31 @@
+plugins/spec-flow/harness/_vendor/yaml/__init__.py:390: new blank line at EOF.
+plugins/spec-flow/harness/_vendor/yaml/composer.py:139: new blank line at EOF.
+plugins/spec-flow/harness/_vendor/yaml/dumper.py:62: new blank line at EOF.
+plugins/spec-flow/harness/_vendor/yaml/error.py:75: new blank line at EOF.
+plugins/spec-flow/harness/_vendor/yaml/events.py:86: new blank line at EOF.
+plugins/spec-flow/harness/_vendor/yaml/nodes.py:49: new blank line at EOF.
+plugins/spec-flow/harness/_vendor/yaml/parser.py:485: trailing whitespace.
++            
+plugins/spec-flow/harness/_vendor/yaml/parser.py:589: new blank line at EOF.
+plugins/spec-flow/harness/_vendor/yaml/representer.py:389: new blank line at EOF.
+plugins/spec-flow/harness/_vendor/yaml/resolver.py:227: new blank line at EOF.
+plugins/spec-flow/harness/_vendor/yaml/scanner.py:316: trailing whitespace.
++            
+plugins/spec-flow/harness/_vendor/yaml/scanner.py:365: trailing whitespace.
++        
+plugins/spec-flow/harness/_vendor/yaml/scanner.py:369: trailing whitespace.
++        
+plugins/spec-flow/harness/_vendor/yaml/scanner.py:383: trailing whitespace.
++        
+plugins/spec-flow/harness/_vendor/yaml/scanner.py:391: trailing whitespace.
++        
+plugins/spec-flow/harness/_vendor/yaml/scanner.py:518: trailing whitespace.
++        
+plugins/spec-flow/harness/_vendor/yaml/scanner.py:568: trailing whitespace.
++            
+plugins/spec-flow/harness/_vendor/yaml/scanner.py:1020: trailing whitespace.
++                
+plugins/spec-flow/harness/_vendor/yaml/scanner.py:1027: trailing whitespace.
++                
+plugins/spec-flow/harness/_vendor/yaml/serializer.py:111: new blank line at EOF.
+plugins/spec-flow/harness/_vendor/yaml/tokens.py:104: new blank line at EOF.

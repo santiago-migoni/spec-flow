@@ -15,6 +15,28 @@ CLI = PLUGIN_ROOT / "scripts" / "spec-flow.py"
 
 
 class EngineTests(unittest.TestCase):
+    def test_mixed_format_approvals_and_explicit_conversion_invalidate_pins(self):
+        import helpers
+        from harness.runtime.contracts import read_document
+        original = helpers.write_document
+        def mixed(path, data, prose="Approved source decision."):
+            return original(path, data, prose, encoding="json" if data['kind'] in {'constitution', 'spec'} else "yaml")
+        with patch.object(helpers, 'write_document', mixed):
+            self.docs = make_project(self.root)
+        self.engine.dispatch('initialize', {})
+        approve_release(self.engine, self.docs)
+        self.assertTrue(self.engine.dispatch('gate', {'path': '.specs/release-v1.2.3/tasks.md'})['ready'])
+        baseline = self.docs['constitution'].read_bytes()
+        receipts = self.engine.store.approvals()
+        self.engine.dispatch('status', {})
+        self.assertEqual(self.docs['constitution'].read_bytes(), baseline)
+        self.assertEqual(self.engine.store.approvals(), receipts)
+        doc = read_document(self.docs['roadmap'])
+        original(self.docs['roadmap'], doc['contract'], doc['prose'], encoding='json')
+        with self.assertRaises((EngineError, ContractError)):
+            self.engine.dispatch('validate', {'release': 'v1.2.3'})
+        self.assertEqual(self.engine.store.approvals(), receipts)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
@@ -29,14 +51,14 @@ class EngineTests(unittest.TestCase):
         approve_release(self.engine, self.docs)
         return start_run(self.engine)
 
-    def test_initialize_writes_fixed_explicit_model_profiles(self):
+    def test_initialize_writes_editable_explicit_model_defaults(self):
         result = self.engine.dispatch("initialize", {})
         config = json.loads((self.root / ".spec-flow" / "config.json").read_text())
         self.assertEqual(result["status"], "initialized")
         self.assertEqual(config["schema_version"], 1)
-        self.assertEqual(config["profiles"]["orchestrator"], {"id": "gpt-6-sol", "effort": "high"})
+        self.assertEqual(config["profiles"]["orchestrator"], {"id": "gpt-6.1-sol", "effort": "low"})
         self.assertEqual(config["profiles"]["implementer"], {"id": "gpt-6-luna", "effort": "high"})
-        self.assertEqual(config["profiles"]["reviewer"], {"id": "gpt-6-sol", "effort": "high"})
+        self.assertEqual(config["profiles"]["reviewer"], {"id": "gpt-6.1-sol", "effort": "medium"})
 
     def test_initialize_rejects_legacy_feature_directories(self):
         (self.root / ".specs" / "001-old-feature").mkdir()

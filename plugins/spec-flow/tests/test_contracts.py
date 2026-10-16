@@ -39,6 +39,17 @@ def task(identifier="T-001", *, depends_on=None, acceptance=None):
 
 
 class NormalizeReleaseTests(unittest.TestCase):
+    def test_yaml_header_preserves_semantic_schema_and_typed_fields(self):
+        from harness.runtime.contracts import render_document
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            path = root / 'constitution.md'
+            path.write_text(render_document(base_contract('constitution'), 'Approved decision.'))
+            self.assertEqual(validate_document(root, path)['contract']['revision'], 'R00')
+            path.write_text(path.read_text().replace('schema_version: 1', 'schema_version: "1"'))
+            with self.assertRaises(ContractError):
+                validate_document(root, path)
+
     def test_normalizes_strict_numeric_semver(self):
         self.assertEqual(normalize_release("1.2.3"), "v1.2.3")
         self.assertEqual(normalize_release("v1.2.3"), "v1.2.3")

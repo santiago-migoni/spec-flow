@@ -32,7 +32,7 @@ Inspect project configuration and `.specs` before writing. For a new nonlegacy u
 
 ## Governed documents and gates
 
-The [canonical contract](canonical-contract.md) defines the eight supported source kinds and their fields. They retain one fenced `spec-flow` JSON block, stable kind/id, revision R00 initially, exact-digest `depends_on`, and decision prose. Registry approval of exact content and its dependency closure is authority; generated progress and optional top-level lowercase `status` are views.
+The [canonical contract](canonical-contract.md) defines the eight supported source kinds and their fields. New documents use one YAML frontmatter header before the title; existing fenced `spec-flow` JSON documents retain their encoding unless conversion is explicitly authorized. Both retain stable kind/id, revision R00 initially, exact-digest `depends_on`, and decision prose. Registry approval of exact content and its dependency closure is authority; generated progress and optional top-level lowercase `status` are views.
 
 Before writing dependent decisions, run the owning phase gate and inspect current approvals of all sources actually used. A failed gate blocks dependent work; a narrower query cannot bypass it. `design` uses the actual `architecture`, `infrastructure`, or `structure` kind. `using-spec-flow`, `design`, and `backlog` are not gate kinds. Backlog and conversational reports have no controller document contract: do not validate, digest, or approve them.
 
@@ -51,3 +51,13 @@ Keep R00 until first approval. A substantive postapproval edit increments RNN on
 In strict consultation, inspect existing status/events/closure references as recorded history and explicitly state that current technical completion, review/audit flags, and closure eligibility were not revalidated. Do not infer readiness from those records.
 
 Authorized implementation handoff, convergence, release review, finishing, and recovery retain their required live completion checks under their existing gates and scope. This filesystem limitation never waives them. `complete.technical_complete=true` is technical eligibility, not semantic convergence, closure approval, or execution/integration authority. `release_review_pending` and `audit_pending` describe remaining closure; require their applicable values at the owning stage. Missing values do not pass. The wrapper maps technical completion to exit 0, incomplete to 1, and invalid input/runtime errors to 2. Concrete execution payloads and closure/recovery controls remain in the [execution contract](execution.md).
+
+## Document encoding and explicit conversion
+
+Create new canonical documents with YAML frontmatter before the title, following [the canonical contract](canonical-contract.md). Metadata and kind-specific records remain one canonical source; do not retain a second fenced JSON contract. CLI payloads/results and internal records remain JSON.
+
+Existing JSON decision documents are supported without automatic conversion, including mixed-format dependency chains. Preserve their encoding during scoped edits and generated status updates unless the user authorizes conversion. Conversion of approved content changes its digest and requires the applicable revision/approval and explicit downstream adoption; old receipts and evidence remain historical. Reconcile active execution before changing its sources. Consultation and resumption never perform conversion, rewrite pins or restore approval.
+
+## Role model preferences
+
+For an explicitly requested model/effort change, follow [configurable profiles](profiles.md) and use `configure-profiles` with all three profiles. This is a mutating configuration operation, excluded from strict consultation. It does not authorize execution or change existing runs. Preserve retry_limit=3, current approvals and evidence. New-run capability probes include host model/effort inventory evidence; resumed runs use their frozen profiles.

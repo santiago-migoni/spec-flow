@@ -41,6 +41,18 @@ class ApprovalHookTest(unittest.TestCase):
     def event(self, tool_name: str, tool_input: dict) -> dict:
         return {"cwd": str(self.root), "tool_name": tool_name, "tool_input": tool_input}
 
+    def test_yaml_sources_still_require_current_registry_approval(self) -> None:
+        self.assertTrue(self.docs['constitution'].read_text().startswith('---\n'))
+        engine = Engine(self.root, adapter=FakeAdapter())
+        engine.dispatch('initialize', {})
+        self.assertFalse(engine.dispatch('gate', {'path': '.specs/roadmap.md'})['ready'])
+        approve_release(engine, self.docs)
+        self.assertTrue(engine.dispatch('gate', {'path': '.specs/release-v1.2.3/tasks.md'})['ready'])
+        source = self.docs['constitution']
+        source.write_text(source.read_text().replace('Approved source decision.', 'Changed governing decision.'))
+        with self.assertRaises((EngineError, ValueError)):
+            engine.dispatch('hook-check', {'paths': ['.specs/roadmap.md']})
+
     def test_malformed_supported_write_is_denied(self) -> None:
         denied = self.event_result(self.event("Write", {"content": "no path"}))
         self.assertEqual(denied["hookSpecificOutput"]["permissionDecision"], "deny")

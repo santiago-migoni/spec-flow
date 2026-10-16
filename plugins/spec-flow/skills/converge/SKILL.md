@@ -13,7 +13,7 @@ Require an adopted release with valid spec, plan, and tasks; current registry ap
 
 Assess the integrated release against approved behavior, quality, completion conditions, and shared decisions. Task completion is necessary; it does not by itself demonstrate usable, coherent release behavior. Read the approved scope, edge cases, non-goals, and plan deliverables. Inspect only relevant code and interfaces within that scope.
 
-Use [the report template](assets/convergence-report-template.md) for conversation output. Assessment and reporting do not change decision content or execution state. Do not write application code, retry a task, or spawn Luna from this skill. Route required work to its canonical owner; this skill never fixes the gap itself.
+Use [the report template](assets/convergence-report-template.md) for conversation output. Assessment and reporting do not change decision content or execution state. Do not write application code, retry a task, or spawn an implementer from this skill. Route required work to its canonical owner; this skill never fixes the gap itself.
 
 ## Assessment context
 

@@ -1,31 +1,22 @@
-# Release Plan: vX.Y.Z
+---
+schema_version: 1
+kind: plan
+revision: R00
+id: PLAN-X.Y.Z
+depends_on:
+- path: .specs/release-vX.Y.Z/spec.md
+  digest: '0000000000000000000000000000000000000000000000000000000000000000'
+phases:
+- id: PH-01
+  description: '[Phase goal and deliverable.]'
+  depends_on: []
+- id: PH-02
+  description: '[Related increment and integration deliverable.]'
+  depends_on:
+  - PH-01
+---
 
-```spec-flow
-{
-  "schema_version": 1,
-  "kind": "plan",
-  "revision": "R00",
-  "id": "PLAN-X.Y.Z",
-  "depends_on": [
-    {
-      "path": ".specs/release-vX.Y.Z/spec.md",
-      "digest": "0000000000000000000000000000000000000000000000000000000000000000"
-    }
-  ],
-  "phases": [
-    {
-      "id": "PH-01",
-      "description": "[Phase goal and deliverable.]",
-      "depends_on": []
-    },
-    {
-      "id": "PH-02",
-      "description": "[Related increment and integration deliverable.]",
-      "depends_on": ["PH-01"]
-    }
-  ]
-}
-```
+# Release Plan: vX.Y.Z
 
 Replace the illustrative phases, table rows, references, and paths with this release's actual approved decisions. They prescribe neither phase count nor implementation scope. The phases array owns IDs, descriptions, and dependencies; keep its reading table synchronized. All decision tables stay outside generated progress and participate in the document digest.
 

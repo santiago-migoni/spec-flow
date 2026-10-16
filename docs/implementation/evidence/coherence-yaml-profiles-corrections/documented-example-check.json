@@ -1,0 +1,15 @@
+[
+  {
+    "case": "complete documented example",
+    "result": "PASS",
+    "basis": "synthetic owner session and inventory; no actual models executed"
+  },
+  {
+    "case": "missing inventory still rejected",
+    "result": "model_catalog_required"
+  },
+  {
+    "case": "wrong actual session still rejected",
+    "result": "host_profile_mismatch"
+  }
+]

@@ -3,13 +3,16 @@
 import json
 from pathlib import Path
 
-from harness.runtime.contracts import document_digest
+from harness.runtime.contracts import document_digest, render_document
 
 
 class FakeAdapter:
     """Mechanics-only adapter for deterministic controller unit tests."""
 
     production = False
+
+    def configure_profiles(self, profiles, *, require_catalog=False):
+        self.profiles = profiles
 
     def capabilities(self, report, owner):
         return {"mechanics_only": True, "report": report, "owner_session": owner}
@@ -37,7 +40,7 @@ class FixtureProductionAdapter(FakeAdapter):
         self.releases = 0
 
     def capabilities(self, report, owner):
-        return {"fixture_attestation": True, "owner_session": {"session_id": owner, "model": "gpt-6-sol", "effort": "high"}}
+        return {"fixture_attestation": True, "owner_session": {"session_id": owner, "model": self.profiles["orchestrator"]["id"], "effort": self.profiles["orchestrator"]["effort"]}}
 
     def acquire(self, run_id, release, owner):
         self.leases.add(run_id)
@@ -58,8 +61,8 @@ class FixtureProductionAdapter(FakeAdapter):
                 "packet_marker": "SPEC_FLOW_PACKET_SHA256=" + task_state["packet_sha256"], "fixture_attestation": True}
 
     def attest_session(self, session_id, role, **kwargs):
-        return {"session_id": session_id, "role": role, "model": "gpt-6-luna" if role == "implementer" else "gpt-6-sol",
-                "effort": "high", "agent_lifecycle": "completed", "parent_session": kwargs.get("parent_session"),
+        return {"session_id": session_id, "role": role, "model": self.profiles[role]["id"],
+                "effort": self.profiles[role]["effort"], "agent_lifecycle": "completed", "parent_session": kwargs.get("parent_session"),
                 "agent_path": kwargs.get("agent_path"), "record_hashes": {"fixture": "sha256"}, "attestation_sha256": "fixture-hash"}
 
     def release(self, state):
@@ -85,9 +88,11 @@ def contract(kind, identifier, *, depends_on=None, **extra):
     }
 
 
-def write_document(path, data, prose="Approved source decision."):
+def write_document(path, data, prose="Approved source decision.", *, encoding="yaml"):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(prose + "\n\n```spec-flow\n" + json.dumps(data, indent=2) + "\n```\n", encoding="utf-8")
+    text = (render_document(data, prose) if encoding == "yaml" else
+            prose + "\n\n```spec-flow\n" + json.dumps(data, indent=2) + "\n```\n")
+    path.write_text(text, encoding="utf-8")
     return path
 
 

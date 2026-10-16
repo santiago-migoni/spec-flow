@@ -46,6 +46,26 @@ class CodexAdapterTests(unittest.TestCase):
                 stream.write(malformed)
         return path
 
+    def test_configured_reviewer_profile_is_checked_in_encrypted_spawn_and_all_turns(self):
+        from harness.runtime.profiles import DEFAULT_PROFILES
+        self.adapter.configure_profiles(DEFAULT_PROFILES)
+        marker = 'SPEC_FLOW_PHASE_REVIEW=run-config/PH-01/' + 'a' * 40
+        agent_path = '/root/review-config'
+        self.write_session(self.owner, model='gpt-6.1-sol', effort='low')
+        name = self.adapter.native_task_name('reviewer', marker)
+        self.write_spawn(self.owner, name, agent_path, role='reviewer', model='gpt-6.1-sol', effort='medium')
+        self.write_session(self.child, model='gpt-6.1-sol', effort='medium', parent=self.owner, agent_path=agent_path)
+        with patch.dict(os.environ, {'CODEX_HOME': str(self.base / 'codex')}):
+            result = self.adapter.attest_session(self.child, 'reviewer', parent_session=self.owner,
+                                                agent_path=agent_path, task_marker=marker, require_finished=True)
+            self.assertEqual((result['model'], result['effort']), ('gpt-6.1-sol', 'medium'))
+            # Editing profiles cannot turn an old native spawn into evidence for a new choice.
+            changed = json.loads(json.dumps(DEFAULT_PROFILES));changed['reviewer']['effort'] = 'high'
+            self.adapter.configure_profiles(changed)
+            with self.assertRaises(AdapterError):
+                self.adapter.attest_session(self.child, 'reviewer', parent_session=self.owner,
+                                            agent_path=agent_path, task_marker=marker, require_finished=True)
+
     def test_capability_report_requires_native_probes_and_owner_attestation(self):
         self.write_session(self.owner)
         report = {"inventory_reference": "native inventory snapshot ref",
@@ -83,11 +103,11 @@ class CodexAdapterTests(unittest.TestCase):
                                             agent_path="/root/T-001", task_marker=marker)
         self.assertEqual(ctx.exception.code, "host_parent_mismatch")
 
-    def write_spawn(self, owner, task_name, agent_path, *, output_path=None, output_error=None, role="implementer"):
+    def write_spawn(self, owner, task_name, agent_path, *, output_path=None, output_error=None, role="implementer", model=None, effort="high"):
         parent_path = self.sessions / ("rollout-2026-10-14T12-00-00-" + owner + ".jsonl")
         call_id = "call-spawn-" + task_name
         arguments = {"task_name": task_name,
-                     "model": "gpt-6-sol" if role == "reviewer" else "gpt-6-luna", "reasoning_effort": "high",
+                     "model": model or ("gpt-6-sol" if role == "reviewer" else "gpt-6-luna"), "reasoning_effort": effort,
                      "fork_turns": "none", "message": "encrypted-prompt-payload"}
         call = {"type": "response_item", "timestamp": "2026-10-14T12:00:01Z",
                 "payload": {"type": "function_call", "namespace": "collaboration", "name": "spawn_agent",

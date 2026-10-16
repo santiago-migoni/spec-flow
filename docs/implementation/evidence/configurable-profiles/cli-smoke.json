@@ -1,0 +1,31 @@
+[
+  {
+    "operation": "initialize",
+    "result": {
+      "already_initialized": false,
+      "config_path": "/private/var/folders/wx/_lbs89q94c7f1kd0xh__8jr40000gn/T/spec-flow-profile-cli-5ynufh_i/.spec-flow/config.json",
+      "status": "initialized"
+    }
+  },
+  {
+    "operation": "configure-profiles",
+    "result": {
+      "applies_to": "new_runs_only",
+      "changed": true,
+      "profiles": {
+        "implementer": {
+          "effort": "low",
+          "id": "custom-implementer"
+        },
+        "orchestrator": {
+          "effort": "medium",
+          "id": "custom-orchestrator"
+        },
+        "reviewer": {
+          "effort": "high",
+          "id": "custom-reviewer"
+        }
+      }
+    }
+  }
+]

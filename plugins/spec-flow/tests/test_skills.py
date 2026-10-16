@@ -3,6 +3,7 @@ import json
 import re
 import unittest
 from pathlib import Path
+from harness.runtime.contracts import read_document
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "skills"
@@ -57,9 +58,9 @@ class SkillPackageTests(unittest.TestCase):
                 path = SKILLS / skill / "assets" / filename
                 self.assertTrue(path.is_file(), "Missing document template: " + str(path))
                 text = path.read_text()
-                blocks = re.findall(fence + r"spec-flow\n(.*?)\n" + fence, text, re.S)
-                self.assertEqual(len(blocks), 1)
-                contract = json.loads(blocks[0])
+                self.assertTrue(text.startswith("---\n"))
+                self.assertNotIn(fence + "spec-flow", text)
+                contract = read_document(path)["contract"]
                 self.assertEqual(contract["schema_version"], 1)
                 self.assertEqual(contract["revision"], "R00")
                 self.assertIn("depends_on", contract)

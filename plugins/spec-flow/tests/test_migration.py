@@ -8,7 +8,7 @@ from unittest.mock import patch
 from pathlib import Path
 
 from harness.runtime.engine import Engine, EngineError
-from harness.runtime.contracts import document_digest
+from harness.runtime.contracts import document_digest, read_document_text
 from helpers import FakeAdapter, contract, write_document, task
 from harness.runtime.migration import Migration
 
@@ -76,7 +76,7 @@ class MigrationTests(unittest.TestCase):
         self.legacy = legacy
         self.candidate_specs = canonical_docs(self.candidate_root)
         # Canonical candidate references the exact shared strategic sources.
-        candidate_roadmap = json.loads((self.candidate_specs / "roadmap.md").read_text().split("```spec-flow\n")[1].split("\n```")[0])
+        candidate_roadmap = read_document_text((self.candidate_specs / "roadmap.md").read_text())["contract"]
         current_roadmap = specs / "roadmap.md"
         write_document(current_roadmap, candidate_roadmap)
         (self.candidate_specs / "constitution.md").unlink()
@@ -213,15 +213,15 @@ class MigrationTests(unittest.TestCase):
                    "path": ".specs/001-demo/spec.md", "digest": hashlib.sha256(source.read_bytes()).hexdigest(),
                    "actor": "reviewer", "statement": "Approved the mapped specification.", "source": "legacy receipt"}
         receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
-        data = json.loads(target.read_text().split("```spec-flow\n")[1].split("\n```")[0])
+        data = read_document_text(target.read_text())["contract"]
         data["acceptance"][0]["description"] = "A materially different acceptance decision."
         write_document(target, data)
         plan_path = self.candidate_specs / "release-v2.0.0/plan.md"
-        plan_data = json.loads(plan_path.read_text().split("```spec-flow\n")[1].split("\n```")[0])
+        plan_data = read_document_text(plan_path.read_text())["contract"]
         plan_data["depends_on"][0]["digest"] = document_digest(target)
         write_document(plan_path, plan_data)
         tasks_path = self.candidate_specs / "release-v2.0.0/tasks.md"
-        tasks_data = json.loads(tasks_path.read_text().split("```spec-flow\n")[1].split("\n```")[0])
+        tasks_data = read_document_text(tasks_path.read_text())["contract"]
         tasks_data["depends_on"][0]["digest"] = document_digest(plan_path)
         write_document(tasks_path, tasks_data)
         equivalence = {"statement": "The decision was structurally converted.",
@@ -252,7 +252,7 @@ class MigrationTests(unittest.TestCase):
         receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
         code_path = self.root / "src/example.py"
         code_files = {"src/example.py": hashlib.sha256(code_path.read_bytes()).hexdigest()}
-        tasks = json.loads((release_dir / "tasks.md").read_text().split("```spec-flow\n")[1].split("\n```")[0])
+        tasks = read_document_text((release_dir / "tasks.md").read_text())["contract"]
         step = tasks["tasks"][0]["steps"][0]
         raw_evidence = {"schema_version": 1, "kind": "spec-flow-step-evidence", "task_id": "T-001",
                         "step_id": "T-001.001", "command": step["verification"]["command"],
@@ -287,13 +287,13 @@ class MigrationTests(unittest.TestCase):
         candidate_tasks = release_dir / "tasks.md"
         originals = {path: path.read_text(encoding="utf-8") for path in (candidate_spec, candidate_plan, candidate_tasks)}
         architecture = write_document(self.root / ".specs/architecture.md", contract("architecture", "ARCHITECTURE"))
-        added_dependency_spec = json.loads(originals[candidate_spec].split("```spec-flow\n")[1].split("\n```")[0])
+        added_dependency_spec = read_document_text(originals[candidate_spec])["contract"]
         added_dependency_spec["depends_on"].append({"path": ".specs/architecture.md", "digest": document_digest(architecture)})
         write_document(candidate_spec, added_dependency_spec)
-        added_dependency_plan = json.loads(originals[candidate_plan].split("```spec-flow\n")[1].split("\n```")[0])
+        added_dependency_plan = read_document_text(originals[candidate_plan])["contract"]
         added_dependency_plan["depends_on"][0]["digest"] = document_digest(candidate_spec)
         write_document(candidate_plan, added_dependency_plan)
-        added_dependency_tasks = json.loads(originals[candidate_tasks].split("```spec-flow\n")[1].split("\n```")[0])
+        added_dependency_tasks = read_document_text(originals[candidate_tasks])["contract"]
         added_dependency_tasks["depends_on"][0]["digest"] = document_digest(candidate_plan)
         write_document(candidate_tasks, added_dependency_tasks)
         git_commit(self.root)
@@ -308,13 +308,13 @@ class MigrationTests(unittest.TestCase):
             "approvals": [{"source": ".specs/001-demo/approval.json", "target": ".specs/release-v2.0.0/spec.md", "equivalence": approval_equivalence}],
             "evidence": [{"source": ".specs/001-demo/step-evidence.json", "target": ".specs/release-v2.0.0/tasks.md", "equivalence": evidence_equivalence}],
         })
-        changed_spec = json.loads(originals[candidate_spec].split("```spec-flow\n")[1].split("\n```")[0])
+        changed_spec = read_document_text(originals[candidate_spec])["contract"]
         changed_spec["acceptance"][0]["description"] = "New acceptance requirement not covered by the legacy check."
         write_document(candidate_spec, changed_spec)
-        changed_plan = json.loads(originals[candidate_plan].split("```spec-flow\n")[1].split("\n```")[0])
+        changed_plan = read_document_text(originals[candidate_plan])["contract"]
         changed_plan["depends_on"][0]["digest"] = document_digest(candidate_spec)
         write_document(candidate_plan, changed_plan)
-        changed_tasks = json.loads(originals[candidate_tasks].split("```spec-flow\n")[1].split("\n```")[0])
+        changed_tasks = read_document_text(originals[candidate_tasks])["contract"]
         changed_tasks["depends_on"][0]["digest"] = document_digest(candidate_plan)
         write_document(candidate_tasks, changed_tasks)
         changed_preview = self.preview(imports={

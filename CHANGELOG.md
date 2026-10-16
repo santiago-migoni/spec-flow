@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Added
+
+- Editable role model/effort profiles with validated atomic configure-profiles updates, host model-inventory evidence, exact native attestation and immutable per-run/packet snapshots. New project defaults: gpt-6.1-sol/low orchestrator, gpt-6-luna/high implementer and gpt-6.1-sol/medium independent reviewer. Preserve existing configs, legacy run profiles, event history, packet recovery, three-attempt limits and all other execution gates.
+
+### Changed
+
+- Generate the eight canonical document templates with YAML frontmatter before the title. Read existing fenced JSON without changing legacy digests; preserve source encoding during derived status writes. Keep current schema, approvals, dependency pins, execution/recovery controls and JSON internal records. Bundle licensed pure-Python PyYAML with a strict bounded loader and add format, mixed-chain, closure and compatibility regressions. Approved conversions remain explicit source changes requiring existing revision/approval and downstream adoption controls.
+
 ## Release v3.0.1
 
 Release date: 2026-10-16.

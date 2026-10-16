@@ -1,14 +1,12 @@
-# Project Constitution
+---
+schema_version: 1
+kind: constitution
+revision: R00
+id: CONST-PROJECT
+depends_on: []
+---
 
-```spec-flow
-{
-  "schema_version": 1,
-  "kind": "constitution",
-  "revision": "R00",
-  "id": "CONST-PROJECT",
-  "depends_on": []
-}
-```
+# Project Constitution
 
 ## Purpose and justification
 

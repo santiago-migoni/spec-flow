@@ -1,0 +1,29 @@
+[
+  {
+    "id": "COH-01",
+    "status": "resolved",
+    "original_location": {
+      "file": "plugins/spec-flow/harness/contracts/operations.md",
+      "line": 35
+    },
+    "resolution": "New YAML / preserved legacy JSON distinction in shared mechanics; all other gates unchanged."
+  },
+  {
+    "id": "COH-02",
+    "status": "resolved",
+    "original_location": {
+      "file": "plugins/spec-flow/harness/contracts/execution.md",
+      "line": 49
+    },
+    "resolution": "Complete documented inventory payload with honest host-evidence caveat and optional existing-run run_id. Positive/negative adapter checks pass."
+  },
+  {
+    "id": "COH-03",
+    "status": "resolved",
+    "original_location": {
+      "file": "plugins/spec-flow/harness/contracts/execution.md",
+      "line": 63
+    },
+    "resolution": "Active instructions use role names/pinned profiles, including convergence prohibition; historical labels and compatibility prefixes retained."
+  }
+]

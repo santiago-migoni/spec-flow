@@ -1,0 +1,21 @@
+{
+  "result": "No actionable findings in scoped core and final CLI review",
+  "reviewer": "review_configurable_profiles",
+  "scope": [
+    "role validation",
+    "native binding and attestation",
+    "snapshots and configuration updates",
+    "repeated start/takeover/closure",
+    "packet restoration",
+    "legacy compatibility",
+    "CLI exposure"
+  ],
+  "independent_tests": {
+    "profile_tests": 12,
+    "adapter_tests": 21,
+    "CLI_tests": 4
+  },
+  "native_models_executed": false,
+  "files_modified_by_reviewer": false,
+  "limits": "Deterministic/static review; no independent authentication of host inventory references."
+}

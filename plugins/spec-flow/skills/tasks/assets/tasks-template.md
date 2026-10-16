@@ -1,111 +1,131 @@
-# Release Tasks: vX.Y.Z
+---
+schema_version: 1
+kind: tasks
+revision: R00
+id: TASKS-X.Y.Z
+depends_on:
+- path: .specs/release-vX.Y.Z/plan.md
+  digest: '0000000000000000000000000000000000000000000000000000000000000000'
+tasks:
+- id: T-001
+  phase: PH-01
+  story: US-001
+  acceptance:
+  - AC-001
+  depends_on: []
+  files:
+  - src/example.py
+  - tests/test_example.py
+  steps:
+  - id: T-001.001
+    action: '[Implement and test the enabling change contributing partially to AC-001 in the listed files.]'
+    verification:
+      command:
+      - python3
+      - -B
+      - -m
+      - unittest
+      - discover
+      - -s
+      - tests
+      - -p
+      - test_example.py
+      - -k
+      - enabling
+      expected: '[Enabling cases execute and pass; contribution to AC-001 remains partial.]'
+  closure: '[Enabling change verified; AC-001 contribution remains partial.]'
+- id: T-002
+  phase: PH-01
+  story: US-001
+  acceptance:
+  - AC-001
+  - AC-002
+  - AC-003
+  depends_on:
+  - T-001
+  files:
+  - src/example.py
+  - tests/test_example.py
+  - tests/test_quality.py
+  steps:
+  - id: T-002.001
+    action: '[Complete the successful behavior of AC-001 and its final acceptance check.]'
+    verification:
+      command:
+      - python3
+      - -B
+      - -m
+      - unittest
+      - discover
+      - -s
+      - tests
+      - -p
+      - test_example.py
+      - -k
+      - success
+      expected: '[Executed success cases demonstrate the complete behavior required by AC-001.]'
+  - id: T-002.002
+    action: '[Complete the relevant invalid-input or failure behavior of AC-002 and its final acceptance
+      check.]'
+    verification:
+      command:
+      - python3
+      - -B
+      - -m
+      - unittest
+      - discover
+      - -s
+      - tests
+      - -p
+      - test_example.py
+      - -k
+      - invalid
+      expected: '[Executed error cases demonstrate the response required by AC-002.]'
+  - id: T-002.003
+    action: '[Meet the NFR-001 conditions and target referenced by AC-003 and add its quality check.]'
+    verification:
+      command:
+      - python3
+      - -B
+      - -m
+      - unittest
+      - discover
+      - -s
+      - tests
+      - -p
+      - test_quality.py
+      expected: '[Executed quality checks satisfy NFR-001 under its approved conditions and demonstrate
+        AC-003.]'
+  closure: '[US-001 complete with final verification of AC-001, AC-002, and AC-003.]'
+- id: T-003
+  phase: PH-02
+  story: US-002
+  acceptance:
+  - AC-004
+  depends_on:
+  - T-002
+  files:
+  - src/related.py
+  - tests/test_integration.py
+  steps:
+  - id: T-003.001
+    action: '[Implement the related US-002 increment and integration behavior for AC-004 with its tests.]'
+    verification:
+      command:
+      - python3
+      - -B
+      - -m
+      - unittest
+      - discover
+      - -s
+      - tests
+      - -p
+      - test_integration.py
+      expected: '[Executed integration cases demonstrate AC-004 and relevant regression checks pass.]'
+  closure: '[US-002 complete with final verification of AC-004.]'
+---
 
-```spec-flow
-{
-  "schema_version": 1,
-  "kind": "tasks",
-  "revision": "R00",
-  "id": "TASKS-X.Y.Z",
-  "depends_on": [
-    {
-      "path": ".specs/release-vX.Y.Z/plan.md",
-      "digest": "0000000000000000000000000000000000000000000000000000000000000000"
-    }
-  ],
-  "tasks": [
-    {
-      "id": "T-001",
-      "phase": "PH-01",
-      "story": "US-001",
-      "acceptance": [
-        "AC-001"
-      ],
-      "depends_on": [],
-      "files": [
-        "src/example.py",
-        "tests/test_example.py"
-      ],
-      "steps": [
-        {
-          "id": "T-001.001",
-          "action": "[Implement and test the enabling change contributing partially to AC-001 in the listed files.]",
-          "verification": {
-            "command": [
-              "python3",
-              "-B",
-              "-m",
-              "unittest",
-              "discover",
-              "-s",
-              "tests",
-              "-p",
-              "test_example.py",
-              "-k",
-              "enabling"
-            ],
-            "expected": "[Enabling cases execute and pass; contribution to AC-001 remains partial.]"
-          }
-        }
-      ],
-      "closure": "[Enabling change verified; AC-001 contribution remains partial.]"
-    },
-    {
-      "id": "T-002",
-      "phase": "PH-01",
-      "story": "US-001",
-      "acceptance": ["AC-001", "AC-002", "AC-003"],
-      "depends_on": ["T-001"],
-      "files": ["src/example.py", "tests/test_example.py", "tests/test_quality.py"],
-      "steps": [
-        {
-          "id": "T-002.001",
-          "action": "[Complete the successful behavior of AC-001 and its final acceptance check.]",
-          "verification": {
-            "command": ["python3", "-B", "-m", "unittest", "discover", "-s", "tests", "-p", "test_example.py", "-k", "success"],
-            "expected": "[Executed success cases demonstrate the complete behavior required by AC-001.]"
-          }
-        },
-        {
-          "id": "T-002.002",
-          "action": "[Complete the relevant invalid-input or failure behavior of AC-002 and its final acceptance check.]",
-          "verification": {
-            "command": ["python3", "-B", "-m", "unittest", "discover", "-s", "tests", "-p", "test_example.py", "-k", "invalid"],
-            "expected": "[Executed error cases demonstrate the response required by AC-002.]"
-          }
-        },
-        {
-          "id": "T-002.003",
-          "action": "[Meet the NFR-001 conditions and target referenced by AC-003 and add its quality check.]",
-          "verification": {
-            "command": ["python3", "-B", "-m", "unittest", "discover", "-s", "tests", "-p", "test_quality.py"],
-            "expected": "[Executed quality checks satisfy NFR-001 under its approved conditions and demonstrate AC-003.]"
-          }
-        }
-      ],
-      "closure": "[US-001 complete with final verification of AC-001, AC-002, and AC-003.]"
-    },
-    {
-      "id": "T-003",
-      "phase": "PH-02",
-      "story": "US-002",
-      "acceptance": ["AC-004"],
-      "depends_on": ["T-002"],
-      "files": ["src/related.py", "tests/test_integration.py"],
-      "steps": [
-        {
-          "id": "T-003.001",
-          "action": "[Implement the related US-002 increment and integration behavior for AC-004 with its tests.]",
-          "verification": {
-            "command": ["python3", "-B", "-m", "unittest", "discover", "-s", "tests", "-p", "test_integration.py"],
-            "expected": "[Executed integration cases demonstrate AC-004 and relevant regression checks pass.]"
-          }
-        }
-      ],
-      "closure": "[US-002 complete with final verification of AC-004.]"
-    }
-  ]
-}
-```
+# Release Tasks: vX.Y.Z
 
 Replace the illustrative tasks, references, paths, commands, selectors, and expected results with this release's actual decisions. Confirm that selected checks exist and exercise the intended behavior; these examples prescribe neither task count nor scope. The tasks array owns all executable task definitions. Keep reading tables synchronized and outside generated progress; their decision context participates in the document digest.
 

@@ -1,0 +1,7 @@
+{
+  "finding": "COH-02",
+  "result": "reproduced",
+  "error": "model_catalog_required",
+  "message": "supply the current host model/effort inventory and its evidence reference",
+  "basis": "exact active execution.md capabilities example against new-run defaults; no host session lookup or model invocation needed"
+}

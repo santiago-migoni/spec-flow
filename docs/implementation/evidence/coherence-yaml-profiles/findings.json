@@ -1,0 +1,64 @@
+[
+  {
+    "id": "COH-01",
+    "priority": "P2",
+    "status": "open",
+    "file": "plugins/spec-flow/harness/contracts/operations.md",
+    "line": 35,
+    "finding": "Shared mandatory writing guidance still requires a fenced JSON contract, contradicting new YAML frontmatter guidance at line 57 and all eight templates.",
+    "correction": "Require YAML frontmatter for newly created canonical documents; preserve existing JSON encoding unless conversion is explicitly authorized. Keep kinds, IDs, revisions, pins and approvals unchanged."
+  },
+  {
+    "id": "COH-02",
+    "priority": "P2",
+    "status": "open",
+    "file": "plugins/spec-flow/harness/contracts/execution.md",
+    "line": 49,
+    "finding": "Complete-looking capabilities example omits model_catalog_reference and model_catalog, so new-run preflight rejects it with model_catalog_required.",
+    "correction": "Complete the example with current host model/effort inventory fields and their evidence reference; explain optional run_id for existing frozen-profile preflight. Never weaken availability/attestation checks to accept the old example."
+  },
+  {
+    "id": "COH-03",
+    "priority": "P3",
+    "status": "open",
+    "file": "plugins/spec-flow/harness/contracts/execution.md",
+    "line": 63,
+    "related": [
+      {
+        "file": "plugins/spec-flow/harness/contracts/execution.md",
+        "lines": [
+          49,
+          51,
+          71
+        ]
+      },
+      {
+        "file": "plugins/spec-flow/harness/roles/implementer.md",
+        "lines": [
+          13
+        ]
+      },
+      {
+        "file": "plugins/spec-flow/harness/roles/orchestrator.md",
+        "lines": [
+          5
+        ]
+      },
+      {
+        "file": "README.md",
+        "lines": [
+          46,
+          74
+        ]
+      },
+      {
+        "file": "plugins/spec-flow/skills/converge/SKILL.md",
+        "lines": [
+          16
+        ]
+      }
+    ],
+    "finding": "Remaining active instructions name Sol/Luna rather than the configurable orchestrator/implementer/reviewer; these labels leave model-specific role assumptions, including convergence instructions, inconsistent with arbitrary configured IDs.",
+    "correction": "Use role names and pinned profiles throughout active instructions. Preserve historical E7/E8 labels and compatibility identifiers such as the luna_ native task prefix."
+  }
+]

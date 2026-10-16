@@ -28,7 +28,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "operation",
         choices=(
-            "initialize", "digest", "validate", "approve", "gate", "capabilities", "start", "authorize",
+            "initialize", "configure-profiles", "digest", "validate", "approve", "gate", "capabilities", "start", "authorize",
             "prepare", "restore-packet", "bind-agent", "result", "retry", "reconcile", "verify", "review", "close", "resume", "takeover", "status", "interrupt",
             "phase-ready", "review-phase", "commit-phase", "refresh-evidence", "release-review", "complete", "hook-check",
             "migrate-preview", "migrate-apply", "migrate-resume", "abandon",

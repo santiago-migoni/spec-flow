@@ -1,0 +1,21 @@
+{
+  "verified_at": "2026-10-16T18:29:50.296531+00:00",
+  "result": "PASS_WITH_DOCUMENTED_UPSTREAM_WHITESPACE",
+  "scope": "Local commit only; no push, tag, version bump, installation or publication.",
+  "parent": "3cb96fe43a5615b716ebf98ce63208e90ce2f953",
+  "candidate_evidence": "docs/implementation/evidence/coherence-yaml-profiles-corrections/verification.json",
+  "own_sources_staged_whitespace_check": "PASS",
+  "vendored_whitespace": "Original PyYAML 6.0.3 whitespace retained to preserve byte-identical upstream source; not silently normalized.",
+  "vendored_python_sources_verified_against_wheel": 16,
+  "license_byte_identical_to_wheel": true,
+  "source_wheel": "pyyaml-6.0.3-cp314-cp314-macosx_11_0_arm64.whl",
+  "wheel_sha256": "34d5fcd24b8445fadc33f9cf348c1047101756fd760b4dacb5c3e99755703310",
+  "version": "3.0.1",
+  "prior_test_results_for_reviewed_source": {
+    "YAML_suite": 152,
+    "JSON_suite": 152,
+    "hook": 10,
+    "documentary_corrections_focused": 29
+  },
+  "E7_E8_history_unchanged": true
+}

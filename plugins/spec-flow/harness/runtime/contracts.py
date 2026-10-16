@@ -8,6 +8,8 @@ import re
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Set, Union
 
+from .yaml_format import load_contract, dump_contract
+
 
 class ContractError(ValueError):
     """Raised when a contract document or its references are invalid."""
@@ -57,26 +59,64 @@ def safe_path(root: Union[str, Path], relative: Union[str, Path]) -> Path:
     return resolved
 
 
+YAML_HEADER_RE = re.compile(r"\A---\r?\n(.*?)^---[ \t]*(?:\r?\n|$)", re.DOTALL | re.MULTILINE)
+
+
+def contract_region(text: str):
+    """Return the sole contract span, encoding and object; reject mixed sources."""
+    legacy = list(CONTRACT_BLOCK_RE.finditer(text))
+    header = YAML_HEADER_RE.match(text)
+    if text.startswith(("---\n", "---\r\n")):
+        if header is None or legacy:
+            raise ContractError("document requires one closed YAML header and no JSON contract block")
+        if "<!-- spec-flow:generated:" in header.group(0):
+            raise ContractError("generated progress cannot enclose or precede the contract")
+        try:
+            contract = load_contract(header.group(1))
+        except ValueError as exc:
+            raise ContractError(str(exc)) from exc
+        match, encoding = header, "yaml"
+    else:
+        if len(legacy) != 1:
+            raise ContractError("document requires one YAML frontmatter header or one legacy spec-flow JSON block")
+        match, encoding = legacy[0], "json"
+        try:
+            contract = json.loads(match.group(1))
+        except json.JSONDecodeError as exc:
+            raise ContractError("spec-flow contract block contains invalid JSON: {}".format(exc)) from exc
+    if not isinstance(contract, dict):
+        raise ContractError("spec-flow contract must be a mapping object")
+    return match, encoding, contract
+
+
+def read_document_text(text: str) -> Dict[str, Any]:
+    match, _, contract = contract_region(text)
+    prose = (text[:match.start()] + text[match.end():]).strip()
+    prose = _strip_generated_tail(prose).strip()
+    return {"contract": contract, "prose": prose}
+
+
+def render_document(contract: Mapping[str, Any], prose: str) -> str:
+    """Create a new Markdown decision document with YAML frontmatter."""
+    return "---\n" + dump_contract(dict(contract)) + "\n---\n\n" + prose.strip() + "\n"
+
+
+def replace_contract(text: str, contract: Mapping[str, Any]) -> str:
+    """Update a contract without silently converting existing documents."""
+    match, encoding, _ = contract_region(text)
+    encoded = ("---\n" + dump_contract(dict(contract)) + "\n---\n" if encoding == "yaml"
+               else "```spec-flow\n" + json.dumps(dict(contract), ensure_ascii=False, indent=2) + "\n```")
+    return text[:match.start()] + encoded + text[match.end():]
+
+
 def read_document(path: Union[str, Path]) -> Dict[str, Any]:
-    """Read one fenced spec-flow JSON block and the surrounding Markdown prose."""
+    """Read YAML frontmatter or an existing fenced JSON decision contract."""
     document_path = Path(path)
     try:
         text = document_path.read_text(encoding="utf-8")
     except (OSError, UnicodeError) as exc:
         raise ContractError("cannot read document: {}".format(document_path)) from exc
-    matches = list(CONTRACT_BLOCK_RE.finditer(text))
-    if len(matches) != 1:
-        raise ContractError("document must contain exactly one fenced spec-flow JSON contract block")
-    match = matches[0]
-    try:
-        contract = json.loads(match.group(1))
-    except json.JSONDecodeError as exc:
-        raise ContractError("spec-flow contract block contains invalid JSON: {}".format(exc)) from exc
-    if not isinstance(contract, dict):
-        raise ContractError("spec-flow contract must be a JSON object")
-    prose = (text[: match.start()] + text[match.end() :]).strip()
-    prose = _strip_generated_tail(prose).strip()
-    return {"contract": contract, "prose": prose}
+    return read_document_text(text)
 
 
 def _strip_generated_tail(text: str) -> str:
@@ -161,6 +201,15 @@ def _validate_generated_record(record: Mapping[str, Any]) -> None:
 
 def _digest_content(text: str) -> bytes:
     """Normalize non-decision status/progress fields before hashing content."""
+    if text.startswith(("---\n", "---\r\n")):
+        match, _, contract = contract_region(text)
+        if "<!-- spec-flow:generated:" in text[:match.end()]:
+            raise ContractError("generated progress cannot enclose or precede the contract")
+        body = _strip_generated_tail(text[match.end():]).strip()
+        contract = dict(contract)
+        contract.pop("status", None)
+        canonical = json.dumps(contract, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
+        return ("spec-flow-yaml-v1\n" + canonical + "\n" + body).encode("utf-8")
     block_matches = list(CONTRACT_BLOCK_RE.finditer(text))
     generated_marked = "<!-- spec-flow:generated:" in text
     if generated_marked:

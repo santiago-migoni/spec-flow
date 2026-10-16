@@ -15,6 +15,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 from typing import Any, Dict, Iterable, Mapping, Optional
+from .profiles import LEGACY_PROFILES, validate_profiles
 
 
 class AdapterError(RuntimeError):
@@ -28,15 +29,37 @@ class NativeCodexAdapter:
     """Validate host supplied references and bind them to local Codex records."""
 
     production = True
-    PROFILES = {
-        "orchestrator": ("gpt-6-sol", "high"),
-        "implementer": ("gpt-6-luna", "high"),
-        "reviewer": ("gpt-6-sol", "high"),
-    }
+    PROFILES = {role: (profile["id"], profile["effort"]) for role, profile in LEGACY_PROFILES.items()}
     OPERATIONS = {"spawn_agent", "wait_agent", "interrupt_agent", "list_agents"}
 
     def __init__(self, root: Path):
         self.root = Path(root).resolve()
+        self.configure_profiles(LEGACY_PROFILES)
+
+    def configure_profiles(self, profiles, *, require_catalog=False):
+        validated = validate_profiles(profiles)
+        self.PROFILES = {role: (p["id"], p["effort"]) for role, p in validated.items()}
+        self.require_model_catalog = require_catalog
+
+    def _check_model_catalog(self, report):
+        if not self.require_model_catalog:
+            return None
+        catalog = report.get("model_catalog")
+        reference = report.get("model_catalog_reference")
+        if not isinstance(reference, str) or not reference.strip() or not isinstance(catalog, list) or not catalog:
+            raise AdapterError("model_catalog_required", "supply the current host model/effort inventory and its evidence reference")
+        indexed = {}
+        for row in catalog:
+            if (not isinstance(row, dict) or not isinstance(row.get("id"), str) or row["id"] in indexed
+                    or not isinstance(row.get("reasoning_efforts"), list) or not row["reasoning_efforts"]
+                    or not all(isinstance(effort, str) for effort in row["reasoning_efforts"])):
+                raise AdapterError("model_catalog_invalid", "host model catalog has a malformed or duplicate entry")
+            indexed[row["id"]] = row["reasoning_efforts"]
+        for role, (model, effort) in self.PROFILES.items():
+            if model not in indexed or effort not in indexed[model]:
+                raise AdapterError("model_unavailable", "configured model/effort is unavailable on this host", details={"role": role, "model": model, "effort": effort})
+        return {"reference": reference, "entries": catalog, "profiles": {role: {"id": model, "effort": effort} for role, (model, effort) in self.PROFILES.items()},
+                "basis": "host-supplied inventory; actual native sessions must still pass exact attestation"}
 
     def capabilities(self, report: Any, owner: str) -> Dict[str, Any]:
         if not isinstance(report, dict):
@@ -48,11 +71,12 @@ class NativeCodexAdapter:
         missing = sorted(name for name in self.OPERATIONS if operations.get(name) is not True or not isinstance(evidence.get(name), str) or not evidence[name].strip())
         if missing:
             raise AdapterError("native_capability_unavailable", "native Codex capabilities are missing or unprobed", details={"operations": missing})
+        catalog = self._check_model_catalog(report)
         session = self.attest_session(owner, "orchestrator")
         return {"operations": sorted(self.OPERATIONS), "inventory_reference": self._nonempty_report_reference(report.get("inventory_reference")),
                 "probe_evidence_references": dict(evidence),
                 "basis": "host-supplied capability references; Python does not enumerate native tools",
-                "owner_session": session}
+                "owner_session": session, "model_catalog": catalog}
 
     @staticmethod
     def _nonempty_report_reference(value: Any) -> str:
