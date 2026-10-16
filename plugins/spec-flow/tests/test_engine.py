@@ -710,5 +710,114 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(third_attempt["attempt"], 3)
 
 
+    def _exhausted_native_failure_fixture(self):
+        adapter = FixtureProductionAdapter()
+        self.docs = make_project(self.root, command=["python3", "-c", "print('injected failure'); raise SystemExit(1)"])
+        engine = Engine(self.root, adapter=adapter)
+        engine.dispatch("initialize", {})
+        approve_release(engine, self.docs)
+        run_id = start_run(engine)
+        payload = {"run_id": run_id, "owner": "sol-session-1", "task_id": "T-001"}
+        for attempt in range(1, 4):
+            engine.dispatch("prepare", payload)
+            path = "/root/luna-" + str(attempt)
+            engine.dispatch("bind-agent", {**payload, "agent_id": path, "agent_path": path, "session_id": "luna-" + str(attempt)})
+            engine.dispatch("result", {**payload, "result": {
+                "summary": "Intentionally insufficient fixture implementation.", "files_modified": [],
+                "checks": [{"step_id": "T-001.001", "check": "Canonical command", "result": "injected failure"}],
+                "evidence": [{"kind": "inspection", "reference": "fixture", "description": "Failure is deliberate."}], "blockers": []}})
+            with self.assertRaises(EngineError) as failed:
+                engine.dispatch("verify", payload)
+            self.assertEqual(failed.exception.code, "verification_failed")
+            if attempt < 3:
+                with self.assertRaises(EngineError) as early:
+                    engine.dispatch("abandon", self._exhausted_abandon_payload(run_id))
+                self.assertEqual(early.exception.code, "active_task_requires_reconciliation")
+                engine.dispatch("retry", {**payload, "reason": "Correct the injected failure.", "hypothesis": "Next attempt may pass."})
+        return engine, adapter, run_id, payload
+
+    @staticmethod
+    def _exhausted_abandon_payload(run_id):
+        return {"run_id": run_id, "owner": "sol-session-1", "reason": "Escalate exhausted failed task without accepting it.",
+                "authorization": {"actor": "user", "statement": "Abandon this exhausted run and preserve all history.", "source": "conversation"}}
+
+    def test_exhausted_failed_task_abandon_preserves_failure_history_and_restart_budget(self):
+        engine, adapter, run_id, payload = self._exhausted_native_failure_fixture()
+        before = engine.dispatch("status", {"run_id": run_id})
+        prior_events = engine.store.read_events(run_id)
+        code = (self.root / "src/example.py").read_bytes()
+        for op, extra, error in (("retry", {"reason": "Fourth attempt.", "hypothesis": "Should remain blocked."}, "retry_limit"),
+                                 ("review", {"verdict": "pass", "evidence": "Cannot accept failed verification."}, "verification_required"),
+                                 ("close", {}, "review_required")):
+            with self.assertRaises(EngineError) as blocked:
+                engine.dispatch(op, {**payload, **extra})
+            self.assertEqual(blocked.exception.code, error)
+        result = engine.dispatch("abandon", self._exhausted_abandon_payload(run_id))
+        after = engine.dispatch("status", {"run_id": run_id})
+        self.assertEqual(result["status"], "abandoned")
+        self.assertIsNone(after["active_task"])
+        self.assertEqual(after["tasks"], before["tasks"])
+        self.assertEqual(after["tasks"]["T-001"]["status"], "verification_failed")
+        self.assertEqual(engine.store.read_events(run_id)[:-1], prior_events)
+        abandonment = engine.store.read_events(run_id)[-1]["data"]["unresolved_task"]
+        self.assertEqual(abandonment["task_id"], "T-001")
+        self.assertEqual(abandonment["attempt"], 3)
+        self.assertEqual(abandonment["host_attestation"]["session_id"], "luna-3")
+        self.assertEqual((self.root / "src/example.py").read_bytes(), code)
+        self.assertNotIn(run_id, adapter.leases)
+        repeated = engine.dispatch("abandon", self._exhausted_abandon_payload(run_id))
+        self.assertTrue(repeated["already_abandoned"])
+        self.assertEqual(len(engine.store.read_events(run_id)), len(prior_events) + 1)
+        next_run = start_run(engine)
+        with self.assertRaises(EngineError) as exhausted:
+            engine.dispatch("prepare", {**payload, "run_id": next_run})
+        self.assertEqual(exhausted.exception.code, "retry_limit")
+
+    def test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation(self):
+        from harness.runtime.codex_adapter import AdapterError
+        engine, adapter, run_id, _ = self._exhausted_native_failure_fixture()
+        events = engine.store.read_events(run_id)
+        original = adapter.attest_session
+        def active_child(session_id, role, **kwargs):
+            return {**original(session_id, role, **kwargs), "agent_lifecycle": "running" if role == "implementer" else "completed"}
+        def missing_child(session_id, role, **kwargs):
+            if role == "implementer":
+                raise AdapterError("host_session_missing", "Child log unavailable.")
+            return original(session_id, role, **kwargs)
+        for callback, expected in ((active_child, "agent_still_active"), (missing_child, "host_session_missing")):
+            with self.subTest(expected=expected), patch.object(adapter, "attest_session", side_effect=callback):
+                with self.assertRaises(EngineError) as blocked:
+                    engine.dispatch("abandon", self._exhausted_abandon_payload(run_id))
+                self.assertEqual(blocked.exception.code, expected)
+            self.assertEqual(engine.store.read_events(run_id), events)
+            self.assertIn(run_id, adapter.leases)
+
+    def test_exhausted_failure_abandon_requires_owner_authorization_and_lease(self):
+        engine, adapter, run_id, _ = self._exhausted_native_failure_fixture()
+        payload = self._exhausted_abandon_payload(run_id)
+        events = engine.store.read_events(run_id)
+        for changed, expected in (({**payload, "owner": "wrong"}, "wrong_owner"),
+                                  ({**payload, "authorization": {"actor": "user", "statement": "", "source": "conversation"}}, "invalid_input")):
+            with self.assertRaises(EngineError) as blocked:
+                engine.dispatch("abandon", changed)
+            self.assertEqual(blocked.exception.code, expected)
+        adapter.leases.remove(run_id)
+        with self.assertRaises(EngineError) as no_lease:
+            engine.dispatch("abandon", payload)
+        self.assertEqual(no_lease.exception.code, "ownership_lease_missing")
+        self.assertEqual(engine.store.read_events(run_id), events)
+
+    def test_exhausted_failure_abandon_recovers_crash_after_event_without_reattesting_child(self):
+        engine, adapter, run_id, _ = self._exhausted_native_failure_fixture()
+        with patch.object(adapter, "release", side_effect=RuntimeError("crash before lease release")):
+            with self.assertRaises(RuntimeError):
+                engine.dispatch("abandon", self._exhausted_abandon_payload(run_id))
+        with patch.object(adapter, "attest_session", side_effect=AssertionError("Already abandoned; do not require terminal child log again.")):
+            result = engine.dispatch("abandon", self._exhausted_abandon_payload(run_id))
+        self.assertTrue(result["already_abandoned"])
+        self.assertNotIn(run_id, adapter.leases)
+        self.assertEqual(sum(e["event"] == "abandoned" for e in engine.store.read_events(run_id)), 1)
+
+
 if __name__ == "__main__":
     unittest.main()

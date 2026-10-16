@@ -1,0 +1,75 @@
+test_exhausted_failed_task_abandon_preserves_failure_history_and_restart_budget (test_engine.EngineTests.test_exhausted_failed_task_abandon_preserves_failure_history_and_restart_budget) ... ERROR
+test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation (test_engine.EngineTests.test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation) ... 
+  test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation (test_engine.EngineTests.test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation) (expected='agent_still_active') ... FAIL
+  test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation (test_engine.EngineTests.test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation) (expected='host_session_missing') ... FAIL
+test_exhausted_failure_abandon_requires_owner_authorization_and_lease (test_engine.EngineTests.test_exhausted_failure_abandon_requires_owner_authorization_and_lease) ... FAIL
+test_exhausted_failure_abandon_recovers_crash_after_event_without_reattesting_child (test_engine.EngineTests.test_exhausted_failure_abandon_recovers_crash_after_event_without_reattesting_child) ... ERROR
+
+======================================================================
+ERROR: test_exhausted_failed_task_abandon_preserves_failure_history_and_restart_budget (test_engine.EngineTests.test_exhausted_failed_task_abandon_preserves_failure_history_and_restart_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_engine.py", line 755, in test_exhausted_failed_task_abandon_preserves_failure_history_and_restart_budget
+    result = engine.dispatch("abandon", self._exhausted_abandon_payload(run_id))
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/engine.py", line 108, in dispatch
+    return methods[operation](payload)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/engine.py", line 1288, in _abandon
+    raise EngineError("active_task_requires_reconciliation", "inspect and reconcile the active native task before abandoning the run",
+                      details={"task_id": state["active_task"], "task_status": state.get("tasks", {}).get(state["active_task"], {}).get("status")})
+harness.runtime.engine.EngineError: inspect and reconcile the active native task before abandoning the run
+
+======================================================================
+ERROR: test_exhausted_failure_abandon_recovers_crash_after_event_without_reattesting_child (test_engine.EngineTests.test_exhausted_failure_abandon_recovers_crash_after_event_without_reattesting_child)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_engine.py", line 816, in test_exhausted_failure_abandon_recovers_crash_after_event_without_reattesting_child
+    result = engine.dispatch("abandon", self._exhausted_abandon_payload(run_id))
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/engine.py", line 108, in dispatch
+    return methods[operation](payload)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/engine.py", line 1288, in _abandon
+    raise EngineError("active_task_requires_reconciliation", "inspect and reconcile the active native task before abandoning the run",
+                      details={"task_id": state["active_task"], "task_status": state.get("tasks", {}).get(state["active_task"], {}).get("status")})
+harness.runtime.engine.EngineError: inspect and reconcile the active native task before abandoning the run
+
+======================================================================
+FAIL: test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation (test_engine.EngineTests.test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation) (expected='agent_still_active')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_engine.py", line 791, in test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation
+    self.assertEqual(blocked.exception.code, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'active_task_requires_reconciliation' != 'agent_still_active'
+- active_task_requires_reconciliation
++ agent_still_active
+
+
+======================================================================
+FAIL: test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation (test_engine.EngineTests.test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation) (expected='host_session_missing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_engine.py", line 791, in test_exhausted_failure_abandon_rejects_live_or_unattestable_child_without_mutation
+    self.assertEqual(blocked.exception.code, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'active_task_requires_reconciliation' != 'host_session_missing'
+- active_task_requires_reconciliation
++ host_session_missing
+
+
+======================================================================
+FAIL: test_exhausted_failure_abandon_requires_owner_authorization_and_lease (test_engine.EngineTests.test_exhausted_failure_abandon_requires_owner_authorization_and_lease)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_engine.py", line 807, in test_exhausted_failure_abandon_requires_owner_authorization_and_lease
+    self.assertEqual(no_lease.exception.code, "ownership_lease_missing")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'active_task_requires_reconciliation' != 'ownership_lease_missing'
+- active_task_requires_reconciliation
++ ownership_lease_missing
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.566s
+
+FAILED (failures=3, errors=2)

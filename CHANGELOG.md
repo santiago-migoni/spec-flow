@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix F-03: explicitly abandon an exhausted failed task only after terminal native-child attestation, preserving failure history, retry budget, and ownership-release recovery.
+
 ### Fixed
 
 - Type-check native subagent metadata before reading thread lineage, so unrelated service/compaction records cannot crash no-spawn recovery. Preserve parent/path, inventory, packet, lifecycle and ownership checks; add mixed-metadata recovery regressions.

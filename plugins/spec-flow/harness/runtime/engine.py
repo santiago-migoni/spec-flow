@@ -1284,13 +1284,27 @@ class Engine:
             raise EngineError("run_not_abandonable", "only an active, interrupted, or closure-pending run can be abandoned")
         if state.get("release_review"):
             raise EngineError("run_not_abandonable", "a run with a final release-review audit cannot be abandoned")
+        unresolved_task = None
         if state.get("active_task"):
-            raise EngineError("active_task_requires_reconciliation", "inspect and reconcile the active native task before abandoning the run",
-                              details={"task_id": state["active_task"], "task_status": state.get("tasks", {}).get(state["active_task"], {}).get("status")})
+            task_id = state["active_task"]
+            task_state = state.get("tasks", {}).get(task_id, {})
+            if task_state.get("status") != "verification_failed" or task_state.get("attempt", 0) < self._config()["retry_limit"]:
+                raise EngineError("active_task_requires_reconciliation", "inspect and reconcile the active native task before abandoning the run",
+                                  details={"task_id": task_id, "task_status": task_state.get("status")})
+            unresolved_task = {"task_id": task_id, "status": task_state["status"], "attempt": task_state["attempt"],
+                               "host_attestation": None}
         if getattr(self.adapter, "production", False):
             self._adapter_call("assert_lease", state)
             self._adapter_call("attest_session", owner, "orchestrator")
-        self._append(run_id, "abandoned", {"reason": reason, "authorization": authorization, "abandoned_at": self._now()})
+            if unresolved_task:
+                native = self._attest_bound_agent(state, task_id, task_state)
+                if native.get("agent_lifecycle") not in {"completed", "aborted"}:
+                    raise EngineError("agent_still_active", "inspect or stop the native agent before abandoning an exhausted failed task")
+                unresolved_task["host_attestation"] = native
+        abandonment = {"reason": reason, "authorization": authorization, "abandoned_at": self._now()}
+        if unresolved_task:
+            abandonment["unresolved_task"] = unresolved_task
+        self._append(run_id, "abandoned", abandonment)
         updated = self._state(run_id)
         self._adapter_call("release", updated)
         return {"run_id": run_id, "status": "abandoned", "already_abandoned": False, "history_preserved": True}
@@ -1804,6 +1818,10 @@ class Engine:
                 state["status"] = "abandoned"
                 state["abandonment"] = {"reason": data["reason"], "authorization": data["authorization"],
                                          "abandoned_at": data["abandoned_at"]}
+                if data.get("unresolved_task"):
+                    state["abandonment"]["unresolved_task"] = data["unresolved_task"]
+                    state["active_task"] = None
+                    state["reconciliation_required"] = False
             elif kind == "migration_credited":
                 task = state["tasks"].setdefault(data["task_id"], {})
                 task.update({"status": "completed", "historical_evidence": list(data["steps"]),

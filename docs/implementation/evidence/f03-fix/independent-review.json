@@ -1,0 +1,42 @@
+{
+  "review": "F-03 exhausted verification failure abandonment",
+  "base_head": "6650a194f7ea1c448ffc75d4d21e273fb7d2021e",
+  "scope": "Current uncommitted diff; independent review with library fixture suites and real-adapter tests; no source or execution registry edits. Native E7 recovery/rerun remains parent responsibility.",
+  "files_sha256": {
+    "AGENTS.md": "c4e2026ebfa8ea780e3bd38cd9be1fd87588eceaa5f73cb336dc6cb723eb931e",
+    "CHANGELOG.md": "7238b16b07c533fd131d7cf1c601add9b192594b7ed4e783681b06741f4bf32e",
+    "plugins/spec-flow/harness/runtime/engine.py": "9dc0c4ab2b1f4dd7f663e1cd06e390c8450f035bd8d620bdbbd067dd4eb296be",
+    "plugins/spec-flow/harness/runtime/codex_adapter.py": "b76d3a520869e84626cc4290f3048ed519fd7aa3884e9074d2c9312757f178c9",
+    "plugins/spec-flow/harness/contracts/execution.md": "6544681aa4cad8faaafd7baaf1e5e2a8b4723ef4d8b908ec423f25f03877619b",
+    "plugins/spec-flow/harness/contracts/operations.md": "226655f07f708f62cd6d1f99de7f8748a68376a6947a044a867423c548526287",
+    "plugins/spec-flow/harness/roles/orchestrator.md": "139fc07eee506c1be96fa36fa3d9c59e3bb40f59123266fe838aee8f0db8e830",
+    "plugins/spec-flow/harness/adapters/codex/README.md": "2d099021cfa7d5d5666557937e317b66dc50fe533f19882fc63fb5de8d0919a8",
+    "plugins/spec-flow/skills/implement/SKILL.md": "4282249c80537e178a496364f3b0696b47d51821fa7eca6289deae527dfc2135",
+    "plugins/spec-flow/tests/test_engine.py": "7958ce19e8cb6703dd73546805c81297ef4027d1d09d185f594c86f81462e2a0",
+    "docs/implementation/evidence/e7-34d8909/native/F-03-recovery-after-retry-limit.md": "968a3f66c92f2e069e5f7b7bcb2fce26515a4e36e6faae0189e3eecf66e215e4"
+  },
+  "commands": [
+    {
+      "command": "PYTHONPATH=plugins/spec-flow python3 -B -m unittest discover -s plugins/spec-flow/tests -v",
+      "exit_code": 0,
+      "tests": 127,
+      "result": "OK"
+    },
+    {
+      "command": "python3 -B -m unittest discover -s plugins/spec-flow/hooks -p 'test_*.py' -v",
+      "exit_code": 0,
+      "tests": 9,
+      "result": "OK"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "findings": [],
+  "assessment": "No blocking issues identified in the reviewed scope. Abandonment exception retains authorization, owner/lease checks, bound implementer identity/profile/lineage/packet checks and terminal lifecycle; it records unresolved failure before lease release. Reducer clears reservation only and preserves task failure/attempt history; restart budget remains enforced. Existing review, close, phase and release gates are unchanged. Crash after durable event recovers lease release without duplicate events.",
+  "limitations": [
+    "Tests use temporary fixtures; current real negative run was not mutated or recovered by reviewer.",
+    "This review does not establish successful native E7 repetition or release readiness."
+  ]
+}
