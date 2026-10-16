@@ -4,7 +4,8 @@
 
 ## Release v3.0.0
 
-Status: Prepared locally on 2026-10-16; not published. Publication date pending.
+Release date: 2026-10-16.
+Prepared locally and verified before publication; E7/E8 source commits are recorded below.
 Release notes: [v3.0.0](docs/releases/v3.0.0.md).
 
 ### Breaking changes

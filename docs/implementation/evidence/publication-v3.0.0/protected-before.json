@@ -1,0 +1,581 @@
+{
+  "root": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow/spec-flow",
+  "files": {
+    "2.0.0/plugin.json": {
+      "sha256": "709b4af29c98390977f319ba7f2e47d14d4e30173b3c1849060363144627d2b6",
+      "mode": 33188,
+      "mtime_ns": 1792066932674599035
+    },
+    "2.0.0/evals/deterministic.md": {
+      "sha256": "f7fed11a8030e3cafbc2d65e6d900121437731dff0dc8d2667cb8690b72def69",
+      "mode": 33188,
+      "mtime_ns": 1792066932664156104
+    },
+    "2.0.0/evals/baseline.md": {
+      "sha256": "205a3d15b0b29c4da948f0a066a9cfc9ce9f9e342bf5d5e5e585cda6ece765f3",
+      "mode": 33188,
+      "mtime_ns": 1792066932664028480
+    },
+    "2.0.0/evals/scenarios.md": {
+      "sha256": "a17373fa3f0f29302389ba33a87e94f1c4267b939d0cfbd27300b14aeb52c1a2",
+      "mode": 33188,
+      "mtime_ns": 1792066932671716251
+    },
+    "2.0.0/evals/skill-behavior.md": {
+      "sha256": "f9e28a524544586cfc7a8c90c3f4179e22b2b081373809dfad4ca3cba84c2fec",
+      "mode": 33188,
+      "mtime_ns": 1792066932671808709
+    },
+    "2.0.0/tests/test_phases.py": {
+      "sha256": "9aefa61365127d9d299158a5a051ed90cf7090458306a3b9d21c26f44f30656f",
+      "mode": 33188,
+      "mtime_ns": 1792066932680218021
+    },
+    "2.0.0/tests/test_contracts.py": {
+      "sha256": "d06dc0f601eddf681a084e3b2d7830ee0d042e30430188038b49ceddb402aba7",
+      "mode": 33188,
+      "mtime_ns": 1792066932679890397
+    },
+    "2.0.0/tests/test_engine.py": {
+      "sha256": "a68c23b1092b1819d800b40e28e5aed8b5bd1e6c02f2b0c09d1c042900aba329",
+      "mode": 33188,
+      "mtime_ns": 1792066932680013730
+    },
+    "2.0.0/tests/test_migration.py": {
+      "sha256": "d6f17c0a3ab850747e50fe31a3b9c776f66493a452fa49c816b6b200118efce6",
+      "mode": 33188,
+      "mtime_ns": 1792066932680120480
+    },
+    "2.0.0/tests/test_codex_adapter.py": {
+      "sha256": "88ef7661122a9ccf74cfc3349a4b5a198061482c036fc220984661b07e6a4626",
+      "mode": 33188,
+      "mtime_ns": 1792066932679570648
+    },
+    "2.0.0/tests/test_skills.py": {
+      "sha256": "19c3e4459417d5317e1ba07c6d928067877956f33783ab12b0a92a7dd39d57ab",
+      "mode": 33188,
+      "mtime_ns": 1792066932680292312
+    },
+    "2.0.0/tests/test_cli.py": {
+      "sha256": "7a80df0a367ac6e7930c59cbde48b32e4cf24df9c8d30ed0ede9e350c720fc77",
+      "mode": 33188,
+      "mtime_ns": 1792066932679479106
+    },
+    "2.0.0/tests/helpers.py": {
+      "sha256": "9788acf27443a39d73148fc2e4b799d355925b0aa032ec225f71daaf8097c8b4",
+      "mode": 33188,
+      "mtime_ns": 1792066932679410815
+    },
+    "2.0.0/harness/__init__.py": {
+      "sha256": "958f8f547e8dae65ffcdae8d6c28d6133d43f27ba654d84f6381b129dc346928",
+      "mode": 33188,
+      "mtime_ns": 1792066932671927417
+    },
+    "2.0.0/hooks/check-phase-approval.py": {
+      "sha256": "c411ae82cf4d37c59c2bf2b46523477d9078608b79b205b44e100c5a88aab48e",
+      "mode": 33188,
+      "mtime_ns": 1792066932674321494
+    },
+    "2.0.0/hooks/hooks.json": {
+      "sha256": "b31b4b8edc358c981cf669372f3d3936c038a1b1641957fdb20135ea224feaa1",
+      "mode": 33188,
+      "mtime_ns": 1792066932674402203
+    },
+    "2.0.0/hooks/test_check_phase_approval.py": {
+      "sha256": "10b196e451b49db47716b286638dee6d2fffab7f73ccc7df6757996503f91cf1",
+      "mode": 33188,
+      "mtime_ns": 1792066932674514619
+    },
+    "2.0.0/scripts/check-complete.sh": {
+      "sha256": "2480473ad10298bce41408269845f98d9d0f329097d2dca162b961d425ff6f66",
+      "mode": 33261,
+      "mtime_ns": 1792066932674730202
+    },
+    "2.0.0/scripts/spec-flow.py": {
+      "sha256": "4d59f9d067494852ead2603ebe3f8b603e8997cf50f894b09c30048c777a4b5a",
+      "mode": 33188,
+      "mtime_ns": 1792066932674817410
+    },
+    "2.0.0/assets/spec-flow-icon.png": {
+      "sha256": "d81a9c002a01e01b19aac628a6307887a8e1db17e9fbd02b512f8b71dc1ea2d1",
+      "mode": 33188,
+      "mtime_ns": 1792066932663443981
+    },
+    "2.0.0/.codex-plugin/plugin.json": {
+      "sha256": "709b4af29c98390977f319ba7f2e47d14d4e30173b3c1849060363144627d2b6",
+      "mode": 33188,
+      "mtime_ns": 1792066932661851527
+    },
+    "2.0.0/skills/finishing-branch/SKILL.md": {
+      "sha256": "b03641c2b505246ed5dc71b61d302d1551364ccd96dc9a17ab7a363fdaa732b0",
+      "mode": 33188,
+      "mtime_ns": 1792066932676699655
+    },
+    "2.0.0/skills/tasks/SKILL.md": {
+      "sha256": "a639780e5f34cdaa2e5084f3e84ebfef81e3108ec25587fa82ee5263b06922cb",
+      "mode": 33188,
+      "mtime_ns": 1792066932679022149
+    },
+    "2.0.0/skills/roadmap/SKILL.md": {
+      "sha256": "8b38c40db69a5c5798688877d23e10bd47408122a635d83be95dd21111eef5c2",
+      "mode": 33188,
+      "mtime_ns": 1792066932678174818
+    },
+    "2.0.0/skills/backlog/SKILL.md": {
+      "sha256": "de807c466658baeb6e9d135b6fda1eac6b1bf03e8f8a7ccad278db0fe66c7f2f",
+      "mode": 33188,
+      "mtime_ns": 1792066932675547700
+    },
+    "2.0.0/skills/plan/SKILL.md": {
+      "sha256": "b73aad84d35ebd003d5d2f5dfbd2f3afb5420f412acdd85a4c4b39433f736063",
+      "mode": 33188,
+      "mtime_ns": 1792066932677792319
+    },
+    "2.0.0/skills/clarify/SKILL.md": {
+      "sha256": "debb0055b383e7e51a1888c28632184cc5d425ec6d37b43a27f8491290cfe9f5",
+      "mode": 33188,
+      "mtime_ns": 1792066932675808782
+    },
+    "2.0.0/skills/converge/SKILL.md": {
+      "sha256": "28f7832e4e32013fbacb4bd4f67a78928f3dbe2bb3eb132806ad3fbab9c2d0aa",
+      "mode": 33188,
+      "mtime_ns": 1792066932676338323
+    },
+    "2.0.0/skills/constitution/SKILL.md": {
+      "sha256": "d06783ef382426f5b06035832a36589c6ba173b886a4f694d434a3fee9daf99e",
+      "mode": 33188,
+      "mtime_ns": 1792066932676072323
+    },
+    "2.0.0/skills/architecture/SKILL.md": {
+      "sha256": "5211af9c0806ad9e2b8e71222bc07aceb8159775649275fa02f0ad855b0b6fb0",
+      "mode": 33188,
+      "mtime_ns": 1792066932675278409
+    },
+    "2.0.0/skills/review-release/SKILL.md": {
+      "sha256": "bfc56196a5bf51b3a051554ab4d66fb7c7a137a5c556dec63defa05018e43ad0",
+      "mode": 33188,
+      "mtime_ns": 1792066932678041860
+    },
+    "2.0.0/skills/using-spec-flow/SKILL.md": {
+      "sha256": "1be6f3423cec8cbc0f91b95ef7e3a1a45a07fbef5273810042fdbb3f1bb04349",
+      "mode": 33188,
+      "mtime_ns": 1792066932679261357
+    },
+    "2.0.0/skills/implement/SKILL.md": {
+      "sha256": "76356b211875a42a8f73a9c558a799943876c79d66927ccf20463c83a291107e",
+      "mode": 33188,
+      "mtime_ns": 1792066932676844821
+    },
+    "2.0.0/skills/analyze/SKILL.md": {
+      "sha256": "8083bfd0fce7f0f80d35e367e6d5d09c8e0811255c610e5be28c0b2c42693825",
+      "mode": 33188,
+      "mtime_ns": 1792066932675005909
+    },
+    "2.0.0/skills/infrastructure/SKILL.md": {
+      "sha256": "e41f988525b733b0adb522f170099f8f70ab3dc24c0f3716a15751ed0fc9fb95",
+      "mode": 33188,
+      "mtime_ns": 1792066932676982613
+    },
+    "2.0.0/skills/structure/SKILL.md": {
+      "sha256": "4ed960fdf36dcc783c12082218a94d69f5ce3964bc36673ef67575174f9d005c",
+      "mode": 33188,
+      "mtime_ns": 1792066932678676650
+    },
+    "2.0.0/skills/specify/SKILL.md": {
+      "sha256": "e18305b97d30af91e78080c6a9e8d55d3d1bb3e3c2eae3f00f00f93f48a9b7c4",
+      "mode": 33188,
+      "mtime_ns": 1792066932678439359
+    },
+    "2.0.0/skills/specify/assets/spec-template.md": {
+      "sha256": "e8bf12dfc3974c4b6553f2ea097746579a6ea3103b3daaeda635494ac4a39d42",
+      "mode": 33188,
+      "mtime_ns": 1792066932678561067
+    },
+    "2.0.0/skills/structure/assets/structure-template.md": {
+      "sha256": "0ded6aa5a407f3756e626de4ab4ac98ada4ac9ccd1c3b051b30a5116a9ab8d40",
+      "mode": 33188,
+      "mtime_ns": 1792066932678922733
+    },
+    "2.0.0/skills/infrastructure/assets/infrastructure-template.md": {
+      "sha256": "865ce86ca342a1efc6d875deeb3218d233232715eed535b01641ad8cba0eadb5",
+      "mode": 33188,
+      "mtime_ns": 1792066932677108946
+    },
+    "2.0.0/skills/analyze/assets/report-template.md": {
+      "sha256": "194b585776bb9bc6f60d18b8faa538de0909c629f62d136ca23fa0648999855f",
+      "mode": 33188,
+      "mtime_ns": 1792066932675128284
+    },
+    "2.0.0/skills/architecture/assets/architecture-template.md": {
+      "sha256": "c5b21c234fb370527f7b5de0b14e10329ade83ff67db5352d4793aa5e35ea88d",
+      "mode": 33188,
+      "mtime_ns": 1792066932675418658
+    },
+    "2.0.0/skills/constitution/assets/constitution-template.md": {
+      "sha256": "4941c74e3919ffa4b7de707bfe7c66e72f0decdf79b42658c82cf695658bcb26",
+      "mode": 33188,
+      "mtime_ns": 1792066932676201948
+    },
+    "2.0.0/skills/converge/assets/convergence-report-template.md": {
+      "sha256": "a7520f014961c6083ba25e3ebf8090d7ed1c1f4defa9d67181e87afceb2098fd",
+      "mode": 33188,
+      "mtime_ns": 1792066932676586989
+    },
+    "2.0.0/skills/clarify/assets/clarifications-template.md": {
+      "sha256": "619b7a4d798864945f500b835e9b587129c9fdb2d09385e782d7ccfad5a5e89f",
+      "mode": 33188,
+      "mtime_ns": 1792066932675946115
+    },
+    "2.0.0/skills/plan/assets/plan-template.md": {
+      "sha256": "e2944d95d42e021ff29318d3a964311e2e153de0b1ff8e8c27c944ec269d0696",
+      "mode": 33188,
+      "mtime_ns": 1792066932677919902
+    },
+    "2.0.0/skills/backlog/assets/backlog-template.md": {
+      "sha256": "1f080cc906645e60fbab242fb78ee4337e4e5e148f33121ec43b46971ab4d322",
+      "mode": 33188,
+      "mtime_ns": 1792066932675674491
+    },
+    "2.0.0/skills/roadmap/assets/roadmap-template.md": {
+      "sha256": "d7718072b67782d5db16f9e105dd723fe8b0244ce678ff11bc925ac2d80ac690",
+      "mode": 33188,
+      "mtime_ns": 1792066932678302526
+    },
+    "2.0.0/skills/tasks/assets/tasks-template.md": {
+      "sha256": "1d1a9f14d4f0585812571615118b0f122d2bcc48fde7f451f1852403e7b11e51",
+      "mode": 33188,
+      "mtime_ns": 1792066932679126857
+    },
+    "2.0.0/harness/contracts/canonical-contract.md": {
+      "sha256": "5935625bc67816045e25de746d687708fb20542d3461494ea00c19a0cb9a42b3",
+      "mode": 33188,
+      "mtime_ns": 1792066932672266291
+    },
+    "2.0.0/harness/contracts/migration.md": {
+      "sha256": "3b3a823e96144a4219b6610eb34a082690432c87c8fe658b64871311aa0065be",
+      "mode": 33188,
+      "mtime_ns": 1792066932672658082
+    },
+    "2.0.0/harness/contracts/execution.md": {
+      "sha256": "26b9d87ed103a6d11b2c0e2e67b169f09370494ea2254a5b1d37b75cf981eb94",
+      "mode": 33188,
+      "mtime_ns": 1792066932672420624
+    },
+    "2.0.0/harness/runtime/store.py": {
+      "sha256": "bbaff0cc3a10a6cdd4dc685b05921a583f5781170922daf654502538e92d84d6",
+      "mode": 33188,
+      "mtime_ns": 1792066932674003412
+    },
+    "2.0.0/harness/runtime/__init__.py": {
+      "sha256": "a333ff46abc351363f83e45b42605b24c1cad0b41e8527e88e2e6055c7172445",
+      "mode": 33188,
+      "mtime_ns": 1792066932673075206
+    },
+    "2.0.0/harness/runtime/phases.py": {
+      "sha256": "387b11cf94e6dcb318012ac6d40cdc37e41de95f122eaa16b52d373ef5067edc",
+      "mode": 33188,
+      "mtime_ns": 1792066932673898537
+    },
+    "2.0.0/harness/runtime/codex_adapter.py": {
+      "sha256": "edfbe8f4a778e14f73e71f5e044997ec94606dc6556bd7426d6b4e9b515fe678",
+      "mode": 33188,
+      "mtime_ns": 1792066932673202372
+    },
+    "2.0.0/harness/runtime/engine.py": {
+      "sha256": "d156a4fabd78dfbf4de466a29a6617a614c545dbbe816d8d6289a0b52bebcf8b",
+      "mode": 33188,
+      "mtime_ns": 1792066932673570413
+    },
+    "2.0.0/harness/runtime/contracts.py": {
+      "sha256": "dc56a6806865db55f452261917f75838cb3010ef939a5c2dc9e4cbcceb52bb7b",
+      "mode": 33188,
+      "mtime_ns": 1792066932673334455
+    },
+    "2.0.0/harness/runtime/migration.py": {
+      "sha256": "78bab564f0e70399732308bcadb93f98f83321f6c13577ed5b3276fc9e37b39b",
+      "mode": 33188,
+      "mtime_ns": 1792066932673734954
+    },
+    "2.0.0/harness/roles/orchestrator.md": {
+      "sha256": "52ccb1ea858556d7714c3e4ffc88c72024283e19c0c779eba3d15b24012b1301",
+      "mode": 33188,
+      "mtime_ns": 1792066932672869123
+    },
+    "2.0.0/harness/roles/reviewer.md": {
+      "sha256": "9f602833c8e309b264dd6176acd96c638a12ffdfc0d95f913b9cdc01b1e6d245",
+      "mode": 33188,
+      "mtime_ns": 1792066932672946290
+    },
+    "2.0.0/harness/roles/implementer.md": {
+      "sha256": "fdabce0b9a23bc8fdcc2376660881d9048cb461ee3ef6da8cc5b5972d1bae649",
+      "mode": 33188,
+      "mtime_ns": 1792066932672783540
+    },
+    "2.0.0/harness/schemas/document.schema.json": {
+      "sha256": "98bd32d28d26429bd2177d3b8a294d32c85937d3bb941e5f3e888e43d9350672",
+      "mode": 33188,
+      "mtime_ns": 1792066932674163870
+    },
+    "2.0.0/harness/adapters/codex/README.md": {
+      "sha256": "189db3d7b06e4808c86a647217606cbce375fd20049963e98cb3764707b70d5d",
+      "mode": 33188,
+      "mtime_ns": 1792066932672127458
+    },
+    "2.0.0/evals/native/evaluation-report.md": {
+      "sha256": "ee2d0da8ce9bb66a925f2d76d6fec485f4fe10db992d4aefb87e5da4e81fa714",
+      "mode": 33188,
+      "mtime_ns": 1792066932664542395
+    },
+    "2.0.0/evals/native/initial-host-mismatch.json": {
+      "sha256": "a0847cb99144e86bbbc632abcb454fd8feff10fcf22d5e018a3dec1d0a957c11",
+      "mode": 33188,
+      "mtime_ns": 1792066932666579931
+    },
+    "2.0.0/evals/native/revision-and-hashes.json": {
+      "sha256": "67fd80ea19c2d7798a8dbf6842c99ec344661300ad72523a6bc4b79c2fcd4b6b",
+      "mode": 33188,
+      "mtime_ns": 1792066932671206544
+    },
+    "2.0.0/evals/native/native-session-metrics.json": {
+      "sha256": "b03a04da24e323979e1b4ac60f4f3df91b1d8e9ec08f67793c669d32ba5e7f8d",
+      "mode": 33188,
+      "mtime_ns": 1792066932669790506
+    },
+    "2.0.0/evals/native/initial-blocked-release.py": {
+      "sha256": "5bca83a01c4a2fde64929dc5cdc0e003930d96f2790b538655b9944f48836b9e",
+      "mode": 33188,
+      "mtime_ns": 1792066932666482557
+    },
+    "2.0.0/evals/native/SHA256SUMS": {
+      "sha256": "655a371abd16fbc99eb4474bd731c0b96d8fbaf44dac0d2c7898200031612830",
+      "mode": 33188,
+      "mtime_ns": 1792066932664384187
+    },
+    "2.0.0/evals/reference/test_release.py": {
+      "sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "mode": 33188,
+      "mtime_ns": 1792066932671414960
+    },
+    "2.0.0/evals/reference/release.py": {
+      "sha256": "a3cc0ce61d2ee3481ae9587ae96a0e8fb41bc7a9c267fa93cc1f622ac97e098a",
+      "mode": 33188,
+      "mtime_ns": 1792066932671337627
+    },
+    "2.0.0/evals/reference/verification.txt": {
+      "sha256": "19629009fd846a7c195100ad07d270443a741fb83e56797fc4308c325d414a7b",
+      "mode": 33188,
+      "mtime_ns": 1792066932671628002
+    },
+    "2.0.0/evals/native/legacy-migration/preview.json": {
+      "sha256": "79c1da774f9767729d2c8cd2f941be86e2dcdbed4154ef22194b6f4fa7427bdd",
+      "mode": 33188,
+      "mtime_ns": 1792066932669644798
+    },
+    "2.0.0/evals/native/fresh-linked/test_release.py": {
+      "sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "mode": 33188,
+      "mtime_ns": 1792066932666372973
+    },
+    "2.0.0/evals/native/fresh-linked/release.py": {
+      "sha256": "caa01813e009c2914d1407f0f8c9559001d7d32f897959e1e8a51e2eb27a0971",
+      "mode": 33188,
+      "mtime_ns": 1792066932666264890
+    },
+    "2.0.0/evals/native/fresh-linked/operations-summary.json": {
+      "sha256": "d057cc67257f206ca45df1549a25236c1552e7b0592bdf49d37fd6c60a472287",
+      "mode": 33188,
+      "mtime_ns": 1792066932665962516
+    },
+    "2.0.0/evals/native/fresh-linked/events-summary.json": {
+      "sha256": "092450b3363a9a123334922b4828413f0b312a75c8d6a156c7b69927e6a70b9f",
+      "mode": 33188,
+      "mtime_ns": 1792066932665391518
+    },
+    "2.0.0/evals/native/fresh-linked/git-commits.txt": {
+      "sha256": "2c07060386b7a58f46e727ee0784eb8e8f4c997f23df91072b404f7869ce4307",
+      "mode": 33188,
+      "mtime_ns": 1792066932665811267
+    },
+    "2.0.0/evals/native/negative-linked/test_release.py": {
+      "sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "mode": 33188,
+      "mtime_ns": 1792066932671101086
+    },
+    "2.0.0/evals/native/negative-linked/release.py": {
+      "sha256": "820b2dddbeee9e0c20e5324ae3c9d3a01e270af0207c03e975f45b27d9a9b267",
+      "mode": 33188,
+      "mtime_ns": 1792066932671014170
+    },
+    "2.0.0/evals/native/negative-linked/operations-summary.json": {
+      "sha256": "48052dedb4ffd7b88fb6bf0a30aa04c99b08074209ce29e9e904849f57a0117d",
+      "mode": 33188,
+      "mtime_ns": 1792066932670931295
+    },
+    "2.0.0/evals/native/negative-linked/events-summary.json": {
+      "sha256": "a3bc2ed60237d4962960215f3872a98212708e59b2221dc12ef560c1e58e38a9",
+      "mode": 33188,
+      "mtime_ns": 1792066932670733212
+    },
+    "2.0.0/evals/native/negative-linked/git-commits.txt": {
+      "sha256": "09a4e796c26435ae6a61234fb713a980b259fc9a4b076c95d7edf9a9ef934c22",
+      "mode": 33188,
+      "mtime_ns": 1792066932670817420
+    },
+    "2.0.0/evals/native/legacy-linked/test_release.py": {
+      "sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "mode": 33188,
+      "mtime_ns": 1792066932668092844
+    },
+    "2.0.0/evals/native/legacy-linked/release.py": {
+      "sha256": "224d838cd502ca77885342f9da77089ade26ee7439e06624ac7d63732cb1c905",
+      "mode": 33188,
+      "mtime_ns": 1792066932667906886
+    },
+    "2.0.0/evals/native/legacy-linked/operations-summary.json": {
+      "sha256": "9b84c19655df1edf36e0ece7c2afd27c0fef7129daeebfd3c11bcd5aebda899b",
+      "mode": 33188,
+      "mtime_ns": 1792066932667822970
+    },
+    "2.0.0/evals/native/legacy-linked/events-summary.json": {
+      "sha256": "81f7dfb1b0f0da0a2479f8de0f137610ea923d5f69d7e96a478238fa1ca54ca1",
+      "mode": 33188,
+      "mtime_ns": 1792066932667359346
+    },
+    "2.0.0/evals/native/legacy-linked/git-commits.txt": {
+      "sha256": "d0bd56cf2ed8d6aac4f56f1ebe59c2f122ea399d47bb89357dda1f0b26c77558",
+      "mode": 33188,
+      "mtime_ns": 1792066932667691928
+    },
+    "2.0.0/evals/native/legacy-linked/evidence/PH-01-phase-commit.json": {
+      "sha256": "9fb61762e0b0492b9496279870356e1912c0a49865b689f8e555f33b36a52415",
+      "mode": 33188,
+      "mtime_ns": 1792066932667497679
+    },
+    "2.0.0/evals/native/legacy-linked/evidence/T-001-1-verify.json": {
+      "sha256": "01027596b36b91572a297da2557e98bae24bc515dcc5f7484ae74f63f1defa2e",
+      "mode": 33188,
+      "mtime_ns": 1792066932667587595
+    },
+    "2.0.0/evals/native/legacy-linked/.specs/constitution.md": {
+      "sha256": "e86c4507aa2c2b189706881bcdb72dfc65f929daaeed471ddaebc73ed083a906",
+      "mode": 33188,
+      "mtime_ns": 1792066932666790556
+    },
+    "2.0.0/evals/native/legacy-linked/.specs/roadmap.md": {
+      "sha256": "acbf0850cd6115f5b1709be11942920bb728ed4d08d2044476641398d0306613",
+      "mode": 33188,
+      "mtime_ns": 1792066932667222680
+    },
+    "2.0.0/evals/native/legacy-linked/.specs/release-v1.2.3/tasks.md": {
+      "sha256": "8cc190f311d914fe38bc246bd532719cdde16a117ec1f5d1146366752856a76e",
+      "mode": 33188,
+      "mtime_ns": 1792066932667120597
+    },
+    "2.0.0/evals/native/legacy-linked/.specs/release-v1.2.3/plan.md": {
+      "sha256": "a3c82fa168375ad45f57768fa155a386ccdc70efc3d35505df427222bdeeae4a",
+      "mode": 33188,
+      "mtime_ns": 1792066932666934180
+    },
+    "2.0.0/evals/native/legacy-linked/.specs/release-v1.2.3/spec.md": {
+      "sha256": "2406d4f4610112658698811c4b225b6ca3961a2cc7de6dddf1fe831e5bfa9fdf",
+      "mode": 33188,
+      "mtime_ns": 1792066932667026430
+    },
+    "2.0.0/evals/native/negative-linked/.specs/constitution.md": {
+      "sha256": "e86c4507aa2c2b189706881bcdb72dfc65f929daaeed471ddaebc73ed083a906",
+      "mode": 33188,
+      "mtime_ns": 1792066932670003964
+    },
+    "2.0.0/evals/native/negative-linked/.specs/roadmap.md": {
+      "sha256": "9e5625ea323c82c5bc83f4a82ec1bf2fc65926967b1a6629583a28866550defa",
+      "mode": 33188,
+      "mtime_ns": 1792066932670618421
+    },
+    "2.0.0/evals/native/negative-linked/.specs/release-v1.2.3/tasks.md": {
+      "sha256": "865d4ee458a104152e1094f9dadf44a61e037d7fd26353f2be095bee915f9f12",
+      "mode": 33188,
+      "mtime_ns": 1792066932670538921
+    },
+    "2.0.0/evals/native/negative-linked/.specs/release-v1.2.3/plan.md": {
+      "sha256": "a3c82fa168375ad45f57768fa155a386ccdc70efc3d35505df427222bdeeae4a",
+      "mode": 33188,
+      "mtime_ns": 1792066932670151880
+    },
+    "2.0.0/evals/native/negative-linked/.specs/release-v1.2.3/spec.md": {
+      "sha256": "f53857be55213a92d4785c7f047150f436518cfb240d820fa18c198fc5a3e141",
+      "mode": 33188,
+      "mtime_ns": 1792066932670452921
+    },
+    "2.0.0/evals/native/fresh-linked/evidence/PH-01-phase-commit.json": {
+      "sha256": "ba9a7280cfb1e3f1e52a6e3a749934dc81ddf40b0a1642973ce6686c95eaad1a",
+      "mode": 33188,
+      "mtime_ns": 1792066932665557434
+    },
+    "2.0.0/evals/native/fresh-linked/evidence/T-001-2-verify.json": {
+      "sha256": "5d50a064660f2dbba441e641d12d9fdaf289472d5222ee99df8a129441f0713e",
+      "mode": 33188,
+      "mtime_ns": 1792066932665696309
+    },
+    "2.0.0/evals/native/fresh-linked/.specs/constitution.md": {
+      "sha256": "e86c4507aa2c2b189706881bcdb72dfc65f929daaeed471ddaebc73ed083a906",
+      "mode": 33188,
+      "mtime_ns": 1792066932664769811
+    },
+    "2.0.0/evals/native/fresh-linked/.specs/roadmap.md": {
+      "sha256": "c127e1d2b7d69eb55601d929910f8e9667b6659cdfffd77334140eb9b4e4d635",
+      "mode": 33188,
+      "mtime_ns": 1792066932665256268
+    },
+    "2.0.0/evals/native/fresh-linked/.specs/release-v1.2.3/tasks.md": {
+      "sha256": "8cc190f311d914fe38bc246bd532719cdde16a117ec1f5d1146366752856a76e",
+      "mode": 33188,
+      "mtime_ns": 1792066932665133643
+    },
+    "2.0.0/evals/native/fresh-linked/.specs/release-v1.2.3/plan.md": {
+      "sha256": "a3c82fa168375ad45f57768fa155a386ccdc70efc3d35505df427222bdeeae4a",
+      "mode": 33188,
+      "mtime_ns": 1792066932664918561
+    },
+    "2.0.0/evals/native/fresh-linked/.specs/release-v1.2.3/spec.md": {
+      "sha256": "d4cc0d20fa5e154f46b416fa8448817f5ac0f3d935cc2401f2933a541f068428",
+      "mode": 33188,
+      "mtime_ns": 1792066932665030477
+    },
+    "2.0.0/evals/native/legacy-migration/.spec-flow/legacy/784ba60ef4a356c8b74381aa1c65ef62/sources/001-normalize-release/tasks.md": {
+      "sha256": "3780698614ffc934b85a7da9da0c8852ce165799e34175a2bb6c25772998c06c",
+      "mode": 33188,
+      "mtime_ns": 1792066932668750551
+    },
+    "2.0.0/evals/native/legacy-migration/.spec-flow/legacy/784ba60ef4a356c8b74381aa1c65ef62/sources/001-normalize-release/plan.md": {
+      "sha256": "0f73db0a694cf14b917599e1f0756e2be9ccae7cbb5a098b0d287afb54323ad5",
+      "mode": 33188,
+      "mtime_ns": 1792066932668551926
+    },
+    "2.0.0/evals/native/legacy-migration/.spec-flow/legacy/784ba60ef4a356c8b74381aa1c65ef62/sources/001-normalize-release/spec.md": {
+      "sha256": "ad0637f05eef9ef79e109f5bf7dfa9345769bf090488be81bda93490ccd65516",
+      "mode": 33188,
+      "mtime_ns": 1792066932668653884
+    },
+    "2.0.0/evals/native/legacy-migration/.spec-flow/migrations/784ba60ef4a356c8b74381aa1c65ef62/journal.json": {
+      "sha256": "71aac9cf0aafefacf4aebdebc8f04536de1d3a47bf217ed0e82d313429f5425e",
+      "mode": 33188,
+      "mtime_ns": 1792066932669523674
+    },
+    "2.0.0/evals/native/legacy-migration/.spec-flow/migrations/784ba60ef4a356c8b74381aa1c65ef62/complete.json": {
+      "sha256": "a0dfe48c5ebb19d88c2b32bfa1df67c2f16a22c6dd6130c84e8d0e728062e3ed",
+      "mode": 33188,
+      "mtime_ns": 1792066932668962009
+    },
+    "2.0.0/evals/native/legacy-migration/.spec-flow/migrations/784ba60ef4a356c8b74381aa1c65ef62/imports.json": {
+      "sha256": "1602e130c376b73445365b0f4bee07b1c30ab5b1bc1ba55f215b562a9b7db63f",
+      "mode": 33188,
+      "mtime_ns": 1792066932669383591
+    }
+  },
+  "config_bytes_sha256": "8f53d51259c2390cebe8e9dfe14aca45a92dc491ae2e8256da36d163d8778270",
+  "config_semantic_sha256": "7c72c76a591a4d6a5cb90d07c164fb0aad4ddc2b0531ae974862e5cbf00e55a9",
+  "hook_trust_sha256": "1e491537cf44b1d936ab197d131a4500e8bd1982513a0e5d96b5bdc20906036a",
+  "stable_setting": {
+    "enabled": true
+  }
+}
