@@ -1,0 +1,19 @@
+{
+  "started_at": "2026-10-16T14:23:18.586067+00:00",
+  "finished_at": "2026-10-16T14:23:19.956698+00:00",
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "hooks",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "cwd": "plugins/spec-flow",
+  "exit_code": 0,
+  "category": "deterministic regression suite, not native E7"
+}

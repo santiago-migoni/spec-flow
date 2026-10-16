@@ -1,0 +1,77 @@
+{
+  "schema": "spec-flow.independent-patch-review.v1",
+  "reviewer": "independent subagent /root/f01_fix_review",
+  "scope": "Read-only review of uncommitted F-01 fix; not native E7 or release approval",
+  "baseline_head": "4154db084d55ed7de4e9a14a11ec7beebd785237",
+  "observed_head": "4154db084d55ed7de4e9a14a11ec7beebd785237",
+  "reviewed_files": {
+    "plugins/spec-flow/harness/runtime/phases.py": "95ca46549f69fcb6982bf46f314d6f101862b5073602bb537b3ca46cb8e80d5f",
+    "plugins/spec-flow/tests/test_phases.py": "42560dac7a5699def65790d108497db0c1e6311cb6946a812cfd6a13011c5d48",
+    "CHANGELOG.md": "b130b357f3ffd42bacbfa4dd58dd3c3f19b7751675258ace26d5b74e3d98e904"
+  },
+  "diff_sha256": "37bd522df2ccfe738b6223f47f222f7612c190efcf835c17777583d2153afe7d",
+  "checks": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=plugins/spec-flow python3 -B -m unittest discover -s plugins/spec-flow/tests -p 'test_*.py'",
+      "exit_code": 0,
+      "result": "120 tests passed in 17.385s"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s plugins/spec-flow/hooks -p 'test_*.py'",
+      "exit_code": 0,
+      "result": "9 tests passed in 1.292s"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "No whitespace errors"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=plugins/spec-flow:plugins/spec-flow/tests python3 -B - <<PY [inline ExtraReviewProbes unittest suite] PY",
+      "exit_code": 1,
+      "result": "3 integration probes passed: prior derived baseline replacement rejected; durable release event replacement before audit rejected; altered partial derived record rejected. Each asserted release_review_record_stale plus unchanged HEAD, events and document bytes. Fourth parser probe failed one test assumption about a blank line after the header, not a product assertion.",
+      "probe_correction": "The existing shared validator accepts the extra blank line; corrected independent parser probe below checks parity."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=plugins/spec-flow python3 -B - <<PY [inline strict-tail parity assertions] PY",
+      "exit_code": 0,
+      "result": "3 valid progress shapes accepted as None; 4 malformed tails rejected with release_review_record_stale; blank-header-line behavior confirmed consistent with existing _strip_generated_tail."
+    }
+  ],
+  "static_checks": [
+    {
+      "path": "plugins/spec-flow/harness/runtime/phases.py",
+      "lines": "571-581",
+      "result": "Fallback uses shared strict generated-tail validator and returns no closure authority for valid initial/task progress."
+    },
+    {
+      "path": "plugins/spec-flow/harness/runtime/phases.py",
+      "lines": "507-555",
+      "result": "Approval/dependency freshness, evidence freshness, exact phase parent/tree/trailer checks, exact HEAD and task-tree comparison unchanged. Durable expected record equality and reviewed baseline equality unchanged."
+    },
+    {
+      "path": "plugins/spec-flow/harness/runtime/phases.py",
+      "lines": "628-684",
+      "result": "Partial-write, durable-event-before-audit and audit-after-commit recovery logic unchanged; deterministic regression coverage passed."
+    },
+    {
+      "path": "plugins/spec-flow/harness/runtime/contracts.py",
+      "lines": "82-135",
+      "result": "Shared validator rejects duplicate/missing markers, trailing prose and arbitrary content; canonical derived-record validation remains in document loader."
+    },
+    {
+      "path": "plugins/spec-flow/tests/test_phases.py",
+      "lines": "66-118,242-300,390-437",
+      "result": "Template first close/idempotence, prior baseline record, malformed tails, partial writes/event recovery and audit recovery covered in passing full suite."
+    }
+  ],
+  "findings": [],
+  "blocking_findings": false,
+  "conclusion": "No blocking patch findings. Fix resolves the demonstrated initial generated-progress incompatibility without observed weakening of closure controls.",
+  "limits": [
+    "Deterministic fixture adapters and read-only code review do not constitute native E7, fresh installed-package E8, or readiness for publication.",
+    "No repository edits or commits by this reviewer. Only this JSON evidence file written outside temporary test fixtures.",
+    "Existing untracked docs/implementation/evidence/f01-fix/ belongs to parent workflow and was not modified by reviewer."
+  ],
+  "final_status": "M CHANGELOG.md\n M plugins/spec-flow/harness/runtime/phases.py\n M plugins/spec-flow/tests/test_phases.py\n?? docs/implementation/evidence/f01-fix/"
+}

@@ -1,0 +1,84 @@
+test_first_release_review_accepts_initial_template_progress_and_is_idempotent (test_phases.PhaseLifecycleTests.test_first_release_review_accepts_initial_template_progress_and_is_idempotent) ... ERROR
+test_closure_reader_rejects_malformed_generated_tails (test_phases.PhaseLifecycleTests.test_closure_reader_rejects_malformed_generated_tails) ... 
+  test_closure_reader_rejects_malformed_generated_tails (test_phases.PhaseLifecycleTests.test_closure_reader_rejects_malformed_generated_tails) (tail='<!-- spec-flow:generated:end -->\n') ... FAIL
+test_release_review_recovers_exact_partial_derived_write (test_phases.PhaseLifecycleTests.test_release_review_recovers_exact_partial_derived_write) ... ERROR
+test_release_review_recovers_event_before_audit_commit (test_phases.PhaseLifecycleTests.test_release_review_recovers_event_before_audit_commit) ... FAIL
+
+======================================================================
+ERROR: test_first_release_review_accepts_initial_template_progress_and_is_idempotent (test_phases.PhaseLifecycleTests.test_first_release_review_accepts_initial_template_progress_and_is_idempotent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_phases.py", line 72, in test_first_release_review_accepts_initial_template_progress_and_is_idempotent
+    result = self.release_review()
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_phases.py", line 54, in release_review
+    return self.engine.dispatch("release-review", {"run_id": self.run_id, "owner": "sol-session-1",
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                                   "impact_status": "pending", "impact_evidence": []})
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/engine.py", line 108, in dispatch
+    return methods[operation](payload)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/engine.py", line 244, in _release_review
+    return self._phase_controller().release_review(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/phases.py", line 623, in release_review
+    self._validate_release_review_inputs(state, record, reference, spec_path, roadmap_path,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                         review_recorded=bool(existing))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/phases.py", line 546, in _validate_release_review_inputs
+    current_record = self._generated_record(path.read_text(encoding="utf-8"), path)
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/phases.py", line 575, in _generated_record
+    raise EngineError("release_review_record_stale", "derived release record is missing or malformed: {}".format(path))
+harness.runtime.engine.EngineError: derived release record is missing or malformed: /private/var/folders/wx/_lbs89q94c7f1kd0xh__8jr40000gn/T/tmpw7jf14cc/.specs/release-v1.2.3/spec.md
+
+======================================================================
+ERROR: test_release_review_recovers_exact_partial_derived_write (test_phases.PhaseLifecycleTests.test_release_review_recovers_exact_partial_derived_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_phases.py", line 278, in test_release_review_recovers_exact_partial_derived_write
+    result = self.release_review()
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_phases.py", line 54, in release_review
+    return self.engine.dispatch("release-review", {"run_id": self.run_id, "owner": "sol-session-1",
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                                   "impact_status": "pending", "impact_evidence": []})
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/engine.py", line 108, in dispatch
+    return methods[operation](payload)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/engine.py", line 244, in _release_review
+    return self._phase_controller().release_review(payload)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/phases.py", line 623, in release_review
+    self._validate_release_review_inputs(state, record, reference, spec_path, roadmap_path,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                         review_recorded=bool(existing))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/phases.py", line 546, in _validate_release_review_inputs
+    current_record = self._generated_record(path.read_text(encoding="utf-8"), path)
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/phases.py", line 575, in _generated_record
+    raise EngineError("release_review_record_stale", "derived release record is missing or malformed: {}".format(path))
+harness.runtime.engine.EngineError: derived release record is missing or malformed: /private/var/folders/wx/_lbs89q94c7f1kd0xh__8jr40000gn/T/tmpeye3q7us/.specs/release-v1.2.3/spec.md
+
+======================================================================
+FAIL: test_closure_reader_rejects_malformed_generated_tails (test_phases.PhaseLifecycleTests.test_closure_reader_rejects_malformed_generated_tails) (tail='<!-- spec-flow:generated:end -->\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_phases.py", line 116, in test_closure_reader_rejects_malformed_generated_tails
+    with self.assertRaises(EngineError) as ctx:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: EngineError not raised
+
+======================================================================
+FAIL: test_release_review_recovers_event_before_audit_commit (test_phases.PhaseLifecycleTests.test_release_review_recovers_event_before_audit_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_phases.py", line 297, in test_release_review_recovers_event_before_audit_commit
+    self.assertIsNotNone(self.engine.dispatch("status", {"run_id": self.run_id}).get("release_review"))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.328s
+
+FAILED (failures=2, errors=2)

@@ -54,6 +54,69 @@ class PhaseLifecycleTests(unittest.TestCase):
         return self.engine.dispatch("release-review", {"run_id": self.run_id, "owner": "sol-session-1",
                                                        "impact_status": "pending", "impact_evidence": []})
 
+    def add_template_progress(self):
+        for kind, relative in (("spec", "specify/assets/spec-template.md"),
+                               ("roadmap", "roadmap/assets/roadmap-template.md")):
+            template = (Path(__file__).resolve().parents[1] / "skills" / relative).read_text(encoding="utf-8")
+            tail = template[template.index("<!-- spec-flow:generated:start -->"):]
+            path = self.docs[kind]
+            base = path.read_text(encoding="utf-8").split("<!-- spec-flow:generated:start -->")[0].rstrip()
+            path.write_text(base + "\n\n" + tail, encoding="utf-8")
+
+    def test_first_release_review_accepts_initial_template_progress_and_is_idempotent(self):
+        # Catches F-01: valid initial spec/roadmap progress must not masquerade
+        # as a malformed derived closure record or block the first audit.
+        self.add_template_progress()
+        self.close_task()
+        _, phase = self.ready_review_commit()
+        result = self.release_review()
+        self.assertEqual(git(self.root, "rev-parse", "HEAD^"), phase["commit_sha"])
+        self.assertEqual(git(self.root, "status", "--porcelain"), "")
+        completion = self.engine.dispatch("complete", {"release": "1.2.3"})
+        self.assertTrue(completion["technical_complete"], completion)
+        self.assertFalse(completion["release_review_pending"], completion)
+        self.assertFalse(completion["audit_pending"], completion)
+        self.assertEqual(result["release_review"]["impact_status"], "pending")
+        self.assertFalse(result["release_review"]["publication"])
+        self.assertTrue(self.engine.dispatch("validate", {"release": "1.2.3"})["valid"])
+        repeated = self.release_review()
+        self.assertEqual(repeated["audit_commit_sha"], result["audit_commit_sha"])
+
+    def test_recorded_release_review_rejects_replacement_with_initial_progress(self):
+        self.close_task()
+        self.ready_review_commit()
+        self.release_review()
+        self.add_template_progress()
+        head = git(self.root, "rev-parse", "HEAD")
+        events = (self.engine.store.run_dir(self.run_id) / "events.jsonl").read_bytes()
+        before = {kind: self.docs[kind].read_bytes() for kind in ("spec", "roadmap")}
+        with self.assertRaises(EngineError):
+            self.release_review()
+        self.assertEqual(git(self.root, "rev-parse", "HEAD"), head)
+        self.assertEqual((self.engine.store.run_dir(self.run_id) / "events.jsonl").read_bytes(), events)
+        self.assertEqual({kind: self.docs[kind].read_bytes() for kind in before}, before)
+        self.assertTrue(self.engine.dispatch("complete", {"release": "1.2.3"})["audit_pending"])
+
+    def test_closure_reader_rejects_malformed_generated_tails(self):
+        from harness.runtime.phases import PhaseController
+        prefix = "# A decision\n\n"
+        start = "<!-- spec-flow:generated:start -->\n"
+        end = "<!-- spec-flow:generated:end -->\n"
+        progress = "Progress is maintained by the Spec-Flow harness.\n"
+        malformed = (
+            start + "arbitrary decision prose\n" + end,
+            start + progress,
+            start + progress + end + start + progress + end,
+            start + progress + end + "trailing decision prose\n",
+            end,
+            start + "Spec-Flow derived record:\n{bad json}\n" + end,
+        )
+        for tail in malformed:
+            with self.subTest(tail=tail):
+                with self.assertRaises(EngineError) as ctx:
+                    PhaseController._generated_record(prefix + tail, self.docs["spec"])
+                self.assertEqual(ctx.exception.code, "release_review_record_stale")
+
     def test_restore_packet_recovers_missing_phase_review_cache_with_same_pin(self):
         adapter = FixtureProductionAdapter()
         engine = Engine(self.root, adapter=adapter)
@@ -194,6 +257,7 @@ class PhaseLifecycleTests(unittest.TestCase):
         self.assertIn("audit_commit_sha", result)
 
     def test_release_review_recovers_exact_partial_derived_write(self):
+        self.add_template_progress()
         self.close_task()
         self.ready_review_commit()
         controller = self.engine._phase_controller()
@@ -216,6 +280,7 @@ class PhaseLifecycleTests(unittest.TestCase):
         self.assertTrue(self.engine.dispatch("complete", {"release": "1.2.3"})["complete"])
 
     def test_release_review_recovers_event_before_audit_commit(self):
+        self.add_template_progress()
         self.close_task()
         self.ready_review_commit()
         controller = self.engine._phase_controller()

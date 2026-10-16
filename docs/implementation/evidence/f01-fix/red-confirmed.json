@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-16T14:22:20.745044+00:00",
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_phases.PhaseLifecycleTests.test_first_release_review_accepts_initial_template_progress_and_is_idempotent",
+    "test_phases.PhaseLifecycleTests.test_closure_reader_rejects_malformed_generated_tails",
+    "test_phases.PhaseLifecycleTests.test_release_review_recovers_exact_partial_derived_write",
+    "test_phases.PhaseLifecycleTests.test_release_review_recovers_event_before_audit_commit"
+  ],
+  "cwd": "plugins/spec-flow/tests",
+  "PYTHONPATH": "..",
+  "exit_code": 1,
+  "scope": "pre-fix regression reproduction after correcting test assertion context; deterministic, not native E7"
+}

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Allow the first release review from valid initial spec/roadmap progress blocks using the shared strict generated-block validator. Preserve derived-record correspondence, approval/evidence/HEAD checks and audit recovery; add template-based closure and recovery regressions.
+
 ### Changed
 
 - Consolidated common controller invocation, strict consultation, adoption, validation, approval/revision, and completion-check mechanics in a shared operations reference linked by all 14 skills. Distinguished initialization from legacy migration in specify's gate, made design consultation use cache-free/file-free inputs, qualified completion's Git metadata and wrapper side effects consistently, and documented existing canonical roadmap releases and plan phases. Aligned review-release's gate name with its existing selector, README, guidance, and the convergence report without changing template shapes, runtime/schema/profile controls, gate conditions, or version 2.0.0.

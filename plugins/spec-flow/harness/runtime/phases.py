@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Set
 
-from .contracts import ContractError, read_document
+from .contracts import ContractError, _strip_generated_tail, read_document
 from .engine import EngineError
 from .store import Store
 
@@ -571,8 +571,13 @@ class PhaseController:
     def _generated_record(text: str, path: Path) -> Optional[Dict[str, Any]]:
         match = re.search(r"\n<!-- spec-flow:generated:start -->\nSpec-Flow derived record:\n(\{.*\})\n<!-- spec-flow:generated:end -->\n*\Z", text, re.DOTALL)
         if not match:
-            if "<!-- spec-flow:generated:start -->" in text:
-                raise EngineError("release_review_record_stale", "derived release record is missing or malformed: {}".format(path))
+            # Initial template/task progress is valid but carries no closure
+            # authority. Reuse its strict parser instead of treating every
+            # generated marker as a derived release record.
+            try:
+                _strip_generated_tail(text)
+            except ContractError as exc:
+                raise EngineError("release_review_record_stale", "generated release baseline is malformed: {}".format(path)) from exc
             return None
         try:
             current = json.loads(match.group(1))
