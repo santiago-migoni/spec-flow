@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_codex_adapter.CodexAdapterTests.test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child",
+    "test_codex_adapter.CodexAdapterTests.test_non_thread_metadata_cannot_attest_required_child_lineage",
+    "test_codex_adapter.CodexAdapterTests.test_foreign_non_thread_metadata_does_not_hide_own_children"
+  ],
+  "cwd": "plugins/spec-flow/tests",
+  "PYTHONPATH": "..",
+  "exit_code": 1,
+  "at": "2026-10-16T14:44:29.754619+00:00",
+  "category": "pre-fix deterministic regression, not native E7"
+}

@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- Type-check native subagent metadata before reading thread lineage, so unrelated service/compaction records cannot crash no-spawn recovery. Preserve parent/path, inventory, packet, lifecycle and ownership checks; add mixed-metadata recovery regressions.
 - Allow the first release review from valid initial spec/roadmap progress blocks using the shared strict generated-block validator. Preserve derived-record correspondence, approval/evidence/HEAD checks and audit recovery; add template-based closure and recovery regressions.
 
 ### Changed

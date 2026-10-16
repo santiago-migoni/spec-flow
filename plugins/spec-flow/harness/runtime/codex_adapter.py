@@ -74,7 +74,8 @@ class NativeCodexAdapter:
         if not isinstance(meta, dict) or meta.get("id") != session_id:
             raise AdapterError("host_attestation_mismatch", "session_meta id does not match the requested session")
         source = meta.get("source")
-        lineage = source.get("subagent", {}).get("thread_spawn", {}) if isinstance(source, dict) else {}
+        subagent = source.get("subagent") if isinstance(source, dict) else None
+        lineage = subagent.get("thread_spawn", {}) if isinstance(subagent, dict) else {}
         if parent_session is not None and (not isinstance(lineage, dict) or lineage.get("parent_thread_id") != parent_session):
             raise AdapterError("host_parent_mismatch", "native child session is not linked to the run owner")
         if agent_path is not None and (not isinstance(lineage, dict) or lineage.get("agent_path") != agent_path):
@@ -246,7 +247,8 @@ class NativeCodexAdapter:
                 continue
             meta = first.get("payload")
             source = meta.get("source") if isinstance(meta, dict) else None
-            lineage = source.get("subagent", {}).get("thread_spawn", {}) if isinstance(source, dict) else {}
+            subagent = source.get("subagent") if isinstance(source, dict) else None
+            lineage = subagent.get("thread_spawn", {}) if isinstance(subagent, dict) else {}
             if not isinstance(meta, dict) or not isinstance(lineage, dict) or lineage.get("parent_thread_id") != owner_session:
                 continue
             records = self._read_records(path)

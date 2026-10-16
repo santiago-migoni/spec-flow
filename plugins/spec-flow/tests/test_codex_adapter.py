@@ -25,10 +25,12 @@ class CodexAdapterTests(unittest.TestCase):
         self.temp.cleanup()
 
     def write_session(self, ident, *, model="gpt-6-sol", effort="high", parent=None, agent_path=None,
-                      events=("task_started", "task_complete"), marker=None, malformed=None):
+                      events=("task_started", "task_complete"), marker=None, malformed=None, metadata_source=None):
         source = {}
         if parent is not None:
             source = {"subagent": {"thread_spawn": {"parent_thread_id": parent, "agent_path": agent_path}}}
+        if metadata_source is not None:
+            source = metadata_source
         rows = [
             {"type": "session_meta", "payload": {"id": ident, "source": source}},
             {"type": "turn_context", "timestamp": "2026-10-14T12:00:00Z", "payload": {"model": model, "collaboration_mode": {"settings": {"reasoning_effort": effort}}}},
@@ -193,6 +195,47 @@ class CodexAdapterTests(unittest.TestCase):
                 self.adapter.attest_no_spawn(self.owner, task_state, {**inventory, "agents": [{"agent_path": "/root/T-001", "status": "active"}]})
         self.assertEqual(ctx.exception.code, "native_agent_still_active")
 
+    def test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child(self):
+        # F-02: an unrelated compact/service session is not a thread child and
+        # must not crash the global scan or confer any delegation authority.
+        self.write_session(self.owner)
+        task_state = {"packet_sha256": "abc123", "prepared_at": "2026-10-14T11:59:00Z", "attempt_baseline": {}}
+        inventory = {"owner_session": self.owner, "inventory_reference": "actual empty fixture inventory",
+                     "checked_at": "2026-10-14T12:01:00Z", "agents": []}
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.base / "codex")}):
+            for subagent in ("compact", None, [], 7):
+                with self.subTest(subagent=subagent):
+                    self.write_session("foreign-service", metadata_source={"subagent": subagent})
+                    result = self.adapter.attest_no_spawn(self.owner, task_state, inventory)
+                    self.assertEqual(result["child_record_hashes"], [])
+                    self.assertEqual(result["packet_marker"], "SPEC_FLOW_PACKET_SHA256=abc123")
+
+    def test_non_thread_metadata_cannot_attest_required_child_lineage(self):
+        self.write_session(self.child, model="gpt-6-luna", metadata_source={"subagent": "compact"})
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.base / "codex")}):
+            with self.assertRaises(AdapterError) as ctx:
+                self.adapter.attest_session(self.child, "implementer", parent_session=self.owner,
+                                            agent_path="/root/T-001")
+        self.assertEqual(ctx.exception.code, "host_parent_mismatch")
+
+    def test_foreign_non_thread_metadata_does_not_hide_own_children(self):
+        self.write_session("foreign-service", metadata_source={"subagent": "compact"})
+        self.write_session(self.owner)
+        marker = "SPEC_FLOW_PACKET_SHA256=abc123"
+        self.write_session(self.child, model="gpt-6-luna", parent=self.owner, agent_path="/root/T-001", marker=marker)
+        task_state = {"packet_sha256": "abc123", "prepared_at": "2026-10-14T11:59:00Z", "attempt_baseline": {}}
+        base = {"owner_session": self.owner, "inventory_reference": "current fixture inventory",
+                "checked_at": "2026-10-14T12:01:00Z"}
+        cases = (([], "native_inventory_incomplete"),
+                 ([{"agent_path": "/root/T-001", "status": "active"}], "native_agent_still_active"),
+                 ([{"agent_path": "/root/T-001", "status": "completed"}], "task_agent_found_bind_before_reconcile"))
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.base / "codex")}):
+            for agents, expected in cases:
+                with self.subTest(agents=agents):
+                    with self.assertRaises(AdapterError) as ctx:
+                        self.adapter.attest_no_spawn(self.owner, task_state, {**base, "agents": agents})
+                    self.assertEqual(ctx.exception.code, expected)
+
     def test_packet_child_found_during_no_spawn_inspection_requires_late_binding(self):
         self.write_session(self.owner)
         marker = "SPEC_FLOW_PACKET_SHA256=abc123"
@@ -206,6 +249,7 @@ class CodexAdapterTests(unittest.TestCase):
         self.assertEqual(ctx.exception.code, "task_agent_found_bind_before_reconcile")
 
     def test_no_spawn_reconciliation_rejects_unattributed_new_child(self):
+        self.write_session("foreign-service", metadata_source={"subagent": "compact"})
         self.write_session(self.owner)
         self.write_session(self.child, model="gpt-6-luna", parent=self.owner, agent_path="/root/unrelated", marker=None)
         task_state = {"packet_sha256": "abc123", "prepared_at": "2026-10-14T11:59:00Z", "attempt_baseline": {}}

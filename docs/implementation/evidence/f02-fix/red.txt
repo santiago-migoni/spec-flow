@@ -1,0 +1,96 @@
+test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child (test_codex_adapter.CodexAdapterTests.test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child) ... 
+  test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child (test_codex_adapter.CodexAdapterTests.test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child) (subagent='compact') ... ERROR
+  test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child (test_codex_adapter.CodexAdapterTests.test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child) (subagent=None) ... ERROR
+  test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child (test_codex_adapter.CodexAdapterTests.test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child) (subagent=[]) ... ERROR
+  test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child (test_codex_adapter.CodexAdapterTests.test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child) (subagent=7) ... ERROR
+test_non_thread_metadata_cannot_attest_required_child_lineage (test_codex_adapter.CodexAdapterTests.test_non_thread_metadata_cannot_attest_required_child_lineage) ... ERROR
+test_foreign_non_thread_metadata_does_not_hide_own_children (test_codex_adapter.CodexAdapterTests.test_foreign_non_thread_metadata_does_not_hide_own_children) ... 
+  test_foreign_non_thread_metadata_does_not_hide_own_children (test_codex_adapter.CodexAdapterTests.test_foreign_non_thread_metadata_does_not_hide_own_children) (agents=[]) ... ERROR
+  test_foreign_non_thread_metadata_does_not_hide_own_children (test_codex_adapter.CodexAdapterTests.test_foreign_non_thread_metadata_does_not_hide_own_children) (agents=[{'agent_path': '/root/T-001', 'status': 'completed'}]) ... ERROR
+
+======================================================================
+ERROR: test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child (test_codex_adapter.CodexAdapterTests.test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child) (subagent='compact')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_codex_adapter.py", line 209, in test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child
+    result = self.adapter.attest_no_spawn(self.owner, task_state, inventory)
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/codex_adapter.py", line 249, in attest_no_spawn
+    lineage = source.get("subagent", {}).get("thread_spawn", {}) if isinstance(source, dict) else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+
+======================================================================
+ERROR: test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child (test_codex_adapter.CodexAdapterTests.test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child) (subagent=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_codex_adapter.py", line 209, in test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child
+    result = self.adapter.attest_no_spawn(self.owner, task_state, inventory)
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/codex_adapter.py", line 249, in attest_no_spawn
+    lineage = source.get("subagent", {}).get("thread_spawn", {}) if isinstance(source, dict) else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+ERROR: test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child (test_codex_adapter.CodexAdapterTests.test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child) (subagent=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_codex_adapter.py", line 209, in test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child
+    result = self.adapter.attest_no_spawn(self.owner, task_state, inventory)
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/codex_adapter.py", line 249, in attest_no_spawn
+    lineage = source.get("subagent", {}).get("thread_spawn", {}) if isinstance(source, dict) else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+
+======================================================================
+ERROR: test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child (test_codex_adapter.CodexAdapterTests.test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child) (subagent=7)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_codex_adapter.py", line 209, in test_no_spawn_accepts_foreign_non_thread_metadata_without_claiming_a_child
+    result = self.adapter.attest_no_spawn(self.owner, task_state, inventory)
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/codex_adapter.py", line 249, in attest_no_spawn
+    lineage = source.get("subagent", {}).get("thread_spawn", {}) if isinstance(source, dict) else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'int' object has no attribute 'get'
+
+======================================================================
+ERROR: test_non_thread_metadata_cannot_attest_required_child_lineage (test_codex_adapter.CodexAdapterTests.test_non_thread_metadata_cannot_attest_required_child_lineage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_codex_adapter.py", line 217, in test_non_thread_metadata_cannot_attest_required_child_lineage
+    self.adapter.attest_session(self.child, "implementer", parent_session=self.owner,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                agent_path="/root/T-001")
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/codex_adapter.py", line 77, in attest_session
+    lineage = source.get("subagent", {}).get("thread_spawn", {}) if isinstance(source, dict) else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+
+======================================================================
+ERROR: test_foreign_non_thread_metadata_does_not_hide_own_children (test_codex_adapter.CodexAdapterTests.test_foreign_non_thread_metadata_does_not_hide_own_children) (agents=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_codex_adapter.py", line 236, in test_foreign_non_thread_metadata_does_not_hide_own_children
+    self.adapter.attest_no_spawn(self.owner, task_state, {**base, "agents": agents})
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/codex_adapter.py", line 249, in attest_no_spawn
+    lineage = source.get("subagent", {}).get("thread_spawn", {}) if isinstance(source, dict) else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+
+======================================================================
+ERROR: test_foreign_non_thread_metadata_does_not_hide_own_children (test_codex_adapter.CodexAdapterTests.test_foreign_non_thread_metadata_does_not_hide_own_children) (agents=[{'agent_path': '/root/T-001', 'status': 'completed'}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/tests/test_codex_adapter.py", line 236, in test_foreign_non_thread_metadata_does_not_hide_own_children
+    self.adapter.attest_no_spawn(self.owner, task_state, {**base, "agents": agents})
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/santiago_migoni/Documents/Projects/spec-flow/plugins/spec-flow/harness/runtime/codex_adapter.py", line 249, in attest_no_spawn
+    lineage = source.get("subagent", {}).get("thread_spawn", {}) if isinstance(source, dict) else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.008s
+
+FAILED (errors=7)
