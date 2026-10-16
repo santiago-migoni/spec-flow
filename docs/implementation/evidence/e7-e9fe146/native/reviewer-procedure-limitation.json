@@ -1,0 +1,8 @@
+{
+  "command": "git write-tree",
+  "reported_output": "eaf50abe153bddc1100939df91f4efe609152ede",
+  "matches_pinned_tree": true,
+  "source": "Independent reviewer final disclosure, corroborated controller review-phase and commit-phase tree validation",
+  "effects": "No source,index,controller record or commit mutation reported; command may write Git object, so not strict no-write procedure.",
+  "classification": "evaluator procedure limitation"
+}

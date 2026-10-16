@@ -1,0 +1,2 @@
+WARNING: proceeding, even though we could not update PATH: Operation not permitted (os error 1)
+Error: failed to initialize sqlite state runtime under /Users/santiago_migoni/.codex: failed to initialize state runtime at /Users/santiago_migoni/.codex: error returned from database: (code: 8) attempt to write a readonly database

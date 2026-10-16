@@ -1,0 +1,20 @@
+{
+  "discovered_skill": "spec-flow-e8-e9fe146:using-spec-flow",
+  "skill_path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-e9fe146-01a13f8c/spec-flow-e8-e9fe146/3.0.1/skills/using-spec-flow/SKILL.md",
+  "skill_sha256": "9178fb906dc191fb4baf3a90654e16a17378b1adeb3daf18463760fd8a23b2ce",
+  "installed_root": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-e9fe146-01a13f8c/spec-flow-e8-e9fe146/3.0.1",
+  "scratch": "/private/tmp/spec-flow-e8-e9fe146-_0h_4fav/bootstrap-smoke-project",
+  "initial_only_git": true,
+  "initialize_idempotent": true,
+  "constitution_gate_ready": true,
+  "unsupported_gate_kinds_rejected": [
+    "using-spec-flow",
+    "design",
+    "backlog"
+  ],
+  "no_decisions_approvals_or_runs_created": true,
+  "profiles_and_retry_limit_preserved": true,
+  "classification": "Explicit E8 scratch initialization, not strict consultation or production execution",
+  "next_decision": "Project constitution needs human purpose/outcomes and subsequent approval; no product decisions invented.",
+  "result": "PASS"
+}

@@ -1,0 +1,6 @@
+{
+  "changed_config_reviewer_effort": "low",
+  "existing_run_reviewer_effort": "medium",
+  "original_config_restored": true,
+  "evidence": "native/negative/operations.jsonl configure-profiles\u2192capabilities(run_id)\u2192configure-profiles"
+}

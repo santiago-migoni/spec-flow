@@ -1,0 +1,7 @@
+{
+  "old": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/legacy-linked",
+  "new": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/legacy-final-linked",
+  "initial_run": "0120653b-a9de-4be8-b45d-bb933fca0c6e",
+  "reason": "Evaluator omitted migration Git checkpoint before implementation; preserve history then repeat fixture correctly.",
+  "candidate_changed": false
+}

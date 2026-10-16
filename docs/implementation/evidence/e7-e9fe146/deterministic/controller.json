@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/source/plugins/spec-flow/tests",
+    "-p",
+    "test_*.py"
+  ],
+  "PYTHONPATH": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/source/plugins/spec-flow",
+  "exit_code": 0,
+  "duration_seconds": 28.531990916002542
+}

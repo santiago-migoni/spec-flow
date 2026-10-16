@@ -1,0 +1,39 @@
+{
+  "evaluated_commit": "e9fe1461727e7b508143646132e2b9bc9ba5c16c",
+  "result": "PASS within documented E7 scope",
+  "candidate_blocking_findings": [],
+  "evaluator_observations": [
+    {
+      "id": "OBS-01",
+      "classification": "procedimiento del evaluador",
+      "description": "Texto histórico F03 copiado en los primeros payloads de autorización. La autorización humana actual cubre esos proyectos y PH-01; se conservan recibos y eventos originales, sin reescritura.",
+      "evidence": "native/authorization-provenance-discrepancy.json"
+    },
+    {
+      "id": "OBS-02",
+      "classification": "preparación del fixture",
+      "description": "Faltó el checkpoint Git de la primera migración. phase-ready rechazó phase_scope_changed. Run abandonado por controlador, preservado, repetido en otro fixture con checkpoint. No se modificó el candidato.",
+      "evidence": "native/fixture-recovery.json"
+    },
+    {
+      "id": "OBS-03",
+      "classification": "procedimiento del revisor",
+      "description": "El revisor ejecutó git write-tree y obtuvo el árbol ya fijado. Se verifican árbol y padre exactos; no cambió índice, código ni commits.",
+      "evidence": "native/reviewer-procedure-limitation.json"
+    },
+    {
+      "id": "OBS-04",
+      "classification": "invocación del evaluador",
+      "description": "Primer bind-agent omitió dos campos; invalid_input rechazó la solicitud. Se corrigió usando la identidad nativa real, sin editar registro.",
+      "evidence": "native/fresh/operations.jsonl"
+    },
+    {
+      "id": "OBS-05",
+      "classification": "límite de medición",
+      "description": "Las baselines de fallo se reprodujeron después desde el árbol Git inicial inmutable. No se atribuyen a una ejecución previa a la implementación.",
+      "evidence": "native/native-summary.json"
+    }
+  ],
+  "no_candidate_fix_applied": true,
+  "E8_pending_for_this_candidate": true
+}

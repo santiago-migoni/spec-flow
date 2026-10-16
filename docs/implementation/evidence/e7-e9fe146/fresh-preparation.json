@@ -1,0 +1,14 @@
+{
+  "root": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/fresh-main",
+  "head": "479982e99efb7af9754eeac0adcda90820da7d53",
+  "docs": [
+    ".specs/constitution.md",
+    ".specs/architecture.md",
+    ".specs/structure.md",
+    ".specs/roadmap.md",
+    ".specs/release-v1.2.3/spec.md",
+    ".specs/release-v1.2.3/plan.md",
+    ".specs/release-v1.2.3/tasks.md"
+  ],
+  "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+}

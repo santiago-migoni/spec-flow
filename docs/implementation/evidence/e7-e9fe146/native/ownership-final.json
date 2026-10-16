@@ -1,0 +1,22 @@
+{
+  "fresh-linked": {
+    "git_common_dir": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/fresh-main/.git",
+    "ownership_records": {},
+    "registry_exists": false
+  },
+  "legacy-linked": {
+    "git_common_dir": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/legacy-main/.git",
+    "ownership_records": {},
+    "registry_exists": false
+  },
+  "legacy-final-linked": {
+    "git_common_dir": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/legacy-main/.git",
+    "ownership_records": {},
+    "registry_exists": false
+  },
+  "negative-linked": {
+    "git_common_dir": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-main/.git",
+    "ownership_records": {},
+    "registry_exists": false
+  }
+}

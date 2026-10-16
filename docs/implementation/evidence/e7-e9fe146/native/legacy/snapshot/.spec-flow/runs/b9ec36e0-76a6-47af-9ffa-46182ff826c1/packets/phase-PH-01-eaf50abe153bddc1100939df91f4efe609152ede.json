@@ -1,0 +1,46 @@
+{
+  "created_at": "2026-10-16T18:42:25Z",
+  "diff_sha256": "8dabf18498b64b94298637e42a73afd0cff44838cdbae216999f660f88f5c99c",
+  "marker": "SPEC_FLOW_PHASE_REVIEW=b9ec36e0-76a6-47af-9ffa-46182ff826c1/PH-01/eaf50abe153bddc1100939df91f4efe609152ede",
+  "packet_sha256": "378ab552a7f4f36ae27bd61f34aac0484e7007ac4b825b11337dcdf8891148c8",
+  "parent": "4c41a1bb0f695b2feb4fc1174be9427d1ecfa833",
+  "phase_id": "PH-01",
+  "profiles": {
+    "implementer": {
+      "effort": "high",
+      "id": "gpt-6-luna"
+    },
+    "orchestrator": {
+      "effort": "low",
+      "id": "gpt-6.1-sol"
+    },
+    "reviewer": {
+      "effort": "medium",
+      "id": "gpt-6.1-sol"
+    }
+  },
+  "release": "v1.2.3",
+  "run_id": "b9ec36e0-76a6-47af-9ffa-46182ff826c1",
+  "schema": "spec-flow-phase-review.v1",
+  "source_digests": {
+    ".specs/architecture.md": "3dae17819e575ba2352433fbd8f70b2b558e39f4879dcb4f7aae2014256a54b0",
+    ".specs/constitution.md": "c8361c19642a1a5426539affda7f39d63df724dfcc0b292635dfee4880adcd64",
+    ".specs/release-v1.2.3/plan.md": "6ff2f31c6808ef32cfdecf0cf7aa3cdb54956b60a31daa68b6cd138b07db310e",
+    ".specs/release-v1.2.3/spec.md": "0b64fcf0a5e44007abe2f1d8bf98eb2125992a56ba2d0c732b09fdd6a846cc87",
+    ".specs/release-v1.2.3/tasks.md": "42be1b9607a98fcbe667ca9890dcfa6b9aef83fba7b66abf0d09da2bbf881aa9",
+    ".specs/roadmap.md": "601541b58f4aa4649f9e39a34d9f35dfd475d2b63b7d9cc796e5901e4dd566f4",
+    ".specs/structure.md": "b83a0033f71b5b9e32cd0211ae69e7aa3bc1a25959612514ccefc9fe6a2eeb05"
+  },
+  "staged_paths": [
+    ".spec-flow/.gitignore",
+    ".spec-flow/approvals.jsonl",
+    ".spec-flow/runs/b9ec36e0-76a6-47af-9ffa-46182ff826c1/events.jsonl",
+    ".spec-flow/runs/b9ec36e0-76a6-47af-9ffa-46182ff826c1/evidence/T-001-1-verify.json",
+    ".specs/release-v1.2.3/tasks.md",
+    "release.py"
+  ],
+  "task_ids": [
+    "T-001"
+  ],
+  "tree": "eaf50abe153bddc1100939df91f4efe609152ede"
+}

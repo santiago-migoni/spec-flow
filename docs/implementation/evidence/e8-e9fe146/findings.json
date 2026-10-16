@@ -1,0 +1,12 @@
+{
+  "candidate": "e9fe1461727e7b508143646132e2b9bc9ba5c16c",
+  "candidate_blocking_findings": [],
+  "evaluator_observations": [
+    {
+      "id": "OBS-E8-01",
+      "description": "Primer arranque de app-server desde sandbox rechazó escritura de SQLite de estado del host. Se preserva stderr y se repite con ejecución autorizada fuera del sandbox; descubrimiento fresco correcto. No se modificó el candidato ni se cambió la instalación estable.",
+      "evidence": "discovery-server-sandbox-attempt.stderr"
+    }
+  ],
+  "result": "PASS within isolated installation, discovery and installed bootstrap scope"
+}

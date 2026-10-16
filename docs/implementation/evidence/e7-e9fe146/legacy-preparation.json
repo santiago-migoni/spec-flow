@@ -1,0 +1,10 @@
+{
+  "root": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/legacy-main",
+  "candidate_dir": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/legacy-candidates",
+  "head": "1076d0ff942356abaf04d6e8bc110c45ace74e33",
+  "source_hashes": {
+    "tasks.md": "a225bbeca05842786cd2769ff4c13d0b724cc8b480cbbaa017d198ee9825818b",
+    "plan.md": "7ba0ced9eaef89e1ce8f3f659c2416d636721228cc57c2d2050bc608952de569",
+    "spec.md": "6dc2ae30d026f213a7fe01880852b6cfc2f18b34257bc300aa79aa16bcb237d2"
+  }
+}

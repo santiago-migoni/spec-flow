@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-16T18:40:00.780560+00:00",
+  "category": "Production read-only adapter probes; deliberately malformed inventories; no mutations or task credit",
+  "probes": [
+    {
+      "probe": "owner cannot act as implementer",
+      "expected": "host_profile_mismatch",
+      "observed": "host_profile_mismatch",
+      "message": "one or more session turns do not match the required role profile"
+    },
+    {
+      "probe": "missing interrupt capability",
+      "expected": "native_capability_unavailable",
+      "observed": "native_capability_unavailable",
+      "message": "native Codex capabilities are missing or unprobed"
+    },
+    {
+      "probe": "missing catalog reference",
+      "expected": "model_catalog_required",
+      "observed": "model_catalog_required",
+      "message": "supply the current host model/effort inventory and its evidence reference"
+    },
+    {
+      "probe": "configured implementer effort unavailable",
+      "expected": "model_unavailable",
+      "observed": "model_unavailable",
+      "message": "configured model/effort is unavailable on this host"
+    }
+  ],
+  "result": "PASS"
+}

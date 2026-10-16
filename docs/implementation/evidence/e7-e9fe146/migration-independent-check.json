@@ -1,0 +1,11 @@
+{
+  "migration_id": "6e6dc8b1d62a520081de10f1f17f56a3",
+  "preview_digest": "e2ac72719c43193955773db78a6e8e4bea35aede063bdc8baa8a8ac0f4e18986",
+  "source_git_head": "1076d0ff942356abaf04d6e8bc110c45ace74e33",
+  "source_files_preserved_and_equal_git": 3,
+  "approval_imports": 0,
+  "evidence_imports": 0,
+  "new_approval_receipts": 7,
+  "all_decision_digests_equal_candidates": true,
+  "result": "PASS"
+}

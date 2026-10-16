@@ -1,0 +1,86 @@
+{
+  "base": "3cb96fe43a5615b716ebf98ce63208e90ce2f953",
+  "candidate": "e9fe1461727e7b508143646132e2b9bc9ba5c16c",
+  "hard_gates": [
+    {
+      "path": "skills/analyze/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/backlog/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/clarify/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/constitution/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/converge/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/design/SKILL.md",
+      "gate_count": 4,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/finishing-branch/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/implement/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": false
+    },
+    {
+      "path": "skills/plan/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/review-release/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/roadmap/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/specify/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/tasks/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    },
+    {
+      "path": "skills/using-spec-flow/SKILL.md",
+      "gate_count": 1,
+      "exact_preserved": true
+    }
+  ],
+  "all_hard_gates_preserved": false,
+  "hook_handler_byte_preserved": true,
+  "meaning": "Structural guard preservation only; deterministic and native tests provide behavioral evidence.",
+  "authorized_gate_adaptation": {
+    "path": "skills/implement/SKILL.md",
+    "only_change": "fixed Sol high orchestration becomes orchestration attested against immutable configured run model/effort",
+    "matches_exact_expected_replacement": true,
+    "other_gate_requirements_unchanged": true
+  },
+  "result": "PASS: all other gate blocks byte-identical; implement gate contains only authorized profile adaptation; hook handler unchanged"
+}

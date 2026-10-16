@@ -1,0 +1,53 @@
+{
+  "candidate": "e9fe1461727e7b508143646132e2b9bc9ba5c16c",
+  "actual_profiles": {
+    "orchestrator": "gpt-6.1-sol/low",
+    "implementer": "gpt-6-luna/high",
+    "reviewer": "gpt-6.1-sol/medium"
+  },
+  "fresh": {
+    "run_id": "8a974b4c-ef05-4e2c-b323-6a8899b93552",
+    "status": "pass",
+    "interruption": "actual Luna file write then native interrupted/aborted; resume+accept_result no replay",
+    "packet_restore": "same attempt1 hash d74dbada6a235c869d6f70192cc3e42d93f8b75a3d18b483ce7ba62c6c5c0dd1",
+    "fixed_suite": 4,
+    "close_idempotence": true,
+    "phase_commit": "48a248943c3e0c12bccb9fa88cb303476e6c95d3",
+    "audit_commit": "17c8a288408ae36c455530f37b0030e4731fc416"
+  },
+  "legacy": {
+    "run_id": "b9ec36e0-76a6-47af-9ffa-46182ff826c1",
+    "status": "pass",
+    "migration_id": "6e6dc8b1d62a520081de10f1f17f56a3",
+    "checkpoint": "4c41a1bb0f695b2feb4fc1174be9427d1ecfa833",
+    "fresh_synthetic_approvals": 7,
+    "historical_imports": 0,
+    "phase_commit": "a6cb35569033157c74010640d1298f206cdddf08",
+    "audit_commit": "7c964e11626d6a2927285ae4b59bdcb98dfd1da9"
+  },
+  "negative": {
+    "run_id": "ef85c65c-d92d-4034-8f5b-ce35243519d6",
+    "status": "expected failures",
+    "actual_native_attempts": 3,
+    "fourth_prepare_rejected": "task_already_active",
+    "retry_rejected": "retry_limit",
+    "abandoned": true,
+    "technical_complete": false
+  },
+  "profile_snapshot": "config reviewer low, existing run reviewer medium, original config restored; profile-snapshot.json",
+  "EV11": "EV11-pressure-assessment.json instruction-only",
+  "evaluator_errors": [
+    "Historical start authorization wording in first fresh/legacy helpers retained and disclosed; actual current user E7 authority covers scopes; no events rewritten.",
+    "Initial legacy fixture omitted migration checkpoint; candidate correctly phase_scope_changed; initial run controller-abandoned and preserved legacy-initial; final separate fixture migration committed before execution.",
+    "Initial bind field typo rejected invalid_input, corrected with native real identity."
+  ],
+  "limitations": [
+    "Baselines reproduced after run from initial immutable Git tree; not claimed pre-run invocation.",
+    "Reviewers independent; final reviewer git write-tree invocation disclosed."
+  ],
+  "publication": false,
+  "installation_update": false,
+  "impact_status": "pending",
+  "delivery_status": "branch_retained",
+  "controller_evidence": "Each scenario operations.jsonl logs exact CLI input/output/exit; final state and parent preservation retain durable evidence."
+}

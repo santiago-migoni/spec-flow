@@ -1,0 +1,41 @@
+{
+  "source": "Current host collaboration.spawn_agent tool declaration exposed to this task; selected models and efforts explicitly present. This is host-provided availability evidence, not Python authentication or proof of implementation.",
+  "models": [
+    {
+      "id": "gpt-6.1-sol",
+      "reasoning_efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max",
+        "ultra"
+      ]
+    },
+    {
+      "id": "gpt-6-luna",
+      "reasoning_efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ]
+    }
+  ],
+  "selected_profiles": {
+    "orchestrator": {
+      "id": "gpt-6.1-sol",
+      "effort": "low"
+    },
+    "implementer": {
+      "id": "gpt-6-luna",
+      "effort": "high"
+    },
+    "reviewer": {
+      "id": "gpt-6.1-sol",
+      "effort": "medium"
+    }
+  },
+  "actual_session_attestation_required": true
+}

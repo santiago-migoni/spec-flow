@@ -1,0 +1,10 @@
+{
+  "classification": "evaluator provenance wording discrepancy, not candidate failure",
+  "affected": [
+    "fresh start",
+    "legacy start"
+  ],
+  "current_actual_authorization": "Perfecto. Ejecuta E7 sobre el commit e9fe146, usando proyectos desechables y los perfiles configurados, conservando los controles y registrando pruebas, resultados y evidencias. Sin publicar ni actualizar mi instalaci\u00f3n.",
+  "explanation": "Copied helper retained historical F03 sentence in controller authorization statement for first two starts. Current explicit user E7 authorization independently covers synthetic disposable projects and PH-01. No prior events rewritten. Subsequent helper corrected.",
+  "preserved": true
+}

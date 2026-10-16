@@ -1,0 +1,74 @@
+{
+  "authorization": {
+    "actor": "E7 Evaluator",
+    "source": "Current user E7 authorization; corrected fixture recovery",
+    "statement": "Reviewed exact synthetic migration mapping and candidates; preserve originals and import no historical approval/evidence."
+  },
+  "completed_at": "2026-10-16T18:41:45.122543+00:00",
+  "digest": "e2ac72719c43193955773db78a6e8e4bea35aede063bdc8baa8a8ac0f4e18986",
+  "manifest": {
+    "candidate_dir": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/legacy-candidates",
+    "candidates": [
+      {
+        "path": ".specs/architecture.md",
+        "sha256": "5d88231591ffeb2831b5ccfea982421cc4de170d29aa4893e134db2440c3054a"
+      },
+      {
+        "path": ".specs/constitution.md",
+        "sha256": "27d80d449dea0eac28cf607ffd1d9631b55213a340b728c3190bcf81b16bde91"
+      },
+      {
+        "path": ".specs/release-v1.2.3/plan.md",
+        "sha256": "18c27916a38f95985ca9f45e895389b341f545f7a33ec7100e73e04c7c527665"
+      },
+      {
+        "path": ".specs/release-v1.2.3/spec.md",
+        "sha256": "fedbd13f03ab7691f201c24ebed65f37de062f35cd987a98009494a4257a053d"
+      },
+      {
+        "path": ".specs/release-v1.2.3/tasks.md",
+        "sha256": "17aabc5e58c3b31e6935721e182385407f3008ebcd28a6a20113e366ce664a27"
+      },
+      {
+        "path": ".specs/roadmap.md",
+        "sha256": "4e2c1b6eff54bdc67a48e7fbbcc01bad064fc963a5ceaa65022fdb1f49650996"
+      },
+      {
+        "path": ".specs/structure.md",
+        "sha256": "ca4b8e3624473c5dab9345ed8ee26bca6402ada2b47cb121b5cb84de0421a699"
+      }
+    ],
+    "git_head": "1076d0ff942356abaf04d6e8bc110c45ace74e33",
+    "imports": {
+      "approvals": [],
+      "evidence": []
+    },
+    "mapping": [
+      {
+        "legacy": ".specs/001-normalize-release",
+        "release": "v1.2.3"
+      }
+    ],
+    "migration_id": "6e6dc8b1d62a520081de10f1f17f56a3",
+    "project_root": "/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/legacy-final-linked",
+    "replacements": [],
+    "schema_version": 1,
+    "sources": [
+      {
+        "path": ".specs/001-normalize-release/plan.md",
+        "sha256": "7ba0ced9eaef89e1ce8f3f659c2416d636721228cc57c2d2050bc608952de569"
+      },
+      {
+        "path": ".specs/001-normalize-release/spec.md",
+        "sha256": "6dc2ae30d026f213a7fe01880852b6cfc2f18b34257bc300aa79aa16bcb237d2"
+      },
+      {
+        "path": ".specs/001-normalize-release/tasks.md",
+        "sha256": "a225bbeca05842786cd2769ff4c13d0b724cc8b480cbbaa017d198ee9825818b"
+      }
+    ]
+  },
+  "migration_id": "6e6dc8b1d62a520081de10f1f17f56a3",
+  "schema_version": 1,
+  "status": "completed"
+}

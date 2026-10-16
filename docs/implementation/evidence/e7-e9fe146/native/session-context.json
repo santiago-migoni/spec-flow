@@ -1,0 +1,68 @@
+[
+  {
+    "session_id": "01a14605-ebdc-7602-b34a-194b21f7bde2",
+    "agent_path": "/root/e7_native_owner/review_14239d4923447035b65a848adb31e01ffeb46d3187f817c3a9e9fdc1748783a6",
+    "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-42-35-01a14605-ebdc-7602-b34a-194b21f7bde2.jsonl"
+  },
+  {
+    "session_id": "01a14605-443b-7ba1-b8e2-08636b44bf77",
+    "agent_path": "/root/e7_native_owner/luna_0cd003a916978170261fd33f8da6032a7f73711d61cd15428177d36220fa84ec",
+    "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-41-52-01a14605-443b-7ba1-b8e2-08636b44bf77.jsonl"
+  },
+  {
+    "session_id": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+    "agent_path": "/root/e7_native_owner",
+    "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-37-43-01a14601-755e-7623-8d98-bbdcf02b03e6.jsonl"
+  },
+  {
+    "session_id": "01a14604-de6f-74e0-b4c8-8dcc90f5ed64",
+    "agent_path": "/root/e7_native_owner/luna_0c18dc2347610e325ec584cd1dc57e90a1dde4934b4c7e63c56e30b2233b1e6b",
+    "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-41-26-01a14604-de6f-74e0-b4c8-8dcc90f5ed64.jsonl"
+  },
+  {
+    "session_id": "01a14604-2a3d-7822-9dc6-2dd3de84abfc",
+    "agent_path": "/root/e7_native_owner/luna_ce3cd4e2e037b0d1ca3009f000c02304ccb0406d844bc0c38b9940ab0bb4df8e",
+    "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-40-40-01a14604-2a3d-7822-9dc6-2dd3de84abfc.jsonl"
+  },
+  {
+    "session_id": "01a14602-adae-7b33-9947-99751c77c42b",
+    "agent_path": "/root/e7_native_owner/luna_209521e19823e2e09423d72fffbdaa2ed30ea5748517af55f1a0fed78ee615fd",
+    "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-39-03-01a14602-adae-7b33-9947-99751c77c42b.jsonl"
+  },
+  {
+    "session_id": "01a14601-c895-71e2-a0d9-9b762ddd20e4",
+    "agent_path": "/root/e7_native_owner/e7_capability_probe_e9",
+    "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-38-04-01a14601-c895-71e2-a0d9-9b762ddd20e4.jsonl"
+  },
+  {
+    "session_id": "01a14603-7c6f-70c2-a38d-ca45daf71265",
+    "agent_path": "/root/e7_native_owner/review_ee45f14bebce53ea15599f613e519d6dcb15d555577efd26ee5e882c7e3df23d",
+    "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-39-56-01a14603-7c6f-70c2-a38d-ca45daf71265.jsonl"
+  },
+  {
+    "session_id": "01a14605-6eb0-7ed0-961d-865343b68aa8",
+    "agent_path": "/root/e7_native_owner/luna_4e1ca8b710492d59aa8497f04543fe5c86fd4492834030e2cbd9947f4a0a8c50",
+    "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-42-03-01a14605-6eb0-7ed0-961d-865343b68aa8.jsonl"
+  },
+  {
+    "session_id": "01a14601-d713-7342-b078-053ceb856ff8",
+    "agent_path": "/root/e7_native_owner/e7_capability_interrupt_e9",
+    "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-38-08-01a14601-d713-7342-b078-053ceb856ff8.jsonl"
+  },
+  {
+    "session_id": "01a14603-d9e7-7093-9283-6b60025db3bd",
+    "agent_path": "/root/e7_native_owner/luna_26796645523946cd40996441c112aaf1fdd26da29f906f052e37464e15448b64",
+    "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-40-19-01a14603-d9e7-7093-9283-6b60025db3bd.jsonl"
+  }
+]

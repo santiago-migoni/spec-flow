@@ -1,0 +1,14 @@
+{
+  "adopted_after_crash": false,
+  "committed_at": "2026-10-16T18:40:54Z",
+  "evidence": "Independent native reviewer pass: exact staged tree,parent,normalized diff checked; all four tests independently pass; implementation/test hashes unchanged; ASCII error behavior, ACs and MUST constraints satisfied.",
+  "parent": "479982e99efb7af9754eeac0adcda90820da7d53",
+  "phase_id": "PH-01",
+  "release": "v1.2.3",
+  "review_packet_sha256": "2d05bd2c1b6ad6fbeaddd04f1a6b8a9a8623bb30d3d8657fcd75c74871864a96",
+  "run_id": "8a974b4c-ef05-4e2c-b323-6a8899b93552",
+  "schema": "spec-flow-phase-receipt.v1",
+  "sha": "48a248943c3e0c12bccb9fa88cb303476e6c95d3",
+  "subject": "feat(release): normalize strict numeric release triples",
+  "tree": "9ab8239ff326a43b5a650012b3a7a81b83b28937"
+}

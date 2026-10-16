@@ -1,0 +1,300 @@
+{
+  "abandonment": {
+    "abandoned_at": "2026-10-16T18:42:46Z",
+    "authorization": {
+      "actor": "E7 Evaluator",
+      "source": "Current user E7 authorization and evaluation protocol",
+      "statement": "Authorized E7 negative scenario abandonment after exact bound child terminal attestation; preserve all attempts."
+    },
+    "reason": "E7 exhausted three actual native faulty attempts; preserve unresolved failure and release ownership without credit.",
+    "unresolved_task": {
+      "attempt": 3,
+      "host_attestation": {
+        "agent_lifecycle": "completed",
+        "agent_path": "/root/e7_native_owner/luna_4e1ca8b710492d59aa8497f04543fe5c86fd4492834030e2cbd9947f4a0a8c50",
+        "attestation_sha256": "7c57d842b56637865bc2e59f2675db3c82328708b095f114fe56c5bdc0ff45bb",
+        "effort": "high",
+        "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-42-03-01a14605-6eb0-7ed0-961d-865343b68aa8.jsonl",
+        "model": "gpt-6-luna",
+        "packet_marker_source": "native_spawn_task_name",
+        "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+        "record_hashes": {
+          "delegation": "f42dc10ece80a8ee5fa34b5dbac984f4aaa2dd48ab3e0b502b287fdf2f574a68",
+          "lifecycle": "b8becdf7e144dc838024493e91de98b9bed4db2b6610dbde30ee6d6ea6789c20",
+          "session_meta": "f40840794a58c049edaba0a3b4740708f52674a4af0c661293126fcd19e2feda",
+          "task_marker": null,
+          "turn_contexts": [
+            "db33c318221dcf3628d5bc305de51ddaa8cf94f1220bb993267f96a7318a9dda"
+          ]
+        },
+        "role": "implementer",
+        "session_id": "01a14605-6eb0-7ed0-961d-865343b68aa8"
+      },
+      "status": "verification_failed",
+      "task_id": "T-001"
+    }
+  },
+  "active_task": null,
+  "authorization": [
+    {
+      "actor": "User",
+      "source": "evaluation-context.json human_authorization",
+      "statement": "Perfecto. Ejecuta E7 sobre el commit e9fe146, usando proyectos desechables y los perfiles configurados, conservando los controles y registrando pruebas, resultados y evidencias. Sin publicar ni actualizar mi instalación. Synthetic E7 execution of PH-01 only."
+    }
+  ],
+  "authorized_phases": [
+    "PH-01"
+  ],
+  "capabilities": {
+    "basis": "host-supplied capability references; Python does not enumerate native tools",
+    "inventory_reference": "collaboration.list_agents: e9fe146 capability probe completed; interrupt probe observed running then interrupted; no active fixture child at start",
+    "model_catalog": {
+      "basis": "host-supplied inventory; actual native sessions must still pass exact attestation",
+      "entries": [
+        {
+          "id": "gpt-6.1-sol",
+          "reasoning_efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max",
+            "ultra"
+          ]
+        },
+        {
+          "id": "gpt-6-luna",
+          "reasoning_efforts": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "profiles": {
+        "implementer": {
+          "effort": "high",
+          "id": "gpt-6-luna"
+        },
+        "orchestrator": {
+          "effort": "low",
+          "id": "gpt-6.1-sol"
+        },
+        "reviewer": {
+          "effort": "medium",
+          "id": "gpt-6.1-sol"
+        }
+      },
+      "reference": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-e9fe146/host-model-inventory.json"
+    },
+    "operations": [
+      "interrupt_agent",
+      "list_agents",
+      "spawn_agent",
+      "wait_agent"
+    ],
+    "owner_session": {
+      "agent_lifecycle": "active",
+      "agent_path": "/root/e7_native_owner",
+      "attestation_sha256": "b1695be65adb704eed9e954c2ec324f00c52236d5b9cc8b829a6378566455439",
+      "effort": "low",
+      "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-37-43-01a14601-755e-7623-8d98-bbdcf02b03e6.jsonl",
+      "model": "gpt-6.1-sol",
+      "packet_marker_source": null,
+      "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+      "record_hashes": {
+        "delegation": null,
+        "lifecycle": "4b9c318f7f905fe0f9df241b5b49c3643c5214d8689062856d6d9b428aca882c",
+        "session_meta": "cdf65decf6103410e6bf8ab6acf1da19a23074fee732468f02ec5831abc4fb3c",
+        "task_marker": null,
+        "turn_contexts": [
+          "4fa6b25107beb92c9489dcc141bb547546dfbc5f6c5210863ccf7ecfa247e4cb"
+        ]
+      },
+      "role": "orchestrator",
+      "session_id": "01a14601-755e-7623-8d98-bbdcf02b03e6"
+    },
+    "probe_evidence_references": {
+      "interrupt_agent": "native interrupt_agent returned previous_status running for e7_capability_interrupt_e9fe146; later list_agents showed interrupted",
+      "list_agents": "native list_agents showed capability probe running, then interrupted, while no implementation child was active",
+      "spawn_agent": "native spawn_agent created isolated Luna/high e7_capability_probe_e9fe146 and e7_capability_interrupt_e9fe146, unrelated to implementation",
+      "wait_agent": "native wait_agent returned after capability probe ready and terminal message"
+    }
+  },
+  "documents": {
+    ".specs/architecture.md": "59647883742a62fc9d7621cb8737a3c57ca3e54f73a11c60f97aa0d56588d885",
+    ".specs/constitution.md": "c8797303a77653698424899542bdc2962bce9df9e0b5455b87f8b4a4d02af698",
+    ".specs/release-v1.2.3/plan.md": "7babf1ddebbf065c1515a228b4ee400e4998c11a8fc9c0da6500e406bf2e9b1f",
+    ".specs/release-v1.2.3/spec.md": "350ebea1538d6614966e258d852e6702a50f4dcae5c67aa94b7d8ece8d6c3a23",
+    ".specs/release-v1.2.3/tasks.md": "b5d346fbe0665a3ac766dfba54a26877fcd089fd714d644e8f956eb48addaf7b",
+    ".specs/roadmap.md": "4cc8ed79a7d7b76b0a176a7c1a224a0d8eb0642288b8c8f95d75b58302f52c4f",
+    ".specs/structure.md": "984231f958e73bea68ed983b70bd0de6f845125428728cc21bde6708d540a8dd"
+  },
+  "migration_evidence_pending": [],
+  "owner": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+  "phase_contracts": [
+    {
+      "depends_on": [],
+      "description": "Implement and verify strict normalization in release.py.",
+      "id": "PH-01"
+    }
+  ],
+  "phases": {},
+  "prior_attempts": {},
+  "profile_snapshot": true,
+  "profiles": {
+    "implementer": {
+      "effort": "high",
+      "id": "gpt-6-luna"
+    },
+    "orchestrator": {
+      "effort": "low",
+      "id": "gpt-6.1-sol"
+    },
+    "reviewer": {
+      "effort": "medium",
+      "id": "gpt-6.1-sol"
+    }
+  },
+  "reconciliation_required": false,
+  "release": "v1.2.3",
+  "run_id": "ef85c65c-d92d-4034-8f5b-ce35243519d6",
+  "status": "abandoned",
+  "task_contracts": [
+    {
+      "acceptance": [
+        "AC-001",
+        "AC-002"
+      ],
+      "closure": "Final AC-001 and AC-002 behavior passes all four fixed tests; test_release.py remains unchanged.",
+      "depends_on": [],
+      "files": [
+        "release.py"
+      ],
+      "id": "T-001",
+      "phase": "PH-01",
+      "steps": [
+        {
+          "action": "Implement normalize_release to satisfy valid ASCII triples and exact error classes; run the fixed four-method suite without editing tests.",
+          "id": "T-001.001",
+          "verification": {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "-v",
+              "test_release.py"
+            ],
+            "expected": "All four fixed tests execute and pass with exact outputs and exception types."
+          }
+        }
+      ],
+      "story": "US-001"
+    }
+  ],
+  "task_ids": [
+    "T-001"
+  ],
+  "tasks": {
+    "T-001": {
+      "agent": {
+        "agent_id": "/root/e7_native_owner/luna_4e1ca8b710492d59aa8497f04543fe5c86fd4492834030e2cbd9947f4a0a8c50",
+        "agent_path": "/root/e7_native_owner/luna_4e1ca8b710492d59aa8497f04543fe5c86fd4492834030e2cbd9947f4a0a8c50",
+        "attestation": {
+          "agent_lifecycle": "completed",
+          "agent_path": "/root/e7_native_owner/luna_4e1ca8b710492d59aa8497f04543fe5c86fd4492834030e2cbd9947f4a0a8c50",
+          "attestation_sha256": "7c57d842b56637865bc2e59f2675db3c82328708b095f114fe56c5bdc0ff45bb",
+          "effort": "high",
+          "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-42-03-01a14605-6eb0-7ed0-961d-865343b68aa8.jsonl",
+          "model": "gpt-6-luna",
+          "packet_marker_source": "native_spawn_task_name",
+          "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+          "record_hashes": {
+            "delegation": "f42dc10ece80a8ee5fa34b5dbac984f4aaa2dd48ab3e0b502b287fdf2f574a68",
+            "lifecycle": "b8becdf7e144dc838024493e91de98b9bed4db2b6610dbde30ee6d6ea6789c20",
+            "session_meta": "f40840794a58c049edaba0a3b4740708f52674a4af0c661293126fcd19e2feda",
+            "task_marker": null,
+            "turn_contexts": [
+              "db33c318221dcf3628d5bc305de51ddaa8cf94f1220bb993267f96a7318a9dda"
+            ]
+          },
+          "role": "implementer",
+          "session_id": "01a14605-6eb0-7ed0-961d-865343b68aa8"
+        },
+        "parent_session": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+        "session_id": "01a14605-6eb0-7ed0-961d-865343b68aa8"
+      },
+      "attempt": 3,
+      "attempt_baseline": {
+        ".gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+        "release.py": "9ab6ac990edd3501bd2e053d12e280155ed823fc4f1d21a792e47bd6eb002265",
+        "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+      },
+      "attempt_owner": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+      "baseline": {
+        ".gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+        "release.py": "a804abcd14f65126a7ada66bb6a9bb4554595ddd31cdc485df545beb28e42aa9",
+        "test_release.py": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+      },
+      "closed_at": null,
+      "code_fingerprint": null,
+      "evidence_path": null,
+      "failure": {
+        "code": "verification_failed",
+        "details": {
+          "exit_code": 1,
+          "output": "3')\nValueError: injected fault 3\n\n======================================================================\nERROR: test_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) (value=None)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/test_release.py\", line 39, in test_rejects_nonstrings\n    normalize_release(value)\n    ~~~~~~~~~~~~~~~~~^^^^^^^\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/release.py\", line 2, in normalize_release\n    raise ValueError('injected fault 3')\nValueError: injected fault 3\n\n======================================================================\nERROR: test_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) (value=123)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/test_release.py\", line 39, in test_rejects_nonstrings\n    normalize_release(value)\n    ~~~~~~~~~~~~~~~~~^^^^^^^\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/release.py\", line 2, in normalize_release\n    raise ValueError('injected fault 3')\nValueError: injected fault 3\n\n======================================================================\nERROR: test_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) (value=1.2)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/test_release.py\", line 39, in test_rejects_nonstrings\n    normalize_release(value)\n    ~~~~~~~~~~~~~~~~~^^^^^^^\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/release.py\", line 2, in normalize_release\n    raise ValueError('injected fault 3')\nValueError: injected fault 3\n\n======================================================================\nERROR: test_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) (value=b'1.2.3')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/test_release.py\", line 39, in test_rejects_nonstrings\n    normalize_release(value)\n    ~~~~~~~~~~~~~~~~~^^^^^^^\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/release.py\", line 2, in normalize_release\n    raise ValueError('injected fault 3')\nValueError: injected fault 3\n\n======================================================================\nERROR: test_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) (value=[1, 2, 3])\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/test_release.py\", line 39, in test_rejects_nonstrings\n    normalize_release(value)\n    ~~~~~~~~~~~~~~~~~^^^^^^^\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/release.py\", line 2, in normalize_release\n    raise ValueError('injected fault 3')\nValueError: injected fault 3\n\n======================================================================\nERROR: test_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) (value=True)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/test_release.py\", line 39, in test_rejects_nonstrings\n    normalize_release(value)\n    ~~~~~~~~~~~~~~~~~^^^^^^^\n  File \"/private/tmp/spec-flow-e7-e9fe146-ob54eg0e/negative-linked/release.py\", line 2, in normalize_release\n    raise ValueError('injected fault 3')\nValueError: injected fault 3\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (errors=11)\n"
+        },
+        "message": "verification command failed: T-001.001"
+      },
+      "no_spawn_attestation": null,
+      "packet_created_at": "2026-10-16T18:41:56Z",
+      "packet_path": ".spec-flow/runs/ef85c65c-d92d-4034-8f5b-ce35243519d6/packets/T-001-3.json",
+      "packet_sha256": "2e2c180772dbc2ceb375b54a6601bbb7151e3e07451eac5edaadb67bca84bd07",
+      "prepared_at": "2026-10-16T18:41:56Z",
+      "reconciliation_evidence": null,
+      "result": {
+        "blockers": [],
+        "checks": [
+          {
+            "check": "python3 -B -m unittest -v test_release.py",
+            "result": "Ran4tests failed11errors",
+            "step_id": "T-001.001"
+          }
+        ],
+        "evidence": [
+          {
+            "description": "Always ValueError injected; fixed suite unchanged",
+            "kind": "inspection",
+            "reference": "release.py"
+          }
+        ],
+        "files_modified": [
+          "release.py"
+        ],
+        "summary": "Deliberate fault3 always ValueError; actual suite exposes11errors"
+      },
+      "retry_hypothesis": null,
+      "retry_reason": null,
+      "review": null,
+      "scope_files": [
+        "release.py"
+      ],
+      "source_digests": {
+        ".specs/architecture.md": "59647883742a62fc9d7621cb8737a3c57ca3e54f73a11c60f97aa0d56588d885",
+        ".specs/constitution.md": "c8797303a77653698424899542bdc2962bce9df9e0b5455b87f8b4a4d02af698",
+        ".specs/release-v1.2.3/plan.md": "7babf1ddebbf065c1515a228b4ee400e4998c11a8fc9c0da6500e406bf2e9b1f",
+        ".specs/release-v1.2.3/spec.md": "350ebea1538d6614966e258d852e6702a50f4dcae5c67aa94b7d8ece8d6c3a23",
+        ".specs/release-v1.2.3/tasks.md": "b5d346fbe0665a3ac766dfba54a26877fcd089fd714d644e8f956eb48addaf7b",
+        ".specs/roadmap.md": "4cc8ed79a7d7b76b0a176a7c1a224a0d8eb0642288b8c8f95d75b58302f52c4f",
+        ".specs/structure.md": "984231f958e73bea68ed983b70bd0de6f845125428728cc21bde6708d540a8dd"
+      },
+      "status": "verification_failed",
+      "step_evidence": {},
+      "verified_snapshot": null
+    }
+  }
+}

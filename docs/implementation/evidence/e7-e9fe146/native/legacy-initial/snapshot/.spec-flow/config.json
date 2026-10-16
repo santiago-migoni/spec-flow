@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "implementer": {
+      "effort": "high",
+      "id": "gpt-6-luna"
+    },
+    "orchestrator": {
+      "effort": "low",
+      "id": "gpt-6.1-sol"
+    },
+    "reviewer": {
+      "effort": "medium",
+      "id": "gpt-6.1-sol"
+    }
+  },
+  "retry_limit": 3,
+  "schema_version": 1
+}

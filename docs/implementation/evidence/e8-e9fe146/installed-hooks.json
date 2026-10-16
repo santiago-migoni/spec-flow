@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-e9fe146-01a13f8c/spec-flow-e8-e9fe146/3.0.1/hooks",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "exit": 0,
+  "tests": 10,
+  "package_unchanged": true,
+  "output_sha256": "01aafec39d7b1ca14707788ddef61a870ed5e6d041b81656d5bfe1aa79af4f6b"
+}

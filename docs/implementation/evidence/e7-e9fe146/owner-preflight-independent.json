@@ -1,0 +1,21 @@
+{
+  "session_id": "01a14601-755e-7623-8d98-bbdcf02b03e6",
+  "role": "orchestrator",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T15-37-43-01a14601-755e-7623-8d98-bbdcf02b03e6.jsonl",
+  "agent_lifecycle": "active",
+  "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+  "agent_path": "/root/e7_native_owner",
+  "packet_marker_source": null,
+  "record_hashes": {
+    "session_meta": "cdf65decf6103410e6bf8ab6acf1da19a23074fee732468f02ec5831abc4fb3c",
+    "turn_contexts": [
+      "4fa6b25107beb92c9489dcc141bb547546dfbc5f6c5210863ccf7ecfa247e4cb"
+    ],
+    "lifecycle": "4b9c318f7f905fe0f9df241b5b49c3643c5214d8689062856d6d9b428aca882c",
+    "task_marker": null,
+    "delegation": null
+  },
+  "attestation_sha256": "b1695be65adb704eed9e954c2ec324f00c52236d5b9cc8b829a6378566455439"
+}

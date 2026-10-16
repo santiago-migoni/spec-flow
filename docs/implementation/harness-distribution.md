@@ -1,5 +1,9 @@
 # E8 — Preparación de distribución
 
+Comprobación de distribución más reciente: [E8 sobre e9fe146, 2026-10-16](e8-e9fe146.md), **aprobada dentro de instalación aislada, descubrimiento fresco y arranque instalado**. 139 archivos instalados, 14 skills, suites 152 + 10, ocho templates YAML y 75 referencias válidas. Identidades temporales retiradas; instalación estable y configuración intactas; sin publicación. Junto con E7 del mismo commit, resuelve el pendiente E8 señalado en el registro siguiente, cuyo texto se conserva como historia.
+
+Comprobación de desarrollo más reciente: [E7 sobre e9fe146, 2026-10-16](e7-e9fe146.md), **aprobada dentro de su alcance** con YAML, compatibilidad JSON y perfiles `gpt-6.1-sol/low` → `gpt-6-luna/high` → `gpt-6.1-sol/medium`. 152 + 10 pruebas deterministas; ejecución nativa y controles registrados. E8 sobre este candidato sigue pendiente. No hubo publicación ni actualización de instalación; los estados siguientes conservan su alcance histórico.
+
 Estado actual: **[v3.0.0 publicada](https://github.com/santiago-migoni/spec-flow/releases/tag/v3.0.0)**, verificada el 2026-10-16; tag en `1c92505`. [Comprobante de publicación](publication-v3.0.0.md), con E7/E8 originales preservados y paquete descargado verificado. Instalación del usuario y configuración intactas; no se migraron proyectos. Los registros siguientes conservan los estados históricos de preparación y evaluación anteriores a la publicación.
 
 

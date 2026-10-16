@@ -1,0 +1,384 @@
+{
+  "references_checked": 75,
+  "references": [
+    {
+      "source": "harness/adapters/codex/README.md",
+      "target": "../../contracts/profiles.md",
+      "resolved": "harness/contracts/profiles.md"
+    },
+    {
+      "source": "harness/adapters/codex/README.md",
+      "target": "../../contracts/profiles.md",
+      "resolved": "harness/contracts/profiles.md"
+    },
+    {
+      "source": "harness/contracts/canonical-contract.md",
+      "target": "operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "harness/contracts/canonical-contract.md",
+      "target": "../../skills/roadmap/assets/roadmap-template.md",
+      "resolved": "skills/roadmap/assets/roadmap-template.md"
+    },
+    {
+      "source": "harness/contracts/canonical-contract.md",
+      "target": "../../skills/plan/assets/plan-template.md",
+      "resolved": "skills/plan/assets/plan-template.md"
+    },
+    {
+      "source": "harness/contracts/canonical-contract.md",
+      "target": "../schemas/document.schema.json",
+      "resolved": "harness/schemas/document.schema.json"
+    },
+    {
+      "source": "harness/contracts/canonical-contract.md",
+      "target": "../_vendor/README.md",
+      "resolved": "harness/_vendor/README.md"
+    },
+    {
+      "source": "harness/contracts/execution.md",
+      "target": "profiles.md",
+      "resolved": "harness/contracts/profiles.md"
+    },
+    {
+      "source": "harness/contracts/execution.md",
+      "target": "operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "harness/contracts/execution.md",
+      "target": "profiles.md",
+      "resolved": "harness/contracts/profiles.md"
+    },
+    {
+      "source": "harness/contracts/execution.md",
+      "target": "operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "harness/contracts/migration.md",
+      "target": "operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "harness/contracts/operations.md",
+      "target": "migration.md",
+      "resolved": "harness/contracts/migration.md"
+    },
+    {
+      "source": "harness/contracts/operations.md",
+      "target": "canonical-contract.md",
+      "resolved": "harness/contracts/canonical-contract.md"
+    },
+    {
+      "source": "harness/contracts/operations.md",
+      "target": "execution.md",
+      "resolved": "harness/contracts/execution.md"
+    },
+    {
+      "source": "harness/contracts/operations.md",
+      "target": "execution.md",
+      "resolved": "harness/contracts/execution.md"
+    },
+    {
+      "source": "harness/contracts/operations.md",
+      "target": "canonical-contract.md",
+      "resolved": "harness/contracts/canonical-contract.md"
+    },
+    {
+      "source": "harness/contracts/operations.md",
+      "target": "profiles.md",
+      "resolved": "harness/contracts/profiles.md"
+    },
+    {
+      "source": "harness/roles/implementer.md",
+      "target": "../contracts/profiles.md",
+      "resolved": "harness/contracts/profiles.md"
+    },
+    {
+      "source": "harness/roles/orchestrator.md",
+      "target": "../contracts/profiles.md",
+      "resolved": "harness/contracts/profiles.md"
+    },
+    {
+      "source": "harness/roles/reviewer.md",
+      "target": "../contracts/profiles.md",
+      "resolved": "harness/contracts/profiles.md"
+    },
+    {
+      "source": "skills/analyze/SKILL.md",
+      "target": "assets/report-template.md",
+      "resolved": "skills/analyze/assets/report-template.md"
+    },
+    {
+      "source": "skills/analyze/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/backlog/SKILL.md",
+      "target": "assets/backlog-template.md",
+      "resolved": "skills/backlog/assets/backlog-template.md"
+    },
+    {
+      "source": "skills/backlog/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/clarify/SKILL.md",
+      "target": "assets/clarifications-template.md",
+      "resolved": "skills/clarify/assets/clarifications-template.md"
+    },
+    {
+      "source": "skills/clarify/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/clarify/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/constitution/SKILL.md",
+      "target": "assets/constitution-template.md",
+      "resolved": "skills/constitution/assets/constitution-template.md"
+    },
+    {
+      "source": "skills/constitution/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/constitution/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/converge/SKILL.md",
+      "target": "assets/convergence-report-template.md",
+      "resolved": "skills/converge/assets/convergence-report-template.md"
+    },
+    {
+      "source": "skills/converge/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/converge/SKILL.md",
+      "target": "../../harness/contracts/execution.md",
+      "resolved": "harness/contracts/execution.md"
+    },
+    {
+      "source": "skills/design/SKILL.md",
+      "target": "assets/architecture-template.md",
+      "resolved": "skills/design/assets/architecture-template.md"
+    },
+    {
+      "source": "skills/design/SKILL.md",
+      "target": "assets/infrastructure-template.md",
+      "resolved": "skills/design/assets/infrastructure-template.md"
+    },
+    {
+      "source": "skills/design/SKILL.md",
+      "target": "assets/structure-template.md",
+      "resolved": "skills/design/assets/structure-template.md"
+    },
+    {
+      "source": "skills/design/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/design/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/finishing-branch/SKILL.md",
+      "target": "assets/finishing-report-template.md",
+      "resolved": "skills/finishing-branch/assets/finishing-report-template.md"
+    },
+    {
+      "source": "skills/finishing-branch/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/finishing-branch/SKILL.md",
+      "target": "../../harness/contracts/execution.md",
+      "resolved": "harness/contracts/execution.md"
+    },
+    {
+      "source": "skills/implement/SKILL.md",
+      "target": "../../harness/adapters/codex/README.md",
+      "resolved": "harness/adapters/codex/README.md"
+    },
+    {
+      "source": "skills/implement/SKILL.md",
+      "target": "../../harness/contracts/execution.md",
+      "resolved": "harness/contracts/execution.md"
+    },
+    {
+      "source": "skills/implement/SKILL.md",
+      "target": "../../harness/roles/implementer.md",
+      "resolved": "harness/roles/implementer.md"
+    },
+    {
+      "source": "skills/implement/SKILL.md",
+      "target": "../../harness/roles/orchestrator.md",
+      "resolved": "harness/roles/orchestrator.md"
+    },
+    {
+      "source": "skills/implement/SKILL.md",
+      "target": "../../harness/roles/reviewer.md",
+      "resolved": "harness/roles/reviewer.md"
+    },
+    {
+      "source": "skills/implement/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/implement/SKILL.md",
+      "target": "../../harness/contracts/profiles.md",
+      "resolved": "harness/contracts/profiles.md"
+    },
+    {
+      "source": "skills/plan/SKILL.md",
+      "target": "assets/plan-template.md",
+      "resolved": "skills/plan/assets/plan-template.md"
+    },
+    {
+      "source": "skills/plan/SKILL.md",
+      "target": "../../harness/contracts/execution.md",
+      "resolved": "harness/contracts/execution.md"
+    },
+    {
+      "source": "skills/plan/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/plan/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/review-release/SKILL.md",
+      "target": "assets/release-review-report-template.md",
+      "resolved": "skills/review-release/assets/release-review-report-template.md"
+    },
+    {
+      "source": "skills/review-release/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/review-release/SKILL.md",
+      "target": "../../harness/contracts/execution.md",
+      "resolved": "harness/contracts/execution.md"
+    },
+    {
+      "source": "skills/roadmap/SKILL.md",
+      "target": "assets/roadmap-template.md",
+      "resolved": "skills/roadmap/assets/roadmap-template.md"
+    },
+    {
+      "source": "skills/roadmap/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/roadmap/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/specify/SKILL.md",
+      "target": "assets/spec-template.md",
+      "resolved": "skills/specify/assets/spec-template.md"
+    },
+    {
+      "source": "skills/specify/SKILL.md",
+      "target": "../clarify/assets/clarifications-template.md",
+      "resolved": "skills/clarify/assets/clarifications-template.md"
+    },
+    {
+      "source": "skills/specify/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/specify/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/tasks/SKILL.md",
+      "target": "assets/tasks-template.md",
+      "resolved": "skills/tasks/assets/tasks-template.md"
+    },
+    {
+      "source": "skills/tasks/SKILL.md",
+      "target": "../../harness/contracts/execution.md",
+      "resolved": "harness/contracts/execution.md"
+    },
+    {
+      "source": "skills/tasks/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/tasks/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/using-spec-flow/SKILL.md",
+      "target": "../../harness/contracts/migration.md",
+      "resolved": "harness/contracts/migration.md"
+    },
+    {
+      "source": "skills/using-spec-flow/SKILL.md",
+      "target": "../../harness/contracts/migration.md",
+      "resolved": "harness/contracts/migration.md"
+    },
+    {
+      "source": "skills/using-spec-flow/SKILL.md",
+      "target": "../../harness/contracts/execution.md",
+      "resolved": "harness/contracts/execution.md"
+    },
+    {
+      "source": "skills/using-spec-flow/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/using-spec-flow/SKILL.md",
+      "target": "../../harness/contracts/execution.md",
+      "resolved": "harness/contracts/execution.md"
+    },
+    {
+      "source": "skills/using-spec-flow/SKILL.md",
+      "target": "../../harness/adapters/codex/README.md",
+      "resolved": "harness/adapters/codex/README.md"
+    },
+    {
+      "source": "skills/using-spec-flow/SKILL.md",
+      "target": "../../harness/contracts/operations.md",
+      "resolved": "harness/contracts/operations.md"
+    },
+    {
+      "source": "skills/using-spec-flow/SKILL.md",
+      "target": "../../harness/contracts/profiles.md",
+      "resolved": "harness/contracts/profiles.md"
+    }
+  ],
+  "hook_manifest_path_resolves": true,
+  "hook_trust_changed": false,
+  "boundary": "Deterministic hook suite and path resolution only; no live hook trust or interception claimed.",
+  "result": "PASS"
+}

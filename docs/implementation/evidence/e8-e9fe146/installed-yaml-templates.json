@@ -1,0 +1,56 @@
+{
+  "templates": [
+    {
+      "path": "skills/constitution/assets/constitution-template.md",
+      "kind": "constitution",
+      "yaml_frontmatter": true,
+      "sha256": "c7f38b9a4368ebfb48d66339cf6e604613606805db261d945224c7fe5707792b"
+    },
+    {
+      "path": "skills/design/assets/architecture-template.md",
+      "kind": "architecture",
+      "yaml_frontmatter": true,
+      "sha256": "5bd7a83cec6773fb581bde9432e6d6f71e7ba14d139bdcf6b05fe888d3555996"
+    },
+    {
+      "path": "skills/design/assets/infrastructure-template.md",
+      "kind": "infrastructure",
+      "yaml_frontmatter": true,
+      "sha256": "b6a326dc56634eb1c68d9be034c5eaf9c9decfb4e07425f8863b4db7b1a90ed4"
+    },
+    {
+      "path": "skills/design/assets/structure-template.md",
+      "kind": "structure",
+      "yaml_frontmatter": true,
+      "sha256": "cf202c907829539ec65bf3ec69a78b5e3482f53aedeea1149527db8d246b1744"
+    },
+    {
+      "path": "skills/roadmap/assets/roadmap-template.md",
+      "kind": "roadmap",
+      "yaml_frontmatter": true,
+      "sha256": "a7341df0902bcd0453a2bf5e5262759f1adebba860885c0072e2f7cbdb084f2f"
+    },
+    {
+      "path": "skills/specify/assets/spec-template.md",
+      "kind": "spec",
+      "yaml_frontmatter": true,
+      "sha256": "f704b9e69d42834c17f2809c84fecba926ecd68368de368898f4bdc7d1dabcd9"
+    },
+    {
+      "path": "skills/plan/assets/plan-template.md",
+      "kind": "plan",
+      "yaml_frontmatter": true,
+      "sha256": "c31d8e3a6f6e7449e9b514a73e0a5a8bf8f907a3eeb3c6617937e79156cdb325"
+    },
+    {
+      "path": "skills/tasks/assets/tasks-template.md",
+      "kind": "tasks",
+      "yaml_frontmatter": true,
+      "sha256": "c8c15e5b145714d57fda6c1f80b4b8fb851e4f46bda382893e213023dfbbffa2"
+    }
+  ],
+  "count": 8,
+  "reader": "Installed package production document reader",
+  "legacy_compatibility_evidence": "152-test installed suite includes legacy JSON document and old-run compatibility regressions",
+  "result": "PASS"
+}
