@@ -1,0 +1,48 @@
+{
+  "verified_at": "2026-10-16T16:40:02.403311+00:00",
+  "repository": "santiago-migoni/spec-flow",
+  "release_commit": "1c92505584f789b2e20b4e10538678aa2275dfa2",
+  "tag": "v3.0.0",
+  "annotated_tag_object": "d8ee41697512e96121cd90f6c493724356627a80",
+  "tag_target_verified": true,
+  "remote_main_at_publication": "1c92505584f789b2e20b4e10538678aa2275dfa2",
+  "url": "https://github.com/santiago-migoni/spec-flow/releases/tag/v3.0.0",
+  "release_id": 415169925,
+  "published_at": "2026-10-16T16:38:45Z",
+  "draft": false,
+  "prerelease": false,
+  "latest": true,
+  "assets": [
+    {
+      "id": 647930383,
+      "name": "SHA256SUMS",
+      "size": 90,
+      "digest": "sha256:795bfac0cbbb9fdcf923d928616eed93c3c4e57aeae687f9ce572de4e31b3a38",
+      "browser_download_url": "https://github.com/santiago-migoni/spec-flow/releases/download/v3.0.0/SHA256SUMS",
+      "state": "uploaded"
+    },
+    {
+      "id": 647930378,
+      "name": "spec-flow-v3.0.0.tar.gz",
+      "size": 1235359,
+      "digest": "sha256:e91768238461a8159fb0588364636c7925771da666d487c5d0e54f6857d01ecc",
+      "browser_download_url": "https://github.com/santiago-migoni/spec-flow/releases/download/v3.0.0/spec-flow-v3.0.0.tar.gz",
+      "state": "uploaded"
+    }
+  ],
+  "download_directory": "/private/tmp/spec-flow-v3-published-download-y2euqwm6",
+  "downloaded_package_sha256": "e91768238461a8159fb0588364636c7925771da666d487c5d0e54f6857d01ecc",
+  "downloaded_files_verified": 115,
+  "downloaded_checksum_verified": true,
+  "package_identical_to_final_installed_E8_source": "d19d6e0be75702907442412f9227688cbc835fba",
+  "E7_source": "ef7897d83dedf9fe20c8bf82fb9e311f4cff8107",
+  "original_reports_and_evidence_preserved_in_release_commit": true,
+  "user_installation_files_unchanged": 114,
+  "user_installation_modes_and_mtimes_unchanged": true,
+  "configuration_bytes_and_semantics_unchanged": true,
+  "hook_trust_unchanged": true,
+  "installation_or_migration_performed": false,
+  "result": "PASS",
+  "final_notes_sha256": "6a871f6362de3138c094fad919a13609eb11bc92dd7d69de68f88c78a45722d5",
+  "final_notes_verified_on_github": true
+}

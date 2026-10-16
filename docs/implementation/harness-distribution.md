@@ -1,5 +1,8 @@
 # E8 — Preparación de distribución
 
+Estado actual: **[v3.0.0 publicada](https://github.com/santiago-migoni/spec-flow/releases/tag/v3.0.0)**, verificada el 2026-10-16; tag en `1c92505`. [Comprobante de publicación](publication-v3.0.0.md), con E7/E8 originales preservados y paquete descargado verificado. Instalación del usuario y configuración intactas; no se migraron proyectos. Los registros siguientes conservan los estados históricos de preparación y evaluación anteriores a la publicación.
+
+
 Comprobación final actual: [v3.0.0 sobre d19d6e0, 2026-10-16](e8-d19d6e0.md), **aprobada** para instalación aislada, descubrimiento fresco y arranque instalado. 14 skills, 127 + 9 tests; instalación estable y configuración intactas; temporales retirados, sin push/tag/publicación. Las evaluaciones siguientes se conservan como historia de sus respectivos candidatos.
 
 
