@@ -1,5 +1,7 @@
 # Implementación del harness de Spec-Flow
 
+Corte final v3.1.0: [instalación aislada sobre fad239f](e8-v3.1.0.md), **aprobada** (139 archivos, 14 skills, 152 + 10 tests). Solo version de manifiestos difiere de e9fe146, cuya E7/E8 permanece vigente para el código; instalación estable/configuración intactas y temporales retirados. Publicación autorizada pendiente de completar y verificar.
+
 Comprobación de distribución más reciente: [E8 sobre e9fe146, 2026-10-16](e8-e9fe146.md), **aprobada dentro de instalación aislada, descubrimiento fresco y arranque instalado**. 139 archivos instalados, 14 skills, suites 152 + 10, ocho templates YAML y 75 referencias válidas. Identidades temporales retiradas; instalación estable y configuración intactas; sin publicación. Junto con E7 del mismo commit, resuelve el pendiente E8 señalado en el registro siguiente, cuyo texto se conserva como historia.
 
 Comprobación de desarrollo más reciente: [E7 sobre e9fe146, 2026-10-16](e7-e9fe146.md), **aprobada dentro de su alcance** con YAML, compatibilidad JSON y perfiles `gpt-6.1-sol/low` → `gpt-6-luna/high` → `gpt-6.1-sol/medium`. 152 + 10 pruebas deterministas; ejecución nativa y controles registrados. E8 sobre este candidato sigue pendiente. No hubo publicación ni actualización de instalación; los estados siguientes conservan su alcance histórico.

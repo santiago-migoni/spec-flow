@@ -1,0 +1,9 @@
+{
+  "initial_marketplace": "spec-flow-e8-v3.1.0-01a13f8c",
+  "rejected_before_installation": true,
+  "reason": "Marketplace names accept ASCII letters digits underscore hyphen only",
+  "corrected_marketplace": "spec-flow-e8-v310-01a13f8c",
+  "corrected_plugin": "spec-flow-e8-v310",
+  "candidate_changed": false,
+  "result": "Evaluator identity corrected; original failed operation preserved"
+}

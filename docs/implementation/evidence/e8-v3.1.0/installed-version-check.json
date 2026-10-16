@@ -1,0 +1,10 @@
+{
+  "actual_manifest_version": "3.1.0",
+  "fallback_manifest_version": "3.1.0",
+  "exact_mirror": true,
+  "installed_path": "/Users/santiago_migoni/.codex/plugins/cache/spec-flow-e8-v310-01a13f8c/spec-flow-e8-v310/3.1.0",
+  "icon_path": "assets/spec-flow-icon.png",
+  "icon_sha256": "d81a9c002a01e01b19aac628a6307887a8e1db17e9fbd02b512f8b71dc1ea2d1",
+  "icon_png_header_valid": true,
+  "icon_limit": "Asset resolution only; no visual assertion about an already-open Desktop catalog."
+}

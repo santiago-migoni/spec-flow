@@ -1,0 +1,10 @@
+{
+  "original_installation_files_unchanged": 115,
+  "all_other_config_semantics_unchanged": true,
+  "only_added_entries": [
+    "spec-flow-e8-v310@spec-flow-e8-v310-01a13f8c",
+    "spec-flow-e8-v310-01a13f8c"
+  ],
+  "hook_trust_unchanged": true,
+  "result": "PASS"
+}

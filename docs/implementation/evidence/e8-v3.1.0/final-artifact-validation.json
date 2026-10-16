@@ -1,0 +1,21 @@
+{
+  "result": "PASS",
+  "candidate": "fad239f6f280bc35c0f7f5b2236ca2abd37d7814",
+  "version": "3.1.0",
+  "source_files_against_git": 139,
+  "exact_installed_copy": true,
+  "only_functional_base_changes": [
+    ".codex-plugin/plugin.json",
+    "plugin.json"
+  ],
+  "only_field": "version",
+  "runtime_tests": 152,
+  "hook_tests": 10,
+  "fresh_client_enabled_skills": 14,
+  "yaml_templates": 8,
+  "references": 75,
+  "E7_E8_evidence_unchanged_and_tracked": true,
+  "stable_installation_and_config_unchanged": true,
+  "temporary_plugin_marketplace_removed": true,
+  "initial_identity_rejection_preserved": true
+}
