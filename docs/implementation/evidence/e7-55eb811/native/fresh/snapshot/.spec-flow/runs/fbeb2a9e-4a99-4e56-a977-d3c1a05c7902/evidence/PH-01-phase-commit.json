@@ -1,0 +1,14 @@
+{
+  "adopted_after_crash": false,
+  "committed_at": "2026-10-16T13:40:11Z",
+  "evidence": "Independent distinct Sol high reviewer inspected exact tree 0aff23c4 and staged diff 48bd10cf; controller evidence and its own fixed four-method test run passed, test file hash 7bb24f05 unchanged, AC-001/AC-002/NFR-001 and two fixture constitution MUSTs satisfied. E7 synthetic fixture only; design-template section conformance is a separately reported fixture limitation.",
+  "parent": "01c09bc27a7c8802a0305eed9c97b395fc084e78",
+  "phase_id": "PH-01",
+  "release": "v1.2.3",
+  "review_packet_sha256": "8d64a2b255dbcda2aa692144c20e2bee0ed817d1fa79a7accee11e3d2623c681",
+  "run_id": "fbeb2a9e-4a99-4e56-a977-d3c1a05c7902",
+  "schema": "spec-flow-phase-receipt.v1",
+  "sha": "9d556c680c79e2dbdcd241dd3ad9313bf24c7f3e",
+  "subject": "feat(e7): implement strict release normalization",
+  "tree": "0aff23c4b19e8d15a44546de8246f0169b3c3bb1"
+}

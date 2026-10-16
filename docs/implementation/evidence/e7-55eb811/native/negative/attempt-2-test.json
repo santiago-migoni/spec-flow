@@ -1,0 +1,17 @@
+{
+  "injected_failure": true,
+  "attempt": 2,
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_release.py"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... \n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003') ... FAIL\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-55eb811-nh63aagh/negative-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (failures=1)\n",
+  "release_sha256": "be8ae4f9603ccd85995e57abc1238aeff3148f01115cbdd8c886bccb40f253d6",
+  "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577"
+}

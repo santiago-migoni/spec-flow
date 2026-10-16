@@ -1,0 +1,92 @@
+{
+  "original_worktree": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/fresh-linked",
+  "head": "9d556c680c79e2dbdcd241dd3ad9313bf24c7f3e",
+  "snapshot_files": {
+    ".gitignore": {
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+      "bytes": 13
+    },
+    ".spec-flow/.gitignore": {
+      "sha256": "51e22acc425d767901cd51941b9d53a16951a5fe6bd220549f3ef8ed94861af3",
+      "bytes": 98
+    },
+    ".spec-flow/approvals.jsonl": {
+      "sha256": "dabfc3bfef1e8023f7a3b07e8e915ec91c58fda406dc042d53f8636c30f117ca",
+      "bytes": 3241
+    },
+    ".spec-flow/config.json": {
+      "sha256": "16170f48163df123b40a2e52aa1b53c988a2e608656df3881152690b4dcd940c",
+      "bytes": 293
+    },
+    ".spec-flow/lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    ".spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/events.jsonl": {
+      "sha256": "5767de492ccf2da1dc6208a0a0277816e3aea4fff5911e88fcaa4a09804291dd",
+      "bytes": 16991
+    },
+    ".spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/evidence/PH-01-phase-commit.json": {
+      "sha256": "f853a8bb3ac0d3eded4cbd8a0fc20595e7eb340fada420b85dff9f06864519a5",
+      "bytes": 929
+    },
+    ".spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/evidence/T-001-1-verify.json": {
+      "sha256": "f4db39ac3abb6c01bc5349dacd80bd22eb248da101d69429cffb4073ea36f2fe",
+      "bytes": 2619
+    },
+    ".spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/packets/T-001-1.json": {
+      "sha256": "e287099d62f1ab8102348a653746da065e5ce98fe5d2293efd2e0645b2bf69c4",
+      "bytes": 16543
+    },
+    ".spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/packets/phase-PH-01-0aff23c4b19e8d15a44546de8246f0169b3c3bb1.json": {
+      "sha256": "232ea4eaaa1389ba1fdc6501ae38379fba4a8b76e99fe2144ebf3e61d3c28f3e",
+      "bytes": 1587
+    },
+    ".spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/state.json": {
+      "sha256": "f0ad1f4f10235534043f15cce2e3c0018cc1fe1860fd71e45f3390fc5e2f7bf5",
+      "bytes": 18010
+    },
+    ".specs/architecture.md": {
+      "sha256": "380de805ea87819a308f6c8805e07a1b429f2e6aac2e8e00d33977e45f6b1c9f",
+      "bytes": 1386
+    },
+    ".specs/constitution.md": {
+      "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209",
+      "bytes": 2248
+    },
+    ".specs/release-v1.2.3/plan.md": {
+      "sha256": "d78a798dda03987ef5563bcf60caf6ddbdd504731ece154e282a0f40f25b0c0b",
+      "bytes": 2769
+    },
+    ".specs/release-v1.2.3/spec.md": {
+      "sha256": "d58603cadfb5a68e8addc4406030c8185d3ea473b03edbe74bc0df2b2027db2d",
+      "bytes": 3324
+    },
+    ".specs/release-v1.2.3/tasks.md": {
+      "sha256": "e5de6539aa9a86c4083127cbaf3d11faf389a866fb2d206c9222ba6b774b97e1",
+      "bytes": 2681
+    },
+    ".specs/roadmap.md": {
+      "sha256": "4635861e6e452089ae10337c91a2d4a312b112ceed88dd3d5e13e9fdb7d12588",
+      "bytes": 2517
+    },
+    ".specs/structure.md": {
+      "sha256": "1ca614345d660a5c4d9f1c22a0e23ad4860dfa116f40f6dd7ea3125aac390c1c",
+      "bytes": 1215
+    },
+    "release.py": {
+      "sha256": "824f61baf92787c478409d3fcb94842d89a7e01f8eb4e1a5a3e09b1a77f9ea7b",
+      "bytes": 411
+    },
+    "test_release.py": {
+      "sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "bytes": 1577
+    }
+  },
+  "snapshot_bytes": 78452,
+  "bundle_sha256": "ac0a0ef7a6648caf0cb71f69a9f39c2e477b6fd0c4d185f36cfdba70c6b6f2cb",
+  "bundle_verify_stdout": "The bundle contains these 4 refs:\n9d556c680c79e2dbdcd241dd3ad9313bf24c7f3e refs/heads/codex/e7-fresh\n01c09bc27a7c8802a0305eed9c97b395fc084e78 refs/heads/main\n9d556c680c79e2dbdcd241dd3ad9313bf24c7f3e HEAD\n01c09bc27a7c8802a0305eed9c97b395fc084e78 main-worktree/HEAD\nThe bundle records a complete history.\nThe bundle uses this hash algorithm: sha1\n",
+  "bundle_verify_stderr": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-55eb811/native/fresh/repository.bundle is okay\n",
+  "retained_worktree_status": "M .spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/events.jsonl\n?? .spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/evidence/PH-01-phase-commit.json",
+  "restore_limit": "Inspect offline: absolute project paths, native sessions and expired authorization are historical; no active lease is copied."
+}

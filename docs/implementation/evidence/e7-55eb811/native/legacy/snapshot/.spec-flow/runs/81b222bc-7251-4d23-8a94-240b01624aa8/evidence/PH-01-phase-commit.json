@@ -1,0 +1,14 @@
+{
+  "adopted_after_crash": false,
+  "committed_at": "2026-10-16T13:46:24Z",
+  "evidence": "Distinct Sol high reviewer matched pinned tree 3772ed58 and diff aad3fe3f, inspected release.py strict behavior and unchanged fixed suite, ran all four methods successfully, confirmed zero migration imports and seven fresh synthetic fixture approvals.",
+  "parent": "b9400091572b2be73676257ca63cec3d760ae104",
+  "phase_id": "PH-01",
+  "release": "v1.2.3",
+  "review_packet_sha256": "ff0932da3b896e1876c93e38c0d6fe64412f56859ef469ab01338410d6691ae0",
+  "run_id": "81b222bc-7251-4d23-8a94-240b01624aa8",
+  "schema": "spec-flow-phase-receipt.v1",
+  "sha": "e1137488895ec3dfcc32ef9257a6f3a04877d690",
+  "subject": "feat(e7): implement migrated strict normalization",
+  "tree": "3772ed5867ae10f692bde442a9a72f74a11fdc65"
+}

@@ -1,0 +1,38 @@
+{
+  "category": "package structure; not installed-package discovery",
+  "evaluated_commit": "55eb811bd05043966b9763e7270ed678444896c5",
+  "source_matches_commit": true,
+  "skill_names": [
+    "analyze",
+    "backlog",
+    "clarify",
+    "constitution",
+    "converge",
+    "design",
+    "finishing-branch",
+    "implement",
+    "plan",
+    "review-release",
+    "roadmap",
+    "specify",
+    "tasks",
+    "using-spec-flow"
+  ],
+  "templates": [
+    "skills/analyze/assets/report-template.md",
+    "skills/backlog/assets/backlog-template.md",
+    "skills/clarify/assets/clarifications-template.md",
+    "skills/constitution/assets/constitution-template.md",
+    "skills/converge/assets/convergence-report-template.md",
+    "skills/design/assets/architecture-template.md",
+    "skills/design/assets/infrastructure-template.md",
+    "skills/design/assets/structure-template.md",
+    "skills/finishing-branch/assets/finishing-report-template.md",
+    "skills/plan/assets/plan-template.md",
+    "skills/review-release/assets/release-review-report-template.md",
+    "skills/roadmap/assets/roadmap-template.md",
+    "skills/specify/assets/spec-template.md",
+    "skills/tasks/assets/tasks-template.md"
+  ],
+  "source_file_count": 115
+}

@@ -1,0 +1,15 @@
+{
+  "migration_id": "70bb61c2d45c57f3b7d71b601c22b983",
+  "source_head": "a8e66f825595f2b0e10ceecc1b7d8766f47cbce2",
+  "migration_checkpoint": "c21b862",
+  "approval_checkpoint": "b940009",
+  "archive_hashes": {
+    "spec.md": "ad0637f05eef9ef79e109f5bf7dfa9345769bf090488be81bda93490ccd65516",
+    "plan.md": "0f73db0a694cf14b917599e1f0756e2be9ccae7cbb5a098b0d287afb54323ad5",
+    "tasks.md": "3780698614ffc934b85a7da9da0c8852ce165799e34175a2bb6c25772998c06c"
+  },
+  "imports": {
+    "approvals": [],
+    "evidence": []
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "checked_at": "2026-10-16T13:59:17.955681+00:00",
+  "evaluated_commit": "55eb811bd05043966b9763e7270ed678444896c5",
+  "source_files_exact": 115,
+  "export_extra_files": 0,
+  "working_package_equal_to_candidate": true,
+  "json_files_parsed": 61,
+  "jsonl_files_parsed": 12,
+  "python_helpers_and_fixture_sources_parse": true,
+  "report_local_links_verified": 32,
+  "four_bundles_verified": true,
+  "all_snapshots_equal_original_worktree_bytes": true,
+  "plugin_source_modified": false,
+  "result": "PASS"
+}

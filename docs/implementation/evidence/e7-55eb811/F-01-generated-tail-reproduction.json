@@ -1,0 +1,34 @@
+{
+  "category": "independent pure-function reproduction against literal pinned templates; source unmodified",
+  "at": "2026-10-16T13:41:30.819882+00:00",
+  "finding": "F-01",
+  "severity": "HIGH",
+  "expected": "The ordinary valid initial generated-progress tail should be a permissible reviewed baseline before first release-review; malformed/stale derived closure records remain rejected.",
+  "observed": [
+    {
+      "source": "skills/specify/assets/spec-template.md",
+      "sha256": "7b828b4604f9d0753705dd050ed110ade12a300c3078404ac0ca7a2611457f9e",
+      "document_reader_accepts_generated_tail": true,
+      "release_review_baseline_reader": {
+        "error": "release_review_record_stale",
+        "message": "derived release record is missing or malformed: /private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/skills/specify/assets/spec-template.md"
+      }
+    },
+    {
+      "source": "skills/roadmap/assets/roadmap-template.md",
+      "sha256": "527488160b932f4ab5523145e8ed345cbb5fb0cb516eb01f51c07edae134b860",
+      "document_reader_accepts_generated_tail": true,
+      "release_review_baseline_reader": {
+        "error": "release_review_record_stale",
+        "message": "derived release record is missing or malformed: /private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/skills/roadmap/assets/roadmap-template.md"
+      }
+    }
+  ],
+  "native_correspondence": "fresh run fbeb2a9e-4a99-4e56-a977-d3c1a05c7902 reached phase commit and technical_complete=true, then release-review failed before derived writes according to native owner; native operation log is retained separately",
+  "source_locations": [
+    "harness/runtime/phases.py:543-554",
+    "harness/runtime/phases.py:571-577",
+    "skills/specify/assets/spec-template.md:121",
+    "skills/roadmap/assets/roadmap-template.md:100"
+  ]
+}

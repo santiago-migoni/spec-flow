@@ -1,0 +1,92 @@
+{
+  "original_worktree": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/faithful-linked",
+  "head": "eafbe95e03d20db337bf06e53e893ceab3f80b2d",
+  "snapshot_files": {
+    ".gitignore": {
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+      "bytes": 13
+    },
+    ".spec-flow/.gitignore": {
+      "sha256": "51e22acc425d767901cd51941b9d53a16951a5fe6bd220549f3ef8ed94861af3",
+      "bytes": 98
+    },
+    ".spec-flow/approvals.jsonl": {
+      "sha256": "40e9834306015e0f87c97bf2cdfb656b4a2c67ccb37e4cb3632d4903ce38c344",
+      "bytes": 3241
+    },
+    ".spec-flow/config.json": {
+      "sha256": "16170f48163df123b40a2e52aa1b53c988a2e608656df3881152690b4dcd940c",
+      "bytes": 293
+    },
+    ".spec-flow/lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    ".spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/events.jsonl": {
+      "sha256": "51d4bde01a7329181bc7579ae4c69c3083544413a303cf638b5194cd74ff6f6d",
+      "bytes": 17527
+    },
+    ".spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/evidence/PH-01-phase-commit.json": {
+      "sha256": "5690e493f8f6ec50826741b435c6463fddba58c8e89068b9352bdcd3ff603b00",
+      "bytes": 850
+    },
+    ".spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/evidence/T-001-1-verify.json": {
+      "sha256": "fab9fb196f8fc7e80f72f7232fa3596b916cf3aea05b2f79582bbf52f6c1dca3",
+      "bytes": 2619
+    },
+    ".spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/packets/T-001-1.json": {
+      "sha256": "04a1a50451603dcab37104e7b71025378c5c283df995b953bd643e460de56135",
+      "bytes": 18454
+    },
+    ".spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/packets/phase-PH-01-4df0a78b301a76c3ed483154b1b8ee2a88759ca6.json": {
+      "sha256": "622ca4139379455f700bba8b49a71e3ec854b0c8f6d81c18f121c180845eb259",
+      "bytes": 1587
+    },
+    ".spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/state.json": {
+      "sha256": "92eceecd434801df0c0c26042fe4fb10ccc7c9041d06e8f426bed15da0c274cb",
+      "bytes": 18188
+    },
+    ".specs/architecture.md": {
+      "sha256": "f36345196b6588b8bb658993137395edf4156a2dc0e9aba7924cea889aae93b8",
+      "bytes": 2404
+    },
+    ".specs/constitution.md": {
+      "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209",
+      "bytes": 2248
+    },
+    ".specs/release-v1.2.3/plan.md": {
+      "sha256": "6445b165c0bc083787cc724cb53e3f58619ece8e558b22b9599d628ea4ff1479",
+      "bytes": 2769
+    },
+    ".specs/release-v1.2.3/spec.md": {
+      "sha256": "43cc0047b088f3ce2807de0023aedafbbb5c9e027b8ad4367c3d76b1bc627015",
+      "bytes": 3324
+    },
+    ".specs/release-v1.2.3/tasks.md": {
+      "sha256": "1f6d2f003c160d29411fa67517cc371295eed59f8cfa10f8c2e8ae3df9abcf5c",
+      "bytes": 2681
+    },
+    ".specs/roadmap.md": {
+      "sha256": "805a3a15f1dfa75bdafc76054374521a9628fbc6e759aac6a8c9bb5dfa7e92d1",
+      "bytes": 2517
+    },
+    ".specs/structure.md": {
+      "sha256": "9a7f15706785b05aa1a19db6147d9fb87fc40c75f485a43f81be2ace3d29b129",
+      "bytes": 2090
+    },
+    "release.py": {
+      "sha256": "c14c9c24ee75617b843706abf5226306347a590a531830f078572ccccbc72205",
+      "bytes": 407
+    },
+    "test_release.py": {
+      "sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "bytes": 1577
+    }
+  },
+  "snapshot_bytes": 82887,
+  "bundle_sha256": "e38e1d1f10cec6a70c61ab649faa280fd093e17976247dd1b7f5b86ef2c79d13",
+  "bundle_verify_stdout": "The bundle contains these 4 refs:\neafbe95e03d20db337bf06e53e893ceab3f80b2d refs/heads/codex/e7-faithful\ne16a5ece037fe1086a14f31f9cb7d8793ac08c8d refs/heads/main\neafbe95e03d20db337bf06e53e893ceab3f80b2d HEAD\ne16a5ece037fe1086a14f31f9cb7d8793ac08c8d main-worktree/HEAD\nThe bundle records a complete history.\nThe bundle uses this hash algorithm: sha1\n",
+  "bundle_verify_stderr": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-55eb811/native/faithful/repository.bundle is okay\n",
+  "retained_worktree_status": "M .spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/events.jsonl\n?? .spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/evidence/PH-01-phase-commit.json",
+  "restore_limit": "Inspect offline: absolute project paths, native sessions and expired authorization are historical; no active lease is copied."
+}

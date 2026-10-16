@@ -1,0 +1,33 @@
+{
+  "release": "v1.2.3",
+  "run_id": "fbeb2a9e-4a99-4e56-a977-d3c1a05c7902",
+  "evaluated_commit": "9d556c680c79e2dbdcd241dd3ad9313bf24c7f3e",
+  "conclusion": "Technical convergence confirmed for this disposable fixture scope",
+  "entry": {
+    "gate_ready": true,
+    "technical_complete": true,
+    "release_review_pending": true,
+    "audit_pending": true
+  },
+  "acceptance": [
+    {
+      "criterion": "AC-001",
+      "story": "US-001",
+      "status": "Satisfied",
+      "evidence": "T-001.001 controller output ran valid and zero/large component methods; fixed test hash 7bb24f05; exact output comparison passed."
+    },
+    {
+      "criterion": "AC-002",
+      "story": "US-001",
+      "status": "Satisfied",
+      "evidence": "T-001.001 controller output ran malformed-string and nonstring methods; ValueError/TypeError assertions passed."
+    }
+  ],
+  "quality": {
+    "NFR-001": "Satisfied: four named methods executed and passed; release.py fingerprint 824f61ba; verification left code unchanged."
+  },
+  "approved_shared_rules": "Two constitution MUSTs met: fixed test unchanged and verification nonmutating. Architecture interface and structure placement match code. Infrastructure N/A by approved fixture scope.",
+  "findings": [],
+  "fixture_conformance_limitation": "Architecture/structure documents in this first fixture omit several current design-template headings. This does not change the approved behavior assessment, but this run cannot evidence complete current design-skill conformance. A separate faithful fixture is required.",
+  "impact": "pending; disposable test execution does not measure product/user impact"
+}

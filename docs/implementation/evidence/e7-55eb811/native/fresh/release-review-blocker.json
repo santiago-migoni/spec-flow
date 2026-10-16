@@ -1,0 +1,18 @@
+{
+  "code": "release_review_record_stale",
+  "op": "release-review",
+  "affected_run": "fbeb2a9e-4a99-4e56-a977-d3c1a05c7902",
+  "last_phase_commit": "9d556c680c79e2dbdcd241dd3ad9313bf24c7f3e",
+  "observed": "The first review-release call returned exit 2 before creating a derived record or audit commit. Current spec and roadmap retain the initial generated placeholder copied from the pinned templates.",
+  "template_examples": {
+    "spec_template_tail": "Progress is maintained by the Spec-Flow harness.\n<!-- spec-flow:generated:end -->",
+    "roadmap_template_tail": "Progress is maintained by the Spec-Flow harness.\n<!-- spec-flow:generated:end -->"
+  },
+  "runtime_check": "harness/runtime/phases.py:571-576 _generated_record raises release_review_record_stale for any generated start marker without exact derived-record form.",
+  "source_file_sha256": {
+    "harness/runtime/phases.py": "387b11cf94e6dcb318012ac6d40cdc37e41de95f122eaa16b52d373ef5067edc",
+    "skills/specify/assets/spec-template.md": "7b828b4604f9d0753705dd050ed110ade12a300c3078404ac0ca7a2611457f9e",
+    "skills/roadmap/assets/roadmap-template.md": "527488160b932f4ab5523145e8ed345cbb5fb0cb516eb01f51c07edae134b860"
+  },
+  "scope": "Pinned source/fixture mismatch. No source plugin edit and no manual rewrite of approved generated sections."
+}

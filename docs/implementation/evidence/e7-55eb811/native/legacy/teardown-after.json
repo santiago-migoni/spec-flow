@@ -1,0 +1,12 @@
+{
+  "run_id": "81b222bc-7251-4d23-8a94-240b01624aa8",
+  "state_status": "abandoned",
+  "active_task": null,
+  "task_attempt": 1,
+  "task_status": "completed",
+  "phase_status": "committed",
+  "lease_path": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/legacy-main/.git/spec-flow-active-controller.json",
+  "lease": null,
+  "head": "e1137488895ec3dfcc32ef9257a6f3a04877d690",
+  "worktree_status": " M .spec-flow/runs/81b222bc-7251-4d23-8a94-240b01624aa8/events.jsonl\n?? .spec-flow/runs/81b222bc-7251-4d23-8a94-240b01624aa8/evidence/PH-01-phase-commit.json\n"
+}

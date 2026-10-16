@@ -1,0 +1,52 @@
+{
+  "category": "independent static inspection of actual native task packet; not a controller mutation",
+  "at": "2026-10-16T13:39:54.351307+00:00",
+  "run_id": "fbeb2a9e-4a99-4e56-a977-d3c1a05c7902",
+  "packet_sha256": "3990e3c47a99c5be90a3efa419c1ca9f7779b16900f0403e47810767a9154a52",
+  "packet_file_sha256": "e287099d62f1ab8102348a653746da065e5ce98fe5d2293efd2e0645b2bf69c4",
+  "checks": {
+    "retained_spec_quality_target": true,
+    "retained_spec_edge_cases": true,
+    "task_prose_omitted": true,
+    "task_scope_only_release_py": true,
+    "all_canonical_acceptance_retained": true
+  },
+  "sources": [
+    {
+      "path": ".specs/architecture.md",
+      "decision_digest": "723047b7bc70d11a8bd39977a577956233a15c965ee653ad17c405ba9cb12ff6",
+      "retained_prose_chars": 995
+    },
+    {
+      "path": ".specs/constitution.md",
+      "decision_digest": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+      "retained_prose_chars": 1998
+    },
+    {
+      "path": ".specs/release-v1.2.3/plan.md",
+      "decision_digest": "c3aaaf4a65c82ac7987e3827e220139d3dd33797a8cd534af5a4ef63af2f2d37",
+      "retained_prose_chars": 2089
+    },
+    {
+      "path": ".specs/release-v1.2.3/spec.md",
+      "decision_digest": "ebec7aa819e9c9205952f4aec3cf1ffc2a6bfeaef88cf0dde93ae67025bb5eb4",
+      "retained_prose_chars": 1598
+    },
+    {
+      "path": ".specs/release-v1.2.3/tasks.md",
+      "decision_digest": "c0ec0626960211e39c22daefb245ddccfdb6d1285214a2ef3607e73cd658c30a",
+      "retained_prose_chars": 0
+    },
+    {
+      "path": ".specs/roadmap.md",
+      "decision_digest": "f0c45df4c0585c67fc7c8b40d272157d6c879de5794c1b0da5e9b90b6e4485c7",
+      "retained_prose_chars": 0
+    },
+    {
+      "path": ".specs/structure.md",
+      "decision_digest": "3ed45c56be0bfe8e661669365edbf3480790417324eeba6ccc71e9d466b52309",
+      "retained_prose_chars": 687
+    }
+  ],
+  "fixture_template_issue": "architecture has 6 headings and structure 5, compared with current template 11 and 10; owner informed; active approved sources left unchanged"
+}

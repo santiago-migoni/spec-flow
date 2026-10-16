@@ -1,0 +1,14 @@
+{
+  "adopted_after_crash": false,
+  "committed_at": "2026-10-16T13:44:10Z",
+  "evidence": "Distinct Sol high reviewer assessed exact staged tree 4df0a78b and diff 5b6f1bf5: strict ASCII valid/error behavior, fixed test hash 7bb24f05, all four controller-recorded methods pass, implementation unchanged by verification, aborted child reconciled without replay. E7-only fixture.",
+  "parent": "e16a5ece037fe1086a14f31f9cb7d8793ac08c8d",
+  "phase_id": "PH-01",
+  "release": "v1.2.3",
+  "review_packet_sha256": "2a16043375854e90783761decb1709b7e4d9be9f4f707890aeedcf674c9c5db3",
+  "run_id": "1a371423-acdf-47bf-bf9f-3bf41c1ebf70",
+  "schema": "spec-flow-phase-receipt.v1",
+  "sha": "eafbe95e03d20db337bf06e53e893ceab3f80b2d",
+  "subject": "feat(e7): verify strict normalization after interruption",
+  "tree": "4df0a78b301a76c3ed483154b1b8ee2a88759ca6"
+}

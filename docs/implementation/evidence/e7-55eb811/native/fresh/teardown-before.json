@@ -1,0 +1,17 @@
+{
+  "run_id": "fbeb2a9e-4a99-4e56-a977-d3c1a05c7902",
+  "state_status": "completed",
+  "active_task": null,
+  "task_attempt": 1,
+  "task_status": "completed",
+  "phase_status": "committed",
+  "lease_path": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/fresh-main/.git/spec-flow-active-controller.json",
+  "lease": {
+    "owner": "01a144ec-d228-77d0-8a9a-fcc7ef6460ea",
+    "release": "v1.2.3",
+    "run_id": "fbeb2a9e-4a99-4e56-a977-d3c1a05c7902",
+    "worktree": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/fresh-linked"
+  },
+  "head": "9d556c680c79e2dbdcd241dd3ad9313bf24c7f3e",
+  "worktree_status": " M .spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/events.jsonl\n?? .spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/evidence/PH-01-phase-commit.json\n"
+}

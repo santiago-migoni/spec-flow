@@ -1,0 +1,12 @@
+{
+  "run_id": "26f8338a-b762-42d0-8ce2-3a09148c1480",
+  "state_status": "abandoned",
+  "active_task": null,
+  "task_attempt": 2,
+  "task_status": "needs_changes",
+  "phase_status": null,
+  "lease_path": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/negative-main/.git/spec-flow-active-controller.json",
+  "lease": null,
+  "head": "e16a5ece037fe1086a14f31f9cb7d8793ac08c8d",
+  "worktree_status": " M release.py\n?? .spec-flow/runs/\n"
+}

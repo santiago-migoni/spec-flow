@@ -1,0 +1,413 @@
+{
+  "evaluated_commit": "55eb811bd05043966b9763e7270ed678444896c5",
+  "checked_at": "2026-10-16T13:53:05.058644+00:00",
+  "scope": "Original fixtures; status and host attestation read-only. Independent unittest runs confer no controller credit.",
+  "owner": {
+    "session_id": "01a144ec-d228-77d0-8a9a-fcc7ef6460ea",
+    "role": "orchestrator",
+    "model": "gpt-6-sol",
+    "effort": "high",
+    "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T10-35-33-01a144ec-d228-77d0-8a9a-fcc7ef6460ea.jsonl",
+    "agent_lifecycle": "completed",
+    "parent_session": "01a13f8c-b50f-7db0-b28d-162f4914e043",
+    "agent_path": "/root/e7_owner_55eb811",
+    "packet_marker_source": null,
+    "record_hashes": {
+      "session_meta": "3fdbccb6b8d9a23f97c1bfcf0dfed3e5d51ed79c123dd303483597eb143117d2",
+      "turn_contexts": [
+        "00c841937590bd913fb3d72a9d8483c898b5ec412be8b84836159187e203cd93"
+      ],
+      "lifecycle": "498b926f069dfb4b4d6fc1c822cadbf19f69e2d8bfc0e83d921bdf9f863b658d",
+      "task_marker": null,
+      "delegation": null
+    },
+    "attestation_sha256": "4f5437cb4bf20ef59363b1bb7f58cfe58f24f1738f13a1c93a3490f90805f6e5"
+  },
+  "fixtures": {
+    "fresh": {
+      "root": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/fresh-linked",
+      "run_id": "fbeb2a9e-4a99-4e56-a977-d3c1a05c7902",
+      "status": "abandoned",
+      "active_task": null,
+      "release_review": null,
+      "audit_commit_absent": true,
+      "ownership_registry": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/fresh-main/.git/spec-flow-active-controller.json",
+      "lease_absent": true,
+      "head": "9d556c680c79e2dbdcd241dd3ad9313bf24c7f3e",
+      "events": 11,
+      "events_sha256": "5767de492ccf2da1dc6208a0a0277816e3aea4fff5911e88fcaa4a09804291dd",
+      "task_attempts": [
+        {
+          "task_id": "T-001",
+          "attempt": 1,
+          "attestation": {
+            "session_id": "01a144ef-7a46-7073-9c27-343fc9beaf67",
+            "role": "implementer",
+            "model": "gpt-6-luna",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T10-38-27-01a144ef-7a46-7073-9c27-343fc9beaf67.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a144ec-d228-77d0-8a9a-fcc7ef6460ea",
+            "agent_path": "/root/e7_owner_55eb811/luna_9e2db830e6cd6fa87ab1005eedb7b12304c53c19bc95f48688c68eee1876c070",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "01da8261d8255dce0d66e4e1e50e581b1023e2b32363a7559badbec935e69ccf",
+              "turn_contexts": [
+                "7fa31ab8380c7292401bde7531526138aac92851a81a4da4117610dec1d7285b"
+              ],
+              "lifecycle": "96a9c98ad1fb2e007defd2bcedf72760c4b45903d99141340d5cd0e78548d12d",
+              "task_marker": null,
+              "delegation": "df659444ee3600ee86b7efa32b232113546f7f9d617aa08c286083486d9e8bcd"
+            },
+            "attestation_sha256": "f0189d15fd0143271634cebb87213f115451a19f8ff1b0d417a5f70260e9f1f0"
+          }
+        }
+      ],
+      "phases": {
+        "PH-01": {
+          "status": "committed",
+          "commit": {
+            "adopted_after_crash": false,
+            "committed_at": "2026-10-16T13:40:11Z",
+            "evidence": "Independent distinct Sol high reviewer inspected exact tree 0aff23c4 and staged diff 48bd10cf; controller evidence and its own fixed four-method test run passed, test file hash 7bb24f05 unchanged, AC-001/AC-002/NFR-001 and two fixture constitution MUSTs satisfied. E7 synthetic fixture only; design-template section conformance is a separately reported fixture limitation.",
+            "parent": "01c09bc27a7c8802a0305eed9c97b395fc084e78",
+            "phase_id": "PH-01",
+            "release": "v1.2.3",
+            "review_packet_sha256": "8d64a2b255dbcda2aa692144c20e2bee0ed817d1fa79a7accee11e3d2623c681",
+            "run_id": "fbeb2a9e-4a99-4e56-a977-d3c1a05c7902",
+            "schema": "spec-flow-phase-receipt.v1",
+            "sha": "9d556c680c79e2dbdcd241dd3ad9313bf24c7f3e",
+            "subject": "feat(e7): implement strict release normalization",
+            "tree": "0aff23c4b19e8d15a44546de8246f0169b3c3bb1"
+          },
+          "review_attestation": {
+            "session_id": "01a144f0-306d-72a2-949c-0406da7c2657",
+            "role": "reviewer",
+            "model": "gpt-6-sol",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T10-39-14-01a144f0-306d-72a2-949c-0406da7c2657.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a144ec-d228-77d0-8a9a-fcc7ef6460ea",
+            "agent_path": "/root/e7_owner_55eb811/review_7be3a861fc0a1762b6ae9da861d7a37137f7669ec2b01144943c60f2ba98425c",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "24aacba63320917fe7c26da283577a9848e791e87f0ac9758f503cdac659c567",
+              "turn_contexts": [
+                "30c6011f5b33e92f96e3fa6ae112d9be12c010ec5bb712420f61fda87ccb5256"
+              ],
+              "lifecycle": "5f6101f1aaa5b2f6f340b4bfe08fc4879531c74363cfd20f244605f478bcff63",
+              "task_marker": null,
+              "delegation": "5d8c9a6f46b83fa5f68965cdf51436637fd8a922445e7f9e679dca62abc15365"
+            },
+            "attestation_sha256": "5dfcbd5d9a9dc1b835aa458cdfc09ff466fa7e2163fd1febc3ae9a0ac61c4d6d"
+          },
+          "exact_commit_tree_parent": true
+        }
+      },
+      "independent_test": {
+        "argv": [
+          "python3",
+          "-B",
+          "-m",
+          "unittest",
+          "-v",
+          "test_release.py"
+        ],
+        "started_at": "2026-10-16T13:53:05.155197+00:00",
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+        "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+        "code_sha256": "824f61baf92787c478409d3fcb94842d89a7e01f8eb4e1a5a3e09b1a77f9ea7b",
+        "code_unchanged": true
+      },
+      "retained_worktree_status": "M .spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/events.jsonl\n?? .spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/evidence/PH-01-phase-commit.json"
+    },
+    "faithful": {
+      "root": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/faithful-linked",
+      "run_id": "1a371423-acdf-47bf-bf9f-3bf41c1ebf70",
+      "status": "abandoned",
+      "active_task": null,
+      "release_review": null,
+      "audit_commit_absent": true,
+      "ownership_registry": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/faithful-main/.git/spec-flow-active-controller.json",
+      "lease_absent": true,
+      "head": "eafbe95e03d20db337bf06e53e893ceab3f80b2d",
+      "events": 14,
+      "events_sha256": "51d4bde01a7329181bc7579ae4c69c3083544413a303cf638b5194cd74ff6f6d",
+      "task_attempts": [
+        {
+          "task_id": "T-001",
+          "attempt": 1,
+          "attestation": {
+            "session_id": "01a144f2-b02c-7631-ab6e-a097340db1de",
+            "role": "implementer",
+            "model": "gpt-6-luna",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T10-41-57-01a144f2-b02c-7631-ab6e-a097340db1de.jsonl",
+            "agent_lifecycle": "aborted",
+            "parent_session": "01a144ec-d228-77d0-8a9a-fcc7ef6460ea",
+            "agent_path": "/root/e7_owner_55eb811/luna_fcbc40fa701b7f928413b41e1dd710af0594d802f1f8cf82b8501e67f37abb49",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "494edd1b990d1c20bfac8beeb1bd41980011fc1715b54320ccff3ab92ea1cb44",
+              "turn_contexts": [
+                "34cc053e2af2b43fae112f817647cdca5c67bcf7f54a68b2e567a88299ecb178"
+              ],
+              "lifecycle": "8c19e9edbda69d48f9af6a75cffde1590d6059e0e64760bb6f105030081ddef4",
+              "task_marker": null,
+              "delegation": "605421123a7fdb22b340681528b0be5bb00573bf0ab759141f3eddc06ab1a199"
+            },
+            "attestation_sha256": "7c698c5922d005ac9ecb9f4491f3d02434205df50a4f561594b87b67526c76b2"
+          }
+        }
+      ],
+      "phases": {
+        "PH-01": {
+          "status": "committed",
+          "commit": {
+            "adopted_after_crash": false,
+            "committed_at": "2026-10-16T13:44:10Z",
+            "evidence": "Distinct Sol high reviewer assessed exact staged tree 4df0a78b and diff 5b6f1bf5: strict ASCII valid/error behavior, fixed test hash 7bb24f05, all four controller-recorded methods pass, implementation unchanged by verification, aborted child reconciled without replay. E7-only fixture.",
+            "parent": "e16a5ece037fe1086a14f31f9cb7d8793ac08c8d",
+            "phase_id": "PH-01",
+            "release": "v1.2.3",
+            "review_packet_sha256": "2a16043375854e90783761decb1709b7e4d9be9f4f707890aeedcf674c9c5db3",
+            "run_id": "1a371423-acdf-47bf-bf9f-3bf41c1ebf70",
+            "schema": "spec-flow-phase-receipt.v1",
+            "sha": "eafbe95e03d20db337bf06e53e893ceab3f80b2d",
+            "subject": "feat(e7): verify strict normalization after interruption",
+            "tree": "4df0a78b301a76c3ed483154b1b8ee2a88759ca6"
+          },
+          "review_attestation": {
+            "session_id": "01a144f3-c4bb-74f1-883f-14c3da27280e",
+            "role": "reviewer",
+            "model": "gpt-6-sol",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T10-43-08-01a144f3-c4bb-74f1-883f-14c3da27280e.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a144ec-d228-77d0-8a9a-fcc7ef6460ea",
+            "agent_path": "/root/e7_owner_55eb811/review_511541dec70879c96e13f7d579b8881aef3db17dd749721bcaf553a1f6c9e1ea",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "9a61c10cfbe8c46a44057874b0266056a823627e23cfd5472c91f9518ad9a92b",
+              "turn_contexts": [
+                "3ddb072f0513873c7fb0e619d703398d4982fcf50ea96bf9ade0af30a26f1b64"
+              ],
+              "lifecycle": "55ff12858eccf8c227e8daadedb82f4a0ddc71308698182ca99968e3f4c9961a",
+              "task_marker": null,
+              "delegation": "2080e1f72deea9cebee499369f8faee438c1efd6cf1d5bac16f08ca2597654f0"
+            },
+            "attestation_sha256": "e4f221c9a56bf4b5304d31727e0fb1f1b98c74823c1975d653950fee4dda7a7d"
+          },
+          "exact_commit_tree_parent": true
+        }
+      },
+      "independent_test": {
+        "argv": [
+          "python3",
+          "-B",
+          "-m",
+          "unittest",
+          "-v",
+          "test_release.py"
+        ],
+        "started_at": "2026-10-16T13:53:05.272563+00:00",
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+        "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+        "code_sha256": "c14c9c24ee75617b843706abf5226306347a590a531830f078572ccccbc72205",
+        "code_unchanged": true
+      },
+      "retained_worktree_status": "M .spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/events.jsonl\n?? .spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/evidence/PH-01-phase-commit.json"
+    },
+    "legacy": {
+      "root": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/legacy-linked",
+      "run_id": "81b222bc-7251-4d23-8a94-240b01624aa8",
+      "status": "abandoned",
+      "active_task": null,
+      "release_review": null,
+      "audit_commit_absent": true,
+      "ownership_registry": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/legacy-main/.git/spec-flow-active-controller.json",
+      "lease_absent": true,
+      "head": "e1137488895ec3dfcc32ef9257a6f3a04877d690",
+      "events": 11,
+      "events_sha256": "57ef89e90a4c21eb39aed5ab45e56ea39e024d7cb84a7a5c61f008b107119ca2",
+      "task_attempts": [
+        {
+          "task_id": "T-001",
+          "attempt": 1,
+          "attestation": {
+            "session_id": "01a144f5-263f-7480-8511-24781a8e6df6",
+            "role": "implementer",
+            "model": "gpt-6-luna",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T10-44-39-01a144f5-263f-7480-8511-24781a8e6df6.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a144ec-d228-77d0-8a9a-fcc7ef6460ea",
+            "agent_path": "/root/e7_owner_55eb811/luna_c630fbb03709ab0fd1777fcb6b281379294cbe4ef45a9e22e57d963888266360",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "37ba40dd0e2826a6d95bbe1a79a79fdc7411314b72d9b2f20440e2aa4eafbdd6",
+              "turn_contexts": [
+                "77f73203c6a53830641f75f79437b77afbf64a067d4812f3ee40ab7beb9471e8"
+              ],
+              "lifecycle": "fad9d31032906c54117a20e7b39457d824339f4392567513264932a4dac59610",
+              "task_marker": null,
+              "delegation": "b0928eac2358f030c55a917e6a1a55f1abfc21e66e45ed83c8f88a8722d715f2"
+            },
+            "attestation_sha256": "e367b73b8d5994b29ad695400c5e23af722c9113d33d1f61599a0ae7e08858ce"
+          }
+        }
+      ],
+      "phases": {
+        "PH-01": {
+          "status": "committed",
+          "commit": {
+            "adopted_after_crash": false,
+            "committed_at": "2026-10-16T13:46:24Z",
+            "evidence": "Distinct Sol high reviewer matched pinned tree 3772ed58 and diff aad3fe3f, inspected release.py strict behavior and unchanged fixed suite, ran all four methods successfully, confirmed zero migration imports and seven fresh synthetic fixture approvals.",
+            "parent": "b9400091572b2be73676257ca63cec3d760ae104",
+            "phase_id": "PH-01",
+            "release": "v1.2.3",
+            "review_packet_sha256": "ff0932da3b896e1876c93e38c0d6fe64412f56859ef469ab01338410d6691ae0",
+            "run_id": "81b222bc-7251-4d23-8a94-240b01624aa8",
+            "schema": "spec-flow-phase-receipt.v1",
+            "sha": "e1137488895ec3dfcc32ef9257a6f3a04877d690",
+            "subject": "feat(e7): implement migrated strict normalization",
+            "tree": "3772ed5867ae10f692bde442a9a72f74a11fdc65"
+          },
+          "review_attestation": {
+            "session_id": "01a144f5-fb16-7e51-ba4b-3cf136c0ca95",
+            "role": "reviewer",
+            "model": "gpt-6-sol",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T10-45-33-01a144f5-fb16-7e51-ba4b-3cf136c0ca95.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a144ec-d228-77d0-8a9a-fcc7ef6460ea",
+            "agent_path": "/root/e7_owner_55eb811/review_156d18e73ce33acc4459559d9a9186054bd93cb487c5512a9013a53db0f9aa5d",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "88e838f679d12680ea0109675af110904e89fc89d93e7a38ca1e6684ae624464",
+              "turn_contexts": [
+                "a25fc2abc1924d1fed5df586206d89ab82e571bf7931cf53dce0ae0db0ca7658"
+              ],
+              "lifecycle": "d288eb5afe9b1fee83d4b032375b90db2cafae50f5d3340fcab12035ba29b80b",
+              "task_marker": null,
+              "delegation": "cc406a1083b817b81c12c5ef5889004936da5becf29caebf3a41ac52dcd6d5d4"
+            },
+            "attestation_sha256": "40913478ae87bcb0df2728acc3cb4b67e5bea8e4649b337e3c5c80a70fb650eb"
+          },
+          "exact_commit_tree_parent": true
+        }
+      },
+      "independent_test": {
+        "argv": [
+          "python3",
+          "-B",
+          "-m",
+          "unittest",
+          "-v",
+          "test_release.py"
+        ],
+        "started_at": "2026-10-16T13:53:05.386846+00:00",
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+        "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+        "code_sha256": "c74db144c8c858210d89f6cdd6b3839d8eb5660878aade9bd7f271eb50fe8e6b",
+        "code_unchanged": true
+      },
+      "retained_worktree_status": "M .spec-flow/runs/81b222bc-7251-4d23-8a94-240b01624aa8/events.jsonl\n?? .spec-flow/runs/81b222bc-7251-4d23-8a94-240b01624aa8/evidence/PH-01-phase-commit.json",
+      "migration_checkpoint": "c21b862f3da7c5bc21c645611b62c7fb50e572c8",
+      "legacy_source_commit": "a8e66f825595f2b0e10ceecc1b7d8766f47cbce2"
+    },
+    "negative": {
+      "root": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/negative-linked",
+      "run_id": "26f8338a-b762-42d0-8ce2-3a09148c1480",
+      "status": "abandoned",
+      "active_task": null,
+      "release_review": null,
+      "audit_commit_absent": true,
+      "ownership_registry": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/negative-main/.git/spec-flow-active-controller.json",
+      "lease_absent": true,
+      "head": "e16a5ece037fe1086a14f31f9cb7d8793ac08c8d",
+      "events": 13,
+      "events_sha256": "4006d50778b3d8568a3e5df68db739e02582e5ac4ab525cb7e1903b83bb4372c",
+      "task_attempts": [
+        {
+          "task_id": "T-001",
+          "attempt": 1,
+          "attestation": {
+            "session_id": "01a144f6-52c4-74a2-bb7c-870f40e8a471",
+            "role": "implementer",
+            "model": "gpt-6-luna",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T10-45-56-01a144f6-52c4-74a2-bb7c-870f40e8a471.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a144ec-d228-77d0-8a9a-fcc7ef6460ea",
+            "agent_path": "/root/e7_owner_55eb811/luna_dc783f82a56e48fe15e899b4dce8af381259bd73743e80c25cfd1fe47ef8016f",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "67aa5b652515729d6660753d934bef8f117d626dad662e6b5e219a4b03a3d613",
+              "turn_contexts": [
+                "413a97a6e5a1e36b73019eae1f0131996f3896dff2904d1cfd77a46272720df4"
+              ],
+              "lifecycle": "a6d1cf43fa879e27458e300a10a30125b734d150b49d17d01fdf2acecc4e7b2d",
+              "task_marker": null,
+              "delegation": "c9f2e2e7f8d7fae80647dbad952c7db739cb2ee33ce9bb5e47f06776c982f0e1"
+            },
+            "attestation_sha256": "e4820e354f4e8191ac7960390d001d2b7e8a1ad1195a78e4dba1020df48ad78a"
+          }
+        },
+        {
+          "task_id": "T-001",
+          "attempt": 2,
+          "attestation": {
+            "session_id": "01a144f7-3265-7222-80cc-d0cfcde67daa",
+            "role": "implementer",
+            "model": "gpt-6-luna",
+            "effort": "high",
+            "log_path": "/Users/santiago_migoni/.codex/sessions/2026/10/16/rollout-2026-10-16T10-46-53-01a144f7-3265-7222-80cc-d0cfcde67daa.jsonl",
+            "agent_lifecycle": "completed",
+            "parent_session": "01a144ec-d228-77d0-8a9a-fcc7ef6460ea",
+            "agent_path": "/root/e7_owner_55eb811/luna_66e2382b0e3e3194b4afc6f2dfab0fe6e0901625a689618c0fb43023309ffb35",
+            "packet_marker_source": "native_spawn_task_name",
+            "record_hashes": {
+              "session_meta": "9ed46f3c5e8b774a1534d4b4f018e917acb3e1b0804a1cc7143a5c9df0200d11",
+              "turn_contexts": [
+                "e7f764ccc8b3e94960f15079d78f8ed2c2d79d5c4fef7eb067a69eb4ad742c6c"
+              ],
+              "lifecycle": "07a147c4fbb0164a72a3a84fd5b2e01b33b853faf4f03b0b9c0fef04bbd392d6",
+              "task_marker": null,
+              "delegation": "f49217cb43d03f99868d39d828f42fd723e0fdc6ab675d145f621c655d24adaf"
+            },
+            "attestation_sha256": "674e2aec21d6a45e52ed633f64730bcc0a401013a756aeb14a092118fb230c45"
+          }
+        }
+      ],
+      "phases": {},
+      "independent_test": {
+        "argv": [
+          "python3",
+          "-B",
+          "-m",
+          "unittest",
+          "-v",
+          "test_release.py"
+        ],
+        "started_at": "2026-10-16T13:53:05.493394+00:00",
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... \n  test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003') ... FAIL\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n======================================================================\nFAIL: test_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) (value='1.2.003')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/spec-flow-e7-55eb811-nh63aagh/negative-linked/test_release.py\", line 32, in test_rejects_malformed_strings\n    with self.assertRaises(ValueError):\n         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nFAILED (failures=1)\n",
+        "test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+        "code_sha256": "be8ae4f9603ccd85995e57abc1238aeff3148f01115cbdd8c886bccb40f253d6",
+        "code_unchanged": true
+      },
+      "retained_worktree_status": "M release.py\n?? .spec-flow/runs/"
+    }
+  },
+  "distinct_attested_sessions": 9,
+  "result": "PASS: identities, markers, terminal lifecycles, commits, tests and teardown match recorded native outcomes"
+}

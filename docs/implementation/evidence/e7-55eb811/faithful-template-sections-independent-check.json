@@ -1,0 +1,58 @@
+{
+  "category": "independent current-template section conformance check",
+  "at": "2026-10-16T13:43:11.423166+00:00",
+  "exit_code": 0,
+  "fixture": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/faithful-linked",
+  "checks": [
+    {
+      "document": ".specs/architecture.md",
+      "kind": "architecture",
+      "required_count": 11,
+      "observed_count": 11,
+      "missing_sections": []
+    },
+    {
+      "document": ".specs/constitution.md",
+      "kind": "constitution",
+      "required_count": 11,
+      "observed_count": 11,
+      "missing_sections": []
+    },
+    {
+      "document": ".specs/release-v1.2.3/plan.md",
+      "kind": "plan",
+      "required_count": 11,
+      "observed_count": 11,
+      "missing_sections": []
+    },
+    {
+      "document": ".specs/release-v1.2.3/spec.md",
+      "kind": "spec",
+      "required_count": 11,
+      "observed_count": 11,
+      "missing_sections": []
+    },
+    {
+      "document": ".specs/release-v1.2.3/tasks.md",
+      "kind": "tasks",
+      "required_count": 10,
+      "observed_count": 10,
+      "missing_sections": []
+    },
+    {
+      "document": ".specs/roadmap.md",
+      "kind": "roadmap",
+      "required_count": 11,
+      "observed_count": 11,
+      "missing_sections": []
+    },
+    {
+      "document": ".specs/structure.md",
+      "kind": "structure",
+      "required_count": 10,
+      "observed_count": 10,
+      "missing_sections": []
+    }
+  ],
+  "all_sections_present": true
+}

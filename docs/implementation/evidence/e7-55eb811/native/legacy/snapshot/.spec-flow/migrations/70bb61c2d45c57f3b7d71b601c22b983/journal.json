@@ -1,0 +1,74 @@
+{
+  "authorization": {
+    "actor": "User",
+    "source": "User E7 authorization relayed 2026-10-16; reviewed preview digest 595b236a6542a3419f4f40f46bd1f541602083d452a98e6ec832e43c3e13e642",
+    "statement": "Apply this exact one-to-one E7-only migration of committed disposable legacy originals to v1.2.3; do not import historical Approved labels or checked boxes as authority/evidence."
+  },
+  "completed_at": "2026-10-16T13:43:34.467224+00:00",
+  "digest": "595b236a6542a3419f4f40f46bd1f541602083d452a98e6ec832e43c3e13e642",
+  "manifest": {
+    "candidate_dir": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/legacy-candidates",
+    "candidates": [
+      {
+        "path": ".specs/architecture.md",
+        "sha256": "f36345196b6588b8bb658993137395edf4156a2dc0e9aba7924cea889aae93b8"
+      },
+      {
+        "path": ".specs/constitution.md",
+        "sha256": "0ea4058102c0028a9f75221a4fb1d61c71c7d1391301fdffbf34b71b89f46209"
+      },
+      {
+        "path": ".specs/release-v1.2.3/plan.md",
+        "sha256": "6445b165c0bc083787cc724cb53e3f58619ece8e558b22b9599d628ea4ff1479"
+      },
+      {
+        "path": ".specs/release-v1.2.3/spec.md",
+        "sha256": "43cc0047b088f3ce2807de0023aedafbbb5c9e027b8ad4367c3d76b1bc627015"
+      },
+      {
+        "path": ".specs/release-v1.2.3/tasks.md",
+        "sha256": "4703d03ac61b4c2c90117e40599151be71509ebb19c50df2c4c6ba2d33cbf646"
+      },
+      {
+        "path": ".specs/roadmap.md",
+        "sha256": "805a3a15f1dfa75bdafc76054374521a9628fbc6e759aac6a8c9bb5dfa7e92d1"
+      },
+      {
+        "path": ".specs/structure.md",
+        "sha256": "9a7f15706785b05aa1a19db6147d9fb87fc40c75f485a43f81be2ace3d29b129"
+      }
+    ],
+    "git_head": "a8e66f825595f2b0e10ceecc1b7d8766f47cbce2",
+    "imports": {
+      "approvals": [],
+      "evidence": []
+    },
+    "mapping": [
+      {
+        "legacy": ".specs/001-normalize-release",
+        "release": "v1.2.3"
+      }
+    ],
+    "migration_id": "70bb61c2d45c57f3b7d71b601c22b983",
+    "project_root": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/legacy-main",
+    "replacements": [],
+    "schema_version": 1,
+    "sources": [
+      {
+        "path": ".specs/001-normalize-release/plan.md",
+        "sha256": "0f73db0a694cf14b917599e1f0756e2be9ccae7cbb5a098b0d287afb54323ad5"
+      },
+      {
+        "path": ".specs/001-normalize-release/spec.md",
+        "sha256": "ad0637f05eef9ef79e109f5bf7dfa9345769bf090488be81bda93490ccd65516"
+      },
+      {
+        "path": ".specs/001-normalize-release/tasks.md",
+        "sha256": "3780698614ffc934b85a7da9da0c8852ce165799e34175a2bb6c25772998c06c"
+      }
+    ]
+  },
+  "migration_id": "70bb61c2d45c57f3b7d71b601c22b983",
+  "schema_version": 1,
+  "status": "completed"
+}

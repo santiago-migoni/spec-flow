@@ -1,0 +1,36 @@
+{
+  "category": "actual production adapter rejection probes; no execution run or model substitution",
+  "at": "2026-10-16T13:38:24.646202+00:00",
+  "probes": [
+    {
+      "probe": "actual Sol session presented as Luna implementer",
+      "expected_rejection": "host_profile_mismatch",
+      "observed_code": "host_profile_mismatch",
+      "message": "one or more session turns do not match the required role profile",
+      "details": {
+        "expected": {
+          "model": "gpt-6-luna",
+          "effort": "high"
+        },
+        "mismatches": [
+          {
+            "turn": 0,
+            "model": "gpt-6-sol",
+            "effort": "high"
+          }
+        ]
+      }
+    },
+    {
+      "probe": "missing native interruption capability",
+      "expected_rejection": "native_capability_unavailable",
+      "observed_code": "native_capability_unavailable",
+      "message": "native Codex capabilities are missing or unprobed",
+      "details": {
+        "operations": [
+          "interrupt_agent"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "category": "production complete queries in independent disposable clones of native reviewed history; no source fixture or lease changed",
+  "at": "2026-10-16T13:46:40.284818+00:00",
+  "probes": [
+    {
+      "case": "reviewed-code-change",
+      "root": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/reviewed-code-change",
+      "source_phase_head": "eafbe95e03d20db337bf06e53e893ceab3f80b2d",
+      "run_id": "1a371423-acdf-47bf-bf9f-3bf41c1ebf70",
+      "baseline": {
+        "release": "v1.2.3",
+        "run_id": "1a371423-acdf-47bf-bf9f-3bf41c1ebf70",
+        "technical_complete": true,
+        "complete": true,
+        "reasons": [],
+        "release_review_pending": true,
+        "audit_pending": true,
+        "release_closure_reasons": [
+          "release-review has not been recorded"
+        ],
+        "phase_commits": {
+          "PH-01": "eafbe95e03d20db337bf06e53e893ceab3f80b2d"
+        }
+      },
+      "injected_change_path": "release.py",
+      "before_sha256": "c14c9c24ee75617b843706abf5226306347a590a531830f078572ccccbc72205",
+      "after_sha256": "eea571ef31f3f90a91e8079c2c5a4f38cbc3c615f3c0524b8698eda2b3d14f31",
+      "observed_rejection": {
+        "release": "v1.2.3",
+        "run_id": "1a371423-acdf-47bf-bf9f-3bf41c1ebf70",
+        "technical_complete": false,
+        "complete": false,
+        "reasons": [
+          "task T-001 evidence is stale: code_stale",
+          "task files differ from the reviewed phase tree",
+          "worktree changed after the reviewed phase commit: release.py"
+        ],
+        "release_review_pending": true,
+        "audit_pending": true,
+        "release_closure_reasons": [
+          "release-review has not been recorded"
+        ],
+        "phase_commits": {
+          "PH-01": "eafbe95e03d20db337bf06e53e893ceab3f80b2d"
+        }
+      }
+    },
+    {
+      "case": "approved-source-change",
+      "root": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/approved-source-change",
+      "source_phase_head": "eafbe95e03d20db337bf06e53e893ceab3f80b2d",
+      "run_id": "1a371423-acdf-47bf-bf9f-3bf41c1ebf70",
+      "baseline": {
+        "release": "v1.2.3",
+        "run_id": "1a371423-acdf-47bf-bf9f-3bf41c1ebf70",
+        "technical_complete": true,
+        "complete": true,
+        "reasons": [],
+        "release_review_pending": true,
+        "audit_pending": true,
+        "release_closure_reasons": [
+          "release-review has not been recorded"
+        ],
+        "phase_commits": {
+          "PH-01": "eafbe95e03d20db337bf06e53e893ceab3f80b2d"
+        }
+      },
+      "injected_change_path": ".specs/release-v1.2.3/spec.md",
+      "before_sha256": "43cc0047b088f3ce2807de0023aedafbbb5c9e027b8ad4367c3d76b1bc627015",
+      "after_sha256": "81016a27a6aae2cbf6d988d94a31d7556356a3a0621717d50c0e4f7a9e6ff54a",
+      "observed_rejection": {
+        "release": "v1.2.3",
+        "run_id": "1a371423-acdf-47bf-bf9f-3bf41c1ebf70",
+        "technical_complete": false,
+        "complete": false,
+        "reasons": [
+          "approved sources are not current: an approved document dependency is no longer valid",
+          "worktree changed after the reviewed phase commit: .specs/release-v1.2.3/spec.md"
+        ],
+        "release_review_pending": true,
+        "audit_pending": true,
+        "release_closure_reasons": [
+          "release-review has not been recorded"
+        ],
+        "phase_commits": {
+          "PH-01": "eafbe95e03d20db337bf06e53e893ceab3f80b2d"
+        }
+      }
+    }
+  ]
+}

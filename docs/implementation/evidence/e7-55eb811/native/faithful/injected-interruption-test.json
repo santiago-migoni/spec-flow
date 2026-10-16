@@ -1,0 +1,19 @@
+{
+  "injected_condition": "Native Luna was intentionally interrupted after writing release.py and before returning a result; this is an E7 recovery probe, not a model or implementation failure.",
+  "child_session": "01a144f2-b02c-7631-ab6e-a097340db1de",
+  "child_lifecycle": "aborted (production adapter attested)",
+  "source_sha256_before_check": "c14c9c24ee75617b843706abf5226306347a590a531830f078572ccccbc72205",
+  "source_sha256_after_check": "c14c9c24ee75617b843706abf5226306347a590a531830f078572ccccbc72205",
+  "fixed_test_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+  "check": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_release.py"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": "test_accepts_bare_and_prefixed_versions (test_release.NormalizeReleaseTests.test_accepts_bare_and_prefixed_versions) ... ok\ntest_accepts_zero_and_large_components (test_release.NormalizeReleaseTests.test_accepts_zero_and_large_components) ... ok\ntest_rejects_malformed_strings (test_release.NormalizeReleaseTests.test_rejects_malformed_strings) ... ok\ntest_rejects_nonstrings (test_release.NormalizeReleaseTests.test_rejects_nonstrings) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n"
+}

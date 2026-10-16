@@ -1,0 +1,19 @@
+{
+  "category": "deterministic hook mechanics; not installation/trusted-hook evidence",
+  "started_at": "2026-10-16T13:36:38.616104+00:00",
+  "finished_at": "2026-10-16T13:36:39.902339+00:00",
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/hooks",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "output": "hook-tests.txt"
+}

@@ -1,0 +1,29 @@
+{
+  "created_at": "2026-10-16T13:53:55.714433+00:00",
+  "fixtures": {
+    "fresh": {
+      "snapshot_files": 20,
+      "snapshot_bytes": 78452,
+      "bundle_sha256": "ac0a0ef7a6648caf0cb71f69a9f39c2e477b6fd0c4d185f36cfdba70c6b6f2cb",
+      "bundle_verified": true
+    },
+    "faithful": {
+      "snapshot_files": 20,
+      "snapshot_bytes": 82887,
+      "bundle_sha256": "e38e1d1f10cec6a70c61ab649faa280fd093e17976247dd1b7f5b86ef2c79d13",
+      "bundle_verified": true
+    },
+    "legacy": {
+      "snapshot_files": 33,
+      "snapshot_bytes": 102631,
+      "bundle_sha256": "5aeb9efd45ce4bd1cfae5a1353c98d3fe7d6cdce1bfb8301a6dbd9ac9ceb1096",
+      "bundle_verified": true
+    },
+    "negative": {
+      "snapshot_files": 18,
+      "snapshot_bytes": 92875,
+      "bundle_sha256": "049516d903cac45043ca76808baeba9476ae7aa4a47da450418f80cdd822ec81",
+      "bundle_verified": true
+    }
+  }
+}

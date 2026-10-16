@@ -1,5 +1,7 @@
 # Implementación del harness de Spec-Flow
 
+Este documento conserva el registro histórico E0–E8. La [reevaluación E7 de 55eb811 del 2026-10-16](e7-55eb811.md) quedó **no aprobada por HIGH F-01**; los resultados anteriores no acreditan el cierre del candidato actual.
+
 Base: `935de5d:docs/designs/2026-10-14-harness-orchestration.md`.
 Autorización: el usuario solicitó explícitamente implementar el plan E0–E8 en esta conversación el 2026-10-14. Migración obligatoria, una feature activa por release, conservación de evidencia vigente; sin bump, push ni publicación.
 
@@ -79,3 +81,11 @@ README, guía del repositorio, manifiestos, marketplace y Unreleased reflejan el
 La revisión posterior a E8 reprodujo dos P1 que las 107 pruebas anteriores no cubrían: verificación que mutaba código permitido y cierre de release basado solo en estados históricos. Se agregaron siete regresiones, observando primero los fallos y luego su corrección. La verificación rechaza cambios después de cada comando; el cierre revalida aprobaciones, evidencia, árbol revisado y HEAD antes de escribir. Se preservan registros anteriores del roadmap y recuperación tras escritura parcial, evento previo al audit y audit previo a liberar la propiedad.
 
 Verificación independiente del controlador: **114 pruebas del plugin y 9 hooks**, con salidas en [evidence/p1-fixes](evidence/p1-fixes/runtime.txt). Revisor independiente: 59 pruebas de engine/fases aprobadas y sin P1 residuales en las dos rutas corregidas. La evidencia nativa E7 y la instalación E8 se conservan como resultados históricos del candidato anterior; estas correcciones se verificaron con regresiones deterministas y revisión, sin atribuirles una nueva evaluación nativa ni reinstalación. Los hashes del runtime corregido están en [runtime-sha256.json](evidence/p1-fixes/runtime-sha256.json). Versión 1.1.0 sin cambios; integración y release 2.0.0 siguen pendientes.
+
+## Reevaluación E7 de 55eb811 — 2026-10-16
+
+Se ejecutó E7 sobre `55eb811bd05043966b9763e7270ed678444896c5`, versión 2.0.0, usando el paquete exportado sin cambios y proyectos desechables. Tres runs nativos completaron implementación, pruebas, revisión Sol independiente y commit de fase; se verificaron nueve sesiones reales Sol/Luna high. Se ejercitaron interrupción tras escritura, conciliación, restauración exacta del paquete, migración sin importar aprobaciones/evidencias y dos correcciones deliberadamente insuficientes cuyo review/close fue rechazado. Complemento: 117 pruebas del plugin y 9 del hook aprobadas; consultas y probes negativos separados de la ejecución nativa.
+
+**E7 no aprobada:** HIGH F-01 impide el primer `release-review` desde el bloque generado inicial válido de spec/roadmap. Los tres runs positivos terminaron técnicamente completos, pero sin registro de revisión ni audit commit. El defecto se reprodujo también con ambos templates literales. No se modificó el candidato ni se forzó el cierre. Los cuatro runs finalizaron por abandono soportado, con propiedad liberada e historia preservada en bundles y snapshots verificables.
+
+El [informe E7](e7-55eb811.md) contiene escenarios, límites, hallazgo y evidencia. Falta corregir F-01 en otro commit y repetir la evaluación sobre ese candidato; E8, instalación, integración y publicación no se ejecutaron en esta reevaluación.

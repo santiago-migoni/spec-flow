@@ -1,0 +1,400 @@
+{
+  "category": "actual strict CLI queries; no native task delegation in this probe",
+  "timestamp": "2026-10-16T13:37:53.851062+00:00",
+  "setup_separate_from_queries": {
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+      "--root",
+      "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/adopted",
+      "initialize",
+      "--input",
+      "/dev/stdin"
+    ],
+    "input": {},
+    "exit_code": 0,
+    "stdout": {
+      "already_initialized": false,
+      "config_path": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/adopted/.spec-flow/config.json",
+      "status": "initialized"
+    },
+    "stderr": ""
+  },
+  "strict_query_operations": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/new",
+        "status",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {},
+      "exit_code": 0,
+      "stdout": {
+        "initialized": false,
+        "runs": [],
+        "status": "uninitialized"
+      },
+      "stderr": "",
+      "fixture": "new",
+      "no_file_or_metadata_changes": true
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/new",
+        "gate",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "kind": "constitution"
+      },
+      "exit_code": 0,
+      "stdout": {
+        "missing_approvals": [],
+        "ready": false,
+        "reason": "uninitialized"
+      },
+      "stderr": "",
+      "fixture": "new",
+      "no_file_or_metadata_changes": true
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/new",
+        "validate",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "path": ".specs/constitution.md"
+      },
+      "exit_code": 2,
+      "stdout": {
+        "error": {
+          "code": "contract_invalid",
+          "details": {},
+          "message": "cannot read document: /private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/new/.specs/constitution.md"
+        }
+      },
+      "stderr": "",
+      "fixture": "new",
+      "no_file_or_metadata_changes": true
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/new",
+        "digest",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "path": ".specs/constitution.md"
+      },
+      "exit_code": 2,
+      "stdout": {
+        "error": {
+          "code": "contract_invalid",
+          "details": {},
+          "message": "cannot read document: /private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/new/.specs/constitution.md"
+        }
+      },
+      "stderr": "",
+      "fixture": "new",
+      "no_file_or_metadata_changes": true
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/legacy",
+        "status",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {},
+      "exit_code": 2,
+      "stdout": {
+        "error": {
+          "code": "migration_required",
+          "details": {},
+          "message": "legacy .specs/NNN-feature directories require migration before harness operations"
+        }
+      },
+      "stderr": "",
+      "fixture": "legacy",
+      "no_file_or_metadata_changes": true
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/legacy",
+        "gate",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "kind": "constitution"
+      },
+      "exit_code": 2,
+      "stdout": {
+        "error": {
+          "code": "migration_required",
+          "details": {},
+          "message": "legacy .specs/NNN-feature directories require migration before harness operations"
+        }
+      },
+      "stderr": "",
+      "fixture": "legacy",
+      "no_file_or_metadata_changes": true
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/legacy",
+        "validate",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "path": ".specs/constitution.md"
+      },
+      "exit_code": 2,
+      "stdout": {
+        "error": {
+          "code": "migration_required",
+          "details": {},
+          "message": "legacy .specs/NNN-feature directories require migration before harness operations"
+        }
+      },
+      "stderr": "",
+      "fixture": "legacy",
+      "no_file_or_metadata_changes": true
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/legacy",
+        "digest",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "path": ".specs/constitution.md"
+      },
+      "exit_code": 2,
+      "stdout": {
+        "error": {
+          "code": "migration_required",
+          "details": {},
+          "message": "legacy .specs/NNN-feature directories require migration before harness operations"
+        }
+      },
+      "stderr": "",
+      "fixture": "legacy",
+      "no_file_or_metadata_changes": true
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/adopted",
+        "status",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {},
+      "exit_code": 0,
+      "stdout": {
+        "initialized": true,
+        "runs": [],
+        "status": "initialized"
+      },
+      "stderr": "",
+      "fixture": "adopted",
+      "no_file_or_metadata_changes": true
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/adopted",
+        "gate",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "kind": "constitution"
+      },
+      "exit_code": 0,
+      "stdout": {
+        "invalid_prerequisites": [],
+        "missing_approvals": [],
+        "ready": true
+      },
+      "stderr": "",
+      "fixture": "adopted",
+      "no_file_or_metadata_changes": true
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/adopted",
+        "validate",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "path": ".specs/constitution.md"
+      },
+      "exit_code": 2,
+      "stdout": {
+        "error": {
+          "code": "contract_invalid",
+          "details": {},
+          "message": "cannot read document: /private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/adopted/.specs/constitution.md"
+        }
+      },
+      "stderr": "",
+      "fixture": "adopted",
+      "no_file_or_metadata_changes": true
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/adopted",
+        "digest",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "path": ".specs/constitution.md"
+      },
+      "exit_code": 2,
+      "stdout": {
+        "error": {
+          "code": "contract_invalid",
+          "details": {},
+          "message": "cannot read document: /private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/adopted/.specs/constitution.md"
+        }
+      },
+      "stderr": "",
+      "fixture": "adopted",
+      "no_file_or_metadata_changes": true
+    }
+  ],
+  "unsupported_gate_kinds": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/adopted",
+        "gate",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "kind": "design"
+      },
+      "exit_code": 2,
+      "stdout": {
+        "error": {
+          "code": "invalid_input",
+          "details": {},
+          "message": "gate requires a valid path, phase, or kind"
+        }
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/adopted",
+        "gate",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "kind": "backlog"
+      },
+      "exit_code": 2,
+      "stdout": {
+        "error": {
+          "code": "invalid_input",
+          "details": {},
+          "message": "gate requires a valid path, phase, or kind"
+        }
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow/scripts/spec-flow.py",
+        "--root",
+        "/private/tmp/spec-flow-e7-55eb811-nh63aagh/consultation-fixtures/adopted",
+        "gate",
+        "--input",
+        "/dev/stdin"
+      ],
+      "input": {
+        "kind": "using-spec-flow"
+      },
+      "exit_code": 2,
+      "stdout": {
+        "error": {
+          "code": "invalid_input",
+          "details": {},
+          "message": "gate requires a valid path, phase, or kind"
+        }
+      },
+      "stderr": ""
+    }
+  ],
+  "completion_queries_excluded": true,
+  "source_and_fixture_contents_modes_mtimes_unchanged_during_queries": true
+}

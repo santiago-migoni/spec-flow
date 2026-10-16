@@ -1,0 +1,34 @@
+{
+  "release": "v1.2.3",
+  "run_id": "81b222bc-7251-4d23-8a94-240b01624aa8",
+  "evaluated_phase_commit": "e1137488895ec3dfcc32ef9257a6f3a04877d690",
+  "conclusion": "Technical convergence confirmed for disposable E7 fixture scope; release review/audit closure blocked by F-01",
+  "entry": {
+    "gate_ready": true,
+    "technical_complete": true,
+    "release_review_pending": true,
+    "audit_pending": true
+  },
+  "acceptance": [
+    {
+      "criterion": "AC-001",
+      "story": "US-001",
+      "status": "Satisfied",
+      "evidence": "T-001.001 controller evidence: valid bare/prefixed, zero and large-component fixed cases executed and passed."
+    },
+    {
+      "criterion": "AC-002",
+      "story": "US-001",
+      "status": "Satisfied",
+      "evidence": "T-001.001 controller evidence: malformed-string and nonstring fixed cases executed and passed."
+    }
+  ],
+  "quality": {
+    "NFR-001": "Satisfied: all four named methods passed; fixed test hash 7bb24f05; verification did not mutate release.py."
+  },
+  "shared_rules": "Constitution MUST unchanged fixed test and nonmutating verification met; architecture interface and structure placement match.",
+  "findings": [],
+  "impact": "pending; disposable suite does not measure real-world impact",
+  "closure_blocker": "F-01: pinned template generated placeholder rejected by release-review before derived record/audit.",
+  "migration_note": "One-to-one legacy conversion; old Approved/checkmarks imported zero authority/evidence; fresh E7-only receipts."
+}

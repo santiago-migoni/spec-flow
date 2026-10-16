@@ -1,0 +1,30 @@
+{
+  "created_at": "2026-10-16T13:42:58Z",
+  "diff_sha256": "5b6f1bf5ec816dcafe0870a16b3246fc707d1d93e0b9b61ad5a62e1d1b6e0b6a",
+  "marker": "SPEC_FLOW_PHASE_REVIEW=1a371423-acdf-47bf-bf9f-3bf41c1ebf70/PH-01/4df0a78b301a76c3ed483154b1b8ee2a88759ca6",
+  "packet_sha256": "2a16043375854e90783761decb1709b7e4d9be9f4f707890aeedcf674c9c5db3",
+  "parent": "e16a5ece037fe1086a14f31f9cb7d8793ac08c8d",
+  "phase_id": "PH-01",
+  "release": "v1.2.3",
+  "run_id": "1a371423-acdf-47bf-bf9f-3bf41c1ebf70",
+  "schema": "spec-flow-phase-review.v1",
+  "source_digests": {
+    ".specs/architecture.md": "68fadf86f5eac936fabbb35dbd05b51e9ab969693cd970736bd598848d8174c8",
+    ".specs/constitution.md": "1cfeaf7ada550fb9f744596b7a40c4fdba85f51fa276a5ebac95250b44b8d0a3",
+    ".specs/release-v1.2.3/plan.md": "05e99bddfa68f794a9a853fc8baf4e5d6b3669000e939c2d409ce57b2c0f23f1",
+    ".specs/release-v1.2.3/spec.md": "c38cf595cc443657154b2c180791eae21e7c69a4d9e483a31e5dc64b4a116f24",
+    ".specs/release-v1.2.3/tasks.md": "f4fa1e82d43ba961bce4c9ffe97a2e3e9127ad9431505b95c1e4b2c4ded12f6c",
+    ".specs/roadmap.md": "b25879a22fd9a959859b257612d2702a844766972d8245ee7c7ae79b7352a8aa",
+    ".specs/structure.md": "f40581cac4293ebe2623fe1f5655595d4d5c67f832f31492a9dda6ec1b78d5eb"
+  },
+  "staged_paths": [
+    ".spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/events.jsonl",
+    ".spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/evidence/T-001-1-verify.json",
+    ".specs/release-v1.2.3/tasks.md",
+    "release.py"
+  ],
+  "task_ids": [
+    "T-001"
+  ],
+  "tree": "4df0a78b301a76c3ed483154b1b8ee2a88759ca6"
+}

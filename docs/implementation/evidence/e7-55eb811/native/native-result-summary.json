@@ -1,0 +1,142 @@
+{
+  "evaluated_commit": "55eb811bd05043966b9763e7270ed678444896c5",
+  "source_package_root": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/source/plugins/spec-flow",
+  "source_archive_sha256": "9a205f28c05ade0903f75eaee1595443faeb5ceffaf0bba4d38d75f337df50ef",
+  "production_runtime": "Pinned Engine/CLI with NativeCodexAdapter; no FakeAdapter or profile substitution",
+  "owner": {
+    "agent_path": "/root/e7_owner_55eb811",
+    "session_id": "01a144ec-d228-77d0-8a9a-fcc7ef6460ea",
+    "model": "gpt-6-sol",
+    "effort": "high",
+    "attestation_sha256": "430dac9013f3a0435034c57f9e60ceed0fdf68235a6003ab338bdf0508ac4b29"
+  },
+  "fixture_base": "/private/tmp/spec-flow-e7-55eb811-nh63aagh",
+  "evidence_root": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-55eb811/native",
+  "fixture_runs": {
+    "fresh": {
+      "main_repo": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/fresh-main",
+      "linked_worktree": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/fresh-linked",
+      "run_id": "fbeb2a9e-4a99-4e56-a977-d3c1a05c7902",
+      "operations_log": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-55eb811/native/fresh/operations.jsonl",
+      "operation_count": 34,
+      "phase_commit_sha": "9d556c680c79e2dbdcd241dd3ad9313bf24c7f3e",
+      "linked_head_after_teardown": "9d556c680c79e2dbdcd241dd3ad9313bf24c7f3e",
+      "implementer_sessions": [
+        "01a144ef-7a46-7073-9c27-343fc9beaf67"
+      ],
+      "reviewer_session": "01a144f0-306d-72a2-949c-0406da7c2657",
+      "native_profiles_attested": true,
+      "final_run_status": "abandoned",
+      "active_task": null,
+      "lease_before": true,
+      "lease_after": false,
+      "test_file_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "retained_worktree_status": " M .spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/events.jsonl\n?? .spec-flow/runs/fbeb2a9e-4a99-4e56-a977-d3c1a05c7902/evidence/PH-01-phase-commit.json\n",
+      "gate_before_receipts": "ready=false, seven missing",
+      "gate_after_receipts": "ready=true",
+      "fixed_methods_passed": 4,
+      "technical_complete_before_teardown": true,
+      "release_review_exit": 2,
+      "design_template_section_limitation": true
+    },
+    "faithful": {
+      "main_repo": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/faithful-main",
+      "linked_worktree": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/faithful-linked",
+      "run_id": "1a371423-acdf-47bf-bf9f-3bf41c1ebf70",
+      "operations_log": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-55eb811/native/faithful/operations.jsonl",
+      "operation_count": 40,
+      "phase_commit_sha": "eafbe95e03d20db337bf06e53e893ceab3f80b2d",
+      "linked_head_after_teardown": "eafbe95e03d20db337bf06e53e893ceab3f80b2d",
+      "implementer_sessions": [
+        "01a144f2-b02c-7631-ab6e-a097340db1de"
+      ],
+      "reviewer_session": "01a144f3-c4bb-74f1-883f-14c3da27280e",
+      "native_profiles_attested": true,
+      "final_run_status": "abandoned",
+      "active_task": null,
+      "lease_before": true,
+      "lease_after": false,
+      "test_file_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "retained_worktree_status": " M .spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/events.jsonl\n?? .spec-flow/runs/1a371423-acdf-47bf-bf9f-3bf41c1ebf70/evidence/PH-01-phase-commit.json\n",
+      "current_design_template_sections": "architecture 11/11, structure 10/10; parent independently checked all document sections",
+      "injected_interruption": "Child deliberately interrupted after release.py write; host lifecycle aborted; controller interrupt/resume/reconcile(accept_result) accepted real file/result without replay.",
+      "packet_restore": "Injected generated task-packet cache loss; restore-packet produced byte-identical hash 04a1a50451603dcab37104e7b71025378c5c283df995b953bd643e460de56135.",
+      "fixed_methods_passed": 4,
+      "technical_complete_before_teardown": true,
+      "release_review_exit": 2
+    },
+    "legacy": {
+      "main_repo": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/legacy-main",
+      "linked_worktree": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/legacy-linked",
+      "run_id": "81b222bc-7251-4d23-8a94-240b01624aa8",
+      "operations_log": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-55eb811/native/legacy/operations.jsonl",
+      "operation_count": 31,
+      "phase_commit_sha": "e1137488895ec3dfcc32ef9257a6f3a04877d690",
+      "linked_head_after_teardown": "e1137488895ec3dfcc32ef9257a6f3a04877d690",
+      "implementer_sessions": [
+        "01a144f5-263f-7480-8511-24781a8e6df6"
+      ],
+      "reviewer_session": "01a144f5-fb16-7e51-ba4b-3cf136c0ca95",
+      "native_profiles_attested": true,
+      "final_run_status": "abandoned",
+      "active_task": null,
+      "lease_before": true,
+      "lease_after": false,
+      "test_file_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "retained_worktree_status": " M .spec-flow/runs/81b222bc-7251-4d23-8a94-240b01624aa8/events.jsonl\n?? .spec-flow/runs/81b222bc-7251-4d23-8a94-240b01624aa8/evidence/PH-01-phase-commit.json\n",
+      "migration_id": "70bb61c2d45c57f3b7d71b601c22b983",
+      "legacy_source_head": "a8e66f825595f2b0e10ceecc1b7d8766f47cbce2",
+      "migration_checkpoint": "c21b862",
+      "mapping": "one-to-one .specs/001-normalize-release to v1.2.3",
+      "imported_approvals": 0,
+      "imported_evidence": 0,
+      "fresh_synthetic_receipts": 7,
+      "fixed_methods_passed": 4,
+      "technical_complete_before_teardown": true,
+      "release_review_exit": 2
+    },
+    "negative": {
+      "main_repo": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/negative-main",
+      "linked_worktree": "/private/tmp/spec-flow-e7-55eb811-nh63aagh/negative-linked",
+      "run_id": "26f8338a-b762-42d0-8ce2-3a09148c1480",
+      "operations_log": "/Users/santiago_migoni/Documents/Projects/spec-flow/docs/implementation/evidence/e7-55eb811/native/negative/operations.jsonl",
+      "operation_count": 23,
+      "phase_commit_sha": null,
+      "linked_head_after_teardown": "e16a5ece037fe1086a14f31f9cb7d8793ac08c8d",
+      "implementer_sessions": [
+        "01a144f6-52c4-74a2-bb7c-870f40e8a471",
+        "01a144f7-3265-7222-80cc-d0cfcde67daa"
+      ],
+      "reviewer_session": null,
+      "native_profiles_attested": true,
+      "final_run_status": "abandoned",
+      "active_task": null,
+      "lease_before": true,
+      "lease_after": false,
+      "test_file_sha256": "7bb24f05e31ffe3fdb53c96895e3462a5823fe7ac9ad4bdbe0e612d206cd0577",
+      "retained_worktree_status": " M release.py\n?? .spec-flow/runs/\n",
+      "injected_failure": true,
+      "attempts_used": 2,
+      "attempt_limit": 3,
+      "third_attempt_unused": true,
+      "attempt_1": "Controller verification_failed: four leading-zero subtest failures; review(pass) and close denied.",
+      "attempt_2": "Original child blocker result preserved, first verify agent_blocked; Sol explicitly reclassified runnable check with blocker retained in history, then controller verification_failed for 1.2.003; review(pass)/close denied.",
+      "phase_ready": "denied phase_tasks_incomplete",
+      "technical_complete_before_teardown": false
+    }
+  },
+  "candidate_blocker": {
+    "id": "F-01",
+    "severity": "HIGH",
+    "code": "release_review_record_stale",
+    "description": "Pinned spec/roadmap templates contain a generated placeholder that pinned PhaseController._generated_record rejects before release-review can write derived records. Independently reproduced by parent on literal templates.",
+    "effect": "No final release-review record, audit commit or finishing eligibility in any positive native fixture."
+  },
+  "limits": [
+    "First fresh native fixture has condensed architecture/structure prose; faithful and legacy fixtures use all current design-template section headings.",
+    "Analyze/clarify/backlog side channels and publication, installation, push, merge, tags and real-product approval were outside this native execution.",
+    "Negative attempt ceiling was not exhausted: two injected attempts used and third left unused; deterministic bound coverage belongs to separate tests."
+  ],
+  "source_plugin_modified": false,
+  "all_leases_released_via_supported_abandon": true
+}
