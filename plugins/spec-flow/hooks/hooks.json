@@ -1,0 +1,17 @@
+{
+  "description": "Check Spec-Flow document approvals before supported Edit, MultiEdit, and Write operations.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/check-phase-approval.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

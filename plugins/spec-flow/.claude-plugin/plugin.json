@@ -1,0 +1,19 @@
+{
+  "name": "spec-flow",
+  "version": "0.1.0",
+  "description": "Spec-driven development for Claude Code: a strategic flow (constitution, design, roadmap), an agile release flow (spec, plan, tasks, implement, review), and a backlog for deferred ideas.",
+  "author": {
+    "name": "Santiago Migoni",
+    "email": "santiagomigoni@gmail.com"
+  },
+  "repository": "https://github.com/santiago-migoni/spec-flow",
+  "license": "AGPL-3.0",
+  "keywords": [
+    "sdd",
+    "spec-driven",
+    "planning",
+    "specs",
+    "workflows",
+    "releases"
+  ]
+}

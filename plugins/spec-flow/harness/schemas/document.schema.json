@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec-flow.local/schemas/document.schema.json",
+  "title": "Spec-Flow document contract",
+  "oneOf": [
+    {"$ref": "#/$defs/base"},
+    {"$ref": "#/$defs/spec"},
+    {"$ref": "#/$defs/plan"},
+    {"$ref": "#/$defs/roadmap"},
+    {"$ref": "#/$defs/tasks"}
+  ],
+  "$defs": {
+    "dependency": {
+      "type": "object",
+      "required": ["path", "digest"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "common": {
+      "type": "object",
+      "required": ["schema_version", "kind", "revision", "id", "depends_on"],
+      "properties": {
+        "schema_version": {"const": 1},
+        "kind": {"enum": ["constitution", "architecture", "structure", "infrastructure", "roadmap", "spec", "plan", "tasks"]},
+        "revision": {"type": "string", "pattern": "^R[0-9]{2,}$"},
+        "id": {"type": "string", "minLength": 1},
+        "status": {"enum": ["draft", "approved", "converged"]},
+        "depends_on": {"type": "array", "items": {"$ref": "#/$defs/dependency"}}
+      },
+      "additionalProperties": true
+    },
+    "base": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {"not": {"properties": {"kind": {"enum": ["spec", "plan", "roadmap", "tasks"]}}}}
+      ]
+    },
+    "acceptance": {
+      "type": "object",
+      "required": ["id", "story", "description"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "story": {"type": "string", "pattern": "^US-[0-9]{3,}$"},
+        "description": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "story": {
+      "type": "object",
+      "required": ["id", "title", "description"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^US-[0-9]{3,}$"},
+        "title": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {
+          "type": "object",
+          "required": ["stories", "acceptance"],
+          "properties": {
+            "kind": {"const": "spec"},
+            "stories": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/story"}},
+            "acceptance": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/acceptance"}}
+          }
+        }
+      ]
+    },
+    "phase": {
+      "type": "object",
+      "required": ["id", "description", "depends_on"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^PH-[0-9]{2,}$"},
+        "description": {"type": "string", "minLength": 1},
+        "depends_on": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      },
+      "additionalProperties": false
+    },
+    "plan": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {
+          "type": "object",
+          "required": ["phases"],
+          "properties": {
+            "kind": {"const": "plan"},
+            "phases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/phase"}}
+          }
+        }
+      ]
+    },
+    "roadmap_release": {
+      "type": "object",
+      "required": ["version", "objective", "status"],
+      "properties": {
+        "version": {"type": "string", "pattern": "^v(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"},
+        "objective": {"type": "string", "minLength": 1},
+        "status": {"enum": ["planned", "active", "completed", "deferred", "cancelled"]}
+      },
+      "additionalProperties": false
+    },
+    "roadmap": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {
+          "type": "object",
+          "required": ["releases"],
+          "properties": {
+            "kind": {"const": "roadmap"},
+            "releases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/roadmap_release"}}
+          }
+        }
+      ]
+    },
+    "step": {
+      "type": "object",
+      "required": ["id", "action", "verification"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "action": {"type": "string", "minLength": 1},
+        "verification": {
+          "type": "object",
+          "required": ["expected"],
+          "oneOf": [
+            {"required": ["command"], "not": {"required": ["inspection"]}},
+            {"required": ["inspection"], "not": {"required": ["command"]}}
+          ],
+          "properties": {
+            "command": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+            "inspection": {"type": "string", "minLength": 1},
+            "expected": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "task": {
+      "type": "object",
+      "required": ["id", "phase", "story", "acceptance", "depends_on", "files", "steps", "closure"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "phase": {"type": "string", "minLength": 1},
+        "story": {"type": "string", "minLength": 1},
+        "acceptance": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "depends_on": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "files": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "steps": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/step"}},
+        "closure": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "tasks": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {
+          "type": "object",
+          "required": ["tasks"],
+          "properties": {
+            "kind": {"const": "tasks"},
+            "tasks": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/task"}}
+          }
+        }
+      ]
+    }
+  }
+}
