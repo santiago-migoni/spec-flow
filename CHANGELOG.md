@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Present each specify story with its canonical actor, need and benefit, concrete situation, and observable result. Preserve US/AC ownership and outcome traceability; keep supporting technical mechanisms out of fictitious user stories.
+
 ## Release v3.1.0
 
 Release date: 2026-10-16.

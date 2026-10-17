@@ -50,14 +50,34 @@ Replace the illustrative stories, criteria, table rows, outcome references, and 
 
 ## User stories
 
-The stories array owns each story's ID, title, and description; acceptance owns each AC's ID, story owner, and verifiable description. Use this section for additional context and this reference view, not a second definition. Split oversized stories into independently valuable, testable increments. Explain actual dependencies rather than inventing technical-task stories.
+The stories array owns each story's ID, title, and description; acceptance owns each AC's ID, story owner, and verifiable description. Present every canonical story in order using the reading format below. Copy its ID, title, and description exactly; the quoted description expresses the real actor's need and benefit. Situation and observable result elaborate that same need without becoming separate story or acceptance definitions. Split oversized stories into independently valuable, testable increments.
+
+### US-001 — [Story title]
+
+> As a [user], I need [capability] so that [benefit].
+
+**Situation:** [The actor's concrete context, trigger, or problem that creates this need.]
+
+**Observable result:** [What the actor can accomplish or recognize when the need is met, consistent with this story's canonical ACs.]
+
+### US-002 — [Related story title]
+
+> As a [user], I need [related capability] so that [benefit].
+
+**Situation:** [The real usage context for this related need.]
+
+**Observable result:** [The outcome visible to the actor, consistent with this story's canonical ACs.]
+
+### Acceptance traceability and dependencies
 
 | Story | Related outcomes | Acceptance criteria | Relevant dependencies |
 | --- | --- | --- | --- |
 | US-001 | OUT-001 | AC-001, AC-002, AC-003 | [References or none] |
 | US-002 | OUT-001 | AC-004 | [References or none] |
 
-[Include each canonical story exactly once, in canonical order. Reference only existing roadmap outcomes and all AC IDs belonging to that story. Dependencies between stories do not transfer criterion ownership.]
+[Include each canonical story exactly once in the narrative blocks and exactly once in this table, both in canonical order. Reference only existing roadmap outcomes and all AC IDs belonging to that story. Dependencies between stories do not transfer criterion ownership.]
+
+[Installation, delivery mechanisms, persistence, and quality constraints support user journeys; do not invent stories such as “implement email” or “create SQL tables” merely to group technical work. Retain required technical conditions in canonical ACs under their actual story owner or reference approved shared constraints; explain cross-story dependencies without duplicating ownership. Solution details belong in plan. If a situation or observable result introduces a new obligation, update/add the canonical AC under its correct owner and reconcile the reading views in the same revision.]
 
 ## Rules, acceptance, and examples
 
@@ -95,7 +115,7 @@ The stories array owns each story's ID, title, and description; acceptance owns 
 
 ## Readiness for planning, approval, and amendments
 
-Before presenting the spec as ready for planning, review explicit release selection/current approved bases, coherent scope, bounded valuable stories, verifiable criteria, relevant quality/exceptions/constraints, and resolution of material questions. Check story-table count/order/IDs, complete AC membership under the correct owner, known OUT references, valid example/NFR links, and semantic consistency with canonical acceptance. Reconcile any mismatch before dependent planning. These are review requirements, not completion checkboxes.
+Before presenting the spec as ready for planning, review explicit release selection/current approved bases, coherent scope, bounded valuable stories, verifiable criteria, relevant quality/exceptions/constraints, and resolution of material questions. Check narrative-block and story-table count/order/IDs, exact title/description agreement with canonical stories, real needs/benefits, situations and observable results, complete AC membership under the correct owner, known OUT references, valid example/NFR links, and semantic consistency with canonical acceptance. Reconcile any mismatch before dependent planning. These are review requirements, not completion checkboxes.
 
 [Keep decision sources and approved revisions, reasons, and affected documents. Record actual approval scope; authority remains in the controller registry. A substantive change needs revision/approval and inspection of affected downstream pins. Spec approval permits progression through the plan gate, not implementation, integration, or publication.]
 
