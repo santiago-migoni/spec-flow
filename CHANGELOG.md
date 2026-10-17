@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## Release v0.1.0
+
+Release date: 2026-10-17.
 
 ### Added
 
