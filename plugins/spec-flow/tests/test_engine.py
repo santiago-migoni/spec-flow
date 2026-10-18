@@ -112,6 +112,31 @@ class EngineTests(unittest.TestCase):
         self.approve("spec")
         self.assertTrue(self.engine.dispatch("hook-check", {"paths": [".specs/release-v1.2.3/plan.md"]})["allowed"])
 
+    def test_missing_prerequisite_is_reported_as_missing_approval(self):
+        self.engine.dispatch("initialize", {})
+        self.approve("constitution")
+        self.docs["roadmap"].unlink()
+        gate = self.engine.dispatch("gate", {"phase": "spec"})
+        self.assertFalse(gate["ready"])
+        self.assertEqual(gate["missing_approvals"], [".specs/roadmap.md"])
+        self.assertEqual(gate["invalid_prerequisites"], [])
+        self.docs["spec"].unlink()
+        with self.assertRaises(EngineError) as ctx:
+            self.engine.dispatch("hook-check", {"paths": [".specs/release-v1.2.3/spec.md"]})
+        self.assertEqual(ctx.exception.code, "dependency_not_approved")
+        self.assertIn("missing", str(ctx.exception))
+
+    def test_text_after_generated_block_names_the_fix(self):
+        self.engine.dispatch("initialize", {})
+        constitution = self.docs["constitution"]
+        constitution.write_text(constitution.read_text() + "\n<!-- spec-flow:generated:start -->\nProgress is maintained by the Spec-Flow harness.\n<!-- spec-flow:generated:end -->\n", encoding="utf-8")
+        self.approve("constitution")
+        self.approve("roadmap")
+        constitution.write_text(constitution.read_text() + "\nTexto agregado despues del bloque.\n", encoding="utf-8")
+        gate = self.engine.dispatch("gate", {"phase": "spec"})
+        reasons = [row["reason"] for row in gate["invalid_prerequisites"]]
+        self.assertTrue(any("move any text" in reason for reason in reasons), reasons)
+
     def test_legacy_numbered_directory_requires_migration(self):
         (self.root / ".specs" / "001-demo").mkdir()
         with self.assertRaises(EngineError) as ctx:

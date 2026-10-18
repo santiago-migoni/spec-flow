@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- A missing prerequisite document now reports `dependency_not_approved` with "missing; write and approve it first" instead of `contract_invalid: cannot read document`, in both the hook and the gate.
+- Text added after a document's generated progress block now names the fix ("move any text added after it above the block") instead of only stating the block shape.
+
 ## Release v0.1.0
 
 Release date: 2026-10-17.
