@@ -291,6 +291,8 @@ class Engine:
         return ordered
 
     def _require_approved(self, path: Path) -> None:
+        if not path.is_file():
+            raise EngineError("dependency_not_approved", "prerequisite document is missing; write and approve it first: {}".format(path.relative_to(self.root).as_posix()))
         receipts = self._approval_map()
         for dependency in self._approval_closure(path):
             if not self._current_approval(dependency, receipts):
@@ -350,6 +352,11 @@ class Engine:
         missing: List[str] = []
         invalid: List[Dict[str, str]] = []
         for item in prerequisites:
+            if not item.is_file():
+                relative = item.relative_to(self.root).as_posix()
+                if relative not in missing:
+                    missing.append(relative)
+                continue
             try:
                 closure = self._approval_closure(item)
             except EngineError as exc:

@@ -126,7 +126,7 @@ def _strip_generated_tail(text: str) -> str:
     if start_count == end_count == 0:
         return text
     if start_count != 1 or end_count != 1 or len(matches) != 1:
-        raise ContractError("generated progress must be one complete trailing generated block")
+        raise ContractError("generated progress must be one complete trailing generated block; move any text added after it above the block")
     match = matches[0]
     body = text[match.start():match.end()]
     progress = re.sub(
