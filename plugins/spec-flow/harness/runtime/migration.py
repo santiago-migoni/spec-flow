@@ -230,9 +230,8 @@ class Migration:
         active = [item for item in mappings if "release" in item]
         if not active:
             return
-        if candidate is None:
-            # preview() rejects active releases without a candidate before reaching this point.
-            raise MigrationError("migration_candidate_required", "active releases require a candidate overlay")
+        # _manifest rejects active releases without a candidate before reaching this point.
+        assert candidate is not None
         mirror_temp = tempfile.TemporaryDirectory(prefix="spec-flow-migrate-")
         try:
             mirror = Path(mirror_temp.name)
@@ -311,13 +310,13 @@ class Migration:
             decision_is_replacement = replacement is not None and rec["path"] == target
             if not decision_is_legacy and not decision_is_replacement:
                 return {"reason": "receipt does not identify a mapped legacy decision or explicit replacement"}
-            expected_original = replacement["source_sha256"] if replacement is not None and decision_is_replacement else rec["digest"]
+            expected_original = replacement["source_sha256"] if replacement and decision_is_replacement else rec["digest"]
             if sha(original.read_bytes()) != rec["digest"] or rec["digest"] != expected_original:
                 return {"reason": "original decision bytes do not match receipt or replacement pin"}
             if not target.startswith(".specs/"):
                 return {"reason": "approval target must be under .specs"}
             target_path = (candidate / target) if candidate and target in {f["path"] for f in candidates} else safe_path(self.root, target)
-            is_release_target = origin is not None and "release" in origin and target.startswith(".specs/release-{}/".format(origin["release"]))
+            is_release_target = origin and "release" in origin and target.startswith(".specs/release-{}/".format(origin["release"]))
             is_replacement = target in {row["path"] for row in replacements}
             if not is_release_target and not is_replacement:
                 return {"reason": "approval target is not mapped to a release or explicit replacement"}

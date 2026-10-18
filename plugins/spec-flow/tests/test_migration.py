@@ -144,7 +144,7 @@ class MigrationTests(unittest.TestCase):
         self.assertEqual(ctx.exception.code, "migration_candidate_required")
 
     def test_import_outside_mapped_legacy_directory_is_rejected_before_classification(self):
-        # Approval classification needs the legacy origin of each import source.
+        # _one_import rejects import sources outside a mapped legacy directory before classification.
         with self.assertRaises(EngineError) as ctx:
             self.preview(imports={"approvals": [{"source": ".specs/roadmap.md", "target": ".specs/roadmap.md",
                                                  "equivalence": {}}]})
