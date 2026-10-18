@@ -11,7 +11,7 @@ import tempfile
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Set, Tuple
 
 from .contracts import ContractError, document_digest, normalize_release, read_document, safe_path, validate_release
 from .store import Store
@@ -125,10 +125,11 @@ class Migration:
                 raise MigrationError("migration_mapping_invalid", "entry needs release or archive:true")
         return sorted(result, key=lambda item: item["legacy"])
 
-    def _replacements(self, value: Any) -> List[Dict[str, str]]:
+    def _replacements(self, value: Any) -> List[Dict[str, Any]]:
         if not isinstance(value, list):
             raise MigrationError("migration_mapping_invalid", "replacements must be a list")
-        out, seen = [], set()
+        out: List[Dict[str, Any]] = []
+        seen: Set[str] = set()
         for row in value:
             if not isinstance(row, dict) or set(row) != {"path", "source_sha256", "equivalence"}:
                 raise MigrationError("migration_mapping_invalid", "replacement needs path, source_sha256, equivalence")
@@ -177,11 +178,11 @@ class Migration:
                 if (Path(directory) / name).is_symlink():
                     raise MigrationError("migration_unsafe_source", "symlink in .specs")
             for name in filenames:
-                path = Path(directory) / name
-                rel = path.relative_to(self.root).as_posix()
-                if path.is_symlink() or not path.is_file() or rel not in tracked:
+                source_file = Path(directory) / name
+                rel = source_file.relative_to(self.root).as_posix()
+                if source_file.is_symlink() or not source_file.is_file() or rel not in tracked:
                     raise MigrationError("migration_source_dirty", "untracked or non-regular source: " + rel)
-                data = path.read_bytes()
+                data = source_file.read_bytes()
                 if data != self._git("show", "HEAD:" + rel):
                     raise MigrationError("migration_source_dirty", "source bytes differ from Git HEAD: " + rel)
                 result.append({"path": rel, "sha256": sha(data)})
@@ -193,7 +194,7 @@ class Migration:
         specs = candidate / ".specs"
         if not candidate.is_dir() or not specs.is_dir() or [p.name for p in candidate.iterdir()] != [".specs"]:
             raise MigrationError("migration_candidate_invalid", "candidate directory must contain only a .specs overlay")
-        result = []
+        result: List[Dict[str, str]] = []
         for directory, dirs, files in os.walk(specs, followlinks=False):
             if any((Path(directory) / name).is_symlink() for name in [*dirs, *files]):
                 raise MigrationError("migration_candidate_invalid", "candidate overlay cannot contain symlinks")
@@ -206,7 +207,7 @@ class Migration:
             raise MigrationError("migration_candidate_invalid", "candidate overlay is empty")
         return sorted(result, key=lambda row: row["path"])
 
-    def _collisions(self, files: Sequence[Mapping[str, str]], replacements: Sequence[Mapping[str, str]],
+    def _collisions(self, files: Sequence[Mapping[str, str]], replacements: Sequence[Mapping[str, Any]],
                     sources: Sequence[Mapping[str, str]], candidate: Optional[Path]) -> None:
         existing = {row["path"]: row["sha256"] for row in sources}
         replace = {row["path"]: row["source_sha256"] for row in replacements}
@@ -224,11 +225,14 @@ class Migration:
         if conflicts:
             raise MigrationError("migration_collision", "candidate target already exists", {"paths": conflicts})
 
-    def _validate_overlay(self, mappings: Sequence[Mapping[str, Any]], replacements: Sequence[Mapping[str, str]],
+    def _validate_overlay(self, mappings: Sequence[Mapping[str, Any]], replacements: Sequence[Mapping[str, Any]],
                           candidate: Optional[Path], files: Sequence[Mapping[str, str]]) -> None:
         active = [item for item in mappings if "release" in item]
         if not active:
             return
+        if candidate is None:
+            # preview() rejects active releases without a candidate before reaching this point.
+            raise MigrationError("migration_candidate_required", "active releases require a candidate overlay")
         mirror_temp = tempfile.TemporaryDirectory(prefix="spec-flow-migrate-")
         try:
             mirror = Path(mirror_temp.name)
@@ -257,7 +261,7 @@ class Migration:
             mirror_temp.cleanup()
 
     def _imports(self, imports: Any, mappings: Sequence[Mapping[str, Any]], candidate: Optional[Path],
-                 files: Sequence[Mapping[str, str]], replacements: Sequence[Mapping[str, str]],
+                 files: Sequence[Mapping[str, str]], replacements: Sequence[Mapping[str, Any]],
                  sources: Sequence[Mapping[str, str]]) -> Dict[str, List[Dict[str, Any]]]:
         if not isinstance(imports, dict) or set(imports) - {"approvals"}:
             raise MigrationError("migration_import_invalid", "imports accepts an approvals list")
@@ -270,7 +274,7 @@ class Migration:
         return out
 
     def _one_import(self, kind: str, row: Any, mappings: Sequence[Mapping[str, Any]], candidate: Optional[Path],
-                    candidates: Sequence[Mapping[str, str]], replacements: Sequence[Mapping[str, str]],
+                    candidates: Sequence[Mapping[str, str]], replacements: Sequence[Mapping[str, Any]],
                     sources: Sequence[Mapping[str, str]]) -> Dict[str, Any]:
         if not isinstance(row, dict) or set(row) != {"source", "target", "equivalence"}:
             raise MigrationError("migration_import_invalid", "import entry needs source, target, and equivalence")
@@ -293,7 +297,7 @@ class Migration:
         return item
 
     def _classify_approval(self, item: Mapping[str, Any], mappings: Sequence[Mapping[str, Any]],
-                           replacements: Sequence[Mapping[str, str]], candidate: Optional[Path],
+                           replacements: Sequence[Mapping[str, Any]], candidate: Optional[Path],
                            candidates: Sequence[Mapping[str, str]]) -> Dict[str, Any]:
         rec, target = item["record"], item["target"]
         fields = {"schema_version", "kind", "path", "digest", "actor", "statement", "source"}
@@ -307,13 +311,13 @@ class Migration:
             decision_is_replacement = replacement is not None and rec["path"] == target
             if not decision_is_legacy and not decision_is_replacement:
                 return {"reason": "receipt does not identify a mapped legacy decision or explicit replacement"}
-            expected_original = replacement["source_sha256"] if decision_is_replacement else rec["digest"]
+            expected_original = replacement["source_sha256"] if replacement is not None and decision_is_replacement else rec["digest"]
             if sha(original.read_bytes()) != rec["digest"] or rec["digest"] != expected_original:
                 return {"reason": "original decision bytes do not match receipt or replacement pin"}
             if not target.startswith(".specs/"):
                 return {"reason": "approval target must be under .specs"}
             target_path = (candidate / target) if candidate and target in {f["path"] for f in candidates} else safe_path(self.root, target)
-            is_release_target = "release" in origin and target.startswith(".specs/release-{}/".format(origin["release"]))
+            is_release_target = origin is not None and "release" in origin and target.startswith(".specs/release-{}/".format(origin["release"]))
             is_replacement = target in {row["path"] for row in replacements}
             if not is_release_target and not is_replacement:
                 return {"reason": "approval target is not mapped to a release or explicit replacement"}

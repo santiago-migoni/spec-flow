@@ -197,7 +197,7 @@ class Engine:
             if not (is_release_doc or is_strategy_doc):
                 continue
             path = self._project_path(relative)
-            contract = {"depends_on": []}
+            contract: Dict[str, Any] = {"depends_on": []}
             if path.exists():
                 try:
                     contract = validate_document(self.root, path)["contract"]
