@@ -137,6 +137,19 @@ class MigrationTests(unittest.TestCase):
             self.preview()
         self.assertEqual(ctx.exception.code, "migration_candidate_invalid")
 
+    def test_active_release_without_candidate_is_rejected_before_overlay_validation(self):
+        # Overlay validation assumes a candidate directory whenever a release is active.
+        with self.assertRaises(EngineError) as ctx:
+            self.engine.dispatch("migrate-preview", {"mapping": self.mapping, "candidate_dir": None})
+        self.assertEqual(ctx.exception.code, "migration_candidate_required")
+
+    def test_import_outside_mapped_legacy_directory_is_rejected_before_classification(self):
+        # Approval classification needs the legacy origin of each import source.
+        with self.assertRaises(EngineError) as ctx:
+            self.preview(imports={"approvals": [{"source": ".specs/roadmap.md", "target": ".specs/roadmap.md",
+                                                 "equivalence": {}}]})
+        self.assertEqual(ctx.exception.code, "migration_import_invalid")
+
     def test_apply_rejects_stale_source_and_candidate(self):
         preview = self.preview()
         (self.legacy / "spec.md").write_text("concurrent source edit\n")

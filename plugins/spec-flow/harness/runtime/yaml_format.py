@@ -1,11 +1,12 @@
 """Bounded YAML contract codec: JSON-compatible data, no implicit YAML 1.1 types."""
 import json
 import re
+from typing import Any
 from .._vendor import yaml
 
 
 class StrictLoader(yaml.SafeLoader):
-    yaml_implicit_resolvers = {}
+    yaml_implicit_resolvers: dict[Any, Any] = {}
 
     def __init__(self, stream):
         super().__init__(stream)

@@ -38,7 +38,7 @@ PLACEHOLDER_RE = re.compile(
 )
 
 
-def normalize_release(value: str) -> str:
+def normalize_release(value: object) -> str:
     """Return a canonical vX.Y.Z release identifier for strict numeric SemVer."""
     if not isinstance(value, str) or not RELEASE_RE.fullmatch(value):
         raise ContractError("release must be strict numeric semver in X.Y.Z or vX.Y.Z form")
@@ -179,7 +179,7 @@ def _validate_generated_record(record: Mapping[str, Any]) -> None:
         _require(record.get("publication") is False and record.get("external_side_effects") is False, "derived release record cannot claim publication or external side effects")
         _require(isinstance(record.get("run_id"), str) and bool(record["run_id"]), "derived release record requires run_id")
         _require(isinstance(record.get("impact_evidence"), list) and all(isinstance(ref, str) and ref.strip() and "\n" not in ref for ref in record["impact_evidence"]), "derived release record impact evidence must contain references")
-        commits = record.get("phase_commits")
+        commits: Any = record.get("phase_commits")
         _require(isinstance(commits, list) and bool(commits), "derived release record requires phase commit references")
         for item in commits:
             _require(isinstance(item, dict) and set(item) == {"phase_id", "sha"}, "derived phase commit reference has an invalid shape")
@@ -254,7 +254,7 @@ def _require(condition: bool, message: str) -> None:
 
 
 def _validate_dependency_refs(root: Path, contract: Mapping[str, Any]) -> None:
-    refs = contract.get("depends_on")
+    refs: Any = contract.get("depends_on")
     _require(isinstance(refs, list), "depends_on must be a list")
     for ref in refs:
         _require(isinstance(ref, dict), "each document dependency must be an object")
@@ -269,7 +269,7 @@ def _validate_dependency_refs(root: Path, contract: Mapping[str, Any]) -> None:
 
 
 def _validate_spec(contract: Mapping[str, Any]) -> Set[str]:
-    stories = contract.get("stories")
+    stories: Any = contract.get("stories")
     _require(isinstance(stories, list) and bool(stories), "spec stories must be a nonempty list")
     story_ids: Set[str] = set()
     for story in stories:
@@ -281,7 +281,7 @@ def _validate_spec(contract: Mapping[str, Any]) -> Set[str]:
         _require(_nonempty_string(story.get("title")), "story {} requires a title".format(identifier))
         _require(_nonempty_string(story.get("description")), "story {} requires a description".format(identifier))
         story_ids.add(identifier)
-    criteria = contract.get("acceptance")
+    criteria: Any = contract.get("acceptance")
     _require(isinstance(criteria, list) and bool(criteria), "spec acceptance must be a nonempty list")
     ids: Set[str] = set()
     for criterion in criteria:
@@ -296,7 +296,7 @@ def _validate_spec(contract: Mapping[str, Any]) -> Set[str]:
 
 
 def _validate_tasks(contract: Mapping[str, Any], root: Path) -> None:
-    tasks = contract.get("tasks")
+    tasks: Any = contract.get("tasks")
     _require(isinstance(tasks, list) and bool(tasks), "tasks contract must contain a nonempty tasks list")
     task_ids: Set[str] = set()
     step_ids: Set[str] = set()
@@ -376,7 +376,7 @@ def _validate_tasks(contract: Mapping[str, Any], root: Path) -> None:
 
 
 def _validate_plan(contract: Mapping[str, Any]) -> None:
-    phases = contract.get("phases")
+    phases: Any = contract.get("phases")
     _require(isinstance(phases, list) and bool(phases), "plan must declare a nonempty phases array")
     phase_ids: Set[str] = set()
     dependencies: Dict[str, List[str]] = {}
@@ -413,7 +413,7 @@ def _validate_plan(contract: Mapping[str, Any]) -> None:
 
 
 def _validate_roadmap(contract: Mapping[str, Any]) -> None:
-    releases = contract.get("releases")
+    releases: Any = contract.get("releases")
     _require(isinstance(releases, list) and bool(releases), "roadmap must declare a nonempty releases array")
     seen: Set[str] = set()
     for release in releases:
