@@ -1,0 +1,15 @@
+# Development tooling only. The plugin has no runtime dependencies; see requirements-dev.txt.
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "hooks"]
+# tests/helpers.py is imported as a top-level module; the harness package lives at the plugin root.
+pythonpath = [".", "tests"]
+
+[tool.mypy]
+# Checked code only. The vendored PyYAML under harness/_vendor is excluded.
+files = ["harness/runtime", "scripts", "hooks"]
+exclude = ["_vendor/", "test_[^/]*\\.py$"]
+follow_imports = "silent"
+python_version = "3.10"
+warn_unused_ignores = true
+warn_redundant_casts = true

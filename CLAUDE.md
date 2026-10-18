@@ -66,4 +66,8 @@ New canonical documents use YAML frontmatter before the title. Legacy fenced JSO
 
 ## Tests
 
-Run `cd plugins/spec-flow && python3 -m pytest -q tests hooks`.
+Install the development tools once, outside the plugin runtime: `cd plugins/spec-flow && python3 -m pip install -r requirements-dev.txt`.
+
+Run the tests with `cd plugins/spec-flow && python3 -m pytest -q`. Pytest reads its paths from `plugins/spec-flow/pyproject.toml`.
+
+Run the type check with `cd plugins/spec-flow && python3 -m mypy`. It checks `harness/runtime`, `scripts`, and `hooks`, and excludes the vendored YAML and the test modules. The configuration lives in the same `pyproject.toml`.
