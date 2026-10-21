@@ -140,6 +140,14 @@ class DocumentValidationTests(unittest.TestCase):
             with self.assertRaises(ContractError):
                 validate_document(root, path)
 
+    def test_rejects_leftover_authoring_notes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            path = write_document(root / "constitution.md", base_contract("constitution"),
+                                  "Real content.\n\n> **Authoring notes (delete when filling in).**\n")
+            with self.assertRaises(ContractError):
+                validate_document(root, path)
+
     def test_accepts_later_revision_and_rejects_unknown_status(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

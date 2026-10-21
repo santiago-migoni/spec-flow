@@ -33,7 +33,8 @@ GENERATED_BLOCK_RE = re.compile(
 )
 PLACEHOLDER_RE = re.compile(
     r"\[(?:TODO|TBD|PLACEHOLDER|FILL[ -]?ME|REPLACE[ -]?ME|\.\.\.)\]"
-    r"|<(?:TODO|TBD|PLACEHOLDER)[^>]*>|^\s*(?:TODO|TBD|PLACEHOLDER|\.{3,})\s*$",
+    r"|<(?:TODO|TBD|PLACEHOLDER)[^>]*>|^\s*(?:TODO|TBD|PLACEHOLDER|\.{3,})\s*$"
+    r"|^>\s*\*\*Authoring notes",
     re.IGNORECASE | re.MULTILINE,
 )
 
