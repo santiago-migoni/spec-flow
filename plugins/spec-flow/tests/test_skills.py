@@ -8,7 +8,7 @@ from harness.runtime.contracts import read_document
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "skills"
 NAMES = ("using-spec-flow", "constitution", "design", "roadmap", "specify",
-         "clarify", "plan", "tasks", "analyze", "backlog", "implement",
+         "plan", "tasks", "backlog", "implement",
          "review-release", "finishing-branch")
 DOCUMENT_TEMPLATES = {
     "constitution": ("constitution", "constitution-template.md"),
@@ -36,7 +36,7 @@ class SkillPackageTests(unittest.TestCase):
         discovered = {path.parent.name for path in SKILLS.glob("*/SKILL.md")}
         self.assertEqual(discovered, set(NAMES))
         direct_controller_skills = {owner for owner, _ in DOCUMENT_TEMPLATES.values()}
-        direct_controller_skills.update(("using-spec-flow", "clarify", "analyze", "backlog"))
+        direct_controller_skills.update(("using-spec-flow", "backlog"))
         for name in NAMES:
             with self.subTest(skill=name):
                 text = (SKILLS / name / "SKILL.md").read_text()
@@ -86,11 +86,6 @@ class SkillPackageTests(unittest.TestCase):
         self.assertIn("initialize", bootstrap)
         self.assertIn("design (applicable architecture, infrastructure, and structure)", bootstrap)
         self.assertNotIn("one active feature per release", bootstrap)
-
-    def test_read_only_analyze(self):
-        text = (SKILLS / "analyze" / "SKILL.md").read_text()
-        self.assertIn("read-only", text.lower())
-        self.assertIn("Do not write any file", text)
 
 
 if __name__ == "__main__":

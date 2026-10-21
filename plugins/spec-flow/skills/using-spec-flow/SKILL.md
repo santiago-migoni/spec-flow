@@ -35,10 +35,8 @@ Each cycle lives in `.specs/release-vX.Y.Z/` with `spec.md`, `plan.md`, and `tas
 | Architecture, infrastructure, or structure decisions | `design` |
 | Priorities, outcomes, releases, selection | `roadmap` |
 | Behavior and acceptance for one release | `specify` |
-| Ambiguities in a spec | `clarify` (side channel, recommended) |
 | Technical approach and phases | `plan` |
 | Executable tasks | `tasks` |
-| Coherence check across spec, plan, and tasks | `analyze` (read-only, recommended) |
 | Deferred ideas | `backlog` |
 | Build the approved tasks | `implement` |
 | Review a finished release against its criteria and feedback | `review-release` |

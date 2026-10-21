@@ -23,8 +23,7 @@ class EngineError(RuntimeError):
 PHASE_ALIASES = {
     "constitution": "constitution", "architecture": "architecture", "structure": "structure",
     "infrastructure": "infrastructure", "roadmap": "roadmap", "spec": "spec", "specify": "spec",
-    "clarify": "clarify", "plan": "plan", "tasks": "tasks", "analyze": "analyze",
-    "implement": "implement",
+    "plan": "plan", "tasks": "tasks", "implement": "implement",
 }
 
 
@@ -344,7 +343,7 @@ class Engine:
         elif selector in PHASE_ALIASES:
             phase = PHASE_ALIASES[selector]
             prerequisites = self._phase_prerequisites(phase, payload.get("release"))
-            if phase in {"clarify", "analyze", "implement"}:
+            if phase == "implement":
                 self._validate_phase_documents(phase, payload.get("release"))
         else:
             raise EngineError("invalid_input", "gate requires a valid path, phase, or kind")
@@ -397,26 +396,16 @@ class Engine:
             return [self._project_path(".specs/constitution.md")]
         if phase == "spec":
             return [self._project_path(".specs/roadmap.md")]
-        if phase == "clarify":
-            return [self._release_path(release, "spec.md")]
         if phase == "plan":
             return [self._release_path(release, "spec.md")]
         if phase == "tasks":
             return [self._release_path(release, "plan.md")]
-        if phase == "analyze":
-            return [self._release_path(release, name) for name in ("spec.md", "plan.md", "tasks.md")]
         if phase == "implement":
             return self._release_documents(release)
         return []
 
     def _validate_phase_documents(self, phase: str, release: Optional[str]) -> None:
-        if phase == "clarify":
-            path = self._release_path(release, "spec.md")
-            try:
-                validate_document(self.root, path)
-            except ContractError as exc:
-                raise EngineError("contract_invalid", str(exc)) from exc
-        elif phase in {"analyze", "implement"}:
+        if phase == "implement":
             try:
                 validate_release(self.root, self._release_version(release))
             except ContractError as exc:

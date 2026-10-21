@@ -40,10 +40,8 @@ Each release lives in `.specs/release-vX.Y.Z/` with its own `spec.md`, `plan.md`
 | Architecture, infrastructure, structure | `$design` | applicable `.specs/{architecture,infrastructure,structure}.md` |
 | Outcomes and releases | `$roadmap` | `.specs/roadmap.md` |
 | Behavior and acceptance for one release | `$specify` | `release-vX.Y.Z/spec.md` |
-| Ambiguities in a spec (optional) | `$clarify` | section inside `spec.md` |
 | Technical approach and phases | `$plan` | `release-vX.Y.Z/plan.md` |
 | Executable tasks | `$tasks` | `release-vX.Y.Z/tasks.md` |
-| Consistency check (optional, read-only) | `$analyze` | conversation report |
 | Deferred ideas | `$backlog` | `.specs/backlog.md` |
 | Build the approved tasks | `$implement` | code changes and verification results |
 | Review a finished release | `$review-release` | conversation report: acceptance, feedback, outcomes |
