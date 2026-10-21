@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## Release v0.3.0
+
+Release date: 2026-10-21.
 
 ### Removed
 

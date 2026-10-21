@@ -1,6 +1,6 @@
 {
   "name": "spec-flow",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Spec-driven development for Claude Code: a strategic flow (constitution, design, roadmap), an agile release flow (spec, plan, tasks, implement, review), and a backlog for deferred ideas.",
   "author": {
     "name": "Santiago Migoni",

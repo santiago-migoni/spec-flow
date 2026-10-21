@@ -9,7 +9,7 @@
       "name": "spec-flow",
       "source": "./plugins/spec-flow",
       "description": "Strategy, releases, and tasks for spec-driven development.",
-      "version": "0.2.0"
+      "version": "0.3.0"
     }
   ],
   "metadata": {
