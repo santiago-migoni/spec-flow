@@ -62,7 +62,7 @@ class SkillPackageTests(unittest.TestCase):
                 self.assertIn("depends_on", contract)
                 self.assertEqual(contract["kind"], kind)
                 if kind == "roadmap":
-                    self.assertEqual(contract["releases"][0]["version"], "v2.0.0")
+                    self.assertEqual(contract["releases"][0]["version"], "v1.0.0")
                     self.assertIn("objective", contract["releases"][0])
                     self.assertIn("status", contract["releases"][0])
                 if kind == "plan":

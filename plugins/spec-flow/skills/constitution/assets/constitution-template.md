@@ -8,66 +8,159 @@ depends_on: []
 
 # Project Constitution
 
+> **Authoring notes (delete when filling in).**
+> - The constitution is the first approved document and depends on nothing. Its approval sets the project framework only; implementation, integration, and publication keep their own gates.
+> - Write content in the project's language. Keep headings and column names as they are.
+> - Replace every `[bracketed guide]` with content, or write `N/A` plus the reason. Keep paragraphs to two or three sentences; prefer tables, lists, and diagrams.
+> - Never invent budgets, dates, baselines, or role assignments. Leave unknowns as explicit questions or `pending`.
+> - Label each statement as **verified fact**, **hypothesis**, **proposal**, or **approved commitment**.
+> - Every MUST rule must be testable.
+> - Keep out: component design (architecture), paths (structure), environments (infrastructure), release priorities (roadmap), functional detail (release specs), release-specific risks.
+> - Before approving, check that every objective has an indicator, every MUST has a test, and every role has a named person or `pending`.
+
 ## Purpose and justification
 
-[Describe the problem or opportunity, why it merits action, and its contribution to organizational or sponsor objectives. Cite diagnostic sources and distinguish verified facts from hypotheses.]
+[One or two sentences: the problem or opportunity and why it merits action now.]
+
+| Problem or opportunity | Why it matters | Evidence or source | Status |
+|------------------------|----------------|--------------------|--------|
+| [Description] | [Impact on people or the organization] | [Diagnosis, data, or document] | [Verified fact or Hypothesis] |
+
+- **Sponsor objectives served:** [Which organizational or sponsor goals this project advances].
 
 ## Vision and beneficiaries
 
-[Describe the desired future state. Identify users, customers, and key stakeholders, their needs, and the expected benefit for each.]
+> **Vision:** [One sentence describing the desired future state.]
+
+| Beneficiary | Need | Expected benefit |
+|-------------|------|------------------|
+| [User, customer, or stakeholder group] | [What they need] | [What improves for them] |
 
 ## Objectives and success criteria
 
-[Define observable, measurable outcomes. Distinguish expected benefits from the deliverables needed to produce them.]
+[One sentence: objectives are observable outcomes, kept separate from the deliverables that produce them.]
 
-| Objective | Indicator | Baseline | Target | Evaluation point |
-| --- | --- | --- | --- | --- |
-| [Desired outcome] | [How measured] | [Known value or pending] | [Expected result] | [When assessed] |
+| ID | Objective | Indicator | Baseline | Target | Evaluation point |
+|----|-----------|-----------|----------|--------|------------------|
+| OBJ-01 | [Desired outcome] | [How it is measured] | [Known value or pending] | [Expected result] | [When it is assessed] |
+
+| Deliverable | Benefit it produces | Objective |
+|-------------|---------------------|-----------|
+| [Capability or result] | [Benefit] | [OBJ-xx] |
 
 ## Scope and boundaries
 
-[Describe included capabilities or general results, explicit exclusions, matters open to discovery, and conditions that would require reconsidering the project. Functional detail develops progressively in the roadmap and release specs.]
+[One sentence on what the project covers. Detailed functionality belongs in the roadmap and release specs.]
+
+| Category | Items |
+|----------|-------|
+| Included | [Capabilities or general results in scope] |
+| Excluded | [Explicit exclusions, each with a reason] |
+| Open to discovery | [Topics deliberately left undecided] |
+| Reconsideration triggers | [Conditions that reopen the scope or the project] |
 
 ## Principles
 
-- MUST: [Testable, enduring project rule.]
-- SHOULD: [Default and when a deviation is acceptable.]
+[One sentence on how these rules guide decisions. Each MUST must be checkable.]
+
+| ID | Type | Principle | Test or deviation condition |
+|----|------|-----------|-----------------------------|
+| PRN-01 | MUST | [Lasting, testable rule] | [How compliance is verified] |
+| PRN-02 | SHOULD | [Default practice] | [When deviation is acceptable and who decides] |
 
 ## Responsibilities and authority
 
-[Identify the sponsor or initiator, accountable project lead, and product priority decision-maker. State their decision authority, matters requiring approval, and escalation or disagreement resolution. Record explicitly when one person holds several roles.]
+[One sentence on who decides what. Flag when one person holds several roles.]
+
+> Optional diagram. Delete it for a project with one or two roles.
+
+```mermaid
+flowchart TD
+    SP["[Sponsor or initiator]<br/>[decision authority]"] --> LEAD["[Accountable project lead]<br/>[decision authority]"]
+    LEAD --> PO["[Product priority decision-maker]<br/>[decision authority]"]
+    PO -. "[escalation or disagreement path]" .-> SP
+```
+
+| Role | Person | Decision authority | Requires approval from | Escalation |
+|------|--------|--------------------|------------------------|------------|
+| [Sponsor, project lead, product decision-maker] | [Name or pending] | [What they decide alone] | [Who must approve the rest] | [Who resolves disagreements] |
+
+- **Combined roles:** [Which roles one person holds, and any conflict that creates].
 
 ## Resources, constraints, and assumptions
 
-[Record the investment and capacity framework: budget, availability, mandatory dates, and relevant constraints. Distinguish authorized resources from estimates and pending needs. For each important assumption, state how and when it will be validated. Explain any N/A; leave unknowns explicit rather than inventing commitments.]
+[One sentence separating what is authorized from what is estimated or pending.]
+
+| Item | Value | Status | Source |
+|------|-------|--------|--------|
+| [Budget, capacity, mandatory date, or other constraint] | [Amount or pending] | [Authorized, Estimate, or Pending] | [Who set it] |
+
+| Key assumption | How it will be validated | When | Owner |
+|----------------|--------------------------|------|-------|
+| [Assumption] | [Check or experiment] | [Milestone or date] | [Role or person] |
 
 ## Principal risks and uncertainties
 
-[Keep strategic risks affecting value, viability, or objectives here. Develop release-specific risks in their own documents.]
+[One sentence: include only strategic risks that affect value, viability, or objectives. Release-specific risks belong in release documents.]
 
 | Risk or uncertainty | Possible consequence | Initial validation or response | Owner |
-| --- | --- | --- | --- |
+|---------------------|----------------------|--------------------------------|-------|
 | [Description] | [Impact] | [Action] | [Role or person] |
 
 ## Delivery and learning approach
 
-[Agree how increments will be delivered, users will participate, and feedback will inform decisions. State general value prioritization and direction-review criteria. Reference the roadmap, workflow, and team working agreements for their details; references to future documents do not authorize creating them before their gates pass.]
+[One sentence on how increments are delivered and how feedback changes decisions. Reference the roadmap, workflow, and team agreements instead of copying them. Referencing a future document does not authorize creating it early.]
+
+> Optional diagram. Delete it if the table already says everything.
+
+```mermaid
+flowchart LR
+    A["[Plan]"] --> B["[Deliver an increment]"]
+    B --> C["[Review with users]"]
+    C --> D["[Adjust priorities]"]
+    D --> A
+```
+
+| Practice | Agreement | Where documented |
+|----------|-----------|------------------|
+| [Increment cadence, user participation, feedback, prioritization] | [Short statement] | [Link or pending] |
+
+- **Direction review criteria:** [What would make the team change course].
 
 ## Completion and continuation criteria
 
-[Define evidence of project completion, who accepts the results, and conditions for continuing, redirecting, suspending, or cancelling the effort. Distinguish project completion from release acceptance and the team's definition of done.]
+[One sentence distinguishing project completion from release acceptance and from the team's definition of done.]
+
+| Completion condition | Evidence | Accepted by |
+|----------------------|----------|-------------|
+| [What must be true] | [How it is shown] | [Role or person] |
+
+| Decision path | Trigger | Decided by |
+|---------------|---------|------------|
+| Continue | [Condition] | [Role or person] |
+| Redirect | [Condition] | [Role or person] |
+| Suspend | [Condition] | [Role or person] |
+| Cancel | [Condition] | [Role or person] |
 
 ## Approval, references, and amendments
 
-[Link decision sources and record the scope of project authorization. Constitution approval establishes the project framework; implementation, integration, and publication retain their separate authorization gates. The controller registry is the approval authority, not this prose.]
+[One sentence: the controller registry, not this prose, is the approval authority. Approval sets the project framework and authorizes no implementation, integration, or publication.]
 
 ### Decision references
 
-[Keep component design in architecture, paths in structure, environments in infrastructure, and release priorities in roadmap. Link detailed team working agreements rather than duplicating them.]
+| Topic | Lives in | Status |
+|-------|----------|--------|
+| Component design | Architecture | [Exists, pending, or N/A with reason] |
+| Execution environments | Infrastructure | [Exists, pending, or N/A with reason] |
+| Repository organization | Structure | [Exists, pending, or N/A with reason] |
+| Release priorities | Roadmap | [Exists or pending] |
+| Team working agreements | [Link] | [Exists or pending] |
 
 ### Amendment history
 
-[Record approved revisions, why they changed, and affected documents.]
+| Revision | Date | Reason | Documents affected | Approval |
+|----------|------|--------|--------------------|----------|
+| R00 | [YYYY-MM-DD] | [First draft] | [None] | [Who approved, where recorded] |
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.

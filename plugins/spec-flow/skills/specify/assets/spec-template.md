@@ -8,96 +8,183 @@ depends_on:
   digest: '0000000000000000000000000000000000000000000000000000000000000000'
 stories:
 - id: US-001
-  title: '[Story title]'
-  description: As a [user], I need [capability] so that [benefit].
+  title: '[Short story title]'
+  description: 'As a [user], I need [capability] so that [benefit].'
 - id: US-002
-  title: '[Related story title]'
-  description: As a [user], I need [related capability] so that [benefit].
+  title: '[Short story title]'
+  description: 'As a [user], I need [capability] so that [benefit].'
 acceptance:
 - id: AC-001
   story: US-001
-  description: '[Observable successful behavior under stated conditions.]'
+  description: '[Observable, falsifiable behavior for the valid case.]'
 - id: AC-002
   story: US-001
-  description: '[Observable response to a relevant invalid input or failure.]'
+  description: '[Observable, falsifiable behavior for invalid input or failure.]'
 - id: AC-003
   story: US-001
-  description: '[Observable quality behavior satisfying NFR-001 under its documented conditions and target.]'
+  description: '[Observable quality target, for example the threshold from NFR-001.]'
 - id: AC-004
   story: US-002
-  description: '[Observable behavior contributing the related story''s value.]'
+  description: '[Observable, falsifiable behavior for the second story.]'
 ---
 
 # Release Spec: vX.Y.Z
 
-Replace the illustrative stories, criteria, table rows, outcome references, and NFR with the selected release's actual decisions. They prescribe neither story count nor scope. Keep one canonical stories array and one acceptance array. All decision tables below stay outside generated progress and participate in the document digest.
+> **Authoring notes (delete when filling in).**
+> - The frontmatter `stories` and `acceptance` arrays are the only canonical definitions. Tables below reference their IDs and never restate or add criteria.
+> - IDs use `US-` or `AC-` plus at least three digits. Each criterion has exactly one owning story and is falsifiable. Dependencies between stories never transfer criterion ownership.
+> - Keep stories bounded and independently testable; split oversized ones by user value. Do not create a story just to relabel a technical task.
+> - Any required behavior that appears in a table, error case, or compatibility note must also be added to canonical acceptance in the same revision. Quality obligations that need checking must be reachable from an `AC`; prose-only obligations are not covered by the controller.
+> - Never infer the release from a `planned` status, array position, or directory number. The approved roadmap must select this exact version.
+> - Write content in the project's language. Keep headings and column names. Replace every `[bracketed guide]`, or write `N/A` plus the reason. Prefer tables, lists, and diagrams; keep paragraphs short.
+> - Before approving, check by hand (the controller checks structure only): every story appears once in section 5, in the same order as the array; only known `OUT` IDs are cited; every `AC` sits under its real story; thresholds agree across sections.
 
 ## Purpose and selected release
 
-[Identify the version explicitly chosen with the user, its entry in the approved roadmap, and the purpose of this delivery. A projected/planned entry alone does not establish human selection.]
+[One or two sentences: why this release exists and the value it delivers.]
+
+| Field | Value |
+|-------|-------|
+| Release version | [vX.Y.Z, explicitly selected] |
+| Roadmap entry | [Objective text and canonical status from the approved roadmap] |
+| Selection evidence | [Where the approved roadmap records the selection] |
+| Delivery purpose | [What users can do after this release] |
 
 ## Users, context, and expected outcome
 
-[Describe real actors, their needs and usage context. Reference existing roadmap OUT IDs and explain this release's contribution without assuming one delivery achieves the whole outcome. Do not invent upstream goals or copy their definitions.]
+[One sentence on who benefits and in what situation. Use real actors; do not invent upstream goals.]
+
+| Actor | Need | Situation | Related outcomes |
+|-------|------|-----------|------------------|
+| [User or role] | [What they need] | [When and where they need it] | [OUT-xxx] |
+
+| Outcome | Contribution of this release |
+|---------|------------------------------|
+| [OUT-xxx] | [Measurable contribution, consistent with the roadmap] |
 
 ## Scope and exclusions
 
-[State included capabilities, boundaries, and explicit exclusions. Describe the coherent increment of value; identify what belongs to other releases or the backlog without selecting or creating them.]
+[One sentence stating that the release is a coherent increment.]
+
+| Category | Items |
+|----------|-------|
+| Included | [Capabilities and results delivered] |
+| Excluded | [What this release does not do, each with a reason] |
+| Deferred | [Work moved to later releases or the backlog] |
 
 ## Approved bases and constraints
 
-[Reference constitution and applicable architecture, infrastructure, and structure decisions. Pin only approved sources actually used. Identify constraints on behavior without repeating shared design or prematurely choosing release implementation.]
+[One sentence: reference approved sources; never copy their text. Pin only sources actually used.]
+
+| Source | Revision | Constraint or decision used |
+|--------|----------|-----------------------------|
+| Roadmap | [R00] | [Release objective and outcomes] |
+| Constitution | [R00] | [Principles and constraints that apply] |
+| [Architecture, infrastructure, or structure, if used] | [R00] | [Decision that shapes this release] |
 
 ## User stories
 
-The stories array owns each story's ID, title, and description; acceptance owns each AC's ID, story owner, and verifiable description. Use this section for additional context and this reference view, not a second definition. Split oversized stories into independently valuable, testable increments. Explain actual dependencies rather than inventing technical-task stories.
+[One sentence on how the stories fit together. Canonical text lives in the frontmatter.]
+
+```mermaid
+flowchart LR
+    US1["US-001<br/>[story title]"] --> US2["US-002<br/>[story title]"]
+```
+
+> Optional diagram of real dependencies between stories. Dependencies never move criteria between stories.
 
 | Story | Related outcomes | Acceptance criteria | Relevant dependencies |
-| --- | --- | --- | --- |
-| US-001 | OUT-001 | AC-001, AC-002, AC-003 | [References or none] |
-| US-002 | OUT-001 | AC-004 | [References or none] |
-
-[Include each canonical story exactly once, in canonical order. Reference only existing roadmap outcomes and all AC IDs belonging to that story. Dependencies between stories do not transfer criterion ownership.]
+|-------|------------------|---------------------|-----------------------|
+| US-001 | [OUT-xxx] | [AC-001, AC-002, AC-003] | [None or story IDs with reason] |
+| US-002 | [OUT-xxx] | [AC-004] | [None or story IDs with reason] |
 
 ## Rules, acceptance, and examples
 
-[Keep required observable behavior, including relevant conditions, in canonical acceptance descriptions. Use concrete examples where they remove ambiguity; Given/When/Then is optional and does not require a tool.]
+[One sentence: this table illustrates the canonical criteria with situations. It does not define new ones. Given/When/Then wording is optional.]
 
 | Criterion | Situation or input | Action or event | Expected result |
-| --- | --- | --- | --- |
-| AC-001 | [Concrete valid context] | [Action] | [Observable instance of AC-001] |
-| AC-002 | [Relevant invalid input or failure] | [Action] | [Observable instance of AC-002] |
-| AC-003 | [Conditions in NFR-001] | [Action] | [Observable satisfaction of the NFR-001 target] |
-
-[Examples need not enumerate every possible case. Each row must reference an existing AC and illustrate it consistently. If an example reveals a new obligation, update/add the canonical criterion under the correct story in the same revision; do not leave new acceptance solely in prose.]
+|-----------|--------------------|-----------------|-----------------|
+| AC-001 | [Valid situation] | [What the user or system does] | [Observable result] |
+| AC-002 | [Invalid input or failure] | [What happens] | [Observable error behavior] |
+| AC-003 | [Quality condition from NFR-001] | [Measured action] | [Threshold met] |
+| AC-004 | [Situation for the second story] | [What happens] | [Observable result] |
 
 ## Quality and conditions of done
 
-[Define release-specific quality requirements and reference applicable shared conditions of done. Explain N/A when appropriate. Distinguish functional acceptance, increment quality, and any additional delivery conditions.]
+[One sentence on release-specific quality requirements. Reference shared done conditions instead of copying them; write N/A with a reason when none apply.]
 
 | ID | Attribute | Conditions | Result or threshold | Verification approach | Related criteria |
-| --- | --- | --- | --- | --- | --- |
-| NFR-001 | [Quality attribute] | [Relevant context/load] | [Measurable target] | [General method] | AC-003 |
-
-[Link each quality obligation requiring task verification to canonical AC descriptions, directly or through an explicit NFR reference such as AC-003 above. Keep conditions/targets consistent and defined once. For a cross-story requirement, provide the needed canonical criteria under their actual story owners rather than sharing an AC across owners. A prose-only NFR is not covered by the controller's AC coverage check. Detailed verification commands belong in tasks.]
+|----|-----------|------------|---------------------|-----------------------|------------------|
+| NFR-001 | [Performance, security, accessibility, other] | [Load, data, environment] | [Measurable target] | [Test, inspection, or measurement] | [AC-003] |
 
 ## Edge cases, errors, and compatibility
 
-[Describe expected responses to relevant invalid inputs, failures, and alternative situations, referencing their AC IDs. Identify compatibility or data-transition obligations when applicable; technical procedures belong in plan. Update canonical acceptance whenever this section introduces required behavior.]
+[One sentence on failure behavior users can observe. Implementation procedures belong in the plan.]
+
+```mermaid
+flowchart TD
+    START["[Trigger]"] --> CHECK{"[Condition met?]"}
+    CHECK -->|"Yes"| OK["[Expected result]<br/>AC-001"]
+    CHECK -->|"No"| ERR["[Observable error]<br/>AC-002"]
+```
+
+| Case | Trigger | Observable behavior | Criterion |
+|------|---------|---------------------|-----------|
+| [Edge or error case] | [What causes it] | [What the user sees or the system does] | [AC-xxx] |
+
+| Compatibility or data obligation | Affected interface or data | Criterion |
+|----------------------------------|----------------------------|-----------|
+| [Obligation] | [What it touches] | [AC-xxx] |
 
 ## Post-delivery measurement
 
-[Reference roadmap indicators and targets, then specify this release's evaluation source, method, timing, and owner. Distinguish technical acceptance, actual delivery, and observed impact. Accepted releases can retain pending impact measurement. Leave unknowns explicit and explain any N/A.]
+[One sentence separating technical acceptance, delivery, and observed impact.]
+
+| Roadmap indicator | Target | Source | Method | Timing | Owner |
+|-------------------|--------|--------|--------|--------|-------|
+| [OUT-xxx indicator] | [Target from the roadmap] | [Where the data comes from] | [How it is measured] | [When] | [Role or person] |
+
+| Level | What it shows | Status |
+|-------|---------------|--------|
+| Technical acceptance | [All criteria verified] | [Pending] |
+| Delivery | [Released and available to users] | [Pending] |
+| Observed impact | [Indicator moved as targeted] | [Pending] |
 
 ## Assumptions, dependencies, and open questions
 
-[Record uncertainties, consequences, and needed validation. Mark questions that block scope, acceptance, or feasibility and resolve them before plan. Technical choices owned by plan can remain open if behavior and acceptance are sufficiently clear; do not require creating plan/tasks to complete this spec.]
+[One sentence on what could change this spec. Technical choices may stay open for the plan.]
+
+| Assumption | Consequence if false | Validation |
+|------------|----------------------|------------|
+| [Assumption] | [Impact] | [How and when it is checked] |
+
+| Dependency | Type | Needed by | Status |
+|------------|------|-----------|--------|
+| [External decision, system, or team] | [External or Internal] | [Date or phase] | [Open, Confirmed, or Blocked] |
+
+| Open question | Blocks planning | Owner |
+|---------------|-----------------|-------|
+| [Question] | [Yes or No] | [Role or person] |
 
 ## Readiness for planning, approval, and amendments
 
-Before presenting the spec as ready for planning, review explicit release selection/current approved bases, coherent scope, bounded valuable stories, verifiable criteria, relevant quality/exceptions/constraints, and resolution of material questions. Check story-table count/order/IDs, complete AC membership under the correct owner, known OUT references, valid example/NFR links, and semantic consistency with canonical acceptance. Reconcile any mismatch before dependent planning. These are review requirements, not completion checkboxes.
+[One sentence: approval covers progression through the plan gate only. It authorizes no implementation, integration, or publication.]
 
-[Keep decision sources and approved revisions, reasons, and affected documents. Record actual approval scope; authority remains in the controller registry. A substantive change needs revision/approval and inspection of affected downstream pins. Spec approval permits progression through the plan gate, not implementation, integration, or publication.]
+| Readiness check | Result | Note |
+|-----------------|--------|------|
+| Release selected in the approved roadmap | [Met, Not met, or N/A] | [Comment] |
+| Every story bounded and independently testable | [Result] | [Comment] |
+| Every criterion falsifiable and owned by one story | [Result] | [Comment] |
+| Quality obligations reachable from criteria | [Result] | [Comment] |
+| No blocking open questions | [Result] | [Comment] |
+
+| Document | Revision | Digest (first 8 characters) | Purpose |
+|----------|----------|-----------------------------|---------|
+| [roadmap.md](../roadmap.md) | [R00] | [00000000] | [Pinned source] |
+
+| Revision | Date | Approval | Summary of change | Documents affected |
+|----------|------|----------|-------------------|--------------------|
+| R00 | [YYYY-MM-DD] | [Who approved, where recorded] | [First draft] | [None] |
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.

@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+### Removed
+
+- The `clarify` and `analyze` skills and their templates, with their `gate` phases in the controller and their entries in the README and `using-spec-flow` routing. Spec ambiguities are now resolved in `specify`.
+
+### Changed
+
+- Tasks guidance caps a release at about 10 tasks (frontmatter size) and says to split the release past that; the closure text now appears only in the array and the task map.
+- The "never write on the default branch" rule moved from the spec template into the `specify` skill.
+- Constitution, architecture, infrastructure, structure, roadmap, spec, plan, tasks, and backlog templates are rewritten as table-first documents with a deletable "Authoring notes" block, one-sentence section guides, and Mermaid diagrams; the roadmap template's example releases start at `v1.0.0`.
+- A document that still contains the "Authoring notes" block is now rejected as containing a placeholder.
+
 ## Release v0.2.0
 
 Release date: 2026-10-18.

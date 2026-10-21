@@ -10,55 +10,177 @@ depends_on:
 
 # Infrastructure
 
-Replace the example constitution digest with its approved digest. Add exact-digest dependencies only for approved strategic documents whose decisions are actually used. Recommended elaboration order: architecture → infrastructure → structure; this is not a mandatory dependency chain. If a whole document is inapplicable, record N/A with a reason in the roadmap under its own gate. Omitting a dependency alone does not make its document N/A. Do not create filler or future dependent documents to complete this one; keep dependency pins acyclic and navigational links separate.
+> **Authoring notes (delete when filling in).**
+> - Replace the example digest with the approved constitution digest. Pin `architecture.md` when this document maps its components to resources.
+> - Write content in the project's language. Keep headings and column names as they are.
+> - Replace every `[bracketed guide]` with content, or write `N/A` plus the reason. Keep paragraphs to two or three sentences; prefer tables, lists, and diagrams.
+> - **Never write secret values.** Name the secret and where it lives.
+> - Separate declared configuration, tested behavior, deployed resources, estimates, and measurements. Documenting a procedure does not authorize running it.
+> - Before approving, check that every `ARC-xx` used here exists in `architecture.md`.
 
 ## Purpose, audience, and operational scope
 
-[Identify readers and relevant execution modes: local runtime/host, services, cloud, or others. Explain N/A for sections that do not apply; a local plugin does not imply hosted infrastructure.]
+[One or two sentences: which components this document places on resources and who reads it.]
+
+| Execution mode | Applies | Notes |
+|----------------|---------|-------|
+| [Local runtime or host] | [Yes or No] | [Reason or scope] |
+| [Servers or VPS] | [Yes or No] | [Reason or scope] |
+| [Cloud services] | [Yes or No] | [Reason or scope] |
+| [Third-party services] | [Yes or No] | [Reason or scope] |
+| [Orchestration, multi-region, hosted CI, or others] | [No] | [Why it is out of scope] |
 
 ## Current state and evidence
 
-[Distinguish declared configuration, tested behavior, deployed resources, and pending proposals. Cite evidence; approved design does not prove deployment or successful operation.]
+[One sentence stating when and how the current state was verified.]
+
+| Resource or topic | Observation | Method | Date | State |
+|-------------------|-------------|--------|------|-------|
+| [Server, service, or setting] | [Fact found] | [Read-only inspection, configuration file, or test] | [YYYY-MM-DD] | [Verified or Proposed] |
+
+- **Unknowns treated as external:** [Anything found but not understood, and how it is handled].
+- **Everything not listed above is proposed:** [Confirm that approval does not prove deployment].
 
 ## Environments and resources
 
+[One sentence on how environments differ. Include third-party services as resources.]
+
 | Environment | Platform or resource | Purpose | Owner | State and evidence |
-| --- | --- | --- | --- | --- |
+|-------------|----------------------|---------|-------|--------------------|
 | [Name] | [Resource] | [Use] | [Role or person] | [Verified or proposed; reference] |
 
 ## Deployment mapping and connections
 
-[Map component IDs to execution resources, connections, and external dependencies. Use a deployment diagram when useful and explain the choices. Link repository locations once defined; structure is not a default prerequisite.]
+[One sentence describing how components reach their resources and each other.]
+
+```mermaid
+flowchart LR
+    subgraph LOCAL["[Operator machine or local runtime]"]
+        C1["[ARC-xx]<br/>[execution resource]"]
+    end
+    subgraph SERVER["[Server, VPS, or cloud resource]"]
+        S1["[ARC-yy]<br/>[container or service]"]
+        S2["[ARC-zz]<br/>[container or service]"]
+    end
+    EXT["[Third-party service]"]
+    C1 -->|"[protocol, port, access control]"| S1
+    S1 --> S2
+    S2 -->|"[protocol]"| EXT
+```
+
+| Components | Execution resource | Connections | Exposure and network controls |
+|------------|--------------------|-------------|-------------------------------|
+| [ARC IDs sharing a resource] | [Container, VM, service, or process] | [Other components or external systems] | [Published ports, domains, TLS, or private only] |
+
+**Variants by mode**
+
+| Mode or variant | Publishing | Management access | Notes |
+|-----------------|------------|-------------------|-------|
+| [Name] | [How traffic reaches the system] | [How operators reach it] | [Differences to know] |
 
 ## Configuration, access, and secrets
 
-[Describe configuration per environment, permission boundaries, and secret management mechanisms. Reference secure locations without including secret values.]
+[One sentence on how configuration and access are controlled.]
+
+| Setting | Scope | Purpose | Where defined |
+|---------|-------|---------|---------------|
+| [Variable or setting name] | [Environment or component] | [What it controls] | [File, variable, or console] |
+
+| Principal | Access granted | Mechanism | Boundary |
+|-----------|----------------|-----------|----------|
+| [User, service, or role] | [What it can do] | [Key, token, role] | [What limits it] |
+
+| Secret | Where it lives | Protection | Rotation |
+|--------|----------------|------------|----------|
+| [Name only, never the value] | [Secure location] | [Encryption or access control] | [Frequency or pending] |
 
 ## Build, distribution, deployment, and rollback
 
-[Describe the strategy, verification requirements, and rollback conditions. Link automation and detailed procedures. Mark untested procedures as proposed; documenting them does not authorize execution.]
+[One sentence on how code becomes a running system.]
+
+| Artifact | Build | Distribution | Deployment | Rollback |
+|----------|-------|--------------|------------|----------|
+| [Image, binary, script, or package] | [How and where] | [Registry, file, or none] | [Who or what deploys it] | [How to go back] |
+
+| CI step | Check | Blocking | Limits |
+|---------|-------|----------|--------|
+| [Step] | [Lint, tests, secret scan, image build] | [Yes or No] | [What it cannot cover] |
+
+- **Continuous delivery:** [Present or absent, and why].
+- **Verification plan (proposed, untested):** [List the checks that will prove the delivery path works].
 
 ## Observability and operations
 
+[One sentence on what is monitored and what is intentionally excluded.]
+
 | Signal or condition | Objective or threshold | Response | Owner | Procedure |
-| --- | --- | --- | --- | --- |
-| [Metric, log, or condition] | [Agreed value or pending] | [Action] | [Role or person] | [Reference or pending] |
+|---------------------|------------------------|----------|-------|-----------|
+| [Metric, log, alert, or condition] | [Agreed value or pending] | [Action] | [Role or person] | [Reference or pending] |
+
+- **Where logs live:** [Location and retention].
+- **Excluded for now:** [Alerts, dashboards, or tools not covered].
 
 ## Capacity, limits, and costs
 
-[Record needs, load assumptions, limits, and relevant estimates. Separate estimates from current measurements; do not invent commitments or operational targets.]
+[One sentence on the load assumptions behind these numbers.]
+
+| Estimate | Value | Basis | Status |
+|----------|-------|-------|--------|
+| [Resource need] | [Number] | [Source or assumption] | [Estimate, not measured] |
+
+| Measurement | Value | Date | Source |
+|-------------|-------|------|--------|
+| [Observed figure] | [Number] | [YYYY-MM-DD] | [Tool or inspection] |
+
+| External limit | Provider | Verified |
+|----------------|----------|----------|
+| [Quota or restriction] | [Service] | [Yes or No] |
+
+| Cost item | Estimate | Needs approval |
+|-----------|----------|----------------|
+| [Domain, storage, server, service] | [Amount or pending] | [Yes or No] |
 
 ## Backup, restoration, and recovery
 
-[Identify data/state requiring protection and recovery objectives when applicable: RTO for restoration time, RPO for tolerable data loss. Reference recovery procedures and test evidence; distinguish planned tests from completed results.]
+[One sentence on what must survive a failure.]
+
+| Data or state | Protection | Frequency and retention | Restore procedure |
+|---------------|------------|-------------------------|-------------------|
+| [Dataset] | [Mechanism and destination] | [Schedule and keep period] | [Reference or pending] |
+
+| Scope | Recovery point objective (RPO) | Recovery time objective (RTO) | Basis |
+|-------|-------------------------------|-------------------------------|-------|
+| [Data or service] | [Tolerable data loss or not set] | [Restoration time or not set] | [Why this value] |
+
+| Recovery test | Status | Evidence |
+|---------------|--------|----------|
+| [Restore, migration rehearsal, rebuild] | [Planned or Done] | [Result reference or pending] |
+
+> A completed or hash-verified backup does not prove a tested restoration. Record restoration tests separately.
 
 ## Decisions, risks, and operational questions
 
-[For significant choices record ID, context, alternatives, decision, rationale, consequences, and review conditions, or link existing ADRs. Record risks, assumptions to validate, and unresolved human decisions.]
+[One sentence: use the prefix `ADR-I`; decisions are approved when this document is approved. Keep superseded rows with a replacement reference.]
+
+| ID | Context | Alternatives | Choice and rationale | Consequences | Review condition | Status and provenance |
+|----|---------|--------------|----------------------|--------------|------------------|-----------------------|
+| ADR-I01 | [Forces and constraints] | [Options considered] | [What was chosen and why] | [Positive and negative effects] | [What would reopen it] | [proposed or approved; who decided, date; related ADRs] |
+
+| Risk or question | Impact | Action |
+|------------------|--------|--------|
+| [Risk] | [Consequence] | [Mitigation, proof of concept, or decision needed] |
 
 ## References and amendment history
 
-[Link configuration, automation, procedures, approved decisions, and scoped operational evidence. Record approved revisions and reasons. Revisit when environments, resources, deployment, access, or recovery decisions change.]
+| Document | Revision | Digest (first 8 characters) | Purpose |
+|----------|----------|-----------------------------|---------|
+| [constitution.md](constitution.md) | [R00] | [00000000] | [Pinned source] |
+| [architecture.md](architecture.md) | [R00] | [00000000] | [Pinned source; component IDs] |
+| [Procedure or configuration file] | [n/a] | [n/a] | [Reference only] |
+
+| Revision | Date | Approval | Summary of change |
+|----------|------|----------|-------------------|
+| R00 | [YYYY-MM-DD] | [Who approved, where recorded] | [First draft] |
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.

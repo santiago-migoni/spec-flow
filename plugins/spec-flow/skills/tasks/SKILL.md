@@ -13,6 +13,8 @@ Read the current approved plan/spec, applicable shared decisions, and repository
 
 ## Decompose into executable tasks
 
+Keep a release to about 10 tasks: the whole array lives in the frontmatter. Beyond that, return to the roadmap and split the release, recording the decision in the decomposition criteria.
+
 The contract owns the canonical executable task list. Keep kind tasks, id TASKS-X.Y.Z, revision R00 initially, and an exact-digest dependency on plan.md. Preserve the schema: each task has stable id, phase, story, nonempty acceptance IDs, depends_on, explicit files, ordered steps, and closure. Use T- followed by at least three digits; each unique step ID uses its task ID plus a numeric suffix of at least three digits. Phase and story IDs must exist; every linked AC must belong to that task's story. Keep one active release, which may contain several stories/features.
 
 Each task is specific, measurable, achievable, relevant, and bounded, with a concrete contribution that can be implemented, checked, and reviewed clearly. Group by story and actual prerequisites within plan phases. Justify enabling work and label partial contributions; technical tasks need not deliver a whole story independently. Split work that bundles unrelated outcomes or is too large/uncertain to verify clearly. Use estimates only with a basis and uncertainty; time guidance is not an automatic human-hours rule for agents. Integrate relevant tests/checks throughout development.

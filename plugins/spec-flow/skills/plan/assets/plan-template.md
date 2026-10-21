@@ -18,80 +18,160 @@ phases:
 
 # Release Plan: vX.Y.Z
 
-Replace the illustrative phases, table rows, references, and paths with this release's actual approved decisions. They prescribe neither phase count nor implementation scope. The phases array owns IDs, descriptions, and dependencies; keep its reading table synchronized. All decision tables stay outside generated progress and participate in the document digest.
+> **Authoring notes (delete when filling in).**
+> - The frontmatter `phases` array is the only phase sequence. Section 3 holds its reading table: same phases, same order, same descriptions and dependency IDs, with `None` for an empty list. Never keep a second sequence.
+> - Phase IDs are `PH-` plus at least two digits. The graph must be acyclic and match the intended order. Justify enabling technical phases by what they unlock. Do not defer testing to a final phase.
+> - The plan never redefines spec behavior, acceptance criteria, or roadmap priorities. Route changes to their owner: behavior to the spec, priorities to the roadmap, shared decisions to their documents.
+> - Every canonical `AC` needs an intended delivery phase and a final verification. Quality obligations and constitution MUST rules need a planned check. A MUST violation blocks tasks.
+> - Phase and file tables give planning context only. They do not authorize starting work; tasks hold exact file lists and commands.
+> - Pin the spec, plus other approved sources only when they directly shape the plan. Leave unknown decisions, capacity, and estimates explicit; never invent them.
+> - Write content in the project's language. Keep headings and column names. Replace every `[bracketed guide]`, or write `N/A` plus the reason. Prefer tables, lists, and diagrams; keep paragraphs short.
+> - Before approving, check by hand: the table matches the array, every `AC` appears in section 7, and no blocking question remains open.
 
 ## Purpose, scope, and approved bases
 
-[Identify the release, approved spec, and implementation objective. Reference applicable constitution, architecture, infrastructure, and structure decisions; pin only approved sources actually used. Define this plan's boundaries without redefining spec behavior.]
+[One or two sentences: the release, its approved spec, and what this plan sets out to deliver.]
+
+| Field | Value |
+|-------|-------|
+| Release | [vX.Y.Z] |
+| Approved spec | [spec.md, revision] |
+| Objective | [Release objective from the roadmap] |
+| Boundaries | [What this plan covers; spec behavior is not redefined here] |
+
+| Approved base | Revision | Decision used |
+|---------------|----------|---------------|
+| Constitution | [R00] | [Principles that constrain the plan] |
+| [Architecture, infrastructure, or structure, if applicable] | [R00] | [Decision that shapes the approach] |
 
 ## Technical approach and implementation decisions
 
-[Explain the release-specific solution and significant decisions: context, alternatives, choice, rationale, and consequences. Reference shared design instead of copying it. Distinguish verified facts, assumptions, and proposed decisions. Route changes to shared decisions to their owning document before relying on them.]
+[One or two sentences summarizing the approach for this release.]
+
+| Statement | Type | Evidence |
+|-----------|------|----------|
+| [Fact, assumption, or proposal] | [Verified fact, Assumption, or Proposal] | [Source or pending] |
+
+| ID | Context | Alternatives | Choice and rationale | Consequences | Review condition | Status and provenance |
+|----|---------|--------------|----------------------|--------------|------------------|-----------------------|
+| ADR-P01 | [Forces and constraints] | [Options considered] | [What was chosen and why] | [Positive and negative effects] | [What would reopen it] | [proposed or approved; who decided, date] |
+
+> A change to shared design goes to its owning document, not to this table.
 
 ## Phases, deliverables, and dependencies
 
-This table is a reading view of phases, with story/criterion links as additional planning context. Include every phase exactly once in the same order; copy descriptions and dependency IDs exactly. Use None for an empty depends_on array; otherwise preserve its ID order. Never maintain a second independent phase sequence.
+[One sentence: the table is a reading view of the `phases` array. Organize phases around verifiable increments.]
+
+```mermaid
+flowchart LR
+    PH01["PH-01<br/>[deliverable]"] --> PH02["PH-02<br/>[deliverable]"]
+```
+
+> Optional diagram of the dependency graph. It must match the array.
 
 | Phase | Goal and deliverable | Dependencies | Related stories | Related criteria |
-| --- | --- | --- | --- | --- |
-| PH-01 | [Phase goal and deliverable.] | None | US-001 | AC-001, AC-002, AC-003 |
-| PH-02 | [Related increment and integration deliverable.] | PH-01 | US-002 | AC-004 |
+|-------|----------------------|--------------|-----------------|------------------|
+| PH-01 | [Same text as the array description] | None | [US-001] | [AC-001, AC-002, AC-003] |
+| PH-02 | [Same text as the array description] | [PH-01] | [US-002] | [AC-004] |
 
-[Organize phases around verifiable increments. Justify technical enabling phases and explain what they unlock. A story/criterion may span phases; identify partial contributions versus final verification in the coverage table below. Each AC must retain its actual story owner from spec; phase membership does not change ownership. Explain dependency and ordering rationale without redefining canonical dependencies.]
-
-Phase tables provide planning context, including future phases. A visible row is not itself permission to start work; the task's own scope is what permits it.
+- **Ordering rationale:** [Why this order; enabling phases and what they unlock].
+- **Criteria spanning phases:** [Which criteria span several phases, and where each partial contribution ends].
 
 ## Components, files, and change scope
 
-| Component or path | Intended change | Phase | Restrictions or dependencies |
-| --- | --- | --- | --- |
-| [Component reference or relative/path] | [Create, modify, or other intervention] | PH-01 | [Relevant conditions] |
+[One sentence on where changes are expected. Distinguish existing from proposed paths; this table authorizes no writes.]
 
-[Explain where changes are expected and their relationship to approved structure. Distinguish existing from proposed locations. Tasks will contain the executable per-task file list; this planning table does not authorize writes.]
+| Component or path | Intended change | Phase | Restrictions or dependencies |
+|-------------------|-----------------|-------|------------------------------|
+| [Component reference or relative/path] | [Create, modify, or remove] | [PH-xx] | [Conditions, boundaries from structure] |
 
 ## Capacity, resources, and forecasts
 
-[Record availability, tools, environments, access, and constraints affecting feasibility. Estimates must state their basis, assumptions, and uncertainty; distinguish forecasts from approved commitments. Do not assume logically independent work can execute concurrently. Sequence phases and tasks as they will actually be done. Leave missing capacity evidence explicit.]
+[One sentence on what is available and how certain it is. Do not assume independent work runs in parallel.]
+
+| Resource | Availability | Basis | Uncertainty |
+|----------|--------------|-------|-------------|
+| [People, tools, environments, access] | [Amount or pending] | [Source] | [Low, Medium, or High, with reason] |
+
+| Phase | Estimate | Basis | Type |
+|-------|----------|-------|------|
+| [PH-xx] | [Effort or duration, or pending] | [How it was estimated] | [Forecast or Commitment] |
 
 ## Risks, assumptions, and validation
 
-| Risk or assumption | Consequence | Response or validation | Point or phase | Expected evidence |
-| --- | --- | --- | --- | --- |
-| [Description] | [Impact] | [Intended action] | PH-01 | [Observable result] |
+[One sentence: prioritize validation that reduces the most important uncertainty. Keep each item planned until evidence exists.]
 
-[Prioritize validation that reduces important uncertainty. Resolve uncertainty blocking agreed scope, acceptance, or feasibility with its owning document before continuing. Record validations as planned until evidence exists; do not invent a technical-task story to bypass spec decisions.]
+| Risk or assumption | Consequence | Response or validation | Point or phase | Expected evidence |
+|--------------------|-------------|------------------------|----------------|-------------------|
+| [Description] | [Impact] | [Intended action] | [PH-xx] | [Observable result] |
 
 ## Compliance and verification strategy
 
+[One sentence: this table is intended coverage, not evidence. Commands and inspections belong in tasks.]
+
 | Reference | Delivery or verification phase | Verification approach | Expected evidence |
-| --- | --- | --- | --- |
-| AC-001 | PH-01 (delivery and final verification) | [General method] | [Observable result] |
-| AC-002 | PH-01 (delivery and final verification) | [Failure/alternative behavior check] | [Observable result] |
-| NFR-001 → AC-003 | PH-01 (delivery and final verification) | [Quality check] | [Evidence against the spec target] |
-| AC-004 | PH-02 (delivery and final verification) | [Related behavior/integration check] | [Observable result] |
-| [Applicable constitution MUST reference] | [Phase] | [Review or check] | [Evidence] |
+|-----------|--------------------------------|-----------------------|-------------------|
+| AC-001 | [PH-xx, delivery and final verification] | [General method] | [Observable result] |
+| NFR-001 → AC-003 | [PH-xx, delivery and final verification] | [Quality check against the spec threshold] | [Measured result] |
+| [Constitution MUST reference] | [PH-xx] | [Review or check] | [Evidence] |
 
-[Map every canonical AC to planned delivery and final verification; identify final verification explicitly and label partial contributions separately when relevant. Cover applicable quality requirements and constitution rules, linking their definitions instead of redefining thresholds or acceptance. Check that each phase/story/AC/NFR/rule reference exists and agrees with the spec and phase table. A prose-only quality obligation missing canonical AC coverage must return to specify for resolution. Flag conflicts; a MUST violation blocks tasks.]
-
-Integrate verification throughout development, using checks appropriate to the change. Detailed commands, executable steps, and specific inspections belong in tasks. This is intended coverage, not evidence of completion; the controller does not assess Markdown matrix coherence or semantic adequacy.
+- **Partial contributions:** [Phases that contribute to a criterion without finishing it, labeled separately from final verification].
+- **Uncovered obligations:** [Prose-only quality obligations without an `AC`; return them to the spec].
 
 ## Operational delivery preparation
 
-[Identify packaging, installation, configuration, compatibility, migration, and rollback needs when applicable. Reference infrastructure procedures and explain this release's application, or N/A with reason. Separate technical readiness from authorization to integrate, publish, or deploy.]
+[One sentence separating technical readiness from authorization to integrate, publish, or deploy.]
+
+| Area | Applies | Preparation | Rollback or N/A reason |
+|------|---------|-------------|------------------------|
+| Packaging | [Yes or N/A] | [What is prepared] | [Rollback or reason] |
+| Installation and configuration | [Yes or N/A] | [What is prepared] | [Rollback or reason] |
+| Compatibility and migration | [Yes or N/A] | [What is prepared] | [Rollback or reason] |
 
 ## Review, learning, and adaptation
 
-[Define when to review the plan and what evidence may change it: verification results, feedback, discovered risks, or capacity changes. Distinguish adjustments within scope from changes to spec, roadmap, or shared design. Preserve completed work and historical evidence. Substantive revisions need approval and inspection/adoption of affected downstream pins; follow interruption/reconciliation rules for active runs.]
+[One sentence on how evidence can change the plan. Completed work and history are preserved when the plan changes.]
+
+```mermaid
+flowchart TD
+    CH["[Change or new evidence]"] --> Q{"[Inside the plan's scope?]"}
+    Q -->|"Yes"| P["[Revise the plan]"]
+    Q -->|"No"| O["[Route to the owner: spec, roadmap, or shared design]"]
+```
+
+| Trigger | Evidence | Adjustment inside the plan | Route to owner when it exceeds the plan |
+|---------|----------|----------------------------|------------------------------------------|
+| [Event or finding] | [What would be observed] | [Allowed change] | [Spec, roadmap, or design document] |
 
 ## Open questions and readiness for tasks
 
-[List pending decisions and mark which block executable decomposition. Do not create tasks to hide decisions this plan still needs to resolve.]
+[One sentence: do not create tasks to hide open decisions.]
 
-Before handing off to tasks, review current approved bases/no conflicts, sufficiently defined technical approach, coherent phases and acyclic dependencies, intended acceptance/quality/rule coverage, understood change scope and constraints, treatment of important risks, resolution of blocking questions, and table/contract coherence. These are review requirements, not completion checkboxes. Do not require creating tasks to declare the plan ready for their preparation.
+| Open question | Blocks tasks | Owner | Needed by |
+|---------------|--------------|-------|-----------|
+| [Question] | [Yes or No] | [Role or person] | [Date or phase] |
+
+| Readiness check | Result | Note |
+|-----------------|--------|------|
+| Approved bases are current | [Met, Not met, or N/A] | [Comment] |
+| Approach defined enough for tasks | [Result] | [Comment] |
+| Phases coherent and acyclic; table matches array | [Result] | [Comment] |
+| Every criterion, quality rule, and MUST has planned coverage | [Result] | [Comment] |
+| File scope and resources understood | [Result] | [Comment] |
+| Risks have responses; no blocking question remains | [Result] | [Comment] |
 
 ## References, approval, and amendments
 
-[Keep sources and actual approved revisions, reasons, and affected documents. The registry remains approval authority. Plan approval allows proceeding through the tasks gate; it does not prove implementation or authorize publication or deployment. Full-release task coverage still applies.]
+[One sentence: the controller registry is the approval authority. Plan approval permits the tasks gate only; it proves no implementation and authorizes no publication or deployment.]
+
+| Document | Revision | Digest (first 8 characters) | Purpose |
+|----------|----------|-----------------------------|---------|
+| [spec.md](spec.md) | [R00] | [00000000] | [Pinned source] |
+| [Other source] | [n/a] | [n/a] | [Reference only] |
+
+| Revision | Date | Approval | Summary of change | Documents affected |
+|----------|------|----------|-------------------|--------------------|
+| R00 | [YYYY-MM-DD] | [Who approved, where recorded] | [First draft] | [None] |
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.

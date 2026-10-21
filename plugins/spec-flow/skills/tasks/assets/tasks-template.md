@@ -10,187 +10,225 @@ tasks:
 - id: T-001
   phase: PH-01
   story: US-001
-  acceptance:
-  - AC-001
+  acceptance: [AC-001]
   depends_on: []
-  files:
-  - src/example.py
-  - tests/test_example.py
+  files: ['[relative/path/to/source-file]', '[relative/path/to/test-file]']
   steps:
-  - id: T-001.001
-    action: '[Implement and test the enabling change contributing partially to AC-001 in the listed files.]'
-    verification:
-      command:
-      - python3
-      - -B
-      - -m
-      - unittest
-      - discover
-      - -s
-      - tests
-      - -p
-      - test_example.py
-      - -k
-      - enabling
-      expected: '[Enabling cases execute and pass; contribution to AC-001 remains partial.]'
-  closure: '[Enabling change verified; AC-001 contribution remains partial.]'
+  - {id: T-001.001, action: '[Implement and test the enabling change.]', verification: {command: ['[executable]', '[argument]', '[test selector]'], expected: '[Enabling cases pass; AC-001 contribution stays partial.]'}}
+  closure: '[Enabling change verified; AC-001 contribution stays partial.]'
 - id: T-002
   phase: PH-01
   story: US-001
-  acceptance:
-  - AC-001
-  - AC-002
-  - AC-003
-  depends_on:
-  - T-001
-  files:
-  - src/example.py
-  - tests/test_example.py
-  - tests/test_quality.py
+  acceptance: [AC-001, AC-002, AC-003]
+  depends_on: [T-001]
+  files: ['[relative/path/to/source-file]', '[relative/path/to/test-file]']
   steps:
-  - id: T-002.001
-    action: '[Complete the successful behavior of AC-001 and its final acceptance check.]'
-    verification:
-      command:
-      - python3
-      - -B
-      - -m
-      - unittest
-      - discover
-      - -s
-      - tests
-      - -p
-      - test_example.py
-      - -k
-      - success
-      expected: '[Executed success cases demonstrate the complete behavior required by AC-001.]'
-  - id: T-002.002
-    action: '[Complete the relevant invalid-input or failure behavior of AC-002 and its final acceptance
-      check.]'
-    verification:
-      command:
-      - python3
-      - -B
-      - -m
-      - unittest
-      - discover
-      - -s
-      - tests
-      - -p
-      - test_example.py
-      - -k
-      - invalid
-      expected: '[Executed error cases demonstrate the response required by AC-002.]'
-  - id: T-002.003
-    action: '[Meet the NFR-001 conditions and target referenced by AC-003 and add its quality check.]'
-    verification:
-      command:
-      - python3
-      - -B
-      - -m
-      - unittest
-      - discover
-      - -s
-      - tests
-      - -p
-      - test_quality.py
-      expected: '[Executed quality checks satisfy NFR-001 under its approved conditions and demonstrate
-        AC-003.]'
-  closure: '[US-001 complete with final verification of AC-001, AC-002, and AC-003.]'
+  - {id: T-002.001, action: '[Complete the success and failure behavior of AC-001 and AC-002.]', verification: {command: ['[executable]', '[argument]', '[test selector]'], expected: '[AC-001 and AC-002 cases pass; final verification of both.]'}}
+  - {id: T-002.002, action: '[Meet the NFR-001 target referenced by AC-003.]', verification: {inspection: '[Surface inspected, conditions applied, and the observable evidence of the target.]', expected: '[Measured result meets the NFR-001 threshold; final verification of AC-003.]'}}
+  closure: '[US-001 complete, with final verification of AC-001, AC-002, and AC-003.]'
 - id: T-003
   phase: PH-02
   story: US-002
-  acceptance:
-  - AC-004
-  depends_on:
-  - T-002
-  files:
-  - src/related.py
-  - tests/test_integration.py
+  acceptance: [AC-004]
+  depends_on: [T-002]
+  files: ['[relative/path/to/source-file]', '[relative/path/to/test-file]']
   steps:
-  - id: T-003.001
-    action: '[Implement the related US-002 increment and integration behavior for AC-004 with its tests.]'
-    verification:
-      command:
-      - python3
-      - -B
-      - -m
-      - unittest
-      - discover
-      - -s
-      - tests
-      - -p
-      - test_integration.py
-      expected: '[Executed integration cases demonstrate AC-004 and relevant regression checks pass.]'
-  closure: '[US-002 complete with final verification of AC-004.]'
+  - {id: T-003.001, action: '[Implement the US-002 increment and its integration behavior for AC-004.]', verification: {command: ['[executable]', '[argument]', '[test selector]'], expected: '[AC-004 cases pass; final verification of AC-004.]'}}
+  closure: '[US-002 complete, with final verification of AC-004.]'
 ---
 
 # Release Tasks: vX.Y.Z
 
-Replace the illustrative tasks, references, paths, commands, selectors, and expected results with this release's actual decisions. Confirm that selected checks exist and exercise the intended behavior; these examples prescribe neither task count nor scope. The tasks array owns all executable task definitions. Keep reading tables synchronized and outside generated progress; their decision context participates in the document digest.
+> **Authoring notes (delete when filling in).**
+> - The frontmatter `tasks` array owns every executable definition. The reading tables below mirror it; update the array first, then synchronize the views in the same revision.
+> - **Keep the frontmatter short.** Write lists and mappings in one line (flow style), as in the example. Formatting does not change the document digest. Anchors, aliases, merge keys, and explicit tags are rejected, so repeated text cannot be shared.
+> - **Size rule: about 10 tasks per release at most.** The array lives entirely in the frontmatter, so its length grows with every task. Past roughly 10 tasks (or about 80 frontmatter lines), the release is probably too large: return to the roadmap and split it into smaller releases, each with its own spec, plan, and tasks. Record the decision in the Decomposition criteria table.
+> - **Minimal text in the array.** Keep `action`, `expected`, and `closure` to one sentence each, citing the `AC`, `NFR`, or plan section. Detail, rationale, and context belong in the body tables, which add no frontmatter length.
+> - **Group steps by observable check, not by code edit.** One step proves one result; several edits that serve that result go into its `action`. Aim for one to three steps per task. A task that needs more probably bundles unrelated outcomes: split it.
+> - **Cite instead of copy.** Execution-critical detail may live in a named approved source. Let `action` and `closure` cite the `AC`, `NFR`, or plan section rather than restating it.
+> - Task IDs are `T-` plus at least three digits. Step IDs are the task ID plus a dot and at least three digits, for example `T-001.001`. Phase and story must exist in the plan and spec. Each acceptance ID must belong to the task's story. Dependencies must exist and form no cycle.
+> - List files one by one, relative to the project root, tests included. No wildcards. Never target `.specs/`, `.spec-flow/`, or `.git/`. Files from earlier tasks are context only and grant no write permission.
+> - Each step has one action, exactly one verification (a nonempty argv `command` list **or** a specific `inspection` string), and an `expected` result. Commands run from the project root, print meaningful output, and never change project code. Implementation, generation, and migration belong in actions, with a separate check.
+> - An exit code alone does not prove acceptance. Review results against the approved behavior. Inspections name the surface, the conditions, and the observable evidence.
+> - Every spec `AC` appears exactly once, under its real story. The tasks listed for an `AC` must be exactly the tasks whose `acceptance` includes it. Each `AC` needs a named final-verification step; none may rest only on partial tasks or a promise of later checks.
+> - Label enabling and partial-contribution tasks. Execution is sequential, one task at a time, even for logically independent tasks.
+> - Never invent stories or `AC` links to pass validation. Route changed behavior to the spec, a changed solution or phases to the plan, and shared changes to their owner.
+> - Write content in the project's language. Keep headings and column names. Replace every `[bracketed guide]`, or write `N/A` plus the reason. Prefer tables, lists, and diagrams; keep paragraphs short.
+> - **Count check (compact style).** Tasks: `grep -c '^- id: T-' tasks.md`. Steps: `grep -o '{id: T-[0-9]*\.[0-9]*' tasks.md | wc -l`. The totals in the Task map must equal these numbers.
+> - Before approving: compare counts, order, and values between the array and the tables; validate the document; then validate the whole release with `{"release":"vX.Y.Z"}`. The controller checks structure and nominal coverage only, not feasibility.
 
 ## Purpose and approved bases
 
-[Identify the release, approved plan/spec bases, implementation objective, and applicable shared decisions. Reference approved definitions rather than repeating scope or acceptance. Resolve stale bases or conflicts before decomposition.]
+[One or two sentences: which release these tasks deliver and from which approved plan.]
+
+| Field | Value |
+|-------|-------|
+| Release | [vX.Y.Z] |
+| Approved plan | [plan.md, revision] |
+| Approved spec | [spec.md, revision] |
+| Objective | [Release objective from the roadmap] |
+
+| Approved base | Revision | Decision used |
+|---------------|----------|---------------|
+| [Shared design or constitution rule, if applicable] | [R00] | [What it constrains in the tasks] |
 
 ## Decomposition criteria
 
-[Explain the chosen granularity. Each task has a specific, measurable, achievable, relevant, bounded contribution that can be implemented, verified, and reviewed clearly. Justify enabling work; explain what it unlocks. Put relevant tests and checks alongside the change. Record any estimate's basis and uncertainty, using time as guidance rather than an automatic human-hours rule for agents.]
+[One sentence on how work was split. Tasks are specific, measurable, bounded, and reviewable.]
+
+| Criterion | Rule applied |
+|-----------|--------------|
+| Grouping | [By story and real prerequisites within plan phases] |
+| Splitting | [Split tasks that bundle unrelated outcomes or are too large or uncertain to verify] |
+| Release size | [Task count against the limit of about 10; if exceeded, the split into smaller releases or the reason to keep it whole] |
+| Step size | [One step per observable check; edits grouped in the action] |
+| Enabling and partial work | [Allowed when labeled in the task map and closure] |
+| Tests and checks | [Integrated into every task, not deferred] |
+| Exploration | [Only with a question, boundary, expected evidence, stop condition, and explicit files; otherwise return to the plan] |
+
+| Task group | Estimate | Basis | Uncertainty |
+|------------|----------|-------|-------------|
+| [Tasks or phase] | [Effort or pending] | [How it was estimated] | [Low, Medium, or High, with reason] |
 
 ## Task map
 
-This is a reading view of tasks. Include every task exactly once, in canonical order. Copy id, phase, story, acceptance IDs/order, depends_on IDs/order, and closure exactly; render an empty dependency list as None.
+[One sentence: the totals and the table below are reading views of the `tasks` array. Each task appears once, in the same order.]
 
-| Task | Phase | Story | Related criteria | Dependencies | Closure condition |
-| --- | --- | --- | --- | --- | --- |
-| T-001 | PH-01 | US-001 | AC-001 | None | [Enabling change verified; AC-001 contribution remains partial.] |
-| T-002 | PH-01 | US-001 | AC-001, AC-002, AC-003 | T-001 | [US-001 complete with final verification of AC-001, AC-002, and AC-003.] |
-| T-003 | PH-02 | US-002 | AC-004 | T-002 | [US-002 complete with final verification of AC-004.] |
+**Totals**
+
+| Scope | Tasks | Steps | Enabling | Partial | Complete |
+|-------|-------|-------|----------|---------|----------|
+| Release | [n] | [n] | [n] | [n] | [n] |
+
+> Optional per-phase and per-story breakdowns. Each is a hand-kept count: skip them when the Tasks table below already shows the same information.
+
+| Phase | Tasks | Steps |
+|-------|-------|-------|
+| [PH-01] | [n] | [n] |
+| [PH-02] | [n] | [n] |
+
+| Story | Tasks | Criteria covered |
+|-------|-------|------------------|
+| [US-001] | [n] | [AC-001, AC-002, AC-003] |
+| [US-002] | [n] | [AC-004] |
+
+**Tasks**
+
+| Task | Phase | Story | Contribution | Related criteria | Dependencies | Closure condition |
+|------|-------|-------|--------------|------------------|--------------|-------------------|
+| T-001 | [PH-01] | [US-001] | [Enabling or Partial or Complete] | [AC-001] | None | [Same text as the array closure] |
+| T-002 | [PH-01] | [US-001] | [Complete] | [AC-001, AC-002, AC-003] | [T-001] | [Same text as the array closure] |
+| T-003 | [PH-02] | [US-002] | [Complete] | [AC-004] | [T-002] | [Same text as the array closure] |
 
 ## Sequence and dependencies
 
-[Explain the actual prerequisites and ordering rationale, consistent with plan phases and their dependencies. Review both graphs together for an executable sequence, including dependencies that could block a phase on later work. Avoid artificial chains. Logical independence does not authorize parallel work; keep the sequence in order.]
+[One sentence on the execution order. Logical independence does not authorize parallel work.]
+
+```mermaid
+flowchart LR
+    subgraph PH01["PH-01"]
+        T1["T-001<br/>[enabling]"] --> T2["T-002<br/>[story complete]"]
+    end
+    subgraph PH02["PH-02"]
+        T3["T-003<br/>[story complete]"]
+    end
+    T2 --> T3
+```
+
+> Optional diagram. It must match the array and the plan's phase graph.
+
+- **Ordering rationale:** [Real prerequisites and what each task unlocks].
+- **Plan alignment:** [How the task graph respects the phase dependencies].
 
 ## File scope and restrictions
 
-[Explain placement and scope decisions in relation to approved structure and the plan. Distinguish existing/proposed files. Each task's files array names individual contained project-relative files, including relevant tests. Protected .specs, .spec-flow, and .git metadata are excluded. Put task-specific operative restrictions in action/closure and files; background here cannot expand the current task's permitted writes. Dependency files can appear in context without becoming writable by the current task.]
+[One sentence on where changes land. Distinguish existing from proposed files.]
+
+| File | State | Tasks | Purpose |
+|------|-------|-------|---------|
+| [relative/path] | [Existing or Proposed] | [T-xxx] | [What changes] |
+
+| Excluded area | Reason |
+|---------------|--------|
+| `.specs/`, `.spec-flow/`, `.git/` | [Protected metadata; never a task target] |
+| [Other off-limits path] | [Reason] |
 
 ## Acceptance and quality coverage
 
-This matrix describes intended contributions and final checks, not completed acceptance. Every AC appears once in canonical spec order under its actual story owner. Include all contributing task IDs, label partial contributions, and identify existing final-verification step IDs whose tasks reference that AC.
+[One sentence: this table shows intended contributions and final checks, not completed acceptance.]
 
 | Criterion | Owning story | Contributing tasks | Final verification step | Quality reference |
-| --- | --- | --- | --- | --- |
-| AC-001 | US-001 | T-001: partial; T-002: complete | T-002.001 | None |
-| AC-002 | US-001 | T-002 | T-002.002 | None |
-| AC-003 | US-001 | T-002 | T-002.003 | NFR-001 |
-| AC-004 | US-002 | T-003 | T-003.001 | None |
+|-----------|--------------|--------------------|-------------------------|-------------------|
+| AC-001 | [US-001] | [T-001, T-002] | [T-002.001] | [None] |
+| AC-002 | [US-001] | [T-002] | [T-002.001] | [None] |
+| AC-003 | [US-001] | [T-002] | [T-002.002] | [NFR-001] |
+| AC-004 | [US-002] | [T-003] | [T-003.001] | [None] |
 
-[Check coverage against spec and the plan's delivery/final-verification phases. A task's acceptance reference may represent only a partial contribution; nominal ID coverage alone does not establish final satisfaction. Reflect partial/final intent in canonical action, expected, and closure fields, not solely this table. Reference NFR conditions/targets from their approved definition. Map applicable constitution/shared-quality checks to actual task steps. Return missing acceptance or changed behavior to specify and changed technical decisions to plan or their shared owner.]
+| Check | Linked through | Task step |
+|-------|----------------|-----------|
+| [Constitution MUST rule or NFR] | [AC or plan reference] | [T-xxx.xxx] |
+
+- **Partial contributions:** [Tasks that contribute without finishing a criterion].
 
 ## Verification and evidence
 
-Each canonical step has one action and exactly one verification method: an argv command list or a specific inspection, plus its expected result. Choose meaningful checks for the actual change, including relevant errors, quality, integration, and regression. For an inspection, specify the surface, conditions, and observable evidence to examine. Verification commands run from the project root against the resulting task state and must leave project code unchanged; implementation, generation, and migration actions belong in action, with separate checks. Passing commands and nonempty output remain required; test suites must execute cases.
+[One sentence on how each step proves its result.]
 
-The implementer works from each task's canonical record and its dependencies, not from this document's prose and tables. Put every execution-critical instruction in files, action, verification, or closure, or in an approved governing source the task names. Review that representation before approval. A reference to omitted prose cannot supply missing instructions; context about future work is not authorization.
+```mermaid
+flowchart LR
+    A["Step action"] --> V["One verification<br/>command or inspection"]
+    V --> R["Review result against<br/>approved behavior"]
+    R --> C["Task closure"]
+```
+
+| Step | Method | Runs from or inspects | Expected evidence | Changes project code |
+|------|--------|-----------------------|-------------------|----------------------|
+| [T-xxx.xxx] | [Command or Inspection] | [Project root, or the surface and conditions] | [Observable result] | No |
 
 ## Risks, blockers, and readiness
 
-[Record remaining uncertainties, access/tools/environment needs, and blocking conditions. Resolve decisions affecting behavior or solution in their owning source. Any executable exploration needs a clear question, boundary, expected evidence, and stopping condition in canonical fields, with an honest story/AC contribution and explicit file scope. Return work that cannot fit that contract to plan rather than inventing stories, criteria, or task types.]
+[One sentence on what could stop execution.]
 
-Before implementation, review current approved bases, executable tasks across all release phases, complete AC coverage with adequate final checks, coherent tables and phase/task graphs, valid file scope, usable checks, required context, and resolved blockers. These are readiness review requirements, not progress checkboxes. Validate tasks and the full release; approval and starting implementation are distinct.
+| Risk or uncertainty | Consequence | Response | Task or phase |
+|---------------------|-------------|----------|---------------|
+| [Description] | [Impact] | [Action] | [T-xxx or PH-xx] |
+
+| Blocker | Blocks | Owner | Needed by |
+|---------|--------|-------|-----------|
+| [Condition or missing decision] | [T-xxx] | [Role or person] | [Date or phase] |
+
+| Readiness check | Result | Note |
+|-----------------|--------|------|
+| Approved bases are current | [Met, Not met, or N/A] | [Comment] |
+| Tasks defined across all phases | [Result] | [Comment] |
+| Every `AC` covered with a named final check | [Result] | [Comment] |
+| Dependency graph executable; tables match the array | [Result] | [Comment] |
+| Totals in the Task map match the array counts | [Result] | [Comment] |
+| Release size within about 10 tasks, or split justified | [Result] | [Comment] |
+| File scope valid | [Result] | [Comment] |
+| Verifications usable and blockers resolved | [Result] | [Comment] |
 
 ## Closure and progress
 
-[Explain how task closure contributes to criteria and release completion. A partial task can close without satisfying its whole AC. Close a task when its steps' verification commands pass. Planning an operational action does not authorize integration, publication, or deployment.]
+[One sentence: a task closes only when its steps' verifications pass. Checkboxes are generated views, not proof.]
 
-Checkboxes are views, not proof of completion. Keep decision tables out of generated progress and do not maintain a second manual status list. The controller validates structural contracts and nominal AC coverage; table coherence, semantic sufficiency, and feasibility require explicit skill review.
+| Task | Contributes to criteria | Release completion link |
+|------|-------------------------|-------------------------|
+| [T-xxx] | [AC-xxx] | [How it moves the release toward done] |
 
 ## Refinement, references, and approval
 
-[Record references, actual revisions/approval scope, reasons for changes, and affected documents. Refine through approved revisions while preserving completed work, historical evidence, and stable IDs for unchanged tasks/steps; use new IDs for new work. Changed source decisions return to their owner, with affected pins inspected/adopted explicitly.  approvals remain applicable only while their sources are unchanged.]
+[One sentence: approving tasks is distinct from authorizing implementation, and neither permits integration, publication, or deployment. The controller registry is the approval authority.]
 
-Full-release tasks and AC coverage remain required before implementation. Later phases must be sufficiently defined; progressive elaboration does not authorize placeholders or first-phase-only coverage. The registry controls approval. 
+| Document | Revision | Digest (first 8 characters) | Purpose |
+|----------|----------|-----------------------------|---------|
+| [plan.md](plan.md) | [R00] | [00000000] | [Pinned source] |
+
+| Revision | Date | Approval | Summary of change | Documents affected |
+|----------|------|----------|-------------------|--------------------|
+| R00 | [YYYY-MM-DD] | [Who approved, where recorded] | [First draft] | [None] |
+
+- **Stable IDs:** [Completed work, evidence, and IDs are preserved on refinement; new work gets new IDs].
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.
