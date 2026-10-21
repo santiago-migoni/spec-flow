@@ -12,6 +12,7 @@ depends_on:
 
 > **Authoring notes (delete when filling in).**
 > - Replace the example digest with the approved constitution digest. Pin `architecture.md` when this document maps its components to resources.
+> - Leave the Approval cell of the revision row as it is. The `approve` operation rewrites it, then records the digest. Add a new revision row with the same marker for each later revision.
 > - Write content in the project's language. Keep headings and column names as they are.
 > - Replace every `[bracketed guide]` with content, or write `N/A` plus the reason. Keep paragraphs to two or three sentences; prefer tables, lists, and diagrams.
 > - **Never write secret values.** Name the secret and where it lives.
@@ -180,7 +181,7 @@ flowchart LR
 
 | Revision | Date | Approval | Summary of change |
 |----------|------|----------|-------------------|
-| R00 | [YYYY-MM-DD] | [Who approved, where recorded] | [First draft] |
+| R00 | [YYYY-MM-DD] | <!-- spec-flow:approval -->Pending approval<!-- /spec-flow:approval --> | [First draft] |
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.

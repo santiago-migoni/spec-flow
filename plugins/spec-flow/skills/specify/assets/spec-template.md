@@ -36,6 +36,7 @@ acceptance:
 > - Keep stories bounded and independently testable; split oversized ones by user value. Do not create a story just to relabel a technical task.
 > - Any required behavior that appears in a table, error case, or compatibility note must also be added to canonical acceptance in the same revision. Quality obligations that need checking must be reachable from an `AC`; prose-only obligations are not covered by the controller.
 > - Never infer the release from a `planned` status, array position, or directory number. The approved roadmap must select this exact version.
+> - Leave the Approval cell of the revision row as it is. The `approve` operation rewrites it, then records the digest. Add a new revision row with the same marker for each later revision.
 > - Write content in the project's language. Keep headings and column names. Replace every `[bracketed guide]`, or write `N/A` plus the reason. Prefer tables, lists, and diagrams; keep paragraphs short.
 > - Before approving, check by hand (the controller checks structure only): every story appears once in section 5, in the same order as the array; only known `OUT` IDs are cited; every `AC` sits under its real story; thresholds agree across sections.
 
@@ -184,7 +185,7 @@ flowchart TD
 
 | Revision | Date | Approval | Summary of change | Documents affected |
 |----------|------|----------|-------------------|--------------------|
-| R00 | [YYYY-MM-DD] | [Who approved, where recorded] | [First draft] | [None] |
+| R00 | [YYYY-MM-DD] | <!-- spec-flow:approval -->Pending approval<!-- /spec-flow:approval --> | [First draft] | [None] |
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.

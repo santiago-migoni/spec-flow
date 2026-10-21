@@ -53,6 +53,7 @@ tasks:
 > - Every spec `AC` appears exactly once, under its real story. The tasks listed for an `AC` must be exactly the tasks whose `acceptance` includes it. Each `AC` needs a named final-verification step; none may rest only on partial tasks or a promise of later checks.
 > - Label enabling and partial-contribution tasks. Execution is sequential, one task at a time, even for logically independent tasks.
 > - Never invent stories or `AC` links to pass validation. Route changed behavior to the spec, a changed solution or phases to the plan, and shared changes to their owner.
+> - Leave the Approval cell of the revision row as it is. The `approve` operation rewrites it, then records the digest. Add a new revision row with the same marker for each later revision.
 > - Write content in the project's language. Keep headings and column names. Replace every `[bracketed guide]`, or write `N/A` plus the reason. Prefer tables, lists, and diagrams; keep paragraphs short.
 > - **Count check (compact style).** Tasks: `grep -c '^- id: T-' tasks.md`. Steps: `grep -o '{id: T-[0-9]*\.[0-9]*' tasks.md | wc -l`. The totals in the Task map must equal these numbers.
 > - Before approving: compare counts, order, and values between the array and the tables; validate the document; then validate the whole release with `{"release":"vX.Y.Z"}`. The controller checks structure and nominal coverage only, not feasibility.
@@ -226,7 +227,7 @@ flowchart LR
 
 | Revision | Date | Approval | Summary of change | Documents affected |
 |----------|------|----------|-------------------|--------------------|
-| R00 | [YYYY-MM-DD] | [Who approved, where recorded] | [First draft] | [None] |
+| R00 | [YYYY-MM-DD] | <!-- spec-flow:approval -->Pending approval<!-- /spec-flow:approval --> | [First draft] | [None] |
 
 - **Stable IDs:** [Completed work, evidence, and IDs are preserved on refinement; new work gets new IDs].
 

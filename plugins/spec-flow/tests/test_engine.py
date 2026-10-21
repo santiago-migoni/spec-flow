@@ -28,6 +28,48 @@ class EngineTests(unittest.TestCase):
             "source": "conversation",
         })
 
+    def _mark_constitution(self):
+        self.engine.dispatch("initialize", {})
+        path = self.docs["constitution"]
+        path.write_text(path.read_text().replace(
+            "Approved source decision.",
+            "Approved source decision.\n\n| Revision | Approval |\n|---|---|\n"
+            "| R00 | <!-- spec-flow:approval -->Pending approval<!-- /spec-flow:approval --> |\n"))
+        return path
+
+    def test_approve_writes_status_into_the_document_before_recording_the_digest(self):
+        path = self._mark_constitution()
+        result = self.approve("constitution")
+        self.assertRegex(result["approval_text"], r"^Approved by user, \d{4}-\d\d-\d\d$")
+        self.assertIn(result["approval_text"], path.read_text())
+        self.assertNotIn("Pending approval", path.read_text())
+        relative = path.relative_to(self.root).as_posix()
+        self.assertEqual(result["digest"], self.engine.dispatch("digest", {"path": relative})["digest"])
+        self.assertNotIn("warning", self.engine.dispatch("validate", {"path": relative}))
+
+    def test_approve_retry_keeps_the_same_digest_and_receipt(self):
+        self._mark_constitution()
+        first = self.approve("constitution")
+        second = self.approve("constitution")
+        self.assertTrue(second["already_approved"])
+        self.assertEqual(first["digest"], second["digest"])
+        self.assertIsNone(second["approval_text"])
+
+    def test_validate_warns_when_text_says_approved_but_the_document_changed(self):
+        path = self._mark_constitution()
+        self.approve("constitution")
+        path.write_text(path.read_text().replace("Approved source decision.", "Changed decision."))
+        relative = path.relative_to(self.root).as_posix()
+        self.assertIn("warning", self.engine.dispatch("validate", {"path": relative}))
+
+    def test_approve_without_marker_leaves_the_document_untouched(self):
+        self.engine.dispatch("initialize", {})
+        path = self.docs["constitution"]
+        before = path.read_text()
+        result = self.approve("constitution")
+        self.assertIsNone(result["approval_text"])
+        self.assertEqual(path.read_text(), before)
+
     def test_initialize_writes_minimal_config_without_profiles_or_runs(self):
         result = self.engine.dispatch("initialize", {})
         config = json.loads((self.root / ".spec-flow" / "config.json").read_text())

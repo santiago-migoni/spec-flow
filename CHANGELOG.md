@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- `approve` now writes `Approved by <actor>, <date>` into the marked Approval cell of the document's current revision row before recording the digest, so the document and the registry agree. Documents without the marker are approved as before; `validate` warns when the text says approved but no current receipt exists. The document templates carry the marker (`Pending approval`).
+
 ## Release v0.3.0
 
 Release date: 2026-10-21.
