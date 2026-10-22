@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `grilling` skill: an optional, conversation-only side channel that grills an idea, plan, or decision one question at a time, or brainstorms options first. It writes no file and gates nothing.
+
 ## Release v0.4.0
 
 Release date: 2026-10-22.

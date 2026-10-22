@@ -7,7 +7,7 @@ from harness.runtime.contracts import read_document
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "skills"
-NAMES = ("using-spec-flow", "constitution", "design", "roadmap", "specify",
+NAMES = ("using-spec-flow", "grilling", "constitution", "design", "roadmap", "specify",
          "plan", "tasks", "backlog", "implement",
          "review-release", "finishing-branch")
 DOCUMENT_TEMPLATES = {

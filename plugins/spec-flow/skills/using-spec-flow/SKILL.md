@@ -37,6 +37,7 @@ Each cycle lives in `.specs/release-vX.Y.Z/` with `spec.md`, `plan.md`, and `tas
 | Behavior and acceptance for one release | `specify` |
 | Technical approach and phases | `plan` |
 | Executable tasks | `tasks` |
+| Stress-test an idea, plan, or decision (optional) | `grilling` |
 | Deferred ideas | `backlog` |
 | Build the approved tasks | `implement` |
 | Review a finished release against its criteria and feedback | `review-release` |
