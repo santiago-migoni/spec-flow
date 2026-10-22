@@ -50,7 +50,7 @@ Skills that write documents link `harness/contracts/operations.md` before any co
 
 ## Releasing
 
-Keep the version in `plugins/spec-flow/.claude-plugin/plugin.json` and in the marketplace entry identical. The current package version is `0.4.0`. Retain it unless a release bump is part of the work. A release bump and its `CHANGELOG.md` `## Release vX.Y.Z` heading go in a separate commit from feature changes. Collect work under `## Unreleased` until a release is cut.
+Keep the version in `plugins/spec-flow/.claude-plugin/plugin.json` and in the marketplace entry identical. The current package version is `0.5.0`. Retain it unless a release bump is part of the work. A release bump and its `CHANGELOG.md` `## Release vX.Y.Z` heading go in a separate commit from feature changes. Collect work under `## Unreleased` until a release is cut.
 
 ## Cross-file conventions
 
