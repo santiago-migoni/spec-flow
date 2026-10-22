@@ -2,6 +2,7 @@
 schema_version: 1
 kind: roadmap
 revision: R00
+status: draft
 id: ROADMAP-PROJECT
 depends_on:
 - path: .specs/constitution.md
@@ -26,7 +27,7 @@ releases:
 > - Canonical statuses are `planned`, `active`, `completed`, `deferred`, `cancelled`. The labels Projected, Selected, and Not selected are contextual and are neither statuses nor permission to execute.
 > - Choosing the next release is a human decision. Never infer it from array position, horizon, or `planned` status. Keep at most one selected release and one active release.
 > - Pin the constitution, plus any design document whose decisions are used. Record `N/A` with a reason for design documents that do not apply; omitting a pin alone is not N/A.
-> - Leave the Approval cell of the revision row as it is. The `approve` operation rewrites it, then records the digest. Add a new revision row with the same marker for each later revision.
+> - Keep `status: draft` in the header. The `approve` operation sets it to `approved` and then records the digest; the status is outside the digest. Set it back to `draft` when you start a new revision. Never write approval state in the prose.
 > - Write content in the project's language. Keep headings and column names. Replace every `[bracketed guide]`, or write `N/A` plus the reason. Prefer tables, lists, and diagrams; keep paragraphs short.
 > - Before approving, check by hand (the controller does not): row count, unique versions, order, exact objective and status matches, known OUT IDs, and that the Selected label matches section 7.
 
@@ -191,7 +192,7 @@ flowchart LR
 
 | Revision | Date | Approval | Scope or priority change | Documents affected |
 |----------|------|----------|--------------------------|--------------------|
-| R00 | [YYYY-MM-DD] | <!-- spec-flow:approval -->Pending approval<!-- /spec-flow:approval --> | [First draft] | [None] |
+| R00 | [YYYY-MM-DD] | Header status and registry | [First draft] | [None] |
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.

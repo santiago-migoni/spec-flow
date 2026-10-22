@@ -28,47 +28,39 @@ class EngineTests(unittest.TestCase):
             "source": "conversation",
         })
 
-    def _mark_constitution(self):
+    def _draft_constitution(self):
         self.engine.dispatch("initialize", {})
         path = self.docs["constitution"]
-        path.write_text(path.read_text().replace(
-            "Approved source decision.",
-            "Approved source decision.\n\n| Revision | Approval |\n|---|---|\n"
-            "| R00 | <!-- spec-flow:approval -->Pending approval<!-- /spec-flow:approval --> |\n"))
+        path.write_text(path.read_text().replace("revision: R00\n", "revision: R00\nstatus: draft\n", 1))
         return path
 
-    def test_approve_writes_status_into_the_document_before_recording_the_digest(self):
-        path = self._mark_constitution()
-        result = self.approve("constitution")
-        self.assertRegex(result["approval_text"], r"^Approved by user, \d{4}-\d\d-\d\d$")
-        self.assertIn(result["approval_text"], path.read_text())
-        self.assertNotIn("Pending approval", path.read_text())
+    def test_approve_sets_header_status_without_changing_the_digest(self):
+        path = self._draft_constitution()
         relative = path.relative_to(self.root).as_posix()
-        self.assertEqual(result["digest"], self.engine.dispatch("digest", {"path": relative})["digest"])
+        before = self.engine.dispatch("digest", {"path": relative})["digest"]
+        result = self.approve("constitution")
+        self.assertTrue(result["status_written"])
+        self.assertIn("status: approved\n", path.read_text())
+        self.assertNotIn("status: draft", path.read_text())
+        self.assertEqual(result["digest"], before)
         self.assertNotIn("warning", self.engine.dispatch("validate", {"path": relative}))
 
-    def test_approve_retry_keeps_the_same_digest_and_receipt(self):
-        self._mark_constitution()
+    def test_approve_adds_missing_status_and_retry_keeps_the_receipt(self):
+        self.engine.dispatch("initialize", {})
+        path = self.docs["constitution"]
         first = self.approve("constitution")
         second = self.approve("constitution")
+        self.assertIn("status: approved\n", path.read_text())
         self.assertTrue(second["already_approved"])
+        self.assertFalse(second["status_written"])
         self.assertEqual(first["digest"], second["digest"])
-        self.assertIsNone(second["approval_text"])
 
-    def test_validate_warns_when_text_says_approved_but_the_document_changed(self):
-        path = self._mark_constitution()
+    def test_validate_warns_when_status_is_approved_but_the_document_changed(self):
+        path = self._draft_constitution()
         self.approve("constitution")
         path.write_text(path.read_text().replace("Approved source decision.", "Changed decision."))
         relative = path.relative_to(self.root).as_posix()
         self.assertIn("warning", self.engine.dispatch("validate", {"path": relative}))
-
-    def test_approve_without_marker_leaves_the_document_untouched(self):
-        self.engine.dispatch("initialize", {})
-        path = self.docs["constitution"]
-        before = path.read_text()
-        result = self.approve("constitution")
-        self.assertIsNone(result["approval_text"])
-        self.assertEqual(path.read_text(), before)
 
     def test_initialize_writes_minimal_config_without_profiles_or_runs(self):
         result = self.engine.dispatch("initialize", {})

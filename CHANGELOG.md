@@ -4,7 +4,7 @@
 
 ### Changed
 
-- `approve` now writes `Approved by <actor>, <date>` into the marked Approval cell of the document's current revision row before recording the digest, so the document and the registry agree. Documents without the marker are approved as before; `validate` warns when the text says approved but no current receipt exists. The document templates carry the marker (`Pending approval`).
+- `approve` now sets `status: approved` in the document's YAML header before recording the digest. The status is outside the digest, so a draft's digest is the one that stays recorded and pins taken from it remain valid. Documents without a YAML header are approved as before; `validate` warns when the status is `approved` but no current receipt exists. The document templates start with `status: draft` and no longer carry approval state in the prose.
 
 ## Release v0.3.0
 

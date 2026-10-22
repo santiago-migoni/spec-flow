@@ -2,6 +2,7 @@
 schema_version: 1
 kind: constitution
 revision: R00
+status: draft
 id: CONST-PROJECT
 depends_on: []
 ---
@@ -10,7 +11,7 @@ depends_on: []
 
 > **Authoring notes (delete when filling in).**
 > - The constitution is the first approved document and depends on nothing. Its approval sets the project framework only; implementation, integration, and publication keep their own gates.
-> - Leave the Approval cell of the revision row as it is. The `approve` operation rewrites it, then records the digest. Add a new revision row with the same marker for each later revision.
+> - Keep `status: draft` in the header. The `approve` operation sets it to `approved` and then records the digest; the status is outside the digest. Set it back to `draft` when you start a new revision. Never write approval state in the prose.
 > - Write content in the project's language. Keep headings and column names as they are.
 > - Replace every `[bracketed guide]` with content, or write `N/A` plus the reason. Keep paragraphs to two or three sentences; prefer tables, lists, and diagrams.
 > - Never invent budgets, dates, baselines, or role assignments. Leave unknowns as explicit questions or `pending`.
@@ -161,7 +162,7 @@ flowchart LR
 
 | Revision | Date | Reason | Documents affected | Approval |
 |----------|------|--------|--------------------|----------|
-| R00 | [YYYY-MM-DD] | [First draft] | [None] | <!-- spec-flow:approval -->Pending approval<!-- /spec-flow:approval --> |
+| R00 | [YYYY-MM-DD] | [First draft] | [None] | Header status and registry |
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.

@@ -42,9 +42,7 @@ A roadmap change requires its own approval before any release document that depe
 
 Present the validated draft before asking for approval. On explicit approval, call `approve` with `{"path":"<project-relative document>","actor":"<human>","statement":"<their approval>","source":"<conversation reference>"}`. Do not approve unseen changes on the user's behalf.
 
-The document never states its own approval by hand. Its revision row carries a marked cell, `<!-- spec-flow:approval -->Pending approval<!-- /spec-flow:approval -->`. Before calling `approve`, tell the user the one change it will make: that cell becomes `Approved by <actor>, <YYYY-MM-DD>`. `approve` then rewrites the cell of the current revision, validates the document, and records the digest of the result, so the recorded digest already includes the status. A document without the marker is approved as before, and a cell that already says `Approved` is left alone, so retries keep the same digest. Report approval state from `gate` or the receipt, not from prose. `validate` warns when the text says approved but no current receipt exists. Each new revision adds a row with a fresh `Pending approval` marker.
-
-Keep R00 until first approval. A substantive edit after approval increments the revision once. Any edit changes the digest, which invalidates the approval; re-approve the document and any dependent documents that pinned it.
+Approval state lives in the header `status` (`draft` or `approved`) and in the registry, never in the prose. `approve` sets `status: approved`, validates the result, and records the digest. The status is outside the digest, so the digest of a draft is the one that stays recorded and any pin taken from it stays valid. A document without a YAML header is approved as before, and a document already marked `approved` is left alone, so retries keep the same receipt. Report approval state from `gate` or the receipt. `validate` warns when the status is `approved` but no current receipt exists, for example after a later edit. Start each new revision with `status: draft`.
 
 ## Document encoding
 

@@ -9,11 +9,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Set
 
-from .contracts import ContractError, document_digest, safe_path, validate_document, validate_release
+from .contracts import YAML_HEADER_RE, ContractError, document_digest, safe_path, validate_document, validate_release
 from .store import Store, StoreError
 
-
-APPROVAL_CELL_RE = re.compile(r"<!-- spec-flow:approval -->(.*?)<!-- /spec-flow:approval -->")
 
 
 class EngineError(RuntimeError):
@@ -224,9 +222,8 @@ class Engine:
                 path = self._project_path(payload["path"])
                 result = validate_document(self.root, path)
                 response = {"valid": True, "path": path.relative_to(self.root).as_posix(), "kind": result["contract"]["kind"], "digest": document_digest(path)}
-                cell = self._approval_cell(self._read_exact(path), result["contract"]["revision"])
-                if cell and cell[2].startswith("Approved") and not self._current_approval(path):
-                    response["warning"] = "document text says approved but it has no current approval receipt; approve it again"
+                if result["contract"].get("status") == "approved" and not self._current_approval(path):
+                    response["warning"] = "document status is approved but it has no current approval receipt; approve it again"
                 return response
             result = validate_release(self.root, self._nonempty(payload["release"], "release"))
         except ContractError as exc:
@@ -314,28 +311,21 @@ class Engine:
         with open(path, "w", encoding="utf-8", newline="") as stream:
             stream.write(text)
 
-    @staticmethod
-    def _approval_cell(text: str, revision: str) -> Optional[tuple]:
-        """Find the marked approval cell on the amendment-history row of `revision`."""
-        offset = 0
-        for line in text.splitlines(keepends=True):
-            if line.startswith("| {} |".format(revision)):
-                match = APPROVAL_CELL_RE.search(line)
-                if match:
-                    return offset + match.start(1), offset + match.end(1), match.group(1)
-            offset += len(line)
-        return None
-
-    def _record_approval_text(self, path: Path, revision: str, actor: str) -> Optional[str]:
-        """Write the approval status into the document before its digest is recorded."""
+    def _mark_approved(self, path: Path) -> bool:
+        """Set `status: approved` in the YAML header. The status is outside the digest, so it never changes it."""
         text = self._read_exact(path)
-        cell = self._approval_cell(text, revision)
-        if cell is None or cell[2].startswith("Approved"):
-            return None
-        start, end, _ = cell
-        status = "Approved by {}, {}".format(re.sub(r"[|\r\n]+", " ", actor).strip(), self._now()[:10])
+        header = YAML_HEADER_RE.match(text)
+        if header is None:
+            return False
+        body = header.group(1)
+        if re.search(r"^status:[ \t]*approved[ \t]*$", body, re.MULTILINE):
+            return False
+        if re.search(r"^status:", body, re.MULTILINE):
+            updated = re.sub(r"^status:.*$", "status: approved", body, count=1, flags=re.MULTILINE)
+        else:
+            updated = body + "status: approved\n"
         temporary = path.with_name(path.name + ".tmp")
-        self._write_exact(temporary, text[:start] + status + text[end:])
+        self._write_exact(temporary, text[:header.start(1)] + updated + text[header.end(1):])
         os.replace(temporary, path)
         try:
             validate_document(self.root, path)
@@ -343,7 +333,7 @@ class Engine:
             self._write_exact(temporary, text)
             os.replace(temporary, path)
             raise EngineError("contract_invalid", str(exc)) from exc
-        return status
+        return True
 
     def _approve(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, ("path", "actor", "statement", "source"), ("release",))
@@ -360,7 +350,7 @@ class Engine:
         for dependency in self._approval_closure(path)[:-1]:
             if not self._current_approval(dependency):
                 raise EngineError("dependency_not_approved", "approve dependencies first: {}".format(dependency.relative_to(self.root)))
-        approval_text = self._record_approval_text(path, document["contract"]["revision"], actor)
+        status_written = self._mark_approved(path)
         digest = document_digest(path)
         receipt = {"path": path.relative_to(self.root).as_posix(), "digest": digest, "actor": actor, "statement": statement, "source": source, "created_at": self._now()}
         # Approval retries are common after a lost CLI response. Reuse the
@@ -368,12 +358,12 @@ class Engine:
         for existing in self.store.approvals():
             if all(existing.get(key) == receipt[key] for key in ("path", "digest", "actor", "statement", "source")):
                 return {"approved": True, "path": receipt["path"], "digest": digest,
-                        "sequence": existing.get("seq"), "already_approved": True, "approval_text": approval_text}
+                        "sequence": existing.get("seq"), "already_approved": True, "status_written": status_written}
         try:
             row = self.store.append_approval(receipt)
         except StoreError as exc:
             raise EngineError(exc.code, str(exc)) from exc
-        return {"approved": True, "path": receipt["path"], "digest": digest, "sequence": row["seq"], "approval_text": approval_text}
+        return {"approved": True, "path": receipt["path"], "digest": digest, "sequence": row["seq"], "status_written": status_written}
 
     def _gate(self, payload: Mapping[str, Any]) -> Dict[str, Any]:
         self._fields(payload, (), ("path", "phase", "kind", "release"))

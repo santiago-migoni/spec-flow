@@ -2,6 +2,7 @@
 schema_version: 1
 kind: plan
 revision: R00
+status: draft
 id: PLAN-X.Y.Z
 depends_on:
 - path: .specs/release-vX.Y.Z/spec.md
@@ -25,7 +26,7 @@ phases:
 > - Every canonical `AC` needs an intended delivery phase and a final verification. Quality obligations and constitution MUST rules need a planned check. A MUST violation blocks tasks.
 > - Phase and file tables give planning context only. They do not authorize starting work; tasks hold exact file lists and commands.
 > - Pin the spec, plus other approved sources only when they directly shape the plan. Leave unknown decisions, capacity, and estimates explicit; never invent them.
-> - Leave the Approval cell of the revision row as it is. The `approve` operation rewrites it, then records the digest. Add a new revision row with the same marker for each later revision.
+> - Keep `status: draft` in the header. The `approve` operation sets it to `approved` and then records the digest; the status is outside the digest. Set it back to `draft` when you start a new revision. Never write approval state in the prose.
 > - Write content in the project's language. Keep headings and column names. Replace every `[bracketed guide]`, or write `N/A` plus the reason. Prefer tables, lists, and diagrams; keep paragraphs short.
 > - Before approving, check by hand: the table matches the array, every `AC` appears in section 7, and no blocking question remains open.
 
@@ -172,7 +173,7 @@ flowchart TD
 
 | Revision | Date | Approval | Summary of change | Documents affected |
 |----------|------|----------|-------------------|--------------------|
-| R00 | [YYYY-MM-DD] | <!-- spec-flow:approval -->Pending approval<!-- /spec-flow:approval --> | [First draft] | [None] |
+| R00 | [YYYY-MM-DD] | Header status and registry | [First draft] | [None] |
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.

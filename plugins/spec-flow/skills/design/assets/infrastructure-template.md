@@ -2,6 +2,7 @@
 schema_version: 1
 kind: infrastructure
 revision: R00
+status: draft
 id: INFRA-PROJECT
 depends_on:
 - path: .specs/constitution.md
@@ -12,7 +13,7 @@ depends_on:
 
 > **Authoring notes (delete when filling in).**
 > - Replace the example digest with the approved constitution digest. Pin `architecture.md` when this document maps its components to resources.
-> - Leave the Approval cell of the revision row as it is. The `approve` operation rewrites it, then records the digest. Add a new revision row with the same marker for each later revision.
+> - Keep `status: draft` in the header. The `approve` operation sets it to `approved` and then records the digest; the status is outside the digest. Set it back to `draft` when you start a new revision. Never write approval state in the prose.
 > - Write content in the project's language. Keep headings and column names as they are.
 > - Replace every `[bracketed guide]` with content, or write `N/A` plus the reason. Keep paragraphs to two or three sentences; prefer tables, lists, and diagrams.
 > - **Never write secret values.** Name the secret and where it lives.
@@ -181,7 +182,7 @@ flowchart LR
 
 | Revision | Date | Approval | Summary of change |
 |----------|------|----------|-------------------|
-| R00 | [YYYY-MM-DD] | <!-- spec-flow:approval -->Pending approval<!-- /spec-flow:approval --> | [First draft] |
+| R00 | [YYYY-MM-DD] | Header status and registry | [First draft] |
 
 <!-- spec-flow:generated:start -->
 Progress is maintained by the Spec-Flow harness.
