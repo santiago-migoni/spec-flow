@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- `grilling` keeps one running question number for the whole session and uses the Q format only for decisions; requests for information are asked directly.
+
 ## Release v0.5.0
 
 Release date: 2026-10-22.

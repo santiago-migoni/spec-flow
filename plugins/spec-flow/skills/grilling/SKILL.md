@@ -18,7 +18,7 @@ Read what already exists before asking: approved `.specs/` documents, the backlo
 ## Grill
 
 - Ask exactly one question per message, ordered by consequence: settle the decision that other decisions depend on first. Do not announce the questions you are holding back.
-- Give two or more options and your recommended one with every question, so the user can accept it or push back. Number the questions across the session (Q1, Q2, ...) and use this format:
+- Give two or more options and your recommended one with every question, so the user can accept it or push back. Number the questions across the session (Q1, Q2, ...), never restarting at Q1; a question you repeat keeps its number. Use this format:
 
 ```txt
 Q1 - <question>
@@ -30,6 +30,7 @@ Q1 - <question>
 Recommended option: <the option, and why in one sentence>
 ```
 
+- Use the Q format only for decisions. If you need the user to tell you something (describe the plan, paste notes), ask for it directly in one sentence.
 - Challenge assumptions, contradictions, missing edge cases, hidden costs, and unstated alternatives. Fold the strongest objection into the current question as its context; it is not a second question. Be direct and keep going until the weak points are named.
 - Label what you hear as fact, hypothesis, proposal, or decision. Do not turn a hypothesis into a decision.
 - If the user has no options yet, first offer three to five distinct ones with their trade-offs, then grill the one they lean toward.
