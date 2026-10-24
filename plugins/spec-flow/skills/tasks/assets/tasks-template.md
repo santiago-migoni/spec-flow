@@ -43,7 +43,7 @@ tasks:
 > **Authoring notes (delete when filling in).**
 > - The frontmatter `tasks` array owns every executable definition. The reading tables below mirror it; update the array first, then synchronize the views in the same revision.
 > - **Keep the frontmatter short.** Write lists and mappings in one line (flow style), as in the example. Formatting does not change the document digest. Anchors, aliases, merge keys, and explicit tags are rejected, so repeated text cannot be shared.
-> - **Size rule: about 10 tasks per release at most.** The array lives entirely in the frontmatter, so its length grows with every task. Past roughly 10 tasks (or about 80 frontmatter lines), the release is probably too large: return to the roadmap and split it into smaller releases, each with its own spec, plan, and tasks. Record the decision in the Decomposition criteria table.
+> - **Size rule: aim for about 8 tasks per release; 15 is the maximum.** The array lives entirely in the frontmatter, so its length grows with every task. Past 15 tasks (or about 120 frontmatter lines), the release is too large: return to the roadmap and split it into smaller releases, each with its own spec, plan, and tasks. Record the decision in the Decomposition criteria table.
 > - **Minimal text in the array.** Keep `action`, `expected`, and `closure` to one sentence each, citing the `AC`, `NFR`, or plan section. Detail, rationale, and context belong in the body tables, which add no frontmatter length.
 > - **Group steps by observable check, not by code edit.** One step proves one result; several edits that serve that result go into its `action`. Aim for one to three steps per task. A task that needs more probably bundles unrelated outcomes: split it.
 > - **Cite instead of copy.** Execution-critical detail may live in a named approved source. Let `action` and `closure` cite the `AC`, `NFR`, or plan section rather than restating it.
@@ -82,7 +82,7 @@ tasks:
 |-----------|--------------|
 | Grouping | [By story and real prerequisites within plan phases] |
 | Splitting | [Split tasks that bundle unrelated outcomes or are too large or uncertain to verify] |
-| Release size | [Task count against the limit of about 10; if exceeded, the split into smaller releases or the reason to keep it whole] |
+| Release size | [Task count against the recommended 8 and the maximum of 15; if 15 is exceeded, the split into smaller releases or the reason to keep it whole] |
 | Step size | [One step per observable check; edits grouped in the action] |
 | Enabling and partial work | [Allowed when labeled in the task map and closure] |
 | Tests and checks | [Integrated into every task, not deferred] |
@@ -206,7 +206,7 @@ flowchart LR
 | Every `AC` covered with a named final check | [Result] | [Comment] |
 | Dependency graph executable; tables match the array | [Result] | [Comment] |
 | Totals in the Task map match the array counts | [Result] | [Comment] |
-| Release size within about 10 tasks, or split justified | [Result] | [Comment] |
+| Release size within 15 tasks (about 8 recommended), or split justified | [Result] | [Comment] |
 | File scope valid | [Result] | [Comment] |
 | Verifications usable and blockers resolved | [Result] | [Comment] |
 

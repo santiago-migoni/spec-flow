@@ -29,7 +29,7 @@ releases:
 > - Pin the constitution, plus any design document whose decisions are used. Record `N/A` with a reason for design documents that do not apply; omitting a pin alone is not N/A.
 > - Keep `status: draft` in the header. The `approve` operation sets it to `approved` and then records the digest; the status is outside the digest. Set it back to `draft` when you start a new revision. Never write approval state in the prose.
 > - Write content in the project's language. Keep headings and column names. Replace every `[bracketed guide]`, or write `N/A` plus the reason. Prefer tables, lists, and diagrams; keep paragraphs short.
-> - Before approving, check by hand (the controller does not): row count, unique versions, order, exact objective and status matches, known OUT IDs, and that the Selected label matches section 7.
+> - Before approving, check by hand (the controller does not): row count, unique versions, order, exact objective and status matches, known OUT IDs, that the Selected label matches section 7 and its text does not say the selection is still open, and that every other table keeps its own columns (no rows pasted from another table) with each outcome linked to its constitution objective.
 
 ## Purpose, audience, and scope
 

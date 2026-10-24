@@ -34,12 +34,12 @@ acceptance:
 > **Authoring notes (delete when filling in).**
 > - The frontmatter `stories` and `acceptance` arrays are the only canonical definitions. Tables below reference their IDs and never restate or add criteria.
 > - IDs use `US-` or `AC-` plus at least three digits. Each criterion has exactly one owning story and is falsifiable. Dependencies between stories never transfer criterion ownership.
-> - Keep stories bounded and independently testable; split oversized ones by user value. Do not create a story just to relabel a technical task.
+> - Keep stories bounded and independently testable; split oversized ones by user value. A criterion must be verifiable with its own story and earlier ones: if its text needs behavior from a later story, move that part to the later story's criterion or reword it. Never leave a cycle between stories. Do not create a story just to relabel a technical task.
 > - Any required behavior that appears in a table, error case, or compatibility note must also be added to canonical acceptance in the same revision. Quality obligations that need checking must be reachable from an `AC`; prose-only obligations are not covered by the controller.
 > - Never infer the release from a `planned` status, array position, or directory number. The approved roadmap must select this exact version.
 > - Keep `status: draft` in the header. The `approve` operation sets it to `approved` and then records the digest; the status is outside the digest. Set it back to `draft` when you start a new revision. Never write approval state in the prose.
 > - Write content in the project's language. Keep headings and column names. Replace every `[bracketed guide]`, or write `N/A` plus the reason. Prefer tables, lists, and diagrams; keep paragraphs short.
-> - Before approving, check by hand (the controller checks structure only): every story appears once in section 5, in the same order as the array; only known `OUT` IDs are cited; every `AC` sits under its real story; thresholds agree across sections.
+> - Before approving, check by hand (the controller checks structure only): every story appears once in section 5, in the same order as the array; only known `OUT` IDs are cited; every `AC` sits under its real story; thresholds agree across sections; no criterion needs a later story and the dependency table lists every story its criteria mention.
 
 ## Purpose and selected release
 
@@ -93,7 +93,7 @@ flowchart LR
     US1["US-001<br/>[story title]"] --> US2["US-002<br/>[story title]"]
 ```
 
-> Optional diagram of real dependencies between stories. Dependencies never move criteria between stories.
+> Optional diagram of real dependencies between stories. Dependencies never move criteria between stories. Every dependency a criterion's text implies (login, audit, secrets, another story's data) must appear here and in the table below; the graph must be acyclic.
 
 | Story | Related outcomes | Acceptance criteria | Relevant dependencies |
 |-------|------------------|---------------------|-----------------------|
@@ -176,6 +176,7 @@ flowchart TD
 |-----------------|--------|------|
 | Release selected in the approved roadmap | [Met, Not met, or N/A] | [Comment] |
 | Every story bounded and independently testable | [Result] | [Comment] |
+| No criterion depends on a later story; story dependencies are acyclic and match the criteria text | [Result] | [Comment] |
 | Every criterion falsifiable and owned by one story | [Result] | [Comment] |
 | Quality obligations reachable from criteria | [Result] | [Comment] |
 | No blocking open questions | [Result] | [Comment] |

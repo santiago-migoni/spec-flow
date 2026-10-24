@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- `specify` and the spec template require that no criterion depends on a later story, that story dependencies are acyclic and list every story a criterion mentions, and add a readiness check for it. The roadmap template check also covers stale selection text and mixed-up tables.
+- Tasks guidance recommends about 8 tasks per release and sets 15 as the maximum (about 120 frontmatter lines); past 15 the release is split via the roadmap. It was about 10.
+
 ## Release v0.5.1
 
 Release date: 2026-10-22.
